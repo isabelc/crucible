@@ -10,14 +10,32 @@
  * @package Crucible
  */
 
-get_header(); ?>
+get_header();
+/*
+// @todo may need something like this
+
+if (is_page(get_option('smartest_contact_page_id'))){
+	$postclass = 'grid_7 alpha';
+} else {
+	$postclass = 'grid_12';
+} 
+
+@todo end
+*/
+ ?>
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
 			<?php while ( have_posts() ) : the_post(); ?>
 
-				<?php get_template_part( 'content', 'page' ); ?>
+				<?php if (is_page(get_option('smartest_contact_page_id'))) :
+						get_template_part( 'content', 'contact' );
+					elseif (is_page(get_option('smartest_about_page_id'))) :
+						get_template_part( 'content', 'about' );
+					else : 
+						get_template_part( 'content', 'page' );
+				?>
 
 				<?php
 					// If comments are open or we have at least one comment, load up the comment template
