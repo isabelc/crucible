@@ -6,7 +6,7 @@ I'm a starter theme. I'm a theme meant for hacking so don't use me as a Parent T
 Getting Started
 ---------------
 
-The first thing you want to do is copy the `crucible` directory and change the name 
+The first thing you want to do is copy the `crucible` directory and change the name. Then do a 6-step search and replace:
 
 1. Search for `'crucible'` (inside single quotations) to capture the text domain and replace with: `'megatherium'`
 
