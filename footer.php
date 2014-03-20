@@ -1,20 +1,20 @@
 <?php
 /**
  * The template for displaying the footer.
- *
  * Contains the closing of the #content div and all content after
- *
  * @package Crucible
  */
 ?>
-
 	</div><!-- #content -->
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="site-info">
-			<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'crucible' ) ); ?>"><?php printf( __( 'Proudly powered by %s', 'crucible' ), 'WordPress' ); ?></a>
+			<?php do_action( 'crucible_credits' );
+				do_action( 'crucible_footer' ); ?>
 			<span class="sep"> | </span>
-			<?php printf( __( 'Theme: %1$s by %2$s.', 'crucible' ), 'crucible', '<a href="http://automattic.com/" rel="designer">Automattic</a>' ); ?>
+			<?php if ( get_option('smartestthemes_remove_social_footer') != 'true'  ) {
+				do_action( 'crucible_social_buttons' );
+			} ?>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->
