@@ -4,21 +4,21 @@
 		|| is_active_sidebar( 'foot3'  )
 	) {
 			if ( is_active_sidebar( 'foot1' ) ) : ?>
-			<article id="first" class="grid_3 alpha actives1">
+			<aside id="first" class="widget grid_3 alpha actives1">
 				<?php dynamic_sidebar( 'foot1' ); ?>
-			</article><!-- #first .widget-area -->
+			</aside><!-- #first .widget-area -->
 			<?php endif; ?>
 		
 			<?php if ( is_active_sidebar( 'foot2' ) ) : ?>
-			<article id="second" class="grid_6 actives2">
+			<aside id="second" class="widget grid_6 actives2">
 				<?php dynamic_sidebar( 'foot2' ); ?>
-			</article><!-- #second .widget-area -->
+			</aside><!-- #second .widget-area -->
 			<?php endif; ?>
 		
 			<?php if ( is_active_sidebar( 'foot3' ) ) : ?>
-			<article id="third" class="grid_3 omega">
+			<aside id="third" class="widget grid_3 omega">
 				<?php dynamic_sidebar( 'foot3' ); ?>
-			</article><!-- #third .widget-area -->
+			</aside><!-- #third .widget-area -->
 			<?php endif;
 
 	} else { // no active dynamic footer sidebars, so hard code widget calls NEXT
@@ -168,16 +168,16 @@
 			
 			
 			if (in_array($combo, array($c3a, $c3b, $c3c, $c3d ))) { 
-				$wid1style = 'class="grid_3 alpha"';
-				$wid2style = 'class="grid_6"';
+				$wid1style = 'class="widget grid_3 alpha"';
+				$wid2style = 'class="widget grid_6"';
 			}
 			elseif (in_array($combo, array($c2a, $c2b, $c2c, $c2d, $c2e, $c2f ))) { 
 
-				$wid1style = 'class="grid_6 alpha"';
-				$wid2style = 'class="grid_6 omega"';
+				$wid1style = 'class="widget grid_6 alpha"';
+				$wid2style = 'class="widget grid_6 omega"';
 
 			} elseif (in_array($combo, array($c1a, $c1b, $c1c, $c1d ))) {
-				$wid1style = 'class="grid_6" style="margin-left:auto;margin-right:auto;float:none;display:block;max-width:470px;"';
+				$wid1style = 'class="widget grid_6" style="margin-left:auto;margin-right:auto;float:none;display:block;max-width:470px;"';
 			}
 
 			
@@ -191,7 +191,7 @@ $insf = array('title' => __('Featured Services', 'smartestb'));
 $insn = array('title' => __('What\'s New?', 'smartestb'), 'number' => 3,);
 		
 /* begin output */
-			echo '<!-- wid 1 --> <article id="first" '. $wid1style.'>';
+			echo '<!-- wid 1 --> <aside id="first" '. $wid1style.'>';
 				// widget 1
 		
 				if (in_array($combo, array($c3a, $c3b, $c3c, $c2a, $c2b, $c2c, $c1a ))) {
@@ -213,14 +213,14 @@ $insn = array('title' => __('What\'s New?', 'smartestb'), 'number' => 3,);
 				}
 			
 
-			echo '</article>';
+			echo '</aside>';
 			
 					
 			// if not a single wid combo, so next 2 wids
 
 			if (!in_array($combo, array($c1a, $c1b, $c1c, $c1d ))) { 
 		
-				echo '<!-- wid 2 --> <article id="second" '. $wid2style.'>';
+				echo '<!-- wid 2 --> <aside id="second" '. $wid2style.'>';
 			
 					// widget 2
 				
@@ -240,18 +240,15 @@ $insn = array('title' => __('What\'s New?', 'smartestb'), 'number' => 3,);
 				
 					} 
 
-				echo '</article>';
-
+				echo '</aside>';
 				
 				// widget 3
 
 				// if not a double wid combo, do wid3
 
-				
 				if (!in_array($combo, array($c2a, $c2b, $c2c, $c2d, $c2e, $c2f ))) {
 			
-
-						echo '<!-- wid 3 --> <article id="third" class="grid_3 omega">';
+						echo '<!-- wid 3 --> <aside id="third" class="widget grid_3 omega">';
 			
 							if (in_array($combo, array($c3a, $c3c ))) {
 						
@@ -263,7 +260,7 @@ $insn = array('title' => __('What\'s New?', 'smartestb'), 'number' => 3,);
 					
 							 }
 
-						echo '</article>';
+						echo '</aside>';
 
 				}
 			
