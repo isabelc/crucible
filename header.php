@@ -12,7 +12,8 @@
 <title><?php wp_title( '|', true, 'right' ); ?></title>
 <?php wp_head(); ?>
 </head>
-<body <?php body_class(); if ( is_front_page() ) { $schematype = get_option('smartestb_business_itemtype'); echo ' itemscope itemtype="http://schema.org/'.$schematype.'"';} ?>>
+<body <?php body_class(); if ( is_front_page() ) { $schematype = get_option('smartetthemes_business_itemtype'); echo ' itemscope itemtype="http://schema.org/'.$schematype.'"';} ?>>
+<!-- @todo search everywhere for 'smartetthemes_business_itemtype' or '_business_itemtype' to replace it wirh 'smartetthemes_bus_schema' -->
 <div id="page" class="hfeed site">
 
 <!-- 
@@ -32,15 +33,17 @@ do_action( 'professional_svcs_social_buttons' ); // @todo here or in footer
 			<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
 		</div>
 
-		<?php if ( get_option('smartestb_phone_number') ) {
-			echo get_option('smartestb_phone_number');
+		<?php if ( get_option('smartestthemes_phone_number') ) {
+			echo get_option('smartestthemes_phone_number');
 		} ?>
 
 		<nav id="site-navigation" class="main-navigation" role="navigation">
 			<h1 class="menu-toggle"><?php _e( 'Menu', 'crucible' ); ?></h1>
 			<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'crucible' ); ?></a>
 
-			<?php wp_nav_menu( array( 'theme_location' => 'primary','fallback_cb' => 'smartestb_mainnav_fallback', 'items_wrap' => '<ul class="%2$s">%3$s</ul>' ) );// @todo search in frame and elsewhere to change 'primary-menu' to 'primary'
+			<?php wp_nav_menu( array( 'theme_location' => 'primary','fallback_cb' => 'smartestthemes_nav_fallback', 'items_wrap' => '<ul class="%2$s">%3$s</ul>' ) );// @todo search in frame and elsewhere to change 'primary-menu' to 'primary'
+
+// @todo  search in frame and elsewhere to change 'smartestb_mainnav_fallback' to 'smartestthemes_nav_fallback'
 ?>
 		</nav><!-- #site-navigation -->
 	</header><!-- #masthead -->

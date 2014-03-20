@@ -21,16 +21,16 @@
 			</aside><!-- #third .widget-area -->
 			<?php endif;
 
-	} else { // no active dynamic footer sidebars, so hard code widget calls NEXT
+	} else { // no active dynamic footer sidebars, so hard code widget calls
 		
 			/** 
 			 * Option names
 			 */
 
-			$ne = get_option('smartestb_show_news');
-			$se = get_option('smartestb_show_services');
-			$re = get_option('smartestb_add_reviews');
-			$mo = get_option('smartestb_business_motto');
+			$ne = get_option('smartestthemes_show_news');
+			$se = get_option('smartestthemes_show_services');
+			$re = get_option('smartestthemes_add_reviews');
+			$mo = get_option('smartestthemes_business_motto');
 			
 
 			/**
@@ -179,11 +179,9 @@
 			} elseif (in_array($combo, array($c1a, $c1b, $c1c, $c1d ))) {
 				$wid1style = 'class="widget grid_6" style="margin-left:auto;margin-right:auto;float:none;display:block;max-width:470px;"';
 			}
-
-			
-			
+	
 // set var for stripped motto
-$smo = esc_attr(stripslashes_deep(get_option('smartestb_business_motto')));
+$smo = esc_attr(stripslashes_deep(get_option('smartestthemes_business_motto')));
 
 // localize wid titles
 $inst = array('title' => __('Testimonials', 'crucible'));

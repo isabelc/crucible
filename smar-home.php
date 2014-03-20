@@ -12,7 +12,7 @@ get_header(); ?>
 
 				<?php crucible_post_thumbnail(); ?>
 	
-				<?php $attention = get_option('smartestb_attention_grabber');
+				<?php $attention = get_option('smartestthemes_attention_grabber');
 				if( !empty($attention) ) : ?>
 					<div class="attention-grab"><?php echo stripslashes_deep( $attention ); ?></div>
 				<?php endif; ?>
