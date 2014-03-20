@@ -1,10 +1,12 @@
 Crucible
 ========
 
-I'm a starter theme. I'm a theme meant for hacking so don't use me as a Parent Theme. Instead try turning me into the next, most awesome, WordPress theme out there. That's what I'm here for.
+I'm currently under construction. Soon, I will be a starter theme built on an efficient, albeit custom, framework. 
 
-Getting Started
----------------
+Come back soon.
+
+Provisional Notes
+-----------------
 
 The first thing you want to do is copy the `crucible` directory and change the name. Then do a 6-step search and replace:
 
