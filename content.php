@@ -15,6 +15,17 @@
 		<?php endif; ?>
 	</header><!-- .entry-header -->
 
+<!-- 
+
+@todo 
+
+_services gets only crucible_post_thumbnail(), title, excerpt 
+
+_news gets only crucible_post_thumbnail(), title, enrty-meta (date), excerpt
+
+_staff gets only crucible_post_thumbnail(), title, enrty-meta (job title), excerpt, socials
+
+-->
 	<?php if ( is_search() ) : // Only display Excerpts for Search ?>
 	<div class="entry-summary">
 		<?php the_excerpt(); ?>
