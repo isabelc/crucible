@@ -129,3 +129,19 @@ function crucible_category_transient_flusher() {
 }
 add_action( 'edit_category', 'crucible_category_transient_flusher' );
 add_action( 'save_post',     'crucible_category_transient_flusher' );
+
+
+/**
+ * the featured image
+ */
+
+function crucible_post_thumbnail() {
+	global $post;
+	$out = '';
+	if ( has_post_thumbnail() ) : 
+		$thumbid = get_post_thumbnail_id(); 
+		$full_image_url = wp_get_attachment_image_src( $thumbid, 'full');
+		$out = '<figure><a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute('echo=0') . '"><img src="' . $full_image_url[0] . '" alt="' . the_title_attribute('echo=0') . '"></a></figure>';
+	endif;
+	return $out;
+}
