@@ -136,9 +136,27 @@ add_action( 'save_post',     'crucible_category_transient_flusher' );
  */
 
 function crucible_post_thumbnail() {
-	if ( post_password_required() || ! has_post_thumbnail() ) {
+	if ( post_password_required() ) {
 		return;
 	}
+
+	if ( ! has_post_thumbnail() ) {
+		if ( is_post_type_archive( 'smartest_news' ) && ( get_option('smartestthemes_stop_theme_icon') == 'false' ) ) {
+			// show news icon
+			$out .= '<div class="post-thumbnail newsicon"><a href="' . $full_image_url[0] . '" title="' . the_title_attribute('echo=0') . '"><img src="' . get_template_directory_uri(). '/images/newsicon.png'; . '" alt="' . the_title_attribute('echo=0') . '"></a></div>';
+		} else {
+			return;
+		}
+	} /* @test this logic, ends here */
+
+/* @todo just a note that if i need exact size image for staff archives or so, use this:
+
+		$feedthumb = vt_resize( get_post_thumbnail_id(), '', 250, 127, true);
+		$src = $feedthumb['url'];
+		$image_width = $feedthumb['width'];
+
+*/
+
 	$out = '';
 	$img = get_post_thumbnail_id(); 
 	$full_image_url = wp_get_attachment_image_src( $img, 'full');
