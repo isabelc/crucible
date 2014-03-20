@@ -9,7 +9,7 @@
  * Set the content width based on the theme's design and stylesheet.
  */
 if ( ! isset( $content_width ) ) {
-	$content_width = 640; /* pixels */
+	$content_width = 640; /* pixels */ // @todo decide on this!!
 }
 
 if ( ! function_exists( 'crucible_setup' ) ) :
@@ -120,3 +120,64 @@ require get_template_directory() . '/inc/customizer.php';
  * Load Jetpack compatibility file.
  */
 require get_template_directory() . '/inc/jetpack.php';
+
+
+/**	 // @todo move this into framework functions 
+ * Check how many images there are for About page
+ */
+
+function smartestthemes_about_page_images() {// @test maybe have to pass post id
+
+	$img_url = '';
+	$full_featUrl = '';
+	$topImg = '';
+	if ( has_post_thumbnail() ) {
+		$img = get_post_thumbnail_id(); 
+		$full_featUrl = wp_get_attachment_image_src( $img, 'full');
+	}
+	if ( get_option('smartestthemes_about_picture') ) {
+		$img_url = get_option('smartestthemes_about_picture');
+		$topImg = $img_url;
+	} elseif ( isset($full_featUrl) && ! empty($full_featUrl) ) {
+		$topImg = $full_featUrl[0];
+	}
+
+	$out = array();
+
+	if( isset($topImg) && ! empty($topImg) ) {
+		$out[] = '<figure><a href="' . $topImg . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $topImg . '" alt="' . the_title_attribute('echo=0') . '" /></a></figure>';
+	}
+
+	if ( isset($img_url) && $full_featUrl ) {
+			
+		$out[] = '<figure><a href="' . $full_featUrl[0] . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $full_featUrl[0] . '" alt="' . the_title_attribute('echo=0') . '" /></a></figure>';
+	}
+
+	return $out;
+}
+
+/**	 // @todo move this into framework functions 
+ * Top Image for About page
+ */
+
+function crucible_about_top_image() {
+	$out = '';
+	$imgs = smartestthemes_about_page_images();
+	if ( isset($imgs[0]) && !empty($imgs[0]) ) {
+		$out .= $imgs[0];
+	}
+	return $out;
+}
+
+/**	 // @todo move this into framework functions 
+ * Bottom Image for About page
+ */
+
+function crucible_about_bottom_image() {
+	$out = '';
+	$imgs = smartestthemes_about_page_images();
+	if ( isset($imgs[1]) && !empty($imgs[1]) ) {
+		$out .= $imgs[1];
+	}
+	return $out;
+}
