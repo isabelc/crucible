@@ -130,18 +130,68 @@ function crucible_category_transient_flusher() {
 add_action( 'edit_category', 'crucible_category_transient_flusher' );
 add_action( 'save_post',     'crucible_category_transient_flusher' );
 
-
 /**
- * the featured image
+ * Show the featured image. Links to permalink on index
+ * views, or a to full size image on single views.
  */
 
 function crucible_post_thumbnail() {
-	global $post;
+	if ( post_password_required() || ! has_post_thumbnail() ) {
+		return;
+	}
 	$out = '';
-	if ( has_post_thumbnail() ) : 
-		$thumbid = get_post_thumbnail_id(); 
-		$full_image_url = wp_get_attachment_image_src( $thumbid, 'full');
-		$out = '<figure><a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute('echo=0') . '"><img src="' . $full_image_url[0] . '" alt="' . the_title_attribute('echo=0') . '"></a></figure>';
+	$img = get_post_thumbnail_id(); 
+	$full_image_url = wp_get_attachment_image_src( $img, 'full');
+
+	if ( is_singular() ) :
+		$out .= '<div class="post-thumbnail"><a href="' . $full_image_url[0] . '" title="' . the_title_attribute('echo=0') . '"><img src="' . $full_image_url[0]; . '" alt="' . the_title_attribute('echo=0') . '"></a></div>';
+
+	else : 
+
+		$out .= '<div class="post-thumbnail"><a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute('echo=0') . '"><img src="' . $full_image_url[0] . '" alt="' . the_title_attribute('echo=0') . '"></a></div>';
+
 	endif;
+
+	return $out;
+}
+
+/**
+ * Entry meta shows service categories, etc...
+ */
+
+function crucible_entry_meta() {
+
+	$out = '';
+
+	if ( 'smartest_services' == get_post_type() ) {
+		// if service cat is assigned, show it
+		$service_cats = wp_get_post_terms( $post->ID, 'smartest_service_category' );
+		$count = count($service_cats);
+		if ( $count > 0 ){
+			foreach ( $service_cats as $service_cat ) {
+			$out .= '<a title="' . esc_attr( $service_cat->name ) . '" href="'. get_term_link( $service_cat ) .'" class="service-cats">' . $service_cat->name . '</a> ';
+			}
+		}
+	} elseif {
+
+
+		if ( 'smartest_staff' == get_post_type() ) {
+			
+			$out .= '<span class="jobtitle">' . get_post_meta($post->ID, '_smab_staff_job_title', true) . '</span>';
+
+		} elseif ( 'smartest_news' == get_post_type() ) {
+
+			$out .= '<span class="posted-on">' . sprintf( __( 'Posted on <time class="entry-date" datetime="%1$s" pubdate>%2$s</time>', 'crucible' ),
+					esc_attr( get_the_date( 'c' ) ),
+					esc_html( get_the_date() )
+					) . '</span>';
+		} else {
+
+			$out .= professional_svcs_posted_on();
+			// @todo see if i can return _svcs_posted_on() instead of echo
+		}
+		
+	}
+	$out .= '<br />';
 	return $out;
 }
