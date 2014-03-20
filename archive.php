@@ -1,14 +1,16 @@
 <?php
 /**
  * The template for displaying Archive pages.
- *
- * Learn more: http://codex.wordpress.org/Template_Hierarchy
- *
  * @package Crucible
  */
 
-get_header(); ?>
-
+get_header(); 
+// no sidebar if this is a cpt archive
+if ( is_post_type_archive(array('smartest_staff', 'smartest_news', 'smartest_services')) || is_tax('smartest_service_category') ) :
+	$sidebar = false;
+else :
+	$sidebar = true;
+endif; ?>
 	<section id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -61,10 +63,18 @@ get_header(); ?>
 
 						elseif ( is_tax( 'post_format', 'post-format-chat' ) ) :
 							_e( 'Chats', 'crucible' );
-
+						elseif ( is_post_type_archive('smartest_staff') ) :
+							echo apply_filters('smartestthemes_staff_heading', __('Meet The Staff', 'smartestb'));
+						elseif ( is_post_type_archive('smartest_services') ) :
+							echo apply_filters('smartestthemes_services_heading', __('Services', 'smartestb'));
+						elseif ( is_post_type_archive('smartest_news') ) :
+							echo apply_filters('smartestthemes_news_heading', __('Announcements', 'smartestb'));
+						elseif (is_tax('smartest_service_category')) :
+							$taxonomy = get_query_var( 'taxonomy' );
+							$queried_object = get_queried_object();
+							echo $queried_object->name;
 						else :
 							_e( 'Archives', 'crucible' );
-
 						endif;
 					?>
 				</h1>
@@ -100,6 +110,7 @@ get_header(); ?>
 
 		</main><!-- #main -->
 	</section><!-- #primary -->
-
-<?php get_sidebar(); ?>
-<?php get_footer(); ?>
+<?php if($sidebar) :
+		get_sidebar();
+endif;
+get_footer(); ?>
