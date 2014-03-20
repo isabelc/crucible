@@ -11,7 +11,7 @@
 if ( 'smartest_services' == get_post_type() ) :
 	
 	if ( ! dynamic_sidebar( 'servicesidebar' ) ) {
-		the_widget( 'SmartestServices', array('title' => __('All Services', 'smartestb')) );
+		the_widget( 'SmartestServices', array('title' => __('All Services', 'crucible')) );
 	}
 
 
@@ -22,7 +22,7 @@ elseif ( 'smartest_staff' == get_post_type() ) :
 	// if staff sidebar not active
 	if ( ! dynamic_sidebar( 'staffsidebar' ) ) {
 		// get staff widget 
-		the_widget( 'SmartestStaff', array('title' => __('All Staff', 'smartestb')) );
+		the_widget( 'SmartestStaff', array('title' => __('All Staff', 'crucible')) );
 	}
 
 // if is single-announcement, get Announcement sidebar
@@ -34,7 +34,7 @@ elseif ( 'smartest_news' == get_post_type() ) :
 	if ( ! dynamic_sidebar( 'announcementsidebar' ) ) {
 
 		// get Recent Announcements widget 
-		the_widget( 'SmartestAnnouncements', array( 'title' => __( 'Recent News', 'smartestb' ),	'number' => 3 ) );
+		the_widget( 'SmartestAnnouncements', array( 'title' => __( 'Recent News', 'crucible' ),	'number' => 3 ) );
 	}
 
 else :

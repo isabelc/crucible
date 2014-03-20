@@ -64,11 +64,11 @@ endif; ?>
 						elseif ( is_tax( 'post_format', 'post-format-chat' ) ) :
 							_e( 'Chats', 'crucible' );
 						elseif ( is_post_type_archive('smartest_staff') ) :
-							echo apply_filters('smartestthemes_staff_heading', __('Meet The Staff', 'smartestb'));
+							echo apply_filters('smartestthemes_staff_heading', __('Meet The Staff', 'crucible'));
 						elseif ( is_post_type_archive('smartest_services') ) :
-							echo apply_filters('smartestthemes_services_heading', __('Services', 'smartestb'));
+							echo apply_filters('smartestthemes_services_heading', __('Services', 'crucible'));
 						elseif ( is_post_type_archive('smartest_news') ) :
-							echo apply_filters('smartestthemes_news_heading', __('Announcements', 'smartestb'));
+							echo apply_filters('smartestthemes_news_heading', __('Announcements', 'crucible'));
 						elseif (is_tax('smartest_service_category')) :
 							$taxonomy = get_query_var( 'taxonomy' );
 							$queried_object = get_queried_object();

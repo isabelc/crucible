@@ -186,9 +186,9 @@
 $smo = esc_attr(stripslashes_deep(get_option('smartestb_business_motto')));
 
 // localize wid titles
-$inst = array('title' => __('Testimonials', 'smartestb'));
-$insf = array('title' => __('Featured Services', 'smartestb'));
-$insn = array('title' => __('What\'s New?', 'smartestb'), 'number' => 3,);
+$inst = array('title' => __('Testimonials', 'crucible'));
+$insf = array('title' => __('Featured Services', 'crucible'));
+$insn = array('title' => __('What\'s New?', 'crucible'), 'number' => 3,);
 		
 /* begin output */
 			echo '<!-- wid 1 --> <aside id="first" '. $wid1style.'>';
