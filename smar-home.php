@@ -8,10 +8,14 @@ get_header(); ?>
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
-
 			<?php while ( have_posts() ) : the_post(); ?>
 
-				<?php get_template_part( 'content', 'page' ); ?>
+				<?php crucible_post_thumbnail(); ?>
+	
+				<?php $attention = get_option('smartestb_attention_grabber');
+				if( !empty($attention) ) : ?>
+					<div class="attention-grab"><?php echo stripslashes_deep( $attention ); ?></div>
+				<?php endif; ?>
 
 				<?php
 					// If comments are open or we have at least one comment, load up the comment template
@@ -24,6 +28,7 @@ get_header(); ?>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
-
-<?php get_sidebar(); ?>
+<div id="home-footer">
+	<?php get_sidebar( 'footer' ); ?>
+</div>
 <?php get_footer(); ?>
