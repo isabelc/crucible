@@ -1,32 +1,62 @@
 <?php
 /**
  * The Sidebar containing the main widget areas.
- *
  * @package Crucible
  */
 ?>
-	<div id="secondary" class="widget-area" role="complementary">
-		<?php if ( ! dynamic_sidebar( 'sidebar-1' ) ) : ?>
+<div id="secondary" class="widget-area" role="complementary">
 
-			<aside id="search" class="widget widget_search">
-				<?php get_search_form(); ?>
-			</aside>
+<?php // if is single-service, get service sidebar
 
-			<aside id="archives" class="widget">
-				<h1 class="widget-title"><?php _e( 'Archives', 'crucible' ); ?></h1>
-				<ul>
-					<?php wp_get_archives( array( 'type' => 'monthly' ) ); ?>
-				</ul>
-			</aside>
+if ( 'smartest_services' == get_post_type() ) :
+	
+	if ( ! dynamic_sidebar( 'servicesidebar' ) ) {
+		the_widget( 'SmartestServices', array('title' => __('All Services', 'smartestb')) );
+	}
 
-			<aside id="meta" class="widget">
-				<h1 class="widget-title"><?php _e( 'Meta', 'crucible' ); ?></h1>
-				<ul>
-					<?php wp_register(); ?>
-					<li><?php wp_loginout(); ?></li>
-					<?php wp_meta(); ?>
-				</ul>
-			</aside>
 
-		<?php endif; // end sidebar widget area ?>
-	</div><!-- #secondary -->
+// if is single-staff, get staff sidebar
+
+elseif ( 'smartest_staff' == get_post_type() ) :
+
+	// if staff sidebar not active
+	if ( ! dynamic_sidebar( 'staffsidebar' ) ) {
+		// get staff widget 
+		the_widget( 'SmartestStaff', array('title' => __('All Staff', 'smartestb')) );
+	}
+
+// if is single-announcement, get Announcement sidebar
+	
+elseif ( 'smartest_news' == get_post_type() ) :
+
+	// if Announcement sidebar not active
+
+	if ( ! dynamic_sidebar( 'announcementsidebar' ) ) {
+
+		// get Recent Announcements widget 
+		the_widget( 'SmartestAnnouncements', array( 'title' => __( 'Recent News', 'smartestb' ),	'number' => 3 ) );
+	}
+
+else :
+	if ( ! dynamic_sidebar( 'regularsidebar' ) ) { ?>
+		<aside id="search" class="widget widget_search">
+			<?php get_search_form(); ?>
+		</aside>
+		<aside id="archives" class="widget">
+			<h3 class="widget-title">Archives</h3>
+			<ul>
+				<?php wp_get_archives( array( 'type' => 'monthly' ) ); ?>
+			</ul>
+		</aside>
+
+		<aside id="meta" class="widget">
+			<h1 class="widget-title"><?php _e( 'Meta', 'crucible' ); ?></h1>
+			<ul>
+			<?php wp_register(); ?>
+			<li><?php wp_loginout(); ?></li>
+			<?php wp_meta(); ?>
+			</ul>
+		</aside>
+	<?php }
+endif; ?>
+</div><!-- #secondary -->
