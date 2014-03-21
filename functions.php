@@ -57,7 +57,7 @@ function crucible_setup() {
 endif; // crucible_setup
 add_action( 'after_setup_theme', 'crucible_setup' );
 
-/**
+/** @todo bring in all 7 sidebars
  * Register widgetized area and update sidebar with default widgets.
  */
 function crucible_widgets_init() {
