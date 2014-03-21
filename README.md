@@ -21,5 +21,6 @@ The first thing you want to do is copy the `crucible` directory and change the n
 5. Search for `crucible-` to capture prefixed handles and replace with: `megatherium-`
 
 
-Then, update the stylesheet header in style.css and the links in footer.php with your own information. Next, update or delete this readme.
+Then, update the stylesheet header in style.css and the links in footer.php with your own information. Next, update or delete this readme. Change the crucible.pot filename to your textdomain.pot
+
 
