@@ -1,7 +1,7 @@
 Crucible
 ========
 
-I'm currently under construction. Soon, I will be a starter theme built on an efficient, albeit custom, framework. 
+I am currently under construction. Soon, I will be a starter theme built on an efficient, albeit custom, framework. 
 
 Come back soon.
 
