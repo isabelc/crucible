@@ -1,14 +1,14 @@
 Crucible
 ========
 
-I am currently under construction. Soon, I will be a starter theme built on an efficient, albeit custom, framework. 
+Crucible is currently under construction. Soon, this will be a starter theme built on an efficient, albeit custom, framework.
 
 Come back soon.
 
 Provisional Notes
 -----------------
 
-The first thing you want to do is copy the `crucible` directory and change the name. Then do a 6-step search and replace:
+The first thing to do is copy the `crucible` directory and change the name. Then do a 6-step search and replace:
 
 1. Search for `'crucible'` (inside single quotations) to capture the text domain and replace with: `'megatherium'`
 
