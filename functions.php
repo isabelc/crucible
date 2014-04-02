@@ -53,6 +53,14 @@ function crucible_setup() {
 		'comment-form',
 		'gallery',
 	) );
+
+	// Add theme support for Infinite Scroll. See: http://jetpack.me/support/infinite-scroll/
+	add_theme_support( 'infinite-scroll', array(
+		'container' => 'main',
+		'footer'    => 'page',
+	) );
+	
+
 }
 endif; // crucible_setup
 add_action( 'after_setup_theme', 'crucible_setup' );
@@ -102,12 +110,6 @@ require get_template_directory() . '/inc/extras.php';
  * Customizer additions.
  */
 require get_template_directory() . '/inc/customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-require get_template_directory() . '/inc/jetpack.php';
-
 
 /**	 // @todo move this into framework functions 
  * Check how many images there are for About page
