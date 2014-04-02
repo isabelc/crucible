@@ -10,13 +10,13 @@ get_header(); ?>
 		<main id="main" class="site-main" role="main">
 			<?php while ( have_posts() ) : the_post(); ?>
 
-				<?php crucible_post_thumbnail(); ?>
-	
 				<?php $attention = get_option('smartestthemes_attention_grabber');
 				if( !empty($attention) ) : ?>
 					<div class="attention-grab"><?php echo stripslashes_deep( $attention ); ?></div>
 				<?php endif; ?>
 
+				<?php crucible_post_thumbnail(); ?>
+				<?php the_content(); ?>
 				<?php
 					// If comments are open or we have at least one comment, load up the comment template
 					if ( comments_open() || '0' != get_comments_number() ) :
