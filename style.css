@@ -30,6 +30,7 @@ Tags: @todo
 	10.1 - Posts and pages
 	10.2 - Asides
 	10.3 - Comments
+	10.4 - Layout
 11.0 - Infinite scroll
 12.0 - Media
 --------------------------------------------------------------*/
@@ -573,6 +574,52 @@ a:active {
 }
 .bypostauthor {
 }
+
+
+/*--------------------------------------------------------------
+10.4 Layout
+--------------------------------------------------------------*/
+
+/* @test
+Layout: Content-Sidebar
+.content-area {
+	float: left;
+	margin: 0 -25% 0 0;
+	width: 100%;
+}
+.site-main {
+	margin: 0 25% 0 0;
+}
+.site-content .widget-area {
+	float: right;
+	overflow: hidden;
+	width: 25%;
+}
+.site-footer {
+	clear: both;
+	width: 100%;
+}
+*/
+/* @test
+Layout: Sidebar-Content
+.content-area {
+	float: right;
+	margin: 0 0 0 -25%;
+	width: 100%;
+}
+.site-main {
+	margin: 0 0 0 25%;
+}
+.site-content .widget-area {
+	float: left;
+	overflow: hidden;
+	width: 25%;
+}
+.site-footer {
+	clear: both;
+	width: 100%;
+}
+*/
 
 /*--------------------------------------------------------------
 11.0 Infinite scroll
