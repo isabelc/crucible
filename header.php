@@ -22,9 +22,9 @@
 
 If it works well, consider using that instead of my logo creator in panel.
 
-do_action( 'professional_svcs_logo' ); // hold
+do_action( 'crucible_logo' ); // hold
 
-do_action( 'professional_svcs_social_buttons' ); // @todo here or in footer
+do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per theme
 
 -->
 	<header id="masthead" class="site-header" role="banner">
