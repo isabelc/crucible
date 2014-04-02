@@ -1,6 +1,9 @@
 <?php
 /**
  * The Sidebar containing the main widget areas.
+ * Has 3 conditional widget areas: Services Sidebar, Staff Sidebar, Staff Sidebar
+ * and 1 default widget area: General Default Sidebar
+ * 
  * @package Crucible
  */
 ?>
