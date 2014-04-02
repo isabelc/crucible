@@ -1,9 +1,6 @@
 <?php
 /**
  * Custom template tags for this theme.
- *
- * Eventually, some of the functionality here could be replaced by core features.
- *
  * @package Crucible
  */
 
@@ -65,36 +62,6 @@ function crucible_post_nav() {
 }
 endif;
 
-if ( ! function_exists( 'crucible_posted_on' ) ) :
-/**
- * Prints HTML with meta information for the current post-date/time and author.
- */
-function crucible_posted_on() {
-	$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time>';
-	if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
-		$time_string .= '<time class="updated" datetime="%3$s">%4$s</time>';
-	}
-
-	$time_string = sprintf( $time_string,
-		esc_attr( get_the_date( 'c' ) ),
-		esc_html( get_the_date() ),
-		esc_attr( get_the_modified_date( 'c' ) ),
-		esc_html( get_the_modified_date() )
-	);
-
-	printf( __( '<span class="posted-on">Posted on %1$s</span><span class="byline"> by %2$s</span>', 'crucible' ),
-		sprintf( '<a href="%1$s" rel="bookmark">%2$s</a>',
-			esc_url( get_permalink() ),
-			$time_string
-		),
-		sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s">%2$s</a></span>',
-			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
-			esc_html( get_the_author() )
-		)
-	);
-}
-endif;
-
 /**
  * Returns true if a blog has more than 1 category.
  */
@@ -124,7 +91,6 @@ function crucible_categorized_blog() {
  * Flush out the transients used in crucible_categorized_blog.
  */
 function crucible_category_transient_flusher() {
-	// Like, beat it. Dig?
 	delete_transient( 'all_the_cool_cats' );
 }
 add_action( 'edit_category', 'crucible_category_transient_flusher' );
@@ -174,10 +140,12 @@ function crucible_post_thumbnail() {
 }
 
 /**
- * Entry meta shows service categories, etc...
+ * Prints HTML with meta information for the current post depending on post type.
  */
-
+if ( ! function_exists( 'crucible_entry_meta' ) ) :
 function crucible_entry_meta() {
+
+	global $post;
 
 	$out = '';
 
@@ -190,26 +158,29 @@ function crucible_entry_meta() {
 			$out .= '<a title="' . esc_attr( $service_cat->name ) . '" href="'. get_term_link( $service_cat ) .'" class="service-cats">' . $service_cat->name . '</a> ';
 			}
 		}
-	} elseif {
-
-
-		if ( 'smartest_staff' == get_post_type() ) {
+	} elseif ( 'smartest_staff' == get_post_type() ) {
 			
-			$out .= '<span class="jobtitle">' . get_post_meta($post->ID, '_smab_staff_job_title', true) . '</span>';
+		$out .= '<span class="jobtitle">' . get_post_meta($post->ID, '_smab_staff_job_title', true) . '</span><br />';
 
-		} elseif ( 'smartest_news' == get_post_type() ) {
+	} elseif ( 'smartest_news' == get_post_type() ) {
 
-			$out .= '<span class="posted-on">' . sprintf( __( 'Posted on <time class="entry-date" datetime="%1$s" pubdate>%2$s</time>', 'crucible' ),
+		$out .= '<span class="posted-on">' . sprintf( __( 'Posted on <time class="entry-date" datetime="%1$s" pubdate>%2$s</time>', 'crucible' ),
 					esc_attr( get_the_date( 'c' ) ),
 					esc_html( get_the_date() )
 					) . '</span>';
-		} else {
+	} else {
 
-			$out .= professional_svcs_posted_on();
-			// @todo see if i can return _svcs_posted_on() instead of echo
-		}
-		
+		$out .= '<span class="posted-on">' . sprintf( __( 'Posted on <time class="entry-date" datetime="%1$s">%2$s</time><span class="byline"> by <span class="author vcard"><a class="url fn n" href="%3$s" title="%4$s" rel="author">%5$s</a></span></span>', 'smartestb' ),
+				esc_attr( get_the_date( 'c' ) ),
+				esc_html( get_the_date() ),
+				esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+				esc_attr( sprintf( __( 'View all posts by %s', 'smartestb' ), get_the_author() ) ),
+				esc_html( get_the_author() )
+				) . '</span>';
+
 	}
+		
 	$out .= '<br />';
 	return $out;
 }
+endif;

@@ -9,8 +9,7 @@
 		<h1 class="entry-title" <?php if ( 'smartest_staff' == get_post_type() ) { echo ' itemprop="name"'; } ?>><?php the_title(); ?></h1>
 
 		<div class="entry-meta">
-			<?php // @todo sync crucible_posted_on() with crucible_entry_meta() 
-			crucible_entry_meta(); ?>
+			<?php crucible_entry_meta(); ?>
 		</div><!-- .entry-meta -->
 	</header><!-- .entry-header -->
 
