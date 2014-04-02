@@ -13,7 +13,7 @@
 				do_action( 'crucible_footer' ); ?>
 			<span class="sep"> | </span>
 			<?php if ( get_option('smartestthemes_remove_social_footer') != 'true'  ) {
-				do_action( 'crucible_social_buttons' ); // @test do i need parameter true
+				do_action( 'crucible_social_buttons' );
 			} ?>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
