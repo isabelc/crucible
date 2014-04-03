@@ -70,39 +70,39 @@ function crucible_widgets_init() {
 	));
  
 	if ( ( get_option('smartestthemes_show_services') == 'true' ) ) { 
-	    register_sidebar(array(
+		register_sidebar(array(
 			'id' => 'servicesidebar',
 			'name' => __('Services Sidebar', 'crucible'),
 			'description' => __('Sidebar used on single service pages', 'crucible'),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</aside>',
+			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
 			'after_title' => '</h3>'
 		));
 	}
 
 	if ( ( get_option('smartestthemes_show_staff') == 'true' ) ) {
-	    register_sidebar(array(
-	        'id' => 'staffsidebar',
-	        'name' => __('Staff Sidebar', 'crucible'),
-	        'description' => __('Sidebar used on single staff pages', 'crucible'),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</aside>',
-	        'before_title' => '<h3 class="widget-title">',
-	        'after_title' => '</h3>'
-	    ));
+		register_sidebar(array(
+			'id' => 'staffsidebar',
+			'name' => __('Staff Sidebar', 'crucible'),
+			'description' => __('Sidebar used on single staff pages', 'crucible'),
+			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</aside>',
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>'
+		));
 
 	}
 	if ( ( get_option('smartestthemes_show_news') == 'true' ) ) {
-	    register_sidebar(array(
-	        'id' => 'announcementsidebar',
-	        'name' => __('Announcement Sidebar', 'crucible'),
-	        'description' => __('Sidebar used on single announcement pages', 'crucible'),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</aside>',
-	        'before_title' => '<h3 class="widget-title">',
-	        'after_title' => '</h3>'
-	    ));
+		register_sidebar(array(
+			'id' => 'announcementsidebar',
+			'name' => __('Announcement Sidebar', 'crucible'),
+			'description' => __('Sidebar used on single announcement pages', 'crucible'),
+			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</aside>',
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>'
+		));
 
 	}
    
@@ -153,13 +153,13 @@ function crucible_nav_fallback() {
 
 	$sbn = esc_attr(stripslashes_deep(get_option('smartestthemes_business_name')));
 	echo '<ul class="menu">'; ?>
-	<li class="home"><a title="<?php echo $sbn; ?>" href="<?php echo site_url('/'); ?>"><?php _e('Home', 'smartestb'); ?></a></li>
+	<li class="home"><a title="<?php echo $sbn; ?>" href="<?php echo site_url('/'); ?>"><?php _e('Home', 'crucible'); ?></a></li>
 	<?php if((get_option('smartestthemes_about_page') || get_option('smartestthemes_about_picture')) && (get_option('smartestthemes_stop_about') == 'false')) { ?>
-		<li class="about"><a title="<?php _e('About', 'smartestb'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartest_about_page_id')); ?>">
-		<?php _e('About', 'smartestb'); ?></a></li>
+		<li class="about"><a title="<?php _e('About', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartest_about_page_id')); ?>">
+		<?php _e('About', 'crucible'); ?></a></li>
 	<?php } if(get_option('smartestthemes_show_services') == 'true') { ?>
-		<li class="services"><a title="<?php _e( 'Services', 'smartestb'); ?>" href="<?php echo get_post_type_archive_link( 'smartest_services' ); ?>">
-		<?php _e( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'smartestb' ); ?>
+		<li class="services"><a title="<?php _e( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_services' ); ?>">
+		<?php _e( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ); ?>
 		</a>
 		<?php // if service cat tax terms exist, do sub-menu
 		$service_cats = get_terms('smartest_service_category');
@@ -174,20 +174,20 @@ function crucible_nav_fallback() {
 		} ?>
 		</li>
 	<?php } if(get_option('smartestthemes_show_staff') == 'true') { ?>
-		<li class="staff"><a title="<?php _e('Staff', 'smartestb'); ?>" href="<?php echo get_post_type_archive_link( 'smartest_staff' ); ?>">
-		<?php _e( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'smartestb' ); ?>
+		<li class="staff"><a title="<?php _e( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_staff' ); ?>">
+		<?php _e( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ); ?>
 		</a></li>
 	<?php } if(get_option('smartestthemes_show_news') == 'true') { ?>
-		<li class="news"><a title="<?php _e('News', 'smartestb'); ?>" href="<?php echo get_post_type_archive_link( 'smartest_news' ); ?>">
-		<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'smartestb' ); ?>
+		<li class="news"><a title="<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_news' ); ?>">
+		<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>
 		</a></li>
-	<?php } if(get_option('smartestthemes_stop_contact') == 'false') { ?><li class="contact"><a title="<?php _e('Contact', 'smartestb'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartest_contact_page_id')); ?>">
-		<?php _e('Contact', 'smartestb'); ?>
+	<?php } if(get_option('smartestthemes_stop_contact') == 'false') { ?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartest_contact_page_id')); ?>">
+		<?php _e('Contact', 'crucible'); ?>
 		</a></li>
 	<?php }
 	if (get_option('smartestthemes_add_reviews') == 'true') {
 		$smartest_reviewspage_uri = get_page_link(get_option('smartest_reviews_page_id'));
-		echo '<li class="reviews"><a title="' . __('Reviews', 'smartestb') . '" href="'. $smartest_reviewspage_uri .'">'. __('Reviews', 'smartestb'). '</a></li>';
+		echo '<li class="reviews"><a title="' . __('Reviews', 'crucible') . '" href="'. $smartest_reviewspage_uri .'">'. __('Reviews', 'crucible'). '</a></li>';
 
 	}
    	echo '</ul>';
