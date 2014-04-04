@@ -353,7 +353,7 @@ add_action( 'crucible_footer', 'crucible_footer' );
 function crucible_clock_hours() {
 	$output = '';
 	if (get_option('smartestthemes_hours')) {
-		$output .= '<div class="clock-hours"><h3><i class="fa fa-clock-o"></i> '; // @todo must include font awesome styles just a reminder
+		$output .= '<div class="clock-hours"><h3><i class="fa fa-clock-o"></i> ';
 		$output .= apply_filters('smartestthemes_hours_heading', __('Our Hours', 'crucible')) . '</h3><div class="hours">' . wpautop(get_option('smartestthemes_hours')) . '</div></div>';
 	}
 	echo $output;
