@@ -57,7 +57,7 @@ $headfonts = array(
 'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
 'Verdana,Geneva,sans-serif' => 'Verdana, Geneva',
 );
-
+// @new @todo create new font demos with theme name and colors
 $demoImgUrl = get_bloginfo('template_directory') . '/images/demo-';
 
 /*
@@ -119,7 +119,6 @@ $fontsizes = array('','11px','12px','13px','14px','16px','18px','20px','22px','2
 // @new custom color list, list default 1st
 $colors = array('green', 'red','orange','lime','blue','light blue','violet','bronze brown','sand','gray');
 $footcode = htmlentities('<span itemprop="name">YOUR BUSINESS NAME</span>');
-$imgUrl = get_bloginfo('template_directory') . '/images/';
 
 /* @new choices */
 $schema_itemtypes = array(

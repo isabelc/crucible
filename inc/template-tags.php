@@ -105,7 +105,7 @@ function crucible_post_thumbnail() {
 	if ( post_password_required() ) {
 		return;
 	}
-
+	// @todo @pre replace newsicon with font awesome icon
 	if ( ! has_post_thumbnail() ) {
 		if ( is_post_type_archive( 'smartest_news' ) && ( get_option('smartestthemes_stop_theme_icon') == 'false' ) ) {
 			// show news icon
