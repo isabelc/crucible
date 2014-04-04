@@ -16,7 +16,7 @@ The first thing to do is copy the `crucible` directory and change the name. Then
 
 3. Search for `Text Domain: crucible` in style.css and replace with: `Text Domain: megatherium`
 
-4. Search for <code>&nbsp;crucible</code> (with a space before it) to capture DocBlocks and replace with: <code>&nbsp;Megatherium</code> (with space before it and capital letter)
+4. Search for <code>&nbsp;Crucible</code> (with a space before it) to capture DocBlocks and replace with: <code>&nbsp;Megatherium</code> (with space before it and capital letter)
 
 5. Search for `crucible-` to capture prefixed handles and replace with: `megatherium-`
 
