@@ -1,6 +1,6 @@
 <?php // Conditionally load fontface stylesheets
 function crucible_loadfonts() {
-	$fontdir = get_template_directory_uri(). '/css/fonts/';
+	$fontdir = get_template_directory_uri(). '/inc/fonts/';
 	$needle1 = get_option('smartestthemes_heading_font');
 	$needle2 = get_option('smartestthemes_logo_font');
 	$needle3 = get_option('smartestthemes_body_font');
@@ -58,7 +58,7 @@ function crucible_logofontface() {
 
 	if(!get_option('smartestthemes_logo')) {
 
-		$fontdir = get_template_directory_uri(). '/css/fonts/';
+		$fontdir = get_template_directory_uri(). '/inc/fonts/';
 		$needle2 = get_option('smartestthemes_logo_font');
 		
 		/* FONT NAME VARS */
