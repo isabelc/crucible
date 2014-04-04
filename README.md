@@ -1,9 +1,7 @@
 Crucible
 ========
 
-Crucible is currently under construction. Soon, this will be a starter theme built on an efficient, albeit custom, framework.
-
-Come back soon.
+Crucible is currently under construction and not ready for public use. Soon, this will be a starter theme built on a custom, yet very efficient, framework.
 
 Provisional Notes
 -----------------
