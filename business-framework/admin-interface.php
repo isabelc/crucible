@@ -15,8 +15,8 @@ function smartestbthemes_add_admin() {
 			die;
 		}
 	}
-	if(get_option('framework_smartestb_backend_icon')) { $icon = get_option('framework_smartestb_backend_icon'); } else { $icon = get_template_directory_uri(). '/smartest-business-framework/images/smartestb-icon.png'; }
-	$sto=add_menu_page(sprintf(__('%s Options', 'smartestb'), $themename), sprintf(__('%s Options', 'smartestb'), $themename), 'activate_plugins','smartestbthemes', 'smartestbthemes_options_page', $icon, 45);
+	if(get_option('framework_smartestb_backend_icon')) { $icon = get_option('framework_smartestb_backend_icon'); } else { $icon = get_template_directory_uri(). '/business-framework/images/smartestb-icon.png'; }
+	$sto=add_menu_page(sprintf(__('%s Options', 'crucible'), $themename), sprintf(__('%s Options', 'crucible'), $themename), 'activate_plugins','smartestbthemes', 'smartestbthemes_options_page', $icon, 45);
 	add_action( 'admin_head-'. $sto, 'smartestb_frame_load' );
 	add_smar_admin_menu_separator(44);
 } 
@@ -76,18 +76,18 @@ function smartestbthemes_options_page(){
 	$themedata = wp_get_theme();
     $themename = $themedata->Name;
 	$local_version = $themedata->Version;
-	$fDIR = get_template_directory_uri().'/smartest-business-framework/'; ?>
+	$fDIR = get_template_directory_uri().'/business-framework/'; ?>
 <div class="wrap" id="smartestb_container">
-<div id="smartestb-popup-save" class="smartestb-save-popup"><div class="smartestb-save-save"><?php _e('Options Updated', 'smartestb'); ?></div></div>
-<div id="smartestb-popup-reset" class="smartestb-save-popup"><div class="smartestb-save-reset"><?php _e('Options Reset', 'smartestb'); ?></div></div>
+<div id="smartestb-popup-save" class="smartestb-save-popup"><div class="smartestb-save-save"><?php _e('Options Updated', 'crucible'); ?></div></div>
+<div id="smartestb-popup-reset" class="smartestb-save-popup"><div class="smartestb-save-reset"><?php _e('Options Reset', 'crucible'); ?></div></div>
     <form action="" enctype="multipart/form-data" id="smartestbform">
         <div id="header">
            <div class="logo">
 		<?php echo apply_filters('smartestb_options_branding', '<img alt="Smartest Themes" src="'. $fDIR. 'images/st_logo_admin.png" />'); ?>
           </div>
              <div class="theme-info">
-				<span class="theme" style="margin-top:10px;"><?php printf(__('%s', 'smartestb'), $themename); ?>
-						<span class="ver"> <?php printf(__('version %s', 'smartestb'), $local_version); ?>
+				<span class="theme" style="margin-top:10px;"><?php printf(__('%s', 'crucible'), $themename); ?>
+						<span class="ver"> <?php printf(__('version %s', 'crucible'), $local_version); ?>
 </span>						
 				</span>
 				
@@ -104,7 +104,7 @@ function smartestbthemes_options_page(){
 <![endif]-->
 			<ul>
             <li class="right"><img style="display:none" src="<?php echo $fDIR; ?>images/loading-top.gif" class="ajax-loading-img ajax-loading-img-top" alt="Working..." />
-<input type="submit" value="<?php _e('Save All Changes', 'smartestb'); ?>" class="button submit-button" /></li>
+<input type="submit" value="<?php _e('Save All Changes', 'crucible'); ?>" class="button submit-button" /></li>
 			</ul> 
 <!--[if IE]>
 </div>
@@ -114,7 +114,7 @@ function smartestbthemes_options_page(){
 	        <div id="smartestb-nav">
 				<ul>
 					<?php echo $return[1] ?>
-					<li><a class="theme-support" title="Theme Support" href="#smartestb-option-themesupport"><span class="smartestb-nav-icon"></span><?php _e('Theme Support', 'smartestb'); ?></a></li>
+					<li><a class="theme-support" title="Theme Support" href="#smartestb-option-themesupport"><span class="smartestb-nav-icon"></span><?php _e('Theme Support', 'crucible'); ?></a></li>
 					
 				</ul>		
 			</div>
@@ -122,26 +122,26 @@ function smartestbthemes_options_page(){
 	         <?php echo $return[0]; /* Settings */ ?>
 	         <!-- THEME SUPPORT SECTION -->
 	         <div class="group" id="smartestb-option-themesupport" style="display:block;">
-	         <h2><?php _e('Theme Support', 'smartestb'); ?></h2>
+	         <h2><?php _e('Theme Support', 'crucible'); ?></h2>
 	         <div class="section support-section">
 	         </div>
 	         <div class="section support-section">
-	         <p class="support-content"><?php _e('Need help?  We have a variety of support materials that is growing all the time to help you get up and running with Smartest Themes.', 'smartestb'); ?></p>
+	         <p class="support-content"><?php _e('Need help?  We have a variety of support materials that is growing all the time to help you get up and running with Smartest Themes.', 'crucible'); ?></p>
 	         </div>
 	         <div class="support-divider"></div>
 	         <div class="section support-section">
 	         <div class="support-section-icon info_75"></div>
-	         <h4 class="support-section-title"><?php _e('Instruction Guides', 'smartestb'); ?></h4>
-	         <p class="support-content"><?php _e('The Instruction Guides help you set up your theme.', 'smartestb'); ?></p><div class="section support-section">
-	         <a class="support-button" target="_blank" title="Instruction Guides" href="<?php echo $manualurl; ?>"><?php _e('Go To Instruction Guides', 'smartestb'); echo ' &raquo;'; ?></a>
+	         <h4 class="support-section-title"><?php _e('Instruction Guides', 'crucible'); ?></h4>
+	         <p class="support-content"><?php _e('The Instruction Guides help you set up your theme.', 'crucible'); ?></p><div class="section support-section">
+	         <a class="support-button" target="_blank" title="Instruction Guides" href="<?php echo $manualurl; ?>"><?php _e('Go To Instruction Guides', 'crucible'); echo ' &raquo;'; ?></a>
 	         </div><div class="clear"></div></div>
 	         <div class="support-divider"></div>
 	         <div class="section support-section">
 	         <div class="support-section-icon comments_blue_75"></div>
-	         <h4 class="support-section-title"><?php _e('Support Forums', 'smartestb'); ?></h4>
-	         <p class="support-content"><?php _e('Get help or report a bug at the forums. Post your question as a new topic, and we will focus on answering your questions and helping you to use the default functionality of your theme.', 'smartestb'); ?></p>
+	         <h4 class="support-section-title"><?php _e('Support Forums', 'crucible'); ?></h4>
+	         <p class="support-content"><?php _e('Get help or report a bug at the forums. Post your question as a new topic, and we will focus on answering your questions and helping you to use the default functionality of your theme.', 'crucible'); ?></p>
 <div class="section support-section">
-	         <a class="support-button" target="_blank" title="Support Forums" href="http://smartestthemes.com/support/"><?php _e('Go To Support Forums', 'smartestb'); echo ' &raquo;'; ?> </a>
+	         <a class="support-button" target="_blank" title="Support Forums" href="http://smartestthemes.com/support/"><?php _e('Go To Support Forums', 'crucible'); echo ' &raquo;'; ?> </a>
 	         </div>
 	         <div class="clear"></div>
 	         </div>
@@ -154,11 +154,11 @@ function smartestbthemes_options_page(){
 		<![endif]-->
         <div class="save_bar_top">
         <img style="display:none" src="<?php echo $fDIR; ?>images/loading-bottom.gif" class="ajax-loading-img ajax-loading-img-bottom" alt="Working..." />
-        <input type="submit" value="<?php _e('Save All Changes', 'smartestb'); ?>" class="button submit-button" />        
+        <input type="submit" value="<?php _e('Save All Changes', 'crucible'); ?>" class="button submit-button" />        
         </form>
         <form action="<?php echo esc_html( $_SERVER['REQUEST_URI'] ) ?>" method="post" style="display:inline" id="smartestbform-reset">
             <span class="submit-footer-reset">
-            <input name="reset" type="submit" value="<?php _e('Reset Options', 'smartestb'); ?>" class="button submit-button reset-button" onclick="return confirm(localized_label.reset);" />
+            <input name="reset" type="submit" value="<?php _e('Reset Options', 'crucible'); ?>" class="button submit-button reset-button" onclick="return confirm(localized_label.reset);" />
             <input type="hidden" name="smartestb_save" value="reset" /> 
             </span></form></div><!--[if IE 6]></div><![endif]--><div style="clear:both;"></div>    
 </div><!--wrap-->
@@ -166,14 +166,14 @@ function smartestbthemes_options_page(){
 }
 /* smartestb_frame_load */
 function smartestb_frame_load() {
-	$fr = get_template_directory_uri(). '/smartest-business-framework/';
+	$fr = get_template_directory_uri(). '/business-framework/';
 	add_action('admin_head', 'smartestb_admin_head');
 	wp_enqueue_script('jquery-ui-core');
 	wp_register_script('jquery-input-mask', $fr. 'js/jquery.maskedinput-1.3.1.min.js', array( 'jquery' ));
 	wp_enqueue_script('jquery-input-mask');
 	function smartestb_admin_head() { 
-		$fr = get_template_directory_uri(). '/smartest-business-framework/'; ?>
-		<link rel="stylesheet" type="text/css" href="<?php echo $fr; ?>admin-style.css" media="screen" />
+		$fr = get_template_directory_uri(). '/business-framework/'; ?>
+		<link rel="stylesheet" type="text/css" href="<?php echo $fr; ?>css/admin-style.css" media="screen" />
  		<link rel="stylesheet" media="screen" type="text/css" href="<?php echo $fr; ?>css/colorpicker.css" />
 		<script type="text/javascript" src="<?php echo $fr; ?>js/colorpicker.js"></script>
 		<script>jQuery(document).ready(function(){
@@ -215,9 +215,9 @@ function smartestb_frame_load() {
 			</script>
 <?php //AJAX Upload
 		// Set localized php vars for js
-		$upl = __('Uploading', 'smartestb');
-		$upi = __('Upload Image', 'smartestb');
-		$okr = __('Click OK to reset back to default settings. All custom theme settings will be lost!', 'smartestb');
+		$upl = __('Uploading', 'crucible');
+		$upi = __('Upload Image', 'crucible');
+		$okr = __('Click OK to reset back to default settings. All custom theme settings will be lost!', 'crucible');
 ?>
 		<script>
 			var localized_label = {
@@ -420,7 +420,7 @@ function smartestb_ajax_callback() {
 		$upload_tracking[] = $clickedID;
 		update_option( $clickedID , $uploaded_file['url'] );
 
-		 if(!empty($uploaded_file['error'])) {echo __('Upload Error: ', 'smartestb') . $uploaded_file['error']; }
+		 if(!empty($uploaded_file['error'])) {echo __('Upload Error: ', 'crucible') . $uploaded_file['error']; }
 
 		 else {
 			$attachment = array(
@@ -875,9 +875,9 @@ function smartestbthemes_uploader_function($id,$std,$mod){
             if ( get_option( $id ) != "") { $val = get_option($id); }
             $uploader .= '<input class="smartestb-input" name="'. $id .'" id="'. $id .'_upload" type="text" value="'. $val .'" />';
 	}
-	$uploader .= '<div class="upload_button_div"><span class="button image_upload_button" id="'.$id.'">'. __('Upload Image', 'smartestb'). '</span>';
+	$uploader .= '<div class="upload_button_div"><span class="button image_upload_button" id="'.$id.'">'. __('Upload Image', 'crucible'). '</span>';
 	if(!empty($upload)) {$hide = '';} else { $hide = 'hide';}
-	$uploader .= '<span class="button image_reset_button '. $hide.'" id="reset_'. $id .'" title="' . $id . '">'. __('Remove', 'smartestb'). '</span>';
+	$uploader .= '<span class="button image_reset_button '. $hide.'" id="reset_'. $id .'" title="' . $id . '">'. __('Remove', 'crucible'). '</span>';
 	$uploader .='</div>' . "\n";
     $uploader .= '<div class="clear"></div>' . "\n";
 	if(!empty($upload)){

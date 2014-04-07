@@ -58,12 +58,12 @@ function smartestbusiness_insert_post($potype, $slug, $option, $page_title = '',
  */
 function smartestbusiness_after_setup() {
 	$bn = stripslashes_deep(esc_attr(get_option('smartestb_business_name')));if(!$bn) {$bn = get_bloginfo('name'); }
-	$atitle = sprintf(__('About %s','smartestb'), $bn);
+	$atitle = sprintf(__('About %s','crucible'), $bn);
 	// if not disabled in options 
 	if(get_option('smartestb_stop_about') == 'false')
-		smartestbusiness_insert_post( 'page', esc_sql( _x('about', 'page_slug', 'smartestb') ), 'smartest_about_page_id', $atitle, '' );
+		smartestbusiness_insert_post( 'page', esc_sql( _x('about', 'page_slug', 'crucible') ), 'smartest_about_page_id', $atitle, '' );
 	if(get_option('smartestb_stop_home') == 'false')
-		smartestbusiness_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'smartestb') ), 'smartest_home_page_id', __('Home', 'smartestb'), '' );
+		smartestbusiness_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'crucible') ), 'smartest_home_page_id', __('Home', 'crucible'), '' );
 	// Activate Smartest Reviews
 	if (!class_exists('SMARTESTReviewsBusiness') && (get_option('smartestb_add_reviews') == 'true'))
 		include_once(get_template_directory() .'/business-framework/modules/smartest-reviews/smartest-reviews.php');
@@ -95,7 +95,7 @@ if( get_option('smartestb_stop_static') == 'false') {
 
 // Set the blog page, unless disabled
 if( get_option('smartestb_stop_blog') == 'false') {
-	$blog   = get_page_by_title(__('Blog', 'smartestb') );
+	$blog   = get_page_by_title(__('Blog', 'crucible') );
 	if($blog) {
 		update_option( 'page_for_posts', $blog->ID );
 	}
@@ -205,33 +205,33 @@ function create_smartest_business_cpts() {
 	$services = get_option('smartestb_show_services');
 			if( $staff == 'true'  ) { 
 		    	$args = array(
-		        	'label' => __('Staff','smartestb'),
-		        	'singular_label' => __('Staff','smartestb'),
+		        	'label' => __('Staff','crucible'),
+		        	'singular_label' => __('Staff','crucible'),
 		        	'public' => true,
 		        	'show_ui' => true,
 		        	'capability_type' => 'post',
 		        	'hierarchical' => false,
 		        	'rewrite' => array(
-							'slug' => __('staff', 'smartestb'),
+							'slug' => __('staff', 'crucible'),
 							'with_front' => false,
 
 					),
 		        	'exclude_from_search' => false,
 	        		'labels' => array(
-						'name' => __( 'Staff','smartestb' ),
-						'singular_name' => __( 'Staff','smartestb' ),
-						'add_new' => __( 'Add New','smartestb' ),
-						'add_new_item' => __( 'Add New Staff','smartestb' ),
-						'all_items' => __( 'All Staff','smartestb' ),
-						'edit' => __( 'Edit','smartestb' ),
-						'edit_item' => __( 'Edit Staff','smartestb' ),
-						'new_item' => __( 'New Staff','smartestb' ),
-						'view' => __( 'View Staff','smartestb' ),
-						'view_item' => __( 'View Staff','smartestb' ),
-						'search_items' => __( 'Search Staff','smartestb' ),
-						'not_found' => __( 'No staff found','smartestb' ),
-						'not_found_in_trash' => __( 'No staff found in Trash','smartestb' ),
-						'parent' => __( 'Parent Staff','smartestb' ),
+						'name' => __( 'Staff','crucible' ),
+						'singular_name' => __( 'Staff','crucible' ),
+						'add_new' => __( 'Add New','crucible' ),
+						'add_new_item' => __( 'Add New Staff','crucible' ),
+						'all_items' => __( 'All Staff','crucible' ),
+						'edit' => __( 'Edit','crucible' ),
+						'edit_item' => __( 'Edit Staff','crucible' ),
+						'new_item' => __( 'New Staff','crucible' ),
+						'view' => __( 'View Staff','crucible' ),
+						'view_item' => __( 'View Staff','crucible' ),
+						'search_items' => __( 'Search Staff','crucible' ),
+						'not_found' => __( 'No staff found','crucible' ),
+						'not_found_in_trash' => __( 'No staff found in Trash','crucible' ),
+						'parent' => __( 'Parent Staff','crucible' ),
 					),
 		        	'supports' => array('title','editor','thumbnail'),
 				'has_archive' => true,
@@ -244,33 +244,33 @@ function create_smartest_business_cpts() {
 			}// end if show staff enabled
 			if($news == 'true') { 
 		    	$args = array(
-		        	'label' => __('Announcements','smartestb'),
-		        	'singular_label' => __('Announcement','smartestb'),
+		        	'label' => __('Announcements','crucible'),
+		        	'singular_label' => __('Announcement','crucible'),
 		        	'public' => true,
 		        	'show_ui' => true,
 		        	'capability_type' => 'post',
 		        	'hierarchical' => false,
 		        	'rewrite' => array(
-							'slug' => __('news','smartestb'),
+							'slug' => __('news','crucible'),
 							'with_front' => false,
 
 					),
 		        	'exclude_from_search' => false,
 	        		'labels' => array(
-						'name' => __( 'Announcements','smartestb' ),
-						'singular_name' => __( 'Announcement','smartestb' ),
-						'add_new' => __( 'Add New','smartestb' ),
-						'add_new_item' => __( 'Add New Announcement','smartestb' ),
-						'all_items' => __( 'All Announcements','smartestb' ),
-						'edit' => __( 'Edit','smartestb' ),
-						'edit_item' => __( 'Edit Announcement','smartestb' ),
-						'new_item' => __( 'New Announcement','smartestb' ),
-						'view' => __( 'View Announcement','smartestb' ),
-						'view_item' => __( 'View Announcement','smartestb' ),
-						'search_items' => __( 'Search Announcements','smartestb' ),
-						'not_found' => __( 'No announcement found','smartestb' ),
-						'not_found_in_trash' => __( 'No announcements found in Trash','smartestb' ),
-						'parent' => __( 'Parent Announcement','smartestb' ),
+						'name' => __( 'Announcements','crucible' ),
+						'singular_name' => __( 'Announcement','crucible' ),
+						'add_new' => __( 'Add New','crucible' ),
+						'add_new_item' => __( 'Add New Announcement','crucible' ),
+						'all_items' => __( 'All Announcements','crucible' ),
+						'edit' => __( 'Edit','crucible' ),
+						'edit_item' => __( 'Edit Announcement','crucible' ),
+						'new_item' => __( 'New Announcement','crucible' ),
+						'view' => __( 'View Announcement','crucible' ),
+						'view_item' => __( 'View Announcement','crucible' ),
+						'search_items' => __( 'Search Announcements','crucible' ),
+						'not_found' => __( 'No announcement found','crucible' ),
+						'not_found_in_trash' => __( 'No announcements found in Trash','crucible' ),
+						'parent' => __( 'Parent Announcement','crucible' ),
 					),
 		        	'supports' => array('title','editor','thumbnail'),
 				'has_archive' => true,
@@ -282,33 +282,33 @@ function create_smartest_business_cpts() {
 			}// end if show news enabled
 			if($services == 'true') { 
 		    	$args = array(
-		        	'label' => __('Services','smartestb'),
-		        	'singular_label' => __('Service','smartestb'),
+		        	'label' => __('Services','crucible'),
+		        	'singular_label' => __('Service','crucible'),
 		        	'public' => true,
 		        	'show_ui' => true,
 		        	'capability_type' => 'post',
 		        	'hierarchical' => false,
 		        	'rewrite' => array(
-							'slug' => __('services','smartestb'),
+							'slug' => __('services','crucible'),
 							'with_front' => false,
 
 					),
 		        	'exclude_from_search' => false,
 	        		'labels' => array(
-						'name' => __( 'Services','smartestb' ),
-						'singular_name' => __( 'Service','smartestb' ),
-						'add_new' => __( 'Add New','smartestb' ),
-						'all_items' => __( 'All Services','smartestb' ),
-						'add_new_item' => __( 'Add New Service','smartestb' ),
-						'edit' => __( 'Edit','smartestb' ),
-						'edit_item' => __( 'Edit Service','smartestb' ),
-						'new_item' => __( 'New Service','smartestb' ),
-						'view' => __( 'View Services','smartestb' ),
-						'view_item' => __( 'View Service','smartestb' ),
-						'search_items' => __( 'Search Services','smartestb' ),
-						'not_found' => __( 'No services found','smartestb' ),
-						'not_found_in_trash' => __( 'No services found in Trash','smartestb' ),
-						'parent' => __( 'Parent Service','smartestb' ),
+						'name' => __( 'Services','crucible' ),
+						'singular_name' => __( 'Service','crucible' ),
+						'add_new' => __( 'Add New','crucible' ),
+						'all_items' => __( 'All Services','crucible' ),
+						'add_new_item' => __( 'Add New Service','crucible' ),
+						'edit' => __( 'Edit','crucible' ),
+						'edit_item' => __( 'Edit Service','crucible' ),
+						'new_item' => __( 'New Service','crucible' ),
+						'view' => __( 'View Services','crucible' ),
+						'view_item' => __( 'View Service','crucible' ),
+						'search_items' => __( 'Search Services','crucible' ),
+						'not_found' => __( 'No services found','crucible' ),
+						'not_found_in_trash' => __( 'No services found in Trash','crucible' ),
+						'parent' => __( 'Parent Service','crucible' ),
 					),
 		        	'supports' => array('title','editor','thumbnail'),
 				'has_archive' => true,
@@ -333,7 +333,7 @@ function create_smartest_business_cpts() {
 						'name' => __( 'Slideshow','storefront' ),
 						'singular_name' => __( 'Slide','storefront' ),
 						'add_new' => __( 'Add New Slide','storefront' ),
-						'all_items' => __( 'All Slides','smartestb' ),
+						'all_items' => __( 'All Slides','crucible' ),
 						'add_new_item' => __( 'Add New Slide','storefront' ),
 						'edit' => __( 'Edit','storefront' ),
 						'edit_item' => __( 'Edit Slide','storefront' ),
@@ -361,17 +361,17 @@ function create_smartest_business_cpts() {
  */
 function smartestb_set_taxonomies() {
 	$category_labels = array(
-		'name' => __( 'Categories', 'smartestb' ),
-		'singular_name' =>__( 'Category', 'smartestb' ),
-		'search_items' => __( 'Search Categories', 'smartestb' ),
-		'all_items' => __( 'All Categories', 'smartestb' ),
-		'parent_item' => __( 'Parent Category', 'smartestb' ),
-		'parent_item_colon' => __( 'Parent Category:', 'smartestb' ),
-		'edit_item' => __( 'Edit Category', 'smartestb' ),
-		'update_item' => __( 'Update Category', 'smartestb' ),
-		'add_new_item' => __( 'Add New Category', 'smartestb' ),
-		'new_item_name' => __( 'New Category Name', 'smartestb' ),
-		'menu_name' => __( 'Categories', 'smartestb' ),
+		'name' => __( 'Categories', 'crucible' ),
+		'singular_name' =>__( 'Category', 'crucible' ),
+		'search_items' => __( 'Search Categories', 'crucible' ),
+		'all_items' => __( 'All Categories', 'crucible' ),
+		'parent_item' => __( 'Parent Category', 'crucible' ),
+		'parent_item_colon' => __( 'Parent Category:', 'crucible' ),
+		'edit_item' => __( 'Edit Category', 'crucible' ),
+		'update_item' => __( 'Update Category', 'crucible' ),
+		'add_new_item' => __( 'Add New Category', 'crucible' ),
+		'new_item_name' => __( 'New Category Name', 'crucible' ),
+		'menu_name' => __( 'Categories', 'crucible' ),
 	);
 	
 	$category_args = apply_filters( 'smartestb_service_category_args', array(
@@ -461,10 +461,10 @@ function smartestb_cpts_menu_links($items, $args) {
 		 */
 		$newitems = $items;
 		if(($args->theme_location == 'primary-menu') && ( get_option('smartestb_show_staff') == 'true' )) {
-		        $newitems .= '<li class="staff"><a title="' . __( apply_filters( 'smartestb_staff_menu_label', 'Staff' ), 'smartestb' ) . '" href="'. get_post_type_archive_link( 'smartest_staff' ) .'">' . __( apply_filters( 'smartestb_staff_menu_label', 'Staff' ), 'smartestb' ) . '</a></li>';
+		        $newitems .= '<li class="staff"><a title="' . __( apply_filters( 'smartestb_staff_menu_label', 'Staff' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_staff' ) .'">' . __( apply_filters( 'smartestb_staff_menu_label', 'Staff' ), 'crucible' ) . '</a></li>';
 	    }
 		if(($args->theme_location == 'primary-menu') && ( get_option('smartestb_show_services') == 'true' )) {
-			$newitems .= '<li class="services"><a title="' . __( apply_filters( 'smartestb_services_menu_label', 'Services' ), 'smartestb' ) . '" href="'. get_post_type_archive_link( 'smartest_services' ) .'">' . __( apply_filters( 'smartestb_services_menu_label', 'Services' ), 'smartestb' ) . '</a>';
+			$newitems .= '<li class="services"><a title="' . __( apply_filters( 'smartestb_services_menu_label', 'Services' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_services' ) .'">' . __( apply_filters( 'smartestb_services_menu_label', 'Services' ), 'crucible' ) . '</a>';
 
 			// if service cat tax terms exist, do sub-menu
 			$service_cats = get_terms('smartest_service_category');
@@ -481,7 +481,7 @@ function smartestb_cpts_menu_links($items, $args) {
 	    }
 
 	    if( ($args->theme_location == 'primary-menu') && (get_option('smartestb_show_news') == 'true')) {
-	        $newitems .= '<li class="news"><a title="' . __( apply_filters( 'smartestb_news_menu_label', 'News' ), 'smartestb' ) . '" href="'. get_post_type_archive_link( 'smartest_news' ) .'">' . __( apply_filters( 'smartestb_news_menu_label', 'News' ), 'smartestb' ) . '</a></li>';
+	        $newitems .= '<li class="news"><a title="' . __( apply_filters( 'smartestb_news_menu_label', 'News' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_news' ) .'">' . __( apply_filters( 'smartestb_news_menu_label', 'News' ), 'crucible' ) . '</a></li>';
 		 }
 	    return $newitems;
 }
@@ -498,7 +498,7 @@ function custom_smartestb_services_menu_label() {
 	if ( get_option('smartestb_business_servicesmenulabel') != '' ) {
 		$custom = stripslashes(get_option( 'smartestb_business_servicesmenulabel' ));
 	} else { 
-		$custom = __( 'Services', 'smartestb' );
+		$custom = __( 'Services', 'crucible' );
 	}
 	return $custom;
 }
@@ -507,7 +507,7 @@ function custom_smartestb_staff_menu_label() {
 	if (get_option('smartestb_business_staffmenulabel') != '') {
 		$custom = stripslashes(get_option('smartestb_business_staffmenulabel'));
 	} else { 
-		$custom = __('Staff', 'smartestb');
+		$custom = __('Staff', 'crucible');
 	}
 	return $custom;
 }
@@ -516,7 +516,7 @@ function custom_smartestb_news_menu_label() {
 	if (get_option('smartestb_business_newsmenulabel') != '') {
 		$custom = stripslashes(get_option('smartestb_business_newsmenulabel'));
 	} else { 
-		$custom = __('News', 'smartestb');
+		$custom = __('News', 'crucible');
 	}
 	return $custom;
 }
@@ -542,46 +542,46 @@ function smartestb_metaboxes( array $meta_boxes ) {
 
 	$meta_boxes[] = array(
 		'id'         => 'staff_details',
-		'title'      => __('Details', 'smartestb'),
+		'title'      => __('Details', 'crucible'),
 		'pages'      => array( 'smartest_staff', ), // Post type
 		'context'    => 'normal',
 		'priority'   => 'high',
 		'show_names' => true, // Show field names on the left
 		'fields'     => array(
 			array(
-				'name' => __('Job Title', 'smartestb'),
-				'desc' => __('The staff member\'s job title. Optional', 'smartestb'),
+				'name' => __('Job Title', 'crucible'),
+				'desc' => __('The staff member\'s job title. Optional', 'crucible'),
 				'id'   => $prefix . 'staff_job_title',
 				'type' => 'text_medium',
 			),
 			array(
-				'name' => __( 'Sort Order Number', 'smartestb' ),
-				'desc' => __( 'Give this person a number to order them on the list on the staff page and in the staff widget. Number 1 appears 1st on the list, while greater numbers appear lower. Numbers do not have to be consecutive; for example, you could number them like, 10, 20, 35, 45, etc. This would help to leave room in between to insert new staff members later without having to change everyone\'s current number.', 'smartestb' ),
+				'name' => __( 'Sort Order Number', 'crucible' ),
+				'desc' => __( 'Give this person a number to order them on the list on the staff page and in the staff widget. Number 1 appears 1st on the list, while greater numbers appear lower. Numbers do not have to be consecutive; for example, you could number them like, 10, 20, 35, 45, etc. This would help to leave room in between to insert new staff members later without having to change everyone\'s current number.', 'crucible' ),
 				'id'   => $prefix . 'staff-order-number',
 				'type' => 'text',
 				'std' => 9999
 			),
 			array(
-				'name' => __('Facebook Profile ID', 'smartestb'),
-				'desc' => __('The staff member\'s Facebook profile ID. Optional', 'smartestb'),
+				'name' => __('Facebook Profile ID', 'crucible'),
+				'desc' => __('The staff member\'s Facebook profile ID. Optional', 'crucible'),
 				'id'   => $prefix . 'staff_facebook',
 				'type' => 'text_medium',
 			),
 			array(
-				'name' => __('Twitter Username', 'smartestb'),
-				'desc' => __('The staff member\'s Twitter username. Optional', 'smartestb'),
+				'name' => __('Twitter Username', 'crucible'),
+				'desc' => __('The staff member\'s Twitter username. Optional', 'crucible'),
 				'id'   => $prefix . 'staff_twitter',
 				'type' => 'text_medium',
 			),
 			array(
-				'name' => __('Google Plus Profile ID', 'smartestb'),
-				'desc' => __('The staff member\'s Google Plus profile ID. Optional', 'smartestb'),
+				'name' => __('Google Plus Profile ID', 'crucible'),
+				'desc' => __('The staff member\'s Google Plus profile ID. Optional', 'crucible'),
 				'id'   => $prefix . 'staff_gplus',
 				'type' => 'text_medium',
 			),
 			 array(
-				'name' => __('Linkedin Profile', 'smartestb'),
-				'desc' => __('The part of the profile address after "www.linkedin.com/". Optional', 'smartestb'),
+				'name' => __('Linkedin Profile', 'crucible'),
+				'desc' => __('The part of the profile address after "www.linkedin.com/". Optional', 'crucible'),
 				'id' => $prefix . 'staff_linkedin',
 				'type' => 'text_medium',
 			),
@@ -591,15 +591,15 @@ function smartestb_metaboxes( array $meta_boxes ) {
 	// services 'featured' meta box
 	$meta_boxes[] = array(
 		'id'         => 'featured_svcs',
-		'title'      => __('Featured Services', 'smartestb'),
+		'title'      => __('Featured Services', 'crucible'),
 		'pages'      => array( 'smartest_services', ),
 		'context'    => 'side',
 		'priority'   => 'default',//high, core, default, low
 		'show_names' => true,
 		'fields'     => array(
 			array(
-				'name' => __('Feature this?', 'smartestb'),
-				'desc' => __('Check this box to feature this service in the list of featured services on the home page and in the Featured Services widget.', 'smartestb'),
+				'name' => __('Feature this?', 'crucible'),
+				'desc' => __('Check this box to feature this service in the list of featured services on the home page and in the Featured Services widget.', 'crucible'),
 				'id'   => $prefix . 'services_featured',
 				'type' => 'checkbox',
 			),
@@ -610,15 +610,15 @@ function smartestb_metaboxes( array $meta_boxes ) {
 	
 		$meta_boxes[] = array(
 			'id'         => 'services-sort-order',
-			'title'      => __( 'Set a Sort-Order', 'smartestb' ),
+			'title'      => __( 'Set a Sort-Order', 'crucible' ),
 			'pages'      => array( 'smartest_services' ),
 			'context'    => 'normal',
 			'priority'   => 'high',//high, core, default, low
 			'show_names' => true,
 			'fields'     => array(
 				array(
-					'name' => __( 'Sort Order Number', 'smartestb' ),
-					'desc' => __( 'Give this service a number to order them on the list on the service page and in the services widget. Number 1 appears 1st on the list, while greater numbers appear lower. Numbers do not have to be consecutive; for example, you could number them like, 10, 20, 35, 45, etc. This would help to leave room in between to insert new staff members later without having to change all current numbers.', 'smartestb' ),
+					'name' => __( 'Sort Order Number', 'crucible' ),
+					'desc' => __( 'Give this service a number to order them on the list on the service page and in the services widget. Number 1 appears 1st on the list, while greater numbers appear lower. Numbers do not have to be consecutive; for example, you could number them like, 10, 20, 35, 45, etc. This would help to leave room in between to insert new staff members later without having to change all current numbers.', 'crucible' ),
 					'id'   => $prefix . 'service-order-number',
 					'type' => 'text',
 					'std' => 9999
@@ -629,15 +629,15 @@ function smartestb_metaboxes( array $meta_boxes ) {
 
 	$meta_boxes[] = array(
 		'id'         => 'featured_news',
-		'title'      => __('Featured News', 'smartestb'),
+		'title'      => __('Featured News', 'crucible'),
 		'pages'      => array( 'smartest_news', ),
 		'context'    => 'side',
 		'priority'   => 'default',
 		'show_names' => true, // Show field names on the left
 		'fields'     => array(
 			array(
-				'name' => __('Feature this?', 'smartestb'),
-				'desc' => __('Check this box to feature this announcement in the Featured Announcements widget.', 'smartestb'),
+				'name' => __('Feature this?', 'crucible'),
+				'desc' => __('Check this box to feature this announcement in the Featured Announcements widget.', 'crucible'),
 				'id'   => $prefix . 'news_featured',
 				'type' => 'checkbox',
 			),
@@ -645,15 +645,15 @@ function smartestb_metaboxes( array $meta_boxes ) {
 	);
 	$meta_boxes[] = array(
 		'id'         => 'home_slideshow',
-		'title'      => __('Slideshow', 'smartestb'),
+		'title'      => __('Slideshow', 'crucible'),
 		'pages'      => array( 'smartest_slide' ),
 		'context'    => 'normal',
 		'priority'   => 'high',
 		'show_names' => true,
 		'fields'     => array(
 			array(
-				'name' => __('Add A Picture', 'smartestb'),
-				'desc' => sprintf(__('Set a featured image for this slide by clicking "Set featured image", which is normally located on the right hand side of this page. %s', 'smartestb'),
+				'name' => __('Add A Picture', 'crucible'),
+				'desc' => sprintf(__('Set a featured image for this slide by clicking "Set featured image", which is normally located on the right hand side of this page. %s', 'crucible'),
 get_option('smartestb_sshow_description')),
 				'id'   => $prefix . 'slide_title',
 				'type' => 'title',
@@ -681,7 +681,7 @@ function smar_initialize_cmb_meta_boxes() {
 function smartest_change_enter_title( $title ){
 	$screen = get_current_screen();
 	if  ( 'smartest_staff' == $screen->post_type ) {
-		$title = __('Enter staff member\'s name here', 'smartestb');} return $title;
+		$title = __('Enter staff member\'s name here', 'crucible');} return $title;
 }
 add_filter( 'enter_title_here', 'smartest_change_enter_title' );
 
@@ -744,7 +744,7 @@ function custom_staff_heading() {
 	if (get_option('smartestb_business_staffpagetitle') != '') {
 		echo stripslashes(get_option('smartestb_business_staffpagetitle'));
 	} else { 
-		_e('Meet The Staff', 'smartestb');
+		_e('Meet The Staff', 'crucible');
 	}
 }
 
@@ -753,7 +753,7 @@ function custom_services_heading() {
 	if (get_option('smartestb_business_servicespagetitle') != '') {
 		echo stripslashes(get_option('smartestb_business_servicespagetitle'));
 	} else { 
-		_e('Services', 'smartestb');
+		_e('Services', 'crucible');
 	}
 }
 
@@ -762,7 +762,7 @@ function custom_news_heading() {
 	if (get_option('smartestb_business_newspagetitle') != '') {
 		echo stripslashes(get_option('smartestb_business_newspagetitle'));
 	} else { 
-		_e('Announcements', 'smartestb');
+		_e('Announcements', 'crucible');
 	}
 }
 
@@ -782,7 +782,7 @@ function smartestb_admin_bar_render() {
     $wp_admin_bar->add_menu( array(
         'parent' => 'appearance',
         'id' => 'smartestt-options',
-        'title' => $themename. __(' Options', 'smartestb'),
+        'title' => $themename. __(' Options', 'crucible'),
         'href' => admin_url( 'admin.php?page=smartestbthemes')
     ) );
 }
@@ -795,9 +795,9 @@ add_filter( 'manage_edit-smartest_staff_columns', 'smar_manage_edit_staff_column
 function smar_manage_edit_staff_columns( $columns ) {
 	$columns = array(
 		'cb' => '<input type="checkbox" />',
-		'title' => __('Name', 'smartestb'),
-		'jobtitle' => __('Job Title', 'smartestb'),
-		'date' => __('Date', 'smartestb')
+		'title' => __('Name', 'crucible'),
+		'jobtitle' => __('Job Title', 'crucible'),
+		'date' => __('Date', 'crucible')
 	);
 
 	return $columns;
@@ -826,10 +826,10 @@ add_filter( 'manage_edit-smartest_services_columns', 'smar_manage_edit_services_
 function smar_manage_edit_services_columns( $columns ) {
 	$columns = array(
 		'cb' => '<input type="checkbox" />',
-		'title' => __('Title', 'smartestb'),
-		'taxonomy-smartest_service_category' => __('Categories', 'smartestb'),
-		'featureds' => __('Featured', 'smartestb'),
-		'date' => __('Date', 'smartestb')
+		'title' => __('Title', 'crucible'),
+		'taxonomy-smartest_service_category' => __('Categories', 'crucible'),
+		'featureds' => __('Featured', 'crucible'),
+		'date' => __('Date', 'crucible')
 	);
 	return $columns;
 }
@@ -844,7 +844,7 @@ function smar_manage_services_columns( $column, $post_id ) {
 		case 'featureds' :
 			$sf = get_post_meta( $post_id, '_smab_services_featured', true );
 			if ( $sf )
-				_e('Featured', 'smartestb');
+				_e('Featured', 'crucible');
 			break;
 		default :
 			break;
@@ -860,9 +860,9 @@ add_filter( 'manage_edit-smartest_news_columns', 'smar_manage_edit_news_columns'
 function smar_manage_edit_news_columns( $columns ) {
 	$columns = array(
 		'cb' => '<input type="checkbox" />',
-		'title' => __('Title', 'smartestb'),
-		'featuredn' => __('Featured', 'smartestb'),
-		'date' => __('Date', 'smartestb')
+		'title' => __('Title', 'crucible'),
+		'featuredn' => __('Featured', 'crucible'),
+		'date' => __('Date', 'crucible')
 	);
 	return $columns;
 }
@@ -878,7 +878,7 @@ function smar_manage_news_columns( $column, $post_id ) {
 		case 'featuredn' :
 			$sf = get_post_meta( $post_id, '_smab_news_featured', true );
 			if ( $sf )
-				_e('Featured', 'smartestb');
+				_e('Featured', 'crucible');
 			break;
 		default :
 			break;
@@ -890,9 +890,9 @@ function smar_manage_news_columns( $column, $post_id ) {
 function smar_manage_edit_slide_columns( $columns ) {
 	$columns = array(
 		'cb' => '<input type="checkbox" />',
-		'title' => __('Title', 'smartestb'),
-		'thumb' => __('Thumbnail', 'smartestb'),
-		'date' => __('Date', 'smartestb')
+		'title' => __('Title', 'crucible'),
+		'thumb' => __('Thumbnail', 'crucible'),
+		'date' => __('Date', 'crucible')
 	);
 	return $columns;
 }
@@ -991,7 +991,7 @@ function smartest_share() { ?>
        data-width="90" data-show-faces="false"></div>
     <div id="isa_gt">
        <a href="https://twitter.com/share" class="twitter-share-button"
-data-dnt="true"><?php _e('Tweet', 'smartestb'); ?></a>
+data-dnt="true"><?php _e('Tweet', 'crucible'); ?></a>
     <script>!function(d,s,id){
        var js,fjs=d.getElementsByTagName(s)[0];
        if(!d.getElementById(id)){js=d.createElement(s);
@@ -1046,37 +1046,37 @@ function smartestblankie_content_nav( $nav_id ) {
 
 	?>
 	<nav role="navigation" id="<?php echo $nav_id; ?>" class="<?php echo $nav_class; ?>">
-		<h1 class="assistive-text"><?php _e( 'Post navigation', 'smartestb' ); ?></h1>
+		<h1 class="assistive-text"><?php _e( 'Post navigation', 'crucible' ); ?></h1>
 
 	<?php if ( is_single() ) : // navigation links for single posts ?>
 
-		<?php previous_post_link( '<div class="nav-previous">%link</div>', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'smartestb' ) . '</span> %title' ); ?>
-		<?php next_post_link( '<div class="nav-next">%link</div>', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'smartestb' ) . '</span>' ); ?>
+		<?php previous_post_link( '<div class="nav-previous">%link</div>', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'crucible' ) . '</span> %title' ); ?>
+		<?php next_post_link( '<div class="nav-next">%link</div>', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'crucible' ) . '</span>' ); ?>
 	<?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages
 
 if ( is_post_type_archive('smartest_staff') ) {
-	$anchor = $anchorN = __('More Staff', 'smartestb');
+	$anchor = $anchorN = __('More Staff', 'crucible');
 } elseif ( is_post_type_archive('smartest_services') ) { 
-	$anchor = $anchorN = __('More Services', 'smartestb');
+	$anchor = $anchorN = __('More Services', 'crucible');
 } elseif ( is_post_type_archive('smartest_news') ) { 
-	$anchor = __('Older News', 'smartestb');
-	$anchorN = __('Newer News', 'smartestb');
+	$anchor = __('Older News', 'crucible');
+	$anchorN = __('Newer News', 'crucible');
 } else {
-	$anchor = __('Older posts', 'smartestb');
-	$anchorN = __('Newer posts', 'smartestb');
+	$anchor = __('Older posts', 'crucible');
+	$anchorN = __('Newer posts', 'crucible');
 }
 		if ( get_next_posts_link() ) : ?>
 		<div class="nav-previous"><?php
  next_posts_link( 
 		sprintf(
-					__( '<span class="meta-nav">&larr;</span> %s', 'smartestb' ), $anchor
+					__( '<span class="meta-nav">&larr;</span> %s', 'crucible' ), $anchor
 			)
  ); ?>
 </div>
 		<?php endif; ?>
 
 		<?php if ( get_previous_posts_link() ) : ?>
-		<div class="nav-next"><?php previous_posts_link( sprintf(__( '%s <span class="meta-nav">&rarr;</span>', 'smartestb' ), $anchorN)); ?></div>
+		<div class="nav-next"><?php previous_posts_link( sprintf(__( '%s <span class="meta-nav">&rarr;</span>', 'crucible' ), $anchorN)); ?></div>
 		<?php endif;
 	endif; ?>
 	</nav><!-- #<?php echo $nav_id; ?> -->
@@ -1108,7 +1108,7 @@ function smartestblankie_wp_title( $title, $sep ) {
 		$title .= $bn;
 	}
 	if ( $paged >= 2 || $page >= 2 )
-		$title = sprintf( __( 'Page %s', 'smartestb' ), max( $paged, $page ) ) . " $title";
+		$title = sprintf( __( 'Page %s', 'crucible' ), max( $paged, $page ) ) . " $title";
 	return $title;
 }
 add_filter( 'wp_title', 'smartestblankie_wp_title', 10, 2 );

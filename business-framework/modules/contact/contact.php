@@ -132,15 +132,15 @@ function sbfc_input_filter() {
 		return true;
 	} else {
 		if($fail == 'malicious') {
-			$sbfc_strings['error'] = '<p id="sbfc_isa_error">' . __( 'Please do not include any of the following in the Name or Email fields: linebreaks, or the phrases "mime-version", "content-type", "cc:" or "to:"', 'smartestb' ) . '</p>';
+			$sbfc_strings['error'] = '<p id="sbfc_isa_error">' . __( 'Please do not include any of the following in the Name or Email fields: linebreaks, or the phrases "mime-version", "content-type", "cc:" or "to:"', 'crucible' ) . '</p>';
 		} elseif($fail == 'empty') {
 
 			$posted_msg = stripslashes($smartestb_options['smartestb_sbfc_error']);
 			// in case they erase the default in admin
-			$msg = ($posted_msg) ? $posted_msg : __( 'Please complete the required fields.', 'smartestb' );
+			$msg = ($posted_msg) ? $posted_msg : __( 'Please complete the required fields.', 'crucible' );
 			$sbfc_strings['error'] = '<p id="sbfc_isa_error">' . $msg . '</p>';
 		} elseif($fail == 'wrong') {
-			$sbfc_strings['error'] = '<p id="sbfc_isa_error">' . __( 'Oops. Incorrect answer for the security question. Please try again.', 'smartestb' ) . '<br />' . __( 'Hint: 1 + 1 = 2', 'smartestb' ) . '</p>';
+			$sbfc_strings['error'] = '<p id="sbfc_isa_error">' . __( 'Oops. Incorrect answer for the security question. Please try again.', 'crucible' ) . '<br />' . __( 'Hint: 1 + 1 = 2', 'crucible' ) . '</p>';
 		}
 		return false;
 	}
@@ -173,8 +173,8 @@ function sbf_create_contact_page() {
 	if(get_option('smartestb_stop_contact') == 'false') {
 		// CONTACT form is not disabled so do it	
 		$bn = stripslashes_deep(esc_attr(get_option('smartestb_business_name')));
-		$contitle = sprintf(__('Contact %s','smartestb'), $bn);
-		smartestbusiness_insert_post( 'page', esc_sql( _x('contact', 'page_slug', 'smartestb') ), 'smartest_contact_page_id', $contitle );
+		$contitle = sprintf(__('Contact %s','crucible'), $bn);
+		smartestbusiness_insert_post( 'page', esc_sql( _x('contact', 'page_slug', 'crucible') ), 'smartest_contact_page_id', $contitle );
 
 	}
 }
@@ -206,10 +206,10 @@ function sbfc_process_contact_form($content='') {
 	$recipname = $smartestb_options['smartestb_sbfc_name'];
 	$success   = $smartestb_options['smartestb_sbfc_success'];
 
-	$topic     = ! empty($topic) ? stripslashes($topic) : __( 'Message sent from your contact form', 'smartestb' );
+	$topic     = ! empty($topic) ? stripslashes($topic) : __( 'Message sent from your contact form', 'crucible' );
 	$recipient = ! empty($recipient) ? stripslashes($recipient) : get_bloginfo('admin_email');
-	$recipname = ! empty($recipname) ? stripslashes($recipname) : __( 'Site Administrator', 'smartestb' );
-	$success   = ! empty($success) ? stripslashes($success) : '<strong>' . __( 'Success! ', 'smartestb' ) . '</strong> ' . __( 'Your message has been sent.', 'smartestb');
+	$recipname = ! empty($recipname) ? stripslashes($recipname) : __( 'Site Administrator', 'crucible' );
+	$success   = ! empty($success) ? stripslashes($success) : '<strong>' . __( 'Success! ', 'crucible' ) . '</strong> ' . __( 'Your message has been sent.', 'crucible');
 
 	$name      = $_POST['smartestb_sbfc_name'];
 	$email     = $_POST['smartestb_sbfc_email'];
@@ -233,19 +233,19 @@ function sbfc_process_contact_form($content='') {
 	$message	= $_POST['sbfc_message'];
 
 	// localize
-	$local_hello = __( 'Hello', 'smartestb' );
-	$local_intro = sprintf( __( 'You are being contacted via %s:', 'smartestb' ), $recipsite ); 
-	$local_name = __( 'Name:', 'smartestb' );
-	$local_email = __( 'Email:', 'smartestb' );
-	$local_phone = __( 'Phone:', 'smartestb' );
-	$local_msg = __( 'Message:', 'smartestb' );
-	$local_addtl_info = __( 'Additional Information:', 'smartestb' );
-	$local_site = __( 'Site:', 'smartestb' );
-	$local_url = __( 'URL:', 'smartestb' );
-	$local_date = __( 'Date:', 'smartestb' );
-	$local_ip = __( 'IP:', 'smartestb' );
-	$local_host = __( 'Host:', 'smartestb' );
-	$local_agent = __( 'Agent:', 'smartestb' );
+	$local_hello = __( 'Hello', 'crucible' );
+	$local_intro = sprintf( __( 'You are being contacted via %s:', 'crucible' ), $recipsite ); 
+	$local_name = __( 'Name:', 'crucible' );
+	$local_email = __( 'Email:', 'crucible' );
+	$local_phone = __( 'Phone:', 'crucible' );
+	$local_msg = __( 'Message:', 'crucible' );
+	$local_addtl_info = __( 'Additional Information:', 'crucible' );
+	$local_site = __( 'Site:', 'crucible' );
+	$local_url = __( 'URL:', 'crucible' );
+	$local_date = __( 'Date:', 'crucible' );
+	$local_ip = __( 'IP:', 'crucible' );
+	$local_host = __( 'Host:', 'crucible' );
+	$local_agent = __( 'Agent:', 'crucible' );
 
 $fullmsg   = ("$local_hello $recipname,
 
@@ -275,7 +275,7 @@ $local_agent  $agent
 <pre>' . $local_name . ' ' . $name    . '
  ' . $local_email . ' ' . $email   . '
  ' . $local_date . ' ' . $date . ' 
- ' . $local_msg . ' ' . $message .'</pre><p class="sbfc_reset">[ <a href="'. $form .'">'. __( 'Click here to reset form', 'smartestb' ) .'</a> ]</p></div>' . $append);
+ ' . $local_msg . ' ' . $message .'</pre><p class="sbfc_reset">[ <a href="'. $form .'">'. __( 'Click here to reset form', 'crucible' ) .'</a> ]</p></div>' . $append);
 	echo $results;
 }
 /**
@@ -305,7 +305,7 @@ function sbfc_display_contact_form() {
 	} else { $captcha_box = ''; }
 	if ( 'true' == $include_phone ) {
 		$phone_field = '<fieldset class="sbfc-phone">
-			<label for="smartestb_sbfc_phone">'. __( 'Phone', 'smartestb' ) .'</label>
+			<label for="smartestb_sbfc_phone">'. __( 'Phone', 'crucible' ) .'</label>
 			'. $sbfc_strings['phone'] .
 			'</fieldset>';
 	} else {
@@ -315,20 +315,20 @@ function sbfc_display_contact_form() {
 		<div id="sbfc-contactform-wrap">
 			<form action="'. get_permalink() .'" method="post" id="sbfc-contactform">
 				<fieldset class="sbfc-name">
-					<label for="smartestb_sbfc_name">'. __( 'Name (Required)', 'smartestb' ) .'</label>
+					<label for="smartestb_sbfc_name">'. __( 'Name (Required)', 'crucible' ) .'</label>
 					'. $sbfc_strings['name'] .'
 				</fieldset>
 				<fieldset class="sbfc-email">
-					<label for="smartestb_sbfc_email">'. __( 'Email (Required)', 'smartestb' ) .'</label>
+					<label for="smartestb_sbfc_email">'. __( 'Email (Required)', 'crucible' ) .'</label>
 					'. $sbfc_strings['email'] .'
 				</fieldset>
 					' . $captcha_box . $phone_field . '
 				<fieldset class="sbfc-message">
-					<label for="sbfc_message">'. __( 'Message (Required)', 'smartestb' ) .'</label>
+					<label for="sbfc_message">'. __( 'Message (Required)', 'crucible' ) .'</label>
 					'. $sbfc_strings['message'] .'
 				</fieldset>
 				<div class="sbfc-submit">
-					<input type="submit" name="Submit" id="sbfc_contact" value="' . __('Send email', 'smartestb') . '">
+					<input type="submit" name="Submit" id="sbfc_contact" value="' . __('Send email', 'crucible') . '">
 					<input type="hidden" name="sbfc_key" value="process">
 				</div>
 			</form>

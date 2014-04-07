@@ -14,8 +14,8 @@ class SmartestAnnouncements extends WP_Widget {
 	public function __construct() {
 		parent::__construct(
 	 		'smartest_announcements', // Base ID
-			__( 'Smartest Announcements', 'smartestb' ), // Name
-			array( 'description' => __( 'Display the latest Announcements.', 'smartestb' ), )
+			__( 'Smartest Announcements', 'crucible' ), // Name
+			array( 'description' => __( 'Display the latest Announcements.', 'crucible' ), )
 		);
 		add_action( 'wp_enqueue_scripts', array( $this, 'smar_ann_css' ) );
 	}
@@ -64,12 +64,12 @@ class SmartestAnnouncements extends WP_Widget {
 		 
 			} // endwhile
 			echo '</ul>';
-			$li = '<a href="'.get_post_type_archive_link( 'smartest_news' ).'">'. __('All Announcements', 'smartestb'). '</a>';
-			?> <p><?php printf(__( '%s', 'smartestb'), $li); ?></p>
+			$li = '<a href="'.get_post_type_archive_link( 'smartest_news' ).'">'. __('All Announcements', 'crucible'). '</a>';
+			?> <p><?php printf(__( '%s', 'crucible'), $li); ?></p>
 
 	<?php } else {
 				?>
-				<p><?php _e('Coming soon.', 'smartestb'); ?></p>		
+				<p><?php _e('Coming soon.', 'crucible'); ?></p>		
 	<?php }
 		wp_reset_postdata();
 		echo $after_widget;
@@ -105,7 +105,7 @@ class SmartestAnnouncements extends WP_Widget {
 			$title = $instance[ 'title' ];
 		}
 		else {
-			$title = __( 'Latest News', 'smartestb' );
+			$title = __( 'Latest News', 'crucible' );
 		}
 
 		if ( isset( $instance[ 'number' ] ) ) {
@@ -118,12 +118,12 @@ class SmartestAnnouncements extends WP_Widget {
 /* Default Widget Settings */
     	?>
 		<p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'smartestb' ); ?></label> 
+		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'crucible' ); ?></label> 
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
 
 		<p>
-		<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'How many recent announcements to show:', 'smartestb' ); ?></label> 
+		<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'How many recent announcements to show:', 'crucible' ); ?></label> 
 		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" value="<?php echo esc_attr( $number ); ?>" />
 	</p>
 

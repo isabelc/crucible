@@ -14,8 +14,8 @@ class SmartestStaff extends WP_Widget {
 	public function __construct() {
 		parent::__construct(
 	 		'smartest_staff_list', // Base ID
-			__('Smartest Staff List', 'smartestb'), // Name
-			array( 'description' => __( 'Display the full list of Staff members.', 'smartestb' ), )
+			__('Smartest Staff List', 'crucible'), // Name
+			array( 'description' => __( 'Display the full list of Staff members.', 'crucible' ), )
 		);
 		add_action('wp_enqueue_scripts', array( $this, 'smar_staff_css' ) );
 	}
@@ -106,12 +106,12 @@ class SmartestStaff extends WP_Widget {
 			$title = $instance[ 'title' ];
 		}
 		else {
-			$title = __( 'Staff', 'smartestb' );
+			$title = __( 'Staff', 'crucible' );
 		}
 	
     	?>
 		<p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'smartestb' ); ?></label> 
+		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'crucible' ); ?></label> 
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
 
