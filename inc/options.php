@@ -855,9 +855,8 @@ $options[] = array( 'name' => __('Backwards Compatibility: Use Old Clock Icon on
 					'id' => $shortname.'_old_clock',
 					'std' => 'false',
 					'type' => 'checkbox');
-update_option('smartestb_template',$options);      
-update_option('smartestb_themename',$themename);   
-update_option('smartestb_shortname',$shortname);
-update_option('smartestb_manual',$manualurl);
-update_option('smartestb_sshow_description','Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.');// @new update
+update_option('smartestthemes_template',$options);      
+update_option('smartestthemes_themename',$themename);   
+update_option('smartestthemes_manual',$manualurl);
+update_option('smartestthemes_sshow_description','Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.');// @new update
 } ?>
