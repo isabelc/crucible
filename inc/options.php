@@ -826,7 +826,7 @@ $options[] = array( 'name' => __('Disable Automatic Home Page Creation','crucibl
 					'std' => 'false',
 					'type' => 'checkbox');
 $options[] = array( 'name' => __('Disable Contact Page','crucible'),
-					'desc' => sprintf( __( 'Check this to disable the Contact page. This will delete the automatically-created Contact page. You will still be able to use the shortcode to add a contact form: %s', 'crucible' ), '<code>[smartest_themes_contact_form]</code>' ),
+					'desc' => sprintf( __( 'Check this to disable the Contact page. This will delete the automatically-created Contact page. You will still be able to use the shortcode to add a contact form: %s', 'crucible' ), '<code>[smartestthemes_contact_form]</code>' ),
 					'id' => $shortname.'_stop_contact',
 					'std' => 'false',
 					'type' => 'checkbox');

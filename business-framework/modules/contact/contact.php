@@ -155,11 +155,11 @@ function sbfc_shortcode() {
 		return sbfc_display_contact_form();
 	}
 }
-add_shortcode('smartest_themes_contact_form','sbfc_shortcode');
+add_shortcode('smartestthemes_contact_form','sbfc_shortcode');
 /**
  * template tag to display contact form
  */
-function smartest_themes_contact_form() {
+function smartestthemes_contact_form() {
 	if (sbfc_input_filter()) {
 		echo sbfc_process_contact_form();
 	} else {
