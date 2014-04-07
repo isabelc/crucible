@@ -4,25 +4,25 @@
  * @package    Smartest Business Framework
 */
 // Load static framework options pages 
-function smartestbthemes_add_admin() {
+function smartestthemes_add_admin() {
 	global $query_string;
 	$themename =  get_option('smartestthemes_themename');      
 	if ( isset($_REQUEST['page']) && $_REQUEST['page'] == 'smartestbthemes' ) {
-		if (isset($_REQUEST['smartestb_save']) && 'reset' == $_REQUEST['smartestb_save']) {
+		if (isset($_REQUEST['smartestthemes_save']) && 'reset' == $_REQUEST['smartestthemes_save']) {
 			$options =  get_option('smartestthemes_template'); 
-			smartestb_reset_options($options,'smartestbthemes');
+			smartestthemes_reset_options($options,'smartestbthemes');
 			header("Location: admin.php?page=smartestbthemes&reset=true");
 			die;
 		}
 	}
-	if(get_option('framework_smartestb_backend_icon')) { $icon = get_option('framework_smartestb_backend_icon'); } else { $icon = get_template_directory_uri(). '/business-framework/images/smartestb-icon.png'; }
-	$sto=add_menu_page(sprintf(__('%s Options', 'crucible'), $themename), sprintf(__('%s Options', 'crucible'), $themename), 'activate_plugins','smartestbthemes', 'smartestbthemes_options_page', $icon, 45);
-	add_action( 'admin_head-'. $sto, 'smartestb_frame_load' );
+	$icon = get_template_directory_uri(). '/business-framework/images/smartestthemes-icon.png';
+	$sto=add_menu_page(sprintf(__('%s Options', 'crucible'), $themename), sprintf(__('%s Options', 'crucible'), $themename), 'activate_plugins','smartestbthemes', 'smartestthemes_options_page', $icon, 45);
+	add_action( 'admin_head-'. $sto, 'smartestthemes_frame_load' );
 	add_smar_admin_menu_separator(44);
 } 
-add_action('admin_menu', 'smartestbthemes_add_admin');
+add_action('admin_menu', 'smartestthemes_add_admin');
 /* Smartest Business Themes Reset */
-function smartestb_reset_options($options,$page = ''){
+function smartestthemes_reset_options($options,$page = ''){
 	global $wpdb;
 	$query_inner = '';
 	$count = 0;
@@ -70,7 +70,7 @@ function smartestb_reset_options($options,$page = ''){
 	$wpdb->query($query);
 }
 /* Framework options panel */
-function smartestbthemes_options_page(){
+function smartestthemes_options_page(){
     $options = get_option('smartestthemes_template');      
     $manualurl = get_option('smartestthemes_manual');
 	$themedata = wp_get_theme();
@@ -78,8 +78,8 @@ function smartestbthemes_options_page(){
 	$local_version = $themedata->Version;
 	$fDIR = get_template_directory_uri().'/business-framework/'; ?>
 <div class="wrap" id="smartestb_container">
-<div id="smartestb-popup-save" class="smartestb-save-popup"><div class="smartestb-save-save"><?php _e('Options Updated', 'crucible'); ?></div></div>
-<div id="smartestb-popup-reset" class="smartestb-save-popup"><div class="smartestb-save-reset"><?php _e('Options Reset', 'crucible'); ?></div></div>
+<div id="smartestthemes-popup-save" class="smartestthemes-save-popup"><div class="smartestthemes-save-save"><?php _e('Options Updated', 'crucible'); ?></div></div>
+<div id="smartestthemes-popup-reset" class="smartestthemes-save-popup"><div class="smartestthemes-save-reset"><?php _e('Options Reset', 'crucible'); ?></div></div>
     <form action="" enctype="multipart/form-data" id="smartestbform">
         <div id="header">
            <div class="logo">
@@ -111,17 +111,17 @@ function smartestbthemes_options_page(){
 <![endif]-->
 		</div>
         <div id="main">
-	        <div id="smartestb-nav">
+	        <div id="smartestthemes-nav">
 				<ul>
 					<?php echo $return[1] ?>
-					<li><a class="theme-support" title="Theme Support" href="#smartestb-option-themesupport"><span class="smartestb-nav-icon"></span><?php _e('Theme Support', 'crucible'); ?></a></li>
+					<li><a class="theme-support" title="Theme Support" href="#smartestthemes-option-themesupport"><span class="smartestthemes-nav-icon"></span><?php _e('Theme Support', 'crucible'); ?></a></li>
 					
 				</ul>		
 			</div>
 			<div id="content">
 	         <?php echo $return[0]; /* Settings */ ?>
 	         <!-- THEME SUPPORT SECTION -->
-	         <div class="group" id="smartestb-option-themesupport" style="display:block;">
+	         <div class="group" id="smartestthemes-option-themesupport" style="display:block;">
 	         <h2><?php _e('Theme Support', 'crucible'); ?></h2>
 	         <div class="section support-section">
 	         </div>
@@ -159,13 +159,12 @@ function smartestbthemes_options_page(){
         <form action="<?php echo esc_html( $_SERVER['REQUEST_URI'] ) ?>" method="post" style="display:inline" id="smartestbform-reset">
             <span class="submit-footer-reset">
             <input name="reset" type="submit" value="<?php _e('Reset Options', 'crucible'); ?>" class="button submit-button reset-button" onclick="return confirm(localized_label.reset);" />
-            <input type="hidden" name="smartestb_save" value="reset" /> 
+            <input type="hidden" name="smartestthemes_save" value="reset" /> 
             </span></form></div><!--[if IE 6]></div><![endif]--><div style="clear:both;"></div>    
 </div><!--wrap-->
  <?php
 }
-/* smartestb_frame_load */
-function smartestb_frame_load() {
+function smartestthemes_frame_load() {
 	$fr = get_template_directory_uri(). '/business-framework/';
 	add_action('admin_head', 'smartestb_admin_head');
 	wp_enqueue_script('jquery-ui-core');
@@ -178,11 +177,11 @@ function smartestb_frame_load() {
 		<script type="text/javascript" src="<?php echo $fr; ?>js/colorpicker.js"></script>
 		<script>jQuery(document).ready(function(){
 			//JQUERY DATEPICKER
-			jQuery('.smartestb-input-calendar').each(function (){
+			jQuery('.smartestthemes-input-calendar').each(function (){
 				jQuery('#' + jQuery(this).attr('id')).datepicker({showOn: 'button', buttonImage: '<?php echo $fr; ?>images/calendar.gif', buttonImageOnly: true});
 			});
 			//JQUERY TIME INPUT MASK
-			jQuery('.smartestb-input-time').each(function (){
+			jQuery('.smartestthemes-input-time').each(function (){
 				jQuery('#' + jQuery(this).attr('id')).mask("99-9999999");
 			});
 			//Color Picker
@@ -258,17 +257,17 @@ function smartestb_frame_load() {
            					
 					}
 				}
-				jQuery('.smartestb-radio-img-img').click(function(){
-					jQuery(this).parent().parent().find('.smartestb-radio-img-img').removeClass('smartestb-radio-img-selected');
-					jQuery(this).addClass('smartestb-radio-img-selected');
+				jQuery('.smartestthemes-radio-img-img').click(function(){
+					jQuery(this).parent().parent().find('.smartestthemes-radio-img-img').removeClass('smartestthemes-radio-img-selected');
+					jQuery(this).addClass('smartestthemes-radio-img-selected');
 					
 				});
-				jQuery('.smartestb-radio-img-label').hide();
-				jQuery('.smartestb-radio-img-img').show();
-				jQuery('.smartestb-radio-img-radio').hide();
-				jQuery('#smartestb-nav li:first').addClass('current');
-				jQuery('#smartestb-nav li a').click(function(evt){
-						jQuery('#smartestb-nav li').removeClass('current');
+				jQuery('.smartestthemes-radio-img-label').hide();
+				jQuery('.smartestthemes-radio-img-img').show();
+				jQuery('.smartestthemes-radio-img-radio').hide();
+				jQuery('#smartestthemes-nav li:first').addClass('current');
+				jQuery('#smartestthemes-nav li a').click(function(evt){
+						jQuery('#smartestthemes-nav li').removeClass('current');
 						jQuery(this).parent().addClass('current');
 						var clicked_group = jQuery(this).attr('href');
 						jQuery('.group').hide();
@@ -276,7 +275,7 @@ function smartestb_frame_load() {
 						evt.preventDefault();
 					});
 				if('<?php if(isset($_REQUEST['reset'])) { echo $_REQUEST['reset'];} else { echo 'false';} ?>' == 'true'){
-					var reset_popup = jQuery('#smartestb-popup-reset');
+					var reset_popup = jQuery('#smartestthemes-popup-reset');
 					reset_popup.fadeIn();
 					window.setTimeout(function(){
 						   reset_popup.fadeOut();                        
@@ -288,11 +287,11 @@ function smartestb_frame_load() {
 				this.css("left", 250 );
 				return this;
 			}
-			jQuery('#smartestb-popup-save').center();
-			jQuery('#smartestb-popup-reset').center();
+			jQuery('#smartestthemes-popup-save').center();
+			jQuery('#smartestthemes-popup-reset').center();
 			jQuery(window).scroll(function() { 
-				jQuery('#smartestb-popup-save').center();
-				jQuery('#smartestb-popup-reset').center();
+				jQuery('#smartestthemes-popup-save').center();
+				jQuery('#smartestthemes-popup-reset').center();
 			
 			});
 			//AJAX Upload
@@ -332,7 +331,7 @@ function smartestb_frame_load() {
 					
 					}
 					else{
-						var buildReturn = '<img class="hide smartestb-option-image" id="image_'+clickedID+'" src="'+response+'" alt="" />';
+						var buildReturn = '<img class="hide smartestthemes-option-image" id="image_'+clickedID+'" src="'+response+'" alt="" />';
 
 						jQuery(".upload-error").remove();
 						jQuery("#image_" + clickedID).remove();	
@@ -388,7 +387,7 @@ function smartestb_frame_load() {
 						data: serializedReturn
 					};
 					jQuery.post(ajax_url, data, function(response) {
-						var success = jQuery('#smartestb-popup-save');
+						var success = jQuery('#smartestthemes-popup-save');
 						var loading = jQuery('.ajax-loading-img');
 						loading.fadeOut();  
 						success.fadeIn();
@@ -620,10 +619,10 @@ function smartestbthemes_machine($options) {
 		}
 			$std = esc_attr(get_option($value['id']));
 			if ( $std != "") { $val = $std; }
-			$output .= '<input class="smartestb-input" name="'. $value['id'] .'" id="'. $value['id'] .'" type="'. $value['type'] .'" value="'. stripslashes($val) .'" />';
+			$output .= '<input class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'" type="'. $value['type'] .'" value="'. stripslashes($val) .'" />';
 		break;
 		case 'select':
-			$output .= '<select class="smartestb-input" name="'. $value['id'] .'" id="'. $value['id'] .'">';
+			$output .= '<select class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'">';
 			$select_value = get_option($value['id']);
 			foreach ($value['options'] as $option) {
 				$selected = '';
@@ -642,7 +641,7 @@ function smartestbthemes_machine($options) {
 			 $output .= '</select>';
 		break;
 		case 'select2':
-			$output .= '<select class="smartestb-input" name="'. $value['id'] .'" id="'. $value['id'] .'">';
+			$output .= '<select class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'">';
 			$select_value = get_option($value['id']);
 			foreach ($value['options'] as $option => $name) {
 				$selected = '';
@@ -666,14 +665,14 @@ function smartestbthemes_machine($options) {
 			$val = $value['std'];
 			$std = get_option($value['id']);
 			if ( $std != "") { $val = $std; }
-            $output .= '<input class="smartestb-input-calendar" type="text" name="'.$value['id'].'" id="'.$value['id'].'" value="'.$val.'">';
+            $output .= '<input class="smartestthemes-input-calendar" type="text" name="'.$value['id'].'" id="'.$value['id'].'" value="'.$val.'">';
 		
 		break;
 		case 'time':
 			$val = $value['std'];
 			$std = get_option($value['id']);
 			if ( $std != "") { $val = $std; }
-			$output .= '<input class="smartestb-input-time" name="'. $value['id'] .'" id="'. $value['id'] .'" type="text" value="'. $val .'" />';
+			$output .= '<input class="smartestthemes-input-time" name="'. $value['id'] .'" id="'. $value['id'] .'" type="text" value="'. $val .'" />';
 		break;
 		case 'textarea':
 			
@@ -694,7 +693,7 @@ function smartestbthemes_machine($options) {
 			}
 				$std = esc_attr(get_option($value['id']));
 				if( $std != "") { $ta_value = esc_attr( $std ); }
-				$output .= '<textarea class="smartestb-input" name="'. $value['id'] .'" id="'. $value['id'] .'" cols="'. $cols .'" rows="8">'.stripslashes($ta_value).'</textarea>';// 3.6
+				$output .= '<textarea class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'" cols="'. $cols .'" rows="8">'.stripslashes($ta_value).'</textarea>';// 3.6
 		break;
 		case "radio":
 			 $select_value = get_option( $value['id']);
@@ -706,7 +705,7 @@ function smartestbthemes_machine($options) {
 				   } else {
 					if ($value['std'] == $key) { $checked = ' checked'; }
 				   }
-				$output .= '<input class="smartestb-input smartestb-radio" type="radio" name="'. $value['id'] .'" value="'. $key .'" '. $checked .' />' . $option .'<br />';
+				$output .= '<input class="smartestthemes-input smartestthemes-radio" type="radio" name="'. $value['id'] .'" value="'. $key .'" '. $checked .' />' . $option .'<br />';
 			}
 		break;
 		case "radio2":
@@ -721,7 +720,7 @@ function smartestbthemes_machine($options) {
 			
 					if ($option[2] == $std_radio2 ) { $checked = ' checked'; }
 				   }
-				$output .= '<input class="smartestb-input smartestb-radio" type="radio" name="'. $value['id'] .'" value="'. $option[2] .'" '. $checked .' />' . $option[0];
+				$output .= '<input class="smartestthemes-input smartestthemes-radio" type="radio" name="'. $value['id'] .'" value="'. $option[2] .'" '. $checked .' />' . $option[0];
 
 				// image
 				$output .= '<img alt="demo" class="demoimg" src="' . $option[1] . '" />';
@@ -748,7 +747,7 @@ function smartestbthemes_machine($options) {
 			else {
 				$checked = '';
 			}
-			$output .= '<input type="checkbox" class="checkbox smartestb-input" name="'.  $value['id'] .'" id="'. $value['id'] .'" value="true" '. $checked .' />';
+			$output .= '<input type="checkbox" class="checkbox smartestthemes-input" name="'.  $value['id'] .'" id="'. $value['id'] .'" value="true" '. $checked .' />';
 
 		break;
 		case "multicheck":
@@ -774,7 +773,7 @@ function smartestbthemes_machine($options) {
 			}
 			else {
 				$checked = '';                                                                                    }
-			$output .= '<input type="checkbox" class="checkbox smartestb-input" name="'. $smartestb_key .'" id="'. $smartestb_key .'" value="true" '. $checked .' /><label for="'. $smartestb_key .'">'. $option .'</label><br />';
+			$output .= '<input type="checkbox" class="checkbox smartestthemes-input" name="'. $smartestb_key .'" id="'. $smartestb_key .'" value="true" '. $checked .' /><label for="'. $smartestb_key .'">'. $option .'</label><br />';
 										
 			}
 		break;
@@ -789,7 +788,7 @@ function smartestbthemes_machine($options) {
 			$stored  = get_option( $value['id'] );
 			if ( $stored != "") { $val = $stored; }
 			$output .= '<div id="' . $value['id'] . '_picker" class="colorSelector"><div></div></div>';
-			$output .= '<input class="smartestb-color" name="'. $value['id'] .'" id="'. $value['id'] .'" type="text" value="'. $val .'" />';
+			$output .= '<input class="smartestthemes-color" name="'. $value['id'] .'" id="'. $value['id'] .'" type="text" value="'. $val .'" />';
 		break;   
 		case "images":
 			$i = 0;
@@ -800,18 +799,18 @@ function smartestbthemes_machine($options) {
 				 $checked = '';
 				 $selected = '';
 				   if($select_value != '') {
-						if ( $select_value == $key) { $checked = ' checked'; $selected = 'smartestb-radio-img-selected'; } 
+						if ( $select_value == $key) { $checked = ' checked'; $selected = 'smartestthemes-radio-img-selected'; } 
 				    } else {
-						if ($value['std'] == $key) { $checked = ' checked'; $selected = 'smartestb-radio-img-selected'; }
-						elseif ($i == 1  && !isset($select_value)) { $checked = ' checked'; $selected = 'smartestb-radio-img-selected'; }
-						elseif ($i == 1  && $value['std'] == '') { $checked = ' checked'; $selected = 'smartestb-radio-img-selected'; }
+						if ($value['std'] == $key) { $checked = ' checked'; $selected = 'smartestthemes-radio-img-selected'; }
+						elseif ($i == 1  && !isset($select_value)) { $checked = ' checked'; $selected = 'smartestthemes-radio-img-selected'; }
+						elseif ($i == 1  && $value['std'] == '') { $checked = ' checked'; $selected = 'smartestthemes-radio-img-selected'; }
 						else { $checked = ''; }
 					}	
 				
 				$output .= '<span>';
-				$output .= '<input type="radio" id="smartestb-radio-img-' . $value['id'] . $i . '" class="checkbox smartestb-radio-img-radio" value="'.$key.'" name="'. $value['id'].'" '.$checked.' />';
-				$output .= '<div class="smartestb-radio-img-label">'. $key .'</div>';
-				$output .= '<img src="'.$option.'" alt="" class="smartestb-radio-img-img '. $selected .'" onClick="document.getElementById(\'smartestb-radio-img-'. $value['id'] . $i.'\').checked = true;" />';
+				$output .= '<input type="radio" id="smartestthemes-radio-img-' . $value['id'] . $i . '" class="checkbox smartestthemes-radio-img-radio" value="'.$key.'" name="'. $value['id'].'" '.$checked.' />';
+				$output .= '<div class="smartestthemes-radio-img-label">'. $key .'</div>';
+				$output .= '<img src="'.$option.'" alt="" class="smartestthemes-radio-img-img '. $selected .'" onClick="document.getElementById(\'smartestthemes-radio-img-'. $value['id'] . $i.'\').checked = true;" />';
 				$output .= '</span>';
 				
 			}
@@ -825,12 +824,12 @@ function smartestbthemes_machine($options) {
 			   $output .= '</div>'."\n";
 			}
 			$jquery_click_hook = preg_replace('#[^A-Za-z0-9]#', '', strtolower($value['name']) );
-			$jquery_click_hook = "smartestb-option-" . $jquery_click_hook;
+			$jquery_click_hook = "smartestthemes-option-" . $jquery_click_hook;
 					$menu .= '<li><a ';
 					if ( !empty( $value['class'] ) ) {
 						$menu .= 'class="'.  $value['class'] .'" ';
 					}
-					$menu .= 'title="'.  $value['name'] .'" href="#'.  $jquery_click_hook  .'"><span class="smartestb-nav-icon"></span>'.  $value['name'] .'</a></li>';
+					$menu .= 'title="'.  $value['name'] .'" href="#'.  $jquery_click_hook  .'"><span class="smartestthemes-nav-icon"></span>'.  $value['name'] .'</a></li>';
 			$output .= '<div class="group" id="'. $jquery_click_hook  .'"><h2>'.$value['name'].'</h2>'."\n";
 		break;                                  
 		} 
@@ -846,7 +845,7 @@ function smartestbthemes_machine($options) {
 					
 					if($array['type'] == 'text') { // Only text at this point
 						 
-						 $output .= '<input class="input-text-small smartestb-input" name="'. $id .'" id="'. $id .'" type="text" value="'. $std .'" />';  
+						 $output .= '<input class="input-text-small smartestthemes-input" name="'. $id .'" id="'. $id .'" type="text" value="'. $std .'" />';  
 						 $output .= '<span class="meta-two">'.$meta.'</span>';
 					}
 				}
@@ -873,7 +872,7 @@ function smartestbthemes_uploader_function($id,$std,$mod){
 	if($mod != 'min') { 
 			$val = $std;
             if ( get_option( $id ) != "") { $val = get_option($id); }
-            $uploader .= '<input class="smartestb-input" name="'. $id .'" id="'. $id .'_upload" type="text" value="'. $val .'" />';
+            $uploader .= '<input class="smartestthemes-input" name="'. $id .'" id="'. $id .'_upload" type="text" value="'. $val .'" />';
 	}
 	$uploader .= '<div class="upload_button_div"><span class="button image_upload_button" id="'.$id.'">'. __('Upload Image', 'crucible'). '</span>';
 	if(!empty($upload)) {$hide = '';} else { $hide = 'hide';}
@@ -881,8 +880,8 @@ function smartestbthemes_uploader_function($id,$std,$mod){
 	$uploader .='</div>' . "\n";
     $uploader .= '<div class="clear"></div>' . "\n";
 	if(!empty($upload)){
-    	$uploader .= '<a class="smartestb-uploaded-image" href="'. $upload . '">';
-    	$uploader .= '<img class="smartestb-option-image" id="image_'.$id.'" src="'.$upload.'" alt="" />';
+    	$uploader .= '<a class="smartestthemes-uploaded-image" href="'. $upload . '">';
+    	$uploader .= '<img class="smartestthemes-option-image" id="image_'.$id.'" src="'.$upload.'" alt="" />';
     	$uploader .= '</a>';
 		}
 	$uploader .= '<div class="clear"></div>' . "\n"; 

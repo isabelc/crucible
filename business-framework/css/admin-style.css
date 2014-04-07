@@ -106,7 +106,7 @@
 	border-style: none;
 	border-color: inherit;
 	border-width: 0;
-	background: url('../images/smartestb-admin-buttons.png') -140px 0;
+	background: url('../images/smartestthemes-admin-buttons.png') -140px 0;
 	border-radius: 0!important;
 		width: 136px;
 		height: 27px;
@@ -119,7 +119,7 @@
 }
 .reset-button {
 	background-position: -280px 0!important;
-	background-image: url('../images/smartestb-admin-buttons.png');
+	background-image: url('../images/smartestthemes-admin-buttons.png');
 }
 input.reset-button:hover {
 	background-position: -280px -30px!important;
@@ -131,7 +131,7 @@ input.reset-button:hover {
 	border-style: none;
 	border-color: inherit;
 	border-width: 0;
-	background: url('../images/smartestb-admin-buttons.png') -140px 0;
+	background: url('../images/smartestthemes-admin-buttons.png') -140px 0;
 	border-radius: 0!important;
 		width: 136px;
 		height: 27px;
@@ -186,7 +186,7 @@ a.support-button:hover {
 	height: 25px;
 	width: 140px;
 	text-align: center;
-	background: url('../images/smartestb-admin-buttons.png');
+	background: url('../images/smartestthemes-admin-buttons.png');
 	color: #fff;
 	text-decoration: none;
 	margin-top: 12px;
@@ -207,20 +207,20 @@ a.support-button:hover {
 	background: #ccc;
 	margin: 10px;
 }
-#smartestb-option-themesupport .info_75, #smartestb-option-themesupport .comments_blue_75, #smartestb-option-themesupport .bell-blue-75 {
+#smartestthemes-option-themesupport .info_75, #smartestthemes-option-themesupport .comments_blue_75, #smartestthemes-option-themesupport .bell-blue-75 {
 	background: url('../images/blue-sprites.png') no-repeat;
 }
-#smartestb-option-themesupport .info_75 {
+#smartestthemes-option-themesupport .info_75 {
 	background-position: 0 0;
 	width: 75px;
 	height: 75px;
 }
-#smartestb-option-themesupport .comments_blue_75 {
+#smartestthemes-option-themesupport .comments_blue_75 {
 	background-position: -155px 0;
 	width: 75px;
 	height: 75px;
 }
-#smartestb-option-themesupport .bell-blue-75 {
+#smartestthemes-option-themesupport .bell-blue-75 {
 	background-position: -78px 0;
 	width: 75px;
 	height: 75px;
@@ -238,16 +238,16 @@ h4.support-section-title {
 	border-right: 1px solid #d8d8d8;
 	border-bottom: 1px solid #d8d8d8;
 }
-#smartestb_container #smartestb-nav {
+#smartestb_container #smartestthemes-nav {
 	float: left;
 	position: relative;
 	z-index: 9999;
 	width: 170px;
 }
-#smartestb_container #smartestb-nav li {
+#smartestb_container #smartestthemes-nav li {
 	margin-bottom: 0;
 }
-#smartestb_container #smartestb-nav ul li a:link, #smartestb-nav ul li a:visited {
+#smartestb_container #smartestthemes-nav ul li a:link, #smartestthemes-nav ul li a:visited {
 	display: block;
 	padding: 10px 8px 10px 10px;
 	font-family: Georgia,Serif;
@@ -256,10 +256,10 @@ h4.support-section-title {
 	color: #797979;
 	border-bottom: 1px solid #d8d8d8;
 }
-#smartestb_container #smartestb-nav ul li a:hover {
+#smartestb_container #smartestthemes-nav ul li a:hover {
 	color: #797979;
 }
-#smartestb-nav ul li a span.smartestb-nav-icon {
+#smartestthemes-nav ul li a span.smartestthemes-nav-icon {
 	display: inline;
 	width: 20px;
 	height: 20px;
@@ -269,136 +269,136 @@ h4.support-section-title {
 	margin-left: -3px;
 	margin-right: 7px;
 	}
-#smartestb-nav ul li a:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a span.smartestb-nav-icon {
+#smartestthemes-nav ul li a:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a span.smartestthemes-nav-icon {
 	background-position: -305px 0;
 }
-#smartestb-nav ul li a.aboutcircle span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.aboutcircle span.smartestthemes-nav-icon {
 	background-position: -280px -25px;
 }
-#smartestb-nav ul li a.aboutcircle:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.aboutcircle span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.aboutcircle:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.aboutcircle span.smartestthemes-nav-icon {
 	background-position: -281px 0;
 }
-#smartestb-nav ul li a.scripts span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.scripts span.smartestthemes-nav-icon {
 	background-position: -93px -22px;
 }
-#smartestb-nav ul li a.scripts:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.scripts span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.scripts:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.scripts span.smartestthemes-nav-icon {
 	background-position: -93px 0;
 }
-#smartestb-nav ul li a.smartsocial span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.smartsocial span.smartestthemes-nav-icon {
 	background-position: -23px -24px;
 }
-#smartestb-nav ul li a.smartsocial:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.smartsocial span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.smartsocial:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.smartsocial span.smartestthemes-nav-icon {
 	background-position: -24px 0;
 }
-#smartestb-nav ul li a.seo span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.seo span.smartestthemes-nav-icon {
 	background-position: -69px -23px;
 }
-#smartestb-nav ul li a.seo:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.seo span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.seo:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.seo span.smartestthemes-nav-icon {
 	background-position: -69px 0;
 }
-#smartestb-nav ul li a.blog span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.blog span.smartestthemes-nav-icon {
 	background-position: -280px -20px;
 }
-#smartestb-nav ul li a.blog:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.blog span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.blog:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.blog span.smartestthemes-nav-icon {
 	background-position: -280px 0;
 }
-#smartestb-nav ul li a.settings span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.settings span.smartestthemes-nav-icon {
 	background-position: -44px -22px;
 }
-#smartestb-nav ul li a.settings:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.settings span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.settings:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.settings span.smartestthemes-nav-icon {
 	background-position: -45px 0;
 }
-#smartestb-nav ul li a.shop span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.shop span.smartestthemes-nav-icon {
 	background-position: -80px -20px;
 }
-#smartestb-nav ul li a.shop:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.shop span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.shop:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.shop span.smartestthemes-nav-icon {
 	background-position: -80px 0;
 }
-#smartestb-nav ul li a.style span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.style span.smartestthemes-nav-icon {
 	background-position: -200px -20px;
 }
-#smartestb-nav ul li a.style:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.style span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.style:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.style span.smartestthemes-nav-icon {
 	background-position: -200px 0;
 }
-#smartestb-nav ul li a.colors span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.colors span.smartestthemes-nav-icon {
 	background-position: -230px -23px;
 }
-#smartestb-nav ul li a.colors:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.colors span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.colors:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.colors span.smartestthemes-nav-icon {
 	background-position: -230px 0;
 }
-#smartestb-nav ul li a.typography span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.typography span.smartestthemes-nav-icon {
 	background-position: -327px -23px;
 }
-#smartestb-nav ul li a.typography:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.typography span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.typography:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.typography span.smartestthemes-nav-icon {
 	background-position: -330px 0;
 }
-#smartestb-nav ul li a.image span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.image span.smartestthemes-nav-icon {
 	background-position: -183px -23px;
 }
-#smartestb-nav ul li a.image:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.image span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.image:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.image span.smartestthemes-nav-icon {
 	background-position: -184px 0;
 }
-#smartestb-nav ul li a.navigation span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.navigation span.smartestthemes-nav-icon {
 	background-position: -140px -20px;
 }
-#smartestb-nav ul li a.navigation:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.navigation span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.navigation:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.navigation span.smartestthemes-nav-icon {
 	background-position: -140px 0;
 }
-#smartestb-nav ul li a.pencil span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.pencil span.smartestthemes-nav-icon {
 	background-position: -116px -24px;
 }
-#smartestb-nav ul li a.pencil:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.pencil span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.pencil:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.pencil span.smartestthemes-nav-icon {
 	background-position: -115px 0;
 }
-#smartestb-nav ul li a.homepage-slider span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.homepage-slider span.smartestthemes-nav-icon {
 	background-position: 0 -20px;
 }
-#smartestb-nav ul li a.homepage-slider:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.homepage-slider span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.homepage-slider:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.homepage-slider span.smartestthemes-nav-icon {
 	background-position: 0 0;
 }
-#smartestb-nav ul li a.homepage-middle span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.homepage-middle span.smartestthemes-nav-icon {
 	background-position: 0 -20px;
 }
-#smartestb-nav ul li a.homepage-middle:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.homepage-middle span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.homepage-middle:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.homepage-middle span.smartestthemes-nav-icon {
 	background-position: 0 0;
 }
-#smartestb-nav ul li a.footer span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.footer span.smartestthemes-nav-icon {
 	background-position: -207px -24px;
 }
-#smartestb-nav ul li a.footer:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.footer span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.footer:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.footer span.smartestthemes-nav-icon {
 	background-position: -206px 0;
 }
-#smartestb-nav ul li a.analytics span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.analytics span.smartestthemes-nav-icon {
 	background-position: -180px -20px;
 }
-#smartestb-nav ul li a.analytics:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.analytics span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.analytics:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.analytics span.smartestthemes-nav-icon {
 	background-position: -180px 0;
 }
-#smartestb-nav ul li a.theme-support span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.theme-support span.smartestthemes-nav-icon {
 	background-position: 0 -24px;
 }
-#smartestb-nav ul li a.theme-support:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.theme-support span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.theme-support:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.theme-support span.smartestthemes-nav-icon {
 	background-position: 0 0;
 }
-#smartestb-nav ul li a.money span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.money span.smartestthemes-nav-icon {
 	background-position: -138.99998474121094px -23px;
 }
-#smartestb-nav ul li a.money:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.money span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.money:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.money span.smartestthemes-nav-icon {
 	background-position: -138.99998474121094px 0;
 }
-#smartestb-nav ul li a.branding span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.branding span.smartestthemes-nav-icon {
 	background-position: -256px -25px;
 }
-#smartestb-nav ul li a.branding:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.branding span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.branding:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.branding span.smartestthemes-nav-icon {
 	background-position: -256px 0;
 }
-#smartestb-nav ul li a.mail span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.mail span.smartestthemes-nav-icon {
 	background-position: -162px -24px;
 }
-#smartestb-nav ul li a.mail:hover span.smartestb-nav-icon, #smartestb-nav ul li.current a.mail span.smartestb-nav-icon {
+#smartestthemes-nav ul li a.mail:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.mail span.smartestthemes-nav-icon {
 	background-position: -162px 0;
 }
-#smartestb_container #content #smartestb-option-colors .section-color, #smartestb_container #content #smartestb-option-logo .section-color, #smartestb_container #content #smartestb-option-fonts .section-color, #smartestb_container #content #smartestb-option-style .section-color, .group .half {
+#smartestb_container #content #smartestthemes-option-colors .section-color, #smartestb_container #content #smartestthemes-option-logo .section-color, #smartestb_container #content #smartestthemes-option-fonts .section-color, #smartestb_container #content #smartestthemes-option-style .section-color, .group .half {
 	width: 250px;
 	max-width: 250px;
 	height: 140px;
@@ -408,13 +408,13 @@ h4.support-section-title {
 .group .half {
 	height: 90px;
 }
-#smartestb_container #content #smartestb-option-logo .section-color {
+#smartestb_container #content #smartestthemes-option-logo .section-color {
 	height: 160px;
 }
-#smartestb_container #content #smartestb-option-colors .explain, #smartestb_container #content #smartestb-option-logo .section-color .explain, #smartestb_container #content #smartestb-option-fonts .section-color .explain, #smartestb_container #content #smartestb-option-style .section-color .explain {
+#smartestb_container #content #smartestthemes-option-colors .explain, #smartestb_container #content #smartestthemes-option-logo .section-color .explain, #smartestb_container #content #smartestthemes-option-fonts .section-color .explain, #smartestb_container #content #smartestthemes-option-style .section-color .explain {
 	width: auto;
 }
-#smartestb_container #smartestb-nav ul li.current a, #smartestb-nav ul li a:hover {
+#smartestb_container #smartestthemes-nav ul li.current a, #smartestthemes-nav ul li a:hover {
 	color: #21759b;
 	background-color: #fff;
 }
@@ -449,7 +449,7 @@ h4.support-section-title {
 	font-size: 11px;
 	color: #5b5b5b;
 }
-#smartestb_container #content #smartestb-option-backendbranding .section .explain, #smartestb_container #content #smartestb-option-advanced .section .explain, #smartestb_container #content #smartestb-option-footer .section .explain {
+#smartestb_container #content #smartestthemes-option-backendbranding .section .explain, #smartestb_container #content #smartestthemes-option-advanced .section .explain, #smartestb_container #content #smartestthemes-option-footer .section .explain {
 	color: #777;
 }
 #smartestb_container #content .section-checkbox .controls {
@@ -530,13 +530,13 @@ h4.support-section-title {
 #smartestb_container .half input[type=text] {
 	width: 210px;
 }
-#smartestb_container input.smartestb-input-calendar {
+#smartestb_container input.smartestthemes-input-calendar {
 	width: 320px;
 }
 #smartestb_container input.checkbox {
 	width: 30px;
 }
-#smartestb_container input.smartestb-radio {
+#smartestb_container input.smartestthemes-radio {
 	width: 30px;
 }
 #smartestb_container .controls .input-text-small {
@@ -546,7 +546,7 @@ h4.support-section-title {
 #smartestb_container .meta-two {
 	margin-right: 10px;
 }
-#smartestb_container .controls .smartestb-color {
+#smartestb_container .controls .smartestthemes-color {
 	float: left;
 	width: 80px;
 	margin-left: 5px;
@@ -557,39 +557,39 @@ h4.support-section-title {
 #smartestb_container #content .section-typography .explain {
 	width: 140px;
 }
-#smartestb_container .controls .smartestb-typography-size {
+#smartestb_container .controls .smartestthemes-typography-size {
 	width: 80px;
 	float: left;
 }
-#smartestb_container .controls .smartestb-typography-unit {
+#smartestb_container .controls .smartestthemes-typography-unit {
 	width: 50px;
 	float: left;
 }
-#smartestb_container .controls .smartestb-typography-face {
+#smartestb_container .controls .smartestthemes-typography-face {
 	width: 100px;
 	float: left;
 }
-#smartestb_container .controls .smartestb-typography-style {
+#smartestb_container .controls .smartestthemes-typography-style {
 	width: 80px;
 	float: left;
 }
-#smartestb_container .controls .smartestb-radio-img-img {
+#smartestb_container .controls .smartestthemes-radio-img-img {
 	border: 3px solid #fff;
 	margin: 0 5px 10px 0;
 	display: none;
 	cursor: pointer;
 }
-#smartestb_container .controls .smartestb-radio-img-selected {
+#smartestb_container .controls .smartestthemes-radio-img-selected {
 	border: 3px solid #ccc;
 }
-#smartestb_container .controls .smartestb-radio-img-img:hover {
+#smartestb_container .controls .smartestthemes-radio-img-img:hover {
 	opacity: .8;
 }
-#smartestb_container .controls .smartestb-border-width {
+#smartestb_container .controls .smartestthemes-border-width {
 	width: 80px;
 	float: left;
 }
-#smartestb_container .controls .smartestb-border-style {
+#smartestb_container .controls .smartestthemes-border-style {
 	width: 120px;
 	float: left;
 }
@@ -600,7 +600,7 @@ h4.support-section-title {
 	display: none;
 	border-bottom: 3px solid #e7e7e7;
 }
-#smartestb_container #smartestb-option-themesupport.group h2 {
+#smartestb_container #smartestthemes-option-themesupport.group h2 {
 	display: inline-block;
 	border-bottom: 0;
 }
@@ -634,7 +634,7 @@ h4.support-section-title {
 	padding: 10px;
 	text-align: center;
 }
-#smartestb_container .smartestb-save-popup {
+#smartestb_container .smartestthemes-save-popup {
 	position: absolute;
 	-moz-border-radius: 12px;
 	background: rgba(0,0,0,.4);
@@ -643,11 +643,11 @@ h4.support-section-title {
 	text-align: center;
 	display: none;
 }
-#smartestb_container .smartestb-save-save {
+#smartestb_container .smartestthemes-save-save {
 	background: url('../images/happy.png') no-repeat 20px 50%;
 	padding: 30px 30px 30px 70px;
 }
-#smartestb_container .smartestb-save-reset {
+#smartestb_container .smartestthemes-save-reset {
 	background: url('../images/warning.png') no-repeat 20px 50%;
 	padding: 30px 30px 30px 70px;
 }
@@ -705,7 +705,7 @@ h4.support-section-title {
 }
 .ajax-loading-img-bottom {
 }
-.smartestb-option-image {
+.smartestthemes-option-image {
 	max-width: 340px;
 }
 #smartestb_container .mini .controls select, #smartestb_container #content .section .mini .controls {
@@ -717,7 +717,7 @@ h4.support-section-title {
 #smartestb_container #content .mini .explain {
 	width: 500px;
 }
-.smartestb-notice {
+.smartestthemes-notice {
 	background: #ffd1d1;
 	border: 1px solid #DFA8A7;
 	-moz-border-radius: 8px;
@@ -813,7 +813,7 @@ html body * span.clear, html body * div.clear, html body * li.clear, html body *
 	width: 0;
 	height: 0;
 }
-#smartestb_container #smartestb-nav ul, #smartestb_container #support-links ul {
+#smartestb_container #smartestthemes-nav ul, #smartestb_container #support-links ul {
 	margin-top: 0;
 }
 .demoimg {
