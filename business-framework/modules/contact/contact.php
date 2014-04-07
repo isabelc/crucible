@@ -45,7 +45,7 @@ function sbfc_malicious_input($input) {
  * check for spam
  */
 function sbfc_spam_question($input) {
-	global $smartestb_options;
+	global $smartestthemes_options;
 	$response = '2';
 	$response = stripslashes(trim($response));
 	return ($input == $response);
@@ -87,7 +87,7 @@ function sbfc_input_filter() {
 	$_POST['sbfc_response'] = stripslashes(trim($_POST['sbfc_response']));
 	$_POST['sbfc_phone'] = isset($_POST['sbfc_phone']) ? stripslashes(trim($_POST['sbfc_phone'])) : '';
 
-	global $smartestb_options, $sbfc_strings;
+	global $smartestthemes_options, $sbfc_strings;
 	$pass  = true;
 
 	if(empty($_POST['smartestb_sbfc_name'])) {
@@ -100,7 +100,7 @@ function sbfc_input_filter() {
 		$fail = 'empty';
 		$sbfc_strings['email'] = '<input class="smartestb_sbfc_error" name="smartestb_sbfc_email" id="smartestb_sbfc_email" type="text" size="33" maxlength="99" value="'. htmlentities($_POST['smartestb_sbfc_email']) .'" placeholder="Your email" />';
 	}
-	if ($smartestb_options['smartestb_sbfc_captcha'] == 'true') {
+	if ($smartestthemes_options['smartestb_sbfc_captcha'] == 'true') {
 		if (empty($_POST['sbfc_response'])) {
 			$pass = FALSE; 
 			$fail = 'empty';
@@ -117,7 +117,7 @@ function sbfc_input_filter() {
 		$fail = 'empty';
 		$sbfc_strings['message'] = '<textarea class="smartestb_sbfc_error" name="sbfc_message" id="sbfc_message" cols="33" rows="7" placeholder="Your message">'. $_POST['sbfc_message'] .'</textarea>';
 	}
-	if ($smartestb_options['smartestb_sbfc_required_phone'] == 'true') {
+	if ($smartestthemes_options['smartestb_sbfc_required_phone'] == 'true') {
 		if (empty($_POST['sbfc_phone'])) {
 			$pass = FALSE; 
 			$fail = 'empty';
@@ -135,7 +135,7 @@ function sbfc_input_filter() {
 			$sbfc_strings['error'] = '<p id="sbfc_isa_error">' . __( 'Please do not include any of the following in the Name or Email fields: linebreaks, or the phrases "mime-version", "content-type", "cc:" or "to:"', 'crucible' ) . '</p>';
 		} elseif($fail == 'empty') {
 
-			$posted_msg = stripslashes($smartestb_options['smartestb_sbfc_error']);
+			$posted_msg = stripslashes($smartestthemes_options['smartestb_sbfc_error']);
 			// in case they erase the default in admin
 			$msg = ($posted_msg) ? $posted_msg : __( 'Please complete the required fields.', 'crucible' );
 			$sbfc_strings['error'] = '<p id="sbfc_isa_error">' . $msg . '</p>';
@@ -199,12 +199,12 @@ add_action('wp_enqueue_scripts', 'sbfc_enqueue_scripts');
 * process contact form
 */
 function sbfc_process_contact_form($content='') {
-	global $smartestb_options, $sbfc_strings;
+	global $smartestthemes_options, $sbfc_strings;
 
-	$topic     = $smartestb_options['smartestb_sbfc_subject'];
-	$recipient = $smartestb_options['smartestb_sbfc_email'];
-	$recipname = $smartestb_options['smartestb_sbfc_name'];
-	$success   = $smartestb_options['smartestb_sbfc_success'];
+	$topic     = $smartestthemes_options['smartestb_sbfc_subject'];
+	$recipient = $smartestthemes_options['smartestb_sbfc_email'];
+	$recipname = $smartestthemes_options['smartestb_sbfc_name'];
+	$success   = $smartestthemes_options['smartestb_sbfc_success'];
 
 	$topic     = ! empty($topic) ? stripslashes($topic) : __( 'Message sent from your contact form', 'crucible' );
 	$recipient = ! empty($recipient) ? stripslashes($recipient) : get_bloginfo('admin_email');
@@ -215,14 +215,14 @@ function sbfc_process_contact_form($content='') {
 	$email     = $_POST['smartestb_sbfc_email'];
 	$recipsite = get_bloginfo('url');
 	$senderip  = sbfc_get_ip_address();
-	$offset    = $smartestb_options['smartestb_sbfc_offset'];
+	$offset    = $smartestthemes_options['smartestb_sbfc_offset'];
 	$agent     = $_SERVER['HTTP_USER_AGENT'];
 	$form      = getenv("HTTP_REFERER");
 	$host      = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 	$date      = date("l, F jS, Y @ g:i a", time() + $offset * 60 * 60);
 
-	$prepend = stripslashes($smartestb_options['smartestb_sbfc_prepend']);
-	$append  = stripslashes($smartestb_options['smartestb_sbfc_append']);
+	$prepend = stripslashes($smartestthemes_options['smartestb_sbfc_prepend']);
+	$append  = stripslashes($smartestthemes_options['smartestb_sbfc_append']);
 
 	$headers   = "MIME-Version: 1.0\n";
 	$headers .= "From: " . get_bloginfo('name') . " <$recipient>\n";
@@ -282,18 +282,18 @@ $local_agent  $agent
  * display contact form
  */
 function sbfc_display_contact_form() {
-	global $smartestb_options, $sbfc_strings;
+	global $smartestthemes_options, $sbfc_strings;
 
-	$captcha  = isset($smartestb_options['smartestb_sbfc_captcha']) ? $smartestb_options['smartestb_sbfc_captcha'] : '';
-	$offset   = isset($smartestb_options['smartestb_sbfc_offset']) ? $smartestb_options['smartestb_sbfc_offset'] : '';
-	$include_phone   = isset($smartestb_options['smartestb_sbfc_include_phone']) ? $smartestb_options['smartestb_sbfc_include_phone'] : '';
+	$captcha  = isset($smartestthemes_options['smartestb_sbfc_captcha']) ? $smartestthemes_options['smartestb_sbfc_captcha'] : '';
+	$offset   = isset($smartestthemes_options['smartestb_sbfc_offset']) ? $smartestthemes_options['smartestb_sbfc_offset'] : '';
+	$include_phone   = isset($smartestthemes_options['smartestb_sbfc_include_phone']) ? $smartestthemes_options['smartestb_sbfc_include_phone'] : '';
 		
-	if ($smartestb_options['smartestb_sbfc_preform'] !== '') {
-		$smartestb_sbfc_preform = $smartestb_options['smartestb_sbfc_preform'];
+	if ($smartestthemes_options['smartestb_sbfc_preform'] !== '') {
+		$smartestb_sbfc_preform = $smartestthemes_options['smartestb_sbfc_preform'];
 	} else { $smartestb_sbfc_preform = ''; }
 
-	if ($smartestb_options['smartestb_sbfc_appform'] !== '') {
-		$smartestb_sbfc_appform = $smartestb_options['smartestb_sbfc_appform'];
+	if ($smartestthemes_options['smartestb_sbfc_appform'] !== '') {
+		$smartestb_sbfc_appform = $smartestthemes_options['smartestb_sbfc_appform'];
 	} else { $smartestb_sbfc_appform = ''; }
 
 	if ($captcha == 'true') {
