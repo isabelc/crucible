@@ -41,7 +41,7 @@ do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per t
 			<h1 class="menu-toggle"><?php _e( 'Menu', 'crucible' ); ?></h1>
 			<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'crucible' ); ?></a>
 
-			<?php wp_nav_menu( array( 'theme_location' => 'primary','fallback_cb' => 'smartestthemes_nav_fallback', 'items_wrap' => '<ul class="%2$s">%3$s</ul>' ) );// @todo search in frame and elsewhere to change 'primary-menu' to 'primary'
+			<?php wp_nav_menu( array( 'theme_location' => 'primary','fallback_cb' => 'smartestthemes_nav_fallback', 'items_wrap' => '<ul class="%2$s">%3$s</ul>' ) );
 
 // @todo  search in frame and elsewhere to change 'smartestb_mainnav_fallback' to 'smartestthemes_nav_fallback'
 ?>

@@ -457,13 +457,13 @@ function smart_attach_external_image( $url = null, $post_id = null, $post_data =
 */
 function smartestb_cpts_menu_links($items, $args) {
 		/**
-		 * @new themes must use theme_loc = 'primary-menu'
+		 * @new themes must use theme_loc = 'primary'
 		 */
 		$newitems = $items;
-		if(($args->theme_location == 'primary-menu') && ( get_option('smartestb_show_staff') == 'true' )) {
+		if(($args->theme_location == 'primary') && ( get_option('smartestb_show_staff') == 'true' )) {
 		        $newitems .= '<li class="staff"><a title="' . __( apply_filters( 'smartestb_staff_menu_label', 'Staff' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_staff' ) .'">' . __( apply_filters( 'smartestb_staff_menu_label', 'Staff' ), 'crucible' ) . '</a></li>';
 	    }
-		if(($args->theme_location == 'primary-menu') && ( get_option('smartestb_show_services') == 'true' )) {
+		if(($args->theme_location == 'primary') && ( get_option('smartestb_show_services') == 'true' )) {
 			$newitems .= '<li class="services"><a title="' . __( apply_filters( 'smartestb_services_menu_label', 'Services' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_services' ) .'">' . __( apply_filters( 'smartestb_services_menu_label', 'Services' ), 'crucible' ) . '</a>';
 
 			// if service cat tax terms exist, do sub-menu
@@ -480,7 +480,7 @@ function smartestb_cpts_menu_links($items, $args) {
 			$newitems .= '</li>';
 	    }
 
-	    if( ($args->theme_location == 'primary-menu') && (get_option('smartestb_show_news') == 'true')) {
+	    if( ($args->theme_location == 'primary') && (get_option('smartestb_show_news') == 'true')) {
 	        $newitems .= '<li class="news"><a title="' . __( apply_filters( 'smartestb_news_menu_label', 'News' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_news' ) .'">' . __( apply_filters( 'smartestb_news_menu_label', 'News' ), 'crucible' ) . '</a></li>';
 		 }
 	    return $newitems;
