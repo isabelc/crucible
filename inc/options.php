@@ -697,7 +697,7 @@ $options[] = array( 'name' => __('Backend Branding','crucible'),'class' => 'bran
 					'type' => 'heading');
 $options[] = array( 'name' => __('Replace This Page\'s Logo','crucible'),
 					'desc' => __('See the "Smartest Themes" logo at the top of this page? Upload a logo here to replace this page\'s logo. Or specify the image address of your online logo, like http://yoursite.com/logo.png','crucible'),
-					'id' => $shortname.'_options_logo',
+					'id' => $shortname.'_backend_logo',
 					'std' => '',
 					'type' => 'upload');
 $options[] = array( 'name' => __('Custom WP Admin Footer Text','crucible'),

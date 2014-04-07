@@ -1,4 +1,4 @@
-﻿== Changelog for Smartest Business Framework ==
+== Changelog for Smartest Business Framework ==
 
 = 2014.04.07 - version 2.3.7 =
 * New: replaced mysql_real_escape_string to comply with WP 3.9 and PHP 5.5+
@@ -21,7 +21,7 @@
 * New: Optional phone number field added to Contact form.
 
 = 2014.03.07 - version 2.3.1 =
-* Fix: Backend logo was missing due to changing backend branding options_logo default.
+* Fix: Backend logo was missing due to changing backend branding backend_logo default.
 * Maintenance: removed Theme Header output
 
 = 2014.03.01 - version 2.3.0 =

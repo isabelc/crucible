@@ -927,18 +927,18 @@ if(get_option('smartestb_show_slider') == 'true') {
  */
 function custom_options_page_logo() {
 	// backwards compat. if option = 'false' string, update it to ''.
-	$backlogo = get_option('smartestb_options_logo');
+	$backlogo = get_option('smartestb_backend_logo');
 	if( 'false' == $backlogo ) {
-		delete_option( 'smartestb_options_logo' );
+		delete_option( 'smartestb_backend_logo' );
 	}
 
-	if(get_option('smartestb_options_logo')) {
-		return '<img alt="logo" src="'.get_option('smartestb_options_logo').'" class="custom-bb-logo"/>';
+	if(get_option('smartestb_backend_logo')) {
+		return '<img alt="logo" src="'.get_option('smartestb_backend_logo').'" class="custom-bb-logo"/>';
 	} else { 
 		return '<img alt="Smartest Themes" src="'. get_template_directory_uri().'/business-framework/images/st_logo_admin.png" />';
 	}
 }
-add_filter('smartestb_options_branding', 'custom_options_page_logo');
+add_filter('smartestb_backend_branding', 'custom_options_page_logo');
 
 // Replace WP footer with own custom text
 function smb_remove_footer_admin () {

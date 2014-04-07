@@ -83,7 +83,7 @@ function smartestbthemes_options_page(){
     <form action="" enctype="multipart/form-data" id="smartestbform">
         <div id="header">
            <div class="logo">
-		<?php echo apply_filters('smartestb_options_branding', '<img alt="Smartest Themes" src="'. $fDIR. 'images/st_logo_admin.png" />'); ?>
+		<?php echo apply_filters('smartestb_backend_branding', '<img alt="Smartest Themes" src="'. $fDIR. 'images/st_logo_admin.png" />'); ?>
           </div>
              <div class="theme-info">
 				<span class="theme" style="margin-top:10px;"><?php printf(__('%s', 'crucible'), $themename); ?>
