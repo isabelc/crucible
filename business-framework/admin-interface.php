@@ -62,9 +62,9 @@ function smartestb_reset_options($options,$page = ''){
 			
 	}
 	
-	//When Theme Options page is reset - Add the smartestb_options option
+	//When Theme Options page is reset - Add the smartestthemes_options option
 	if($page == 'smartestbthemes'){
-		$query_inner .= " OR option_name = 'smartestb_options'";
+		$query_inner .= " OR option_name = 'smartestthemes_options'";
 	}
 	$query = "DELETE FROM $wpdb->options WHERE $query_inner";
 	$wpdb->query($query);
@@ -520,7 +520,7 @@ function smartestb_ajax_callback() {
 	if( $save_type == 'options'){
 		/* Create, Encrypt and Update the Saved Settings */
 		global $wpdb;
-		$smartestb_options = array();
+		$smartestthemes_options = array();
 		$query_inner = '';
 		$count = 0;
 
@@ -581,7 +581,7 @@ function smartestb_ajax_callback() {
 				$output .= '<li><strong>' . $name . '</strong> - ' . $value . '</li>';
 		}
 		$output .= "</ul>";
-		update_option('smartestb_options',$smartestb_array);
+		update_option('smartestthemes_options',$smartestb_array);
 		update_option('smartestb_settings_encode',$output);
 		// this makes it finally flush, but only if you save twice. Isa
 		flush_rewrite_rules();
