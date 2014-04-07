@@ -12,7 +12,7 @@ $value_response	= isset($_POST['sbfc_response']) ? htmlentities($_POST['sbfc_res
 $value_message		= isset($_POST['sbfc_message']) ? htmlentities($_POST['sbfc_message']) : '';
 $value_phone		= isset($_POST['sbfc_phone']) ? htmlentities($_POST['sbfc_phone']) : '';
 
-if ( get_option('smartestb_sbfc_required_phone') == 'true' ) {
+if ( get_option('smartestthemes_sbfc_required_phone') == 'true' ) {
 	$require_phone = ' class="required"';
 } else {
 	$require_phone = '';
@@ -170,9 +170,9 @@ function smartest_themes_contact_form() {
  * create contact page with working contact form
  */
 function sbf_create_contact_page() {
-	if(get_option('smartestb_stop_contact') == 'false') {
+	if(get_option('smartestthemes_stop_contact') == 'false') {
 		// CONTACT form is not disabled so do it	
-		$bn = stripslashes_deep(esc_attr(get_option('smartestb_business_name')));
+		$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));
 		$contitle = sprintf(__('Contact %s','crucible'), $bn);
 		smartestbusiness_insert_post( 'page', esc_sql( _x('contact', 'page_slug', 'crucible') ), 'smartest_contact_page_id', $contitle );
 
@@ -180,7 +180,7 @@ function sbf_create_contact_page() {
 }
 add_action('after_setup_theme', 'sbf_create_contact_page');
 // if contact page is disabled, delete the page
-if(get_option('smartestb_stop_contact') == 'true') {
+if(get_option('smartestthemes_stop_contact') == 'true') {
 	wp_delete_post(get_option('smartest_contact_page_id'), true);
 }
 /**

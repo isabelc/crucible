@@ -14,7 +14,7 @@ function smartestb_option_setup(){
 	//Update EMPTY options
 	$smartestb_array = array();
 	add_option('smartestthemes_options',$smartestb_array);
-	$template = get_option('smartestb_template');
+	$template = get_option('smartestthemes_template');
 	$saved_options = get_option('smartestthemes_options');
 	foreach($template as $option) {
 		if($option['type'] != 'heading'){

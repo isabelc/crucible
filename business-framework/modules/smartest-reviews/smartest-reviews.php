@@ -30,7 +30,7 @@ class SMARTESTReviewsBusiness {
         ini_set('display_errors',TRUE);
 */
 		$this->dbtable = $wpdb->prefix . $this->dbtable;
-		$this->plugin_version = get_option('smartestb_framework_version');
+		$this->plugin_version = get_option('smartestthemes_framework_version');
 		add_action('the_content', array(&$this, 'do_the_content'), 10); /* prio 10 prevents a conflict with some odd themes */
 		add_action('init', array(&$this, 'init'));
 		add_action('admin_init', array(&$this, 'admin_init'));
@@ -47,7 +47,7 @@ class SMARTESTReviewsBusiness {
 
     function addmenu() {
         add_options_page(__('Smartest Reviews', 'crucible'), '<img src="' . $this->getpluginurl() . 'star.png" />&nbsp;'. __('Smartest Reviews', 'crucible'), 'manage_options', 'smar_options', array(&$this, 'admin_options'));
-		if(get_option('smartestb_add_reviews') == 'true') {       
+		if(get_option('smartestthemes_add_reviews') == 'true') {       
 			add_menu_page(__('Smartest Reviews', 'crucible'), __('Smartest Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array(&$this, 'admin_view_reviews'), $this->getpluginurl() . 'star.png', 62); /* was 50 */
 		}
    }
@@ -603,7 +603,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
  */
 function smartestt_create_reviews_page() {
 	// if set in theme options
-	if(get_option('smartestb_add_reviews') == 'true') {
+	if(get_option('smartestthemes_add_reviews') == 'true') {
 		smartestbusiness_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartest_reviews_page_id', __('Reviews', 'crucible'), '[SMAR_INSERT]' );
 	}
 
@@ -984,7 +984,7 @@ function do_the_content($original_content) {
         return $this->do_the_content('shortcode_insert');        
     }
 	function smartestreviews_scripts() {
-		if( get_option('smartestb_add_reviews') == 'true'  ) {
+		if( get_option('smartestthemes_add_reviews') == 'true'  ) {
 			wp_register_style('smartest-reviews', $this->getpluginurl() . 'smartest-reviews.css', array(), $this->plugin_version);wp_enqueue_style('smartest-reviews');wp_register_script('smartest-reviews', $this->getpluginurl() . 'smartest-reviews.js', array('jquery'), $this->plugin_version);
 			if( is_page(get_option('smartest_reviews_page_id'))) {
 		        wp_enqueue_script('smartest-reviews');
@@ -1007,7 +1007,7 @@ function do_the_content($original_content) {
 	 * widget
 	 */
 	function smartest_reviews_register_widgets() {
-		if( get_option('smartestb_add_reviews') == 'true'  ) {
+		if( get_option('smartestthemes_add_reviews') == 'true'  ) {
 			register_widget('SmartestReviewsTestimonial');
 		}
 	}

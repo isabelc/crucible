@@ -6,10 +6,10 @@
 // Load static framework options pages 
 function smartestbthemes_add_admin() {
 	global $query_string;
-	$themename =  get_option('smartestb_themename');      
+	$themename =  get_option('smartestthemes_themename');      
 	if ( isset($_REQUEST['page']) && $_REQUEST['page'] == 'smartestbthemes' ) {
 		if (isset($_REQUEST['smartestb_save']) && 'reset' == $_REQUEST['smartestb_save']) {
-			$options =  get_option('smartestb_template'); 
+			$options =  get_option('smartestthemes_template'); 
 			smartestb_reset_options($options,'smartestbthemes');
 			header("Location: admin.php?page=smartestbthemes&reset=true");
 			die;
@@ -71,8 +71,8 @@ function smartestb_reset_options($options,$page = ''){
 }
 /* Framework options panel */
 function smartestbthemes_options_page(){
-    $options = get_option('smartestb_template');      
-    $manualurl = get_option('smartestb_manual');
+    $options = get_option('smartestthemes_template');      
+    $manualurl = get_option('smartestthemes_manual');
 	$themedata = wp_get_theme();
     $themename = $themedata->Name;
 	$local_version = $themedata->Version;
@@ -186,7 +186,7 @@ function smartestb_frame_load() {
 				jQuery('#' + jQuery(this).attr('id')).mask("99-9999999");
 			});
 			//Color Picker
-			<?php $options = get_option('smartestb_template');
+			<?php $options = get_option('smartestthemes_template');
 			foreach($options as $option){ 
 			if($option['type'] == 'color'){//12.12
 					$option_id = $option['id'];
@@ -452,7 +452,7 @@ function smartestb_ajax_callback() {
 		//print_r($output);
 		
 		//Pull options
-        	$options = get_option('smartestb_template');
+        	$options = get_option('smartestthemes_template');
 				
 		foreach($options as $option_array){
 			$id = isset($option_array['id']) ? $option_array['id'] : '';
