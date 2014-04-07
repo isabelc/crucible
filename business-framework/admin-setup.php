@@ -42,7 +42,7 @@ function smartestb_option_setup(){
 	update_option('smartestthemes_options',$smartestb_array);
 }
 
-function smartest_activate_msg( ) {
+function smartestthemes_activate_msg( ) {
 	wp_register_script('act', get_template_directory_uri().'/business-framework/js/act.js', array('jquery'));wp_enqueue_script('act');
 	// @new edit page=smartestbthemes below if needed
 	$li1 = '<a href="'. admin_url('admin.php?page=smartestbthemes').'">'. __('comprehensive options panel', 'crucible'). '</a>';
@@ -50,4 +50,4 @@ function smartest_activate_msg( ) {
 	$cue = array('intro' => '<p>'.sprintf(__('This Smartest Theme comes with a %s. This theme also supports widgets, please visit the %s to configure them.', 'crucible'), $li1, $li2 ). '</p>');
 	wp_localize_script( 'act', 'smartact', $cue);
 }
-add_action( 'admin_enqueue_scripts', 'smartest_activate_msg' ); ?>
+add_action( 'admin_enqueue_scripts', 'smartestthemes_activate_msg' ); ?>
