@@ -14,7 +14,7 @@ get_header();
 /*
 // @todo may need something like this
 
-if (is_page(get_option('smartest_contact_page_id'))){
+if (is_page(get_option('smartestthemes_contact_page_id'))){
 	$postclass = 'grid_7 alpha';
 } else {
 	$postclass = 'grid_12';
@@ -29,9 +29,9 @@ if (is_page(get_option('smartest_contact_page_id'))){
 
 			<?php while ( have_posts() ) : the_post(); ?>
 
-				<?php if (is_page(get_option('smartest_contact_page_id'))) :
+				<?php if (is_page(get_option('smartestthemes_contact_page_id'))) :
 						get_template_part( 'content', 'contact' );
-					elseif (is_page(get_option('smartest_about_page_id'))) :
+					elseif (is_page(get_option('smartestthemes_about_page_id'))) :
 						get_template_part( 'content', 'about' );
 					else : 
 						get_template_part( 'content', 'page' );

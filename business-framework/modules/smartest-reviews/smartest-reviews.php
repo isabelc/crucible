@@ -68,7 +68,7 @@ class SMARTESTReviewsBusiness {
     }
     function get_jumplink_for_review($review,$page) {
        /* $page will be 1 for shortcode usage since it pulls most recent, which SHOULD all be on page 1 */
-       $link = get_permalink( get_option('smartest_reviews_page_id') );
+       $link = get_permalink( get_option('smartestthemes_reviews_page_id') );
         if (strpos($link,'?') === false) {
             $link = trailingslashit($link) . "?smarp=$page#hreview-$review->id";
         } else {
@@ -162,7 +162,7 @@ class SMARTESTReviewsBusiness {
         /* upgrade to 2.0.0 */
         if ($current_dbversion < 200) {
             /* change all current reviews to use the selected page id */
-		$pageID = intval(get_option('smartest_reviews_page_id'));
+		$pageID = intval(get_option('smartestthemes_reviews_page_id'));
 		$wpdb->query("UPDATE `$this->dbtable` SET `page_id`=$pageID WHERE `page_id`=0");
 		$this->options['dbversion'] = 200;
 		$current_dbversion = 200;
@@ -236,7 +236,7 @@ class SMARTESTReviewsBusiness {
             return $this->got_aggregate;
         }
         global $wpdb;
-        $pageID = get_option('smartest_reviews_page_id');// 3.11 was -1
+        $pageID = get_option('smartestthemes_reviews_page_id');// 3.11 was -1
         $row = $wpdb->get_results("SELECT COUNT(*) AS `total`,AVG(review_rating) AS `aggregate_rating`,MAX(review_rating) AS `max_rating` FROM `$this->dbtable` WHERE `status`=1");
         /* make sure we have at least one review before continuing below */
         if ($wpdb->num_rows == 0 || $row[0]->total == 0) {
@@ -287,7 +287,7 @@ class SMARTESTReviewsBusiness {
     function aggregate_footer() {// for home page
 		global $smartestthemes_options;
 		// gather agg data
-		$postID = get_option('smartest_reviews_page_id');// was -1
+		$postID = get_option('smartestthemes_reviews_page_id');// was -1
 		$arr_Reviews = $this->get_reviews('', $this->options['reviews_per_page'], 1);
 	 	$reviews = $arr_Reviews[0];// 12.5 prob dont need
 		$total_reviews = intval($arr_Reviews[1]);
@@ -463,7 +463,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
 /* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
          trying to access a page that does not exist -- send to main page 
         if ( isset($this->p->smarp) && $this->p->smarp != 1 && count($reviews) == 0 ) {
-            $url = get_permalink(get_option('smartest_reviews_page_id'));
+            $url = get_permalink(get_option('smartestthemes_reviews_page_id'));
             $this->smar_redirect($url);
         }
 */        
@@ -487,7 +487,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
             $reviews_content .= '<p>'. __('There are no reviews yet. Be the first to leave yours!', 'crucible').'</p>';
         } elseif ($smartestthemes_options['smartestb_add_reviews'] == 'false') {
 				$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
-        } else {	   		$postid = get_option('smartest_reviews_page_id');
+        } else {	   		$postid = get_option('smartestthemes_reviews_page_id');
             $this->get_aggregate_reviews($postid);
             $summary = $this->got_aggregate["text"];
             $best_score = 5;
@@ -604,7 +604,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
 function smartestt_create_reviews_page() {
 	// if set in theme options
 	if(get_option('smartestthemes_add_reviews') == 'true') {
-		smartestbusiness_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartest_reviews_page_id', __('Reviews', 'crucible'), '[SMAR_INSERT]' );
+		smartestbusiness_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[SMAR_INSERT]' );
 	}
 
 }
@@ -986,7 +986,7 @@ function do_the_content($original_content) {
 	function smartestreviews_scripts() {
 		if( get_option('smartestthemes_add_reviews') == 'true'  ) {
 			wp_register_style('smartest-reviews', $this->getpluginurl() . 'smartest-reviews.css', array(), $this->plugin_version);wp_enqueue_style('smartest-reviews');wp_register_script('smartest-reviews', $this->getpluginurl() . 'smartest-reviews.js', array('jquery'), $this->plugin_version);
-			if( is_page(get_option('smartest_reviews_page_id'))) {
+			if( is_page(get_option('smartestthemes_reviews_page_id'))) {
 		        wp_enqueue_script('smartest-reviews');
 				$loc = array(
 					'hidebutton' => __('Click here to hide form', 'crucible'),

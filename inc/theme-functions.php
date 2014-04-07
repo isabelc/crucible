@@ -155,7 +155,7 @@ function crucible_nav_fallback() {
 	echo '<ul class="menu">'; ?>
 	<li class="home"><a title="<?php echo $sbn; ?>" href="<?php echo site_url('/'); ?>"><?php _e('Home', 'crucible'); ?></a></li>
 	<?php if((get_option('smartestthemes_about_page') || get_option('smartestthemes_about_picture')) && (get_option('smartestthemes_stop_about') == 'false')) { ?>
-		<li class="about"><a title="<?php _e('About', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartest_about_page_id')); ?>">
+		<li class="about"><a title="<?php _e('About', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_about_page_id')); ?>">
 		<?php _e('About', 'crucible'); ?></a></li>
 	<?php } if(get_option('smartestthemes_show_services') == 'true') { ?>
 		<li class="services"><a title="<?php _e( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_services' ); ?>">
@@ -181,12 +181,12 @@ function crucible_nav_fallback() {
 		<li class="news"><a title="<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_news' ); ?>">
 		<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>
 		</a></li>
-	<?php } if(get_option('smartestthemes_stop_contact') == 'false') { ?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartest_contact_page_id')); ?>">
+	<?php } if(get_option('smartestthemes_stop_contact') == 'false') { ?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_contact_page_id')); ?>">
 		<?php _e('Contact', 'crucible'); ?>
 		</a></li>
 	<?php }
 	if (get_option('smartestthemes_add_reviews') == 'true') {
-		$smartest_reviewspage_uri = get_page_link(get_option('smartest_reviews_page_id'));
+		$smartest_reviewspage_uri = get_page_link(get_option('smartestthemes_reviews_page_id'));
 		echo '<li class="reviews"><a title="' . __('Reviews', 'crucible') . '" href="'. $smartest_reviewspage_uri .'">'. __('Reviews', 'crucible'). '</a></li>';
 
 	}

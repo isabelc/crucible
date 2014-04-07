@@ -61,9 +61,9 @@ function smartestbusiness_after_setup() {
 	$atitle = sprintf(__('About %s','crucible'), $bn);
 	// if not disabled in options 
 	if(get_option('smartestthemes_stop_about') == 'false')
-		smartestbusiness_insert_post( 'page', esc_sql( _x('about', 'page_slug', 'crucible') ), 'smartest_about_page_id', $atitle, '' );
+		smartestbusiness_insert_post( 'page', esc_sql( _x('about', 'page_slug', 'crucible') ), 'smartestthemes_about_page_id', $atitle, '' );
 	if(get_option('smartestthemes_stop_home') == 'false')
-		smartestbusiness_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'crucible') ), 'smartest_home_page_id', __('Home', 'crucible'), '' );
+		smartestbusiness_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'crucible') ), 'smartestthemes_home_page_id', __('Home', 'crucible'), '' );
 	// Activate Smartest Reviews
 	if (!class_exists('SMARTESTReviewsBusiness') && (get_option('smartestthemes_add_reviews') == 'true'))
 		include_once(get_template_directory() .'/business-framework/modules/smartest-reviews/smartest-reviews.php');
@@ -75,22 +75,22 @@ add_action('after_setup_theme','smartestbusiness_after_setup');
  * if about page is disabled, delete it
  */
 if(get_option('smartestthemes_stop_about') == 'true') {
-	wp_delete_post(get_option('smartest_about_page_id'), true);
+	wp_delete_post(get_option('smartestthemes_about_page_id'), true);
 }
 /**
  * if auto Home page is disabled, delete it
  */
 if(get_option('smartestthemes_stop_home') == 'true') {
-	wp_delete_post(get_option('smartest_home_page_id'), true);
+	wp_delete_post(get_option('smartestthemes_home_page_id'), true);
 }
-update_post_meta(get_option('smartest_home_page_id'), '_wp_page_template', 'smar-home.php');
+update_post_meta(get_option('smartestthemes_home_page_id'), '_wp_page_template', 'smar-home.php');
 /**
  * set static front page, unless disabled
  */
 
 if( get_option('smartestthemes_stop_static') == 'false') {
 	update_option( 'show_on_front', 'page' );
-	update_option( 'page_on_front', get_option('smartest_home_page_id') );
+	update_option( 'page_on_front', get_option('smartestthemes_home_page_id') );
 }
 
 // Set the blog page, unless disabled
@@ -967,7 +967,7 @@ function smartest_framework_enq() {
 	wp_enqueue_style( 'frame' );
 	wp_register_script('responsive', get_template_directory_uri().'/business-framework/js/responsive.js', array('jquery'));
 	// not on reviews page
-	if( !is_page( get_option('smartest_reviews_page_id') ) ) {	
+	if( !is_page( get_option('smartestthemes_reviews_page_id') ) ) {	
 		wp_enqueue_script('responsive');
 	}
 	wp_enqueue_script('retina', get_template_directory_uri().'/business-framework/js/retina-1.1.0.min.js', array(), false, true );

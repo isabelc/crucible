@@ -174,14 +174,14 @@ function sbf_create_contact_page() {
 		// CONTACT form is not disabled so do it	
 		$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));
 		$contitle = sprintf(__('Contact %s','crucible'), $bn);
-		smartestbusiness_insert_post( 'page', esc_sql( _x('contact', 'page_slug', 'crucible') ), 'smartest_contact_page_id', $contitle );
+		smartestbusiness_insert_post( 'page', esc_sql( _x('contact', 'page_slug', 'crucible') ), 'smartestthemes_contact_page_id', $contitle );
 
 	}
 }
 add_action('after_setup_theme', 'sbf_create_contact_page');
 // if contact page is disabled, delete the page
 if(get_option('smartestthemes_stop_contact') == 'true') {
-	wp_delete_post(get_option('smartest_contact_page_id'), true);
+	wp_delete_post(get_option('smartestthemes_contact_page_id'), true);
 }
 /**
 * enqueue CSS and validation script
@@ -189,7 +189,7 @@ if(get_option('smartestthemes_stop_contact') == 'true') {
 function sbfc_enqueue_scripts() {
 	wp_register_script('sbfc-validate', get_template_directory_uri().'/business-framework/modules/contact/sbfc-validate.js', array('jquery'));
 	wp_register_style('contactstyle', get_template_directory_uri().'/business-framework/modules/contact/contact.css');
-	if (is_page(get_option('smartest_contact_page_id'))){
+	if (is_page(get_option('smartestthemes_contact_page_id'))){
 		wp_enqueue_script('sbfc-validate');
 		wp_enqueue_style('contactstyle');
 	}
