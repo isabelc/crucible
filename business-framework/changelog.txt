@@ -1,0 +1,157 @@
+﻿== Changelog for Smartest Business Framework ==
+
+= 2014.04.07 - version 2.3.7 =
+* New: replaced mysql_real_escape_string to comply with WP 3.9 and PHP 5.5+
+
+= 2014.04.04 - version 2.3.6 =
+* Fix: contact form was not displayed properly on Windows mobile devices.
+
+= 2014.04.02 - version 2.3.5 =
+* Tweak: show custom names on menu hover for Staff, Services, News
+
+= 2014.03.31 - version 2.3.4 =
+* Bug fix: do not update page content and id based on matching slug if page was not created by theme.
+* Maintenance: localized some strings in the contact form notification messages.
+* Tweak: removed PHP notice from contact module.
+
+= 2014.03.21 - version 2.3.3 =
+* Fix: _delete_retina_images gave warning when uploading plugins.
+
+= 2014.03.08 - version 2.3.2 =
+* New: Optional phone number field added to Contact form.
+
+= 2014.03.07 - version 2.3.1 =
+* Fix: Backend logo was missing due to changing backend branding options_logo default.
+* Maintenance: removed Theme Header output
+
+= 2014.03.01 - version 2.3.0 =
+* New: Retina-enabled, will create @2x retina images upon upload.
+* New: Backend Branding logo can be different from site logo
+
+= 2014.02.28 - version 2.2.9 =
+* New: Retina ready with retina.js
+* Tweak: removed generator tag from head for less markup.
+ 
+= 2014.02.10 - version 2.2.8 = 
+* Fix: pending reviews showed up in some rare cases.
+* Tweak: added width and height to wp-login page text logo.
+
+= 2014.02.07 - version 2.2.7 =
+* Fix: re-align social share buttons. 
+* New: menu dashicons for services, staff, announcements.
+* Tweak: do not show page navigation on bbPress forum pages.
+
+= 2014.02.03 - version 2.2.6 =
+* New: added option to enable sort order for Services with backwards compatibility for those without it.
+* Maintenance: fixed alignment for checkboxes in theme options.
+* Tweak: darker color for options fonts.
+* Removed 2 PHP warnings.
+
+= 2014.01.30 - version 2.2.5 =
+* Removed license requirement from Instruction Guides section.
+
+= 2014.01.15 - version 2.2.4 =
+* Removed license requirement from Ticket desk section.
+
+= 2014.01.10 - version 2.2.3 =
+* New: integrated theme license details.
+
+= 2013.12.19 - version 2.2.2 =
+* Maintenance: wp-login logo size was too big for WP 3.8.
+* Tweak: moved functions to register styles out of construct in all widgets.
+
+= 2013.11.18 - version 2.2.1 =
+* New: services categories capability.
+* New: option on All Services Widget to limit by category.
+* New: dynamic menu will automatically populate service sub-menu with service category terms.
+* Maintenance: internationalized 3 forgotten title attributes.
+
+= 2013.11.07 - version 2.2 =
+* Maintenance: removed deprecated function from contact.php.
+
+= 2013.11.01 - version 2.1.9 =
+* New: added ability to choose number of testimonials to display on Testimonials widget.
+
+= 2013.10.26 - version 2.1.8 =
+* Bug fix: removed slashes from custom services, news, and staff menu labels and page titles.
+
+= 2013.10.17 - version 2.1.7 =
+* Tweak: Staff sort order number will populate default in order to avoid leaving staff out of list because of missing sort order number.
+* Tweak: removed PHP notices from vt_resize().
+
+= 2013.10.07 - version 2.1.6 =
+* Bug fix: old Reviews did not display in admin backend if Reviews page id had been changed, or if theme had been deactivated and reactivated.
+* Bug fix: update_option() for setting home page template upon theme activation was broken.
+* Bug fix: ob_get_clean() in smartest-reviews.php needed conditional wrap.
+* Maintenance: removed deprecated functions, PHP notices and warnings from admin-setup, contact module, admin-interface, reviews.
+* Tweak: moved smartest-reviews register_script outside the Reviews page conditional so people can enqueue it on other pages, i.e. when using the shortcode.
+* Tweak: moved Contact form sbfc-validate script and contactstyle outside their page conditionals so people can enqueue them on other pages in case they use the shortcodes.
+* Tweak: better mobile CSS for Reviews and Contact forms.
+* Tweak: added line breaks to Reviews business address.
+* Minified: removed unused images.
+* Minified: smartest-functions.php, frame.css,
+
+= 2013.10.05 - version 2.1.5 =
+* Added sort order to staff, again.
+* New: use variable for slideshow metabox description which can be set from theme options.
+* New: added Linkedin for staff.
+* New: added radio2 option type.
+* Tweak: changed email headers in contact module to send from site and added Reply to: visitor.
+* Tweak: on smartest reviews home page aggregate rating microdata, changed reviewCount to ratingCount.
+* Tweak: changed CSS for staff widget to align better.
+* Tweak: Changed query_posts to new WP_Query in all widgets.
+* Updated admin-style.css for extra color boxes in theme options.
+
+= 2013.09.22 - version 2.1.4 =
+ * Tweak: call custom-style.php from wp_head action.
+
+= 2013.09.18 - version 2.1.3 =
+ * Tweak: filter wp_title instead of doing it in header.php
+ * Add meta tags via wp_head rather than in header.php.
+
+= 2013.09.18 - version 2.1.2 =
+ * Minified all CSS files except frame.
+ * Bug fix: Menu label text can be customized separately from Page title labels, for staff, news, and services.
+
+= 2013.09.10 - version 2.1.1 =
+ * Bug fix: removed ability to sort order for Staff because it ruined the dynamic menu.
+ * Tweak - compressed functions for cpt menu links.
+
+= 2013.08.25 - version 2.1.0 =
+ * Tweak - menu item labels now change according to custom title for staff, news, and services.
+ * Tweak - cleaned up logic for grabbing contact form delivery email.
+
+= 2013.08.24 - version 2.0.9 =
+ * New - now supports Multisite.
+ * Tweak: cleaned up unnecessary registering of ui.datepicker.js and jquery-ui-datepicker.css.
+ * Bug fix: metabox class was causing conflict with some plugins, which broke the image uploader for inserting media into posts.
+ * Updated js/ajaxupload.php
+
+= 2013.08.23 - version 2.0.8 =
+ * Bug fix: 1 Smartest Reviews microdata declaration was broken.
+ * Minimize: removed css/jquery-ui-datepicker.css.
+
+= 2013.07.24 - version 2.0.7 =
+ * Minimize: removed the file js/ui.datepicker.js, since currently not using it. May bring it back in the future.
+ * New: added ability to sort order for Staff archive. 
+
+= 2013.07.10 - version 2.0.6 =
+ * Bug fix: Testimonials widget was not showing review from database since it was set up for networks rather than single-site installations.
+
+= 2013.07.05 - version 2.0.5 =
+ * Changes: Using get_post_type_archive_link instead of get_post_type_archive_link() instead of site_url() for nav menu.
+ * Fixed typo in framework functions.
+ * Tweak: include, rather than require, mce_table_buttons to avoid errors.
+
+= 2013.03.17 - version 2.0.4 =
+ * Updates: Masked Input 1.3.1. Ajax upload 3.4. 
+ * Tweak:  Option to stop auto Home page.
+
+= 2013.03.14 - version 2.0.3 =
+ * Tweaks: Removed errors from admin-interface. Smartest Reviews form is now responsive. Redesigned staff widget. Modifyed vt_resize, replaced deprecated image_resize with wp_get_image_editor.
+
+= 2013.03.11 - version 2.0.2 =
+ * Changes: Moved smartest_share and smartestblankie_content_nav to framework. Added responsive css to frame.css for smartshare and comments. Removed FDIR definition. Removed  errors & undefined vars in smartest-reviews. Customized anchor text in smartestblankie_content_nav for cpts. Added responsive css to widgets.
+
+= 2013.02.27 - version 2.0.1 =
+ * Changes: Simplified functions (less code). Added framework stylesheet for functional CSS. Added slider with thumbnail preview column in admin. Added Featured News widget.
