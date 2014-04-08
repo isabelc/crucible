@@ -1,8 +1,8 @@
 <?php 
 /**
- * Smartest Business Framework 
+ * Smartest Themes Business Framework 
  * License: GNU General Public License
- * @package    Smartest Business Framework
+ * @package    Smartest Themes Business Framework
  * @author     Smartest Themes <isa@smartestthemes.com>
  * @version    2.3.7
  */

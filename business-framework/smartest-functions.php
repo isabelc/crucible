@@ -1,7 +1,7 @@
 <?php
 /** 
  * Smartest Functions
- * @package    Smartest Business Framework
+ * @package    Smartest Themes Business Framework
 */
 function smartestthemes_login_logo() {
 	$buslogo =  get_option('smartestthemes_logo');

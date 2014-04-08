@@ -1,4 +1,4 @@
-== Changelog for Smartest Business Framework ==
+== Changelog for Smartest Themes Business Framework ==
 
 = 2014.04.07 - version 2.3.7 =
 * New: replaced mysql_real_escape_string to comply with WP 3.9 and PHP 5.5+

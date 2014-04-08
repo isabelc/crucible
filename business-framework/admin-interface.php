@@ -1,7 +1,7 @@
 <?php
 /** 
  * Admin Interface
- * @package    Smartest Business Framework
+ * @package    Smartest Themes Business Framework
 */
 // Load static framework options pages 
 function smartestthemes_add_admin() {

@@ -1,11 +1,8 @@
 <?php
 /** 
 * Admin Setup
-* @package Smartest Business Framework
+* @package Smartest Themes Business Framework
 */
-// Also, do i need to define this?
-define('THEME_FRAMEWORK','Smartest Business Framework');// @new edit name per diff frame
-
 /* Add default options and show Options Panel after activate  */
 if (is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" ) {
 	add_action('admin_head','smartestthemes_option_setup');
