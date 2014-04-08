@@ -6,14 +6,14 @@
 define('THEME_FRAMEWORK','Smartest Business Framework');// @new edit name per diff frame
 /* Add default options and show Options Panel after activate  */
 if (is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" ) {
-	add_action('admin_head','smartestb_option_setup');
+	add_action('admin_head','smartestthemes_option_setup');
 	// Do redirect. @new edit page if needed
 	header( 'Location: '.admin_url().'admin.php?page=smartestbthemes' ) ;
 }
-function smartestb_option_setup(){
+function smartestthemes_option_setup(){
 	//Update EMPTY options
-	$smartestb_array = array();
-	add_option('smartestthemes_options',$smartestb_array);
+	$smartestthemes_array = array();
+	add_option('smartestthemes_options',$smartestthemes_array);
 	$template = get_option('smartestthemes_template');
 	$saved_options = get_option('smartestthemes_options');
 	foreach($template as $option) {
@@ -27,19 +27,19 @@ function smartestb_option_setup(){
 						$c_id = $child['id'];
 						$c_std = $child['std'];
 						update_option($c_id,$c_std);
-						$smartestb_array[$c_id] = $c_std; 
+						$smartestthemes_array[$c_id] = $c_std; 
 					}
 				} else {
 					update_option($id,$std);
-					$smartestb_array[$id] = $std;
+					$smartestthemes_array[$id] = $std;
 				}
 			}
 			else { //So just store the old values over again.
-				$smartestb_array[$id] = $db_option;
+				$smartestthemes_array[$id] = $db_option;
 			}
 		}
 	}
-	update_option('smartestthemes_options',$smartestb_array);
+	update_option('smartestthemes_options',$smartestthemes_array);
 }
 
 function smartestthemes_activate_msg( ) {

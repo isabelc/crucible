@@ -21,7 +21,7 @@ function smartestthemes_add_admin() {
 	add_smar_admin_menu_separator(44);
 } 
 add_action('admin_menu', 'smartestthemes_add_admin');
-/* Smartest Business Themes Reset */
+/* Reset options */
 function smartestthemes_reset_options($options,$page = ''){
 	global $wpdb;
 	$query_inner = '';
@@ -83,7 +83,7 @@ function smartestthemes_options_page(){
     <form action="" enctype="multipart/form-data" id="smartestbform">
         <div id="header">
            <div class="logo">
-		<?php echo apply_filters('smartestb_backend_branding', '<img alt="Smartest Themes" src="'. $fDIR. 'images/st_logo_admin.png" />'); ?>
+		<?php echo apply_filters('smartestthemes_backend_branding', '<img alt="Smartest Themes" src="'. $fDIR. 'images/st_logo_admin.png" />'); ?>
           </div>
              <div class="theme-info">
 				<span class="theme" style="margin-top:10px;"><?php printf(__('%s', 'crucible'), $themename); ?>
@@ -166,11 +166,11 @@ function smartestthemes_options_page(){
 }
 function smartestthemes_frame_load() {
 	$fr = get_template_directory_uri(). '/business-framework/';
-	add_action('admin_head', 'smartestb_admin_head');
+	add_action('admin_head', 'smartestthemes_admin_head');
 	wp_enqueue_script('jquery-ui-core');
 	wp_register_script('jquery-input-mask', $fr. 'js/jquery.maskedinput-1.3.1.min.js', array( 'jquery' ));
 	wp_enqueue_script('jquery-input-mask');
-	function smartestb_admin_head() { 
+	function smartestthemes_admin_head() { 
 		$fr = get_template_directory_uri(). '/business-framework/'; ?>
 		<link rel="stylesheet" type="text/css" href="<?php echo $fr; ?>css/admin-style.css" media="screen" />
  		<link rel="stylesheet" media="screen" type="text/css" href="<?php echo $fr; ?>css/colorpicker.css" />
@@ -302,7 +302,7 @@ function smartestthemes_frame_load() {
 				  action: '<?php echo admin_url("admin-ajax.php"); ?>',
 				  name: clickedID, // File upload name
 				  data: { // Additional data to send
-						action: 'smartestb_ajax_post_action',
+						action: 'smartestthemes_ajax_post_action',
 						type: 'upload',
 						data: clickedID },
 				  autoSubmit: true, // Submit file after selection
@@ -355,7 +355,7 @@ function smartestthemes_frame_load() {
 					var ajax_url = '<?php echo admin_url("admin-ajax.php"); ?>';
 				
 					var data = {
-						action: 'smartestb_ajax_post_action',
+						action: 'smartestthemes_ajax_post_action',
 						type: 'image_reset',
 						data: theID
 					};
@@ -383,7 +383,7 @@ function smartestthemes_frame_load() {
 						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'smartestbthemes'){ ?>
 						type: 'options',
 						<?php } ?>
-						action: 'smartestb_ajax_post_action',
+						action: 'smartestthemes_ajax_post_action',
 						data: serializedReturn
 					};
 					jQuery.post(ajax_url, data, function(response) {
@@ -404,9 +404,7 @@ function smartestthemes_frame_load() {
 /**
  * Ajax Save Action
  */
-
-add_action('wp_ajax_smartestb_ajax_post_action', 'smartestb_ajax_callback');
-function smartestb_ajax_callback() {
+function smartestthemes_ajax_callback() {
 	global $wpdb;
 	$save_type = $_POST['type'];
 	if($save_type == 'upload'){
@@ -435,22 +433,18 @@ function smartestb_ajax_callback() {
 			wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $uploaded_file['file'] ) );
 			echo $uploaded_file['url']; 
 		}
-	}
-	elseif($save_type == 'image_reset'){
+	} elseif($save_type == 'image_reset'){
 			
 			$id = $_POST['data']; // Acts as the name
 			global $wpdb;
 			$query = "DELETE FROM $wpdb->options WHERE option_name LIKE '$id'";
 			$wpdb->query($query);
 	
-	}	
-	elseif ($save_type == 'options') {
+	} elseif ($save_type == 'options') {
 
 		$data = $_POST['data'];
 		parse_str($data,$output);
-		//print_r($output);
-		
-		//Pull options
+
         	$options = get_option('smartestthemes_template');
 				
 		foreach($options as $option_array){
@@ -463,7 +457,7 @@ function smartestb_ajax_callback() {
 			if(isset($option_array['id'])) { // Non - Headings...
 				
 				//Import of prior saved options
-				if($id == 'framework_smartestb_import_options'){
+				if($id == 'framework_smartestthemes_import_options'){
 					//Decode and over write options.
 					$new_import = $new_value;
 					$new_import = unserialize($new_import);
@@ -564,7 +558,7 @@ function smartestb_ajax_callback() {
 				if(is_serialized($value)) {
 					
 					$value = unserialize($value);
-					$smartestb_array_option = $value;
+					$smartestthemes_array_option = $value;
 					$temp_options = '';
 					foreach($value as $v){
 						if(isset($v))
@@ -572,21 +566,23 @@ function smartestb_ajax_callback() {
 						
 					}	
 					$value = $temp_options;
-					$smartestb_array[$name] = $smartestb_array_option;
+					$smartestthemes_array[$name] = $smartestthemes_array_option;
 				} else {
-					$smartestb_array[$name] = $value;
+					$smartestthemes_array[$name] = $value;
 				}
 				
 				$output .= '<li><strong>' . $name . '</strong> - ' . $value . '</li>';
 		}
 		$output .= "</ul>";
-		update_option('smartestthemes_options',$smartestb_array);
-		update_option('smartestb_settings_encode',$output);
+		update_option('smartestthemes_options',$smartestthemes_array);
+		update_option('smartestthemes_settings_encode',$output);
 		// this makes it finally flush, but only if you save twice. Isa
 		flush_rewrite_rules();
 	}
 	die();
 }
+add_action('wp_ajax_smartestthemes_ajax_post_action', 'smartestthemes_ajax_callback');
+
 /**
  * Generates The Options
  */
@@ -756,8 +752,8 @@ function smartestbthemes_machine($options) {
 			
 			foreach ($value['options'] as $key => $option) {
 											 
-			$smartestb_key = $value['id'] . '_' . $key;
-			$saved_std = get_option($smartestb_key);
+			$smartestthemes_key = $value['id'] . '_' . $key;
+			$saved_std = get_option($smartestthemes_key);
 					
 			if(!empty($saved_std)) 
 			{ 
@@ -773,7 +769,7 @@ function smartestbthemes_machine($options) {
 			}
 			else {
 				$checked = '';                                                                                    }
-			$output .= '<input type="checkbox" class="checkbox smartestthemes-input" name="'. $smartestb_key .'" id="'. $smartestb_key .'" value="true" '. $checked .' /><label for="'. $smartestb_key .'">'. $option .'</label><br />';
+			$output .= '<input type="checkbox" class="checkbox smartestthemes-input" name="'. $smartestthemes_key .'" id="'. $smartestthemes_key .'" value="true" '. $checked .' /><label for="'. $smartestthemes_key .'">'. $option .'</label><br />';
 										
 			}
 		break;

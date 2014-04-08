@@ -174,7 +174,7 @@ function sbf_create_contact_page() {
 		// CONTACT form is not disabled so do it	
 		$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));
 		$contitle = sprintf(__('Contact %s','crucible'), $bn);
-		smartestbusiness_insert_post( 'page', esc_sql( _x('contact', 'page_slug', 'crucible') ), 'smartestthemes_contact_page_id', $contitle );
+		smartestthemes_insert_post( 'page', esc_sql( _x('contact', 'page_slug', 'crucible') ), 'smartestthemes_contact_page_id', $contitle );
 
 	}
 }

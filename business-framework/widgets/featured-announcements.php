@@ -69,7 +69,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 			<img class="thumb" src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" />
 		<?php echo '</a></figure>';
 		} else {
-				// if not stopped with option smartestb_stop_theme_icon
+				// if not stopped with option
 				if(get_option('smartestthemes_stop_theme_icon') != 'true') {
 				$smallimage = array('url' => get_template_directory_uri(). '/images/newsicon.png', 'width' => '40px', 'cl' => 'icon');
 					echo '<figure class="img-indent"><a href="'.get_permalink().'" title="'.get_the_title().'">'; ?>

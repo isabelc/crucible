@@ -38,8 +38,8 @@ class SMARTESTReviewsBusiness {
 		add_action('template_redirect',array(&$this, 'template_redirect')); /* handle redirects and form posts, and add style/script if needed */
 		add_action('admin_menu', array(&$this, 'addmenu'));
 		add_action('wp_ajax_update_field', array(&$this, 'admin_view_reviews'));
-		add_action('save_post', array(&$this, 'admin_save_post'), 10, 2); /* 2 arguments */
-		add_action( 'admin_init', array(&$this, 'smartestt_create_reviews_page'));//@note, but for stand-alone plugin hook to after_setup_theme
+		add_action('save_post', array(&$this, 'admin_save_post'), 10, 2);
+		add_action( 'admin_init', array(&$this, 'smartestthemes_create_reviews_page'));//@note, but for stand-alone plugin hook to after_setup_theme
 		add_action('wp_enqueue_scripts', array(&$this, 'smartestreviews_scripts'));
 		add_action('admin_enqueue_scripts', array(&$this, 'smartestreviews_scripts'));
 		add_action('admin_enqueue_scripts', array(&$this, 'admin_scripts'));
@@ -303,48 +303,48 @@ else {$show = false; }
        	if ($show) { /* we append like this to prevent newlines and wpautop issues */
 				// if set to declare business schema type, do it
             	if ( $this->options['biz_declare'] == 1 ) {
-						$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['smartestb_business_itemtype'] . '"';
+						$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['smartestthemes_business_itemtype'] . '"';
 		                $aggregate_footer_output = '<div id="smar_respond_1"><div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
 
 $smartestthemes_options = get_option('smartestthemes_options');
-	$bn = stripslashes_deep(esc_attr($smartestthemes_options['smartestb_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
+	$bn = stripslashes_deep(esc_attr($smartestthemes_options['smartestthemes_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
 
               $aggregate_footer_output .= '<a itemprop="name" href="' . site_url('/')
  . '">' . $bn . '</a><br />';
-		                if (	$smartestthemes_options['smartestb_address_street'] != '' || 
-			                        $smartestthemes_options['smartestb_address_city'] != '' ||
-			                        $smartestthemes_options['smartestb_address_state'] != '' ||
-			                        $smartestthemes_options['smartestb_address_zip'] != '' ||
-			                        $smartestthemes_options['smartestb_address_country'] != ''
+		                if (	$smartestthemes_options['smartestthemes_address_street'] != '' || 
+			                        $smartestthemes_options['smartestthemes_address_city'] != '' ||
+			                        $smartestthemes_options['smartestthemes_address_state'] != '' ||
+			                        $smartestthemes_options['smartestthemes_address_zip'] != '' ||
+			                        $smartestthemes_options['smartestthemes_address_country'] != ''
 			                   )
 			                {
 			                    $aggregate_footer_output .= '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
-			                    if ($smartestthemes_options['smartestb_address_street'] != '') {
-			                        $aggregate_footer_output .= '<span itemprop="streetAddress">' . $smartestthemes_options['smartestb_address_street'] . '</span>&nbsp;';
+			                    if ($smartestthemes_options['smartestthemes_address_street'] != '') {
+			                        $aggregate_footer_output .= '<span itemprop="streetAddress">' . $smartestthemes_options['smartestthemes_address_street'] . '</span>&nbsp;';
 			                    }
 
-								if ($smartestthemes_options['smartestb_address_suite'] != '') {
-											                        $aggregate_footer_output .= ' ' . $smartestthemes_options['smartestb_address_suite'] . '&nbsp;';
+								if ($smartestthemes_options['smartestthemes_address_suite'] != '') {
+											                        $aggregate_footer_output .= ' ' . $smartestthemes_options['smartestthemes_address_suite'] . '&nbsp;';
 											                    }
 
-			                    if ($smartestthemes_options['smartestb_address_city'] != '') {
-			                        $aggregate_footer_output .='<span itemprop="addressLocality">' . $smartestthemes_options['smartestb_address_city'] . '</span>,&nbsp;';
+			                    if ($smartestthemes_options['smartestthemes_address_city'] != '') {
+			                        $aggregate_footer_output .='<span itemprop="addressLocality">' . $smartestthemes_options['smartestthemes_address_city'] . '</span>,&nbsp;';
 			                    }
-			                    if ($smartestthemes_options['smartestb_address_state'] != '') {
-			                        $aggregate_footer_output .='<span itemprop="addressRegion">' . $smartestthemes_options['smartestb_address_state'] . '</span>,&nbsp;';
+			                    if ($smartestthemes_options['smartestthemes_address_state'] != '') {
+			                        $aggregate_footer_output .='<span itemprop="addressRegion">' . $smartestthemes_options['smartestthemes_address_state'] . '</span>,&nbsp;';
 			                    }
-			                    if ($smartestthemes_options['smartestb_address_zip'] != '') {
-			                        $aggregate_footer_output .='<span class="postal-code" itemprop="postalCode">' . $smartestthemes_options['smartestb_address_zip'] . '</span>&nbsp;';
+			                    if ($smartestthemes_options['smartestthemes_address_zip'] != '') {
+			                        $aggregate_footer_output .='<span class="postal-code" itemprop="postalCode">' . $smartestthemes_options['smartestthemes_address_zip'] . '</span>&nbsp;';
 			                    }
-			                    if ($smartestthemes_options['smartestb_address_country'] != '') {
-			                        $aggregate_footer_output .='<span itemprop="addressCountry">' . $smartestthemes_options['smartestb_address_country'] . '</span>&nbsp;';
+			                    if ($smartestthemes_options['smartestthemes_address_country'] != '') {
+			                        $aggregate_footer_output .='<span itemprop="addressCountry">' . $smartestthemes_options['smartestthemes_address_country'] . '</span>&nbsp;';
 			                    }
 			
 			                    $aggregate_footer_output .= '</span>';
 			                }
 			
-			                if ( $smartestthemes_options['smartestb_phone_number'] != '') {
-			                    $aggregate_footer_output .= '<br />&nbsp;&bull;&nbsp<span itemprop="telephone">' . $smartestthemes_options['smartestb_phone_number'] . '</span>';
+			                if ( $smartestthemes_options['smartestthemes_phone_number'] != '') {
+			                    $aggregate_footer_output .= '<br />&nbsp;&bull;&nbsp<span itemprop="telephone">' . $smartestthemes_options['smartestthemes_phone_number'] . '</span>';
 			                }
 					} else { // end if biz_declare, do else
 							$aggregate_footer_output = '<div id="smar_respond_1"><div id="smar_hcard_s" class="isa_vcard">';
@@ -459,7 +459,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
         $title_tag = $this->options['title_tag'];
 		global $smartestthemes_options;
 		$smartestthemes_options = get_option('smartestthemes_options');
-		$bn = stripslashes_deep(esc_attr($smartestthemes_options['smartestb_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
+		$bn = stripslashes_deep(esc_attr($smartestthemes_options['smartestthemes_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
 /* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
          trying to access a page that does not exist -- send to main page 
         if ( isset($this->p->smarp) && $this->p->smarp != 1 && count($reviews) == 0 ) {
@@ -473,34 +473,34 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
         }
         if (!$inside_div) {
             $reviews_content .= '<!-- no inside div --><div id="smar_respond_1"';
-				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['smartestb_business_itemtype'].'">
+				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['smartestthemes_business_itemtype'].'">
 							<span class="isa_vcard" id="hreview-smar-hcard-for-' . $review->id . '">
                                 <a itemprop="name" href="' . site_url('/') . '">' . $bn . '</a>
-                                <span itemprop="telephone">' . $smartestthemes_options['smartestb_phone_number'] . '</span>
+                                <span itemprop="telephone">' . $smartestthemes_options['smartestthemes_phone_number'] . '</span>
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                    <span itemprop="streetAddress">' . $smartestthemes_options['smartestb_address_street'] . ' ' .$smartestthemes_options['smartestb_address_suite'] . '</span>
-                                    <span itemprop="addressLocality">' . $smartestthemes_options['smartestb_address_city'] . '</span>
-                                    <span itemprop="addressRegion">' . $smartestthemes_options['smartestb_address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['smartestb_address_zip'] . '</span>
-                                    <span itemprop="addressCountry">' . $smartestthemes_options['smartestb_address_country'] . '</span></span></span><hr />';
+                    <span itemprop="streetAddress">' . $smartestthemes_options['smartestthemes_address_street'] . ' ' .$smartestthemes_options['smartestthemes_address_suite'] . '</span>
+                                    <span itemprop="addressLocality">' . $smartestthemes_options['smartestthemes_address_city'] . '</span>
+                                    <span itemprop="addressRegion">' . $smartestthemes_options['smartestthemes_address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['smartestthemes_address_zip'] . '</span>
+                                    <span itemprop="addressCountry">' . $smartestthemes_options['smartestthemes_address_country'] . '</span></span></span><hr />';
         }
         if (count($reviews) == 0) {
             $reviews_content .= '<p>'. __('There are no reviews yet. Be the first to leave yours!', 'crucible').'</p>';
-        } elseif ($smartestthemes_options['smartestb_add_reviews'] == 'false') {
+        } elseif ($smartestthemes_options['smartestthemes_add_reviews'] == 'false') {
 				$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
         } else {	   		$postid = get_option('smartestthemes_reviews_page_id');
             $this->get_aggregate_reviews($postid);
             $summary = $this->got_aggregate["text"];
             $best_score = 5;
             $average_score = number_format($this->got_aggregate["aggregate"], 1);
-			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['smartestb_business_itemtype'].'"><br />
+			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['smartestthemes_business_itemtype'].'"><br />
 							<span class="isa_vcard">
                                 <a itemprop="name" href="' . site_url('/') . '">' . $bn . '</a><br />
-                                <span itemprop="telephone">' . $smartestthemes_options['smartestb_phone_number'] . '</span><br />
+                                <span itemprop="telephone">' . $smartestthemes_options['smartestthemes_phone_number'] . '</span><br />
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                    <span itemprop="streetAddress">' . $smartestthemes_options['smartestb_address_street'] . ' ' .$smartestthemes_options['smartestb_address_suite'] . '</span><br />
-                                    <span itemprop="addressLocality">' . $smartestthemes_options['smartestb_address_city'] . '</span>
-                                    <span itemprop="addressRegion">' . $smartestthemes_options['smartestb_address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['smartestb_address_zip'] . '</span>
-                                    <span itemprop="addressCountry">' . $smartestthemes_options['smartestb_address_country'] . '</span>
+                                    <span itemprop="streetAddress">' . $smartestthemes_options['smartestthemes_address_street'] . ' ' .$smartestthemes_options['smartestthemes_address_suite'] . '</span><br />
+                                    <span itemprop="addressLocality">' . $smartestthemes_options['smartestthemes_address_city'] . '</span>
+                                    <span itemprop="addressRegion">' . $smartestthemes_options['smartestthemes_address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['smartestthemes_address_zip'] . '</span>
+                                    <span itemprop="addressCountry">' . $smartestthemes_options['smartestthemes_address_country'] . '</span>
                                 </span>
                             </span><hr />';
 
@@ -599,12 +599,12 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
 
 /**
  * Create pages that the plugin relies on, storing page id's in variables.
- * @uses smartestbusiness_insert_post()
+ * @uses smartestthemes_insert_post()
  */
-function smartestt_create_reviews_page() {
+function smartestthemes_create_reviews_page() {
 	// if set in theme options
 	if(get_option('smartestthemes_add_reviews') == 'true') {
-		smartestbusiness_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[SMAR_INSERT]' );
+		smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[SMAR_INSERT]' );
 	}
 
 }
@@ -931,7 +931,7 @@ function do_the_content($original_content) {
 
 		global $smartestthemes_options;
 		$smartestthemes_options = get_option('smartestthemes_options');
-		$bn = stripslashes_deep($smartestthemes_options['smartestb_business_name']);if(!$bn) {$bn = get_bloginfo('name'); }
+		$bn = stripslashes_deep($smartestthemes_options['smartestthemes_business_name']);if(!$bn) {$bn = get_bloginfo('name'); }
         $admin_linkpre = get_admin_url().'admin.php?page=smar_view_reviews';
         $admin_link = sprintf(__('Link to admin approval page: %s', 'crucible'), $admin_linkpre);
 		$ac = sprintf(__('A new review has been posted on %1$s\'s website.','crucible'),$bn) . "\n\n" .

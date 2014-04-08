@@ -696,8 +696,7 @@ class SMARTESTReviewsBusinessAdmin
                         <td class="comment column-comment">
                           <div class="smar-submitted-on">
                             <span class="best_in_place" data-url='<?php echo $update_path; ?>' data-object='json' data-attribute='date_time'>
-<!-- <?php echo date("m/d/Y g:i a",strtotime($review->date_time)); ?> -->
-<?php echo date(__('m/d/Y g:i a', 'crucible'),strtotime(__($review->date_time,' smartestb'))); ?><!-- isa locale -->
+<?php echo date(__('m/d/Y g:i a', 'crucible'),strtotime(__($review->date_time, 'crucible'))); ?>
                             </span>
                             <?php if ($review->status == 1) : ?>[<a target="_blank" href="<?php echo $this->parentClass->get_jumplink_for_review($review,$this->page); ?>"><?php _e('View Review on Page', 'crucible'); ?></a>]<?php endif; ?>
                           </div>

@@ -32,7 +32,7 @@ add_filter('login_headertitle', 'isacustom_wp_login_title');
  * @param int $post_parent (default: 0) Parent for the new page
  * @since Smartest Business Framework 2.0.1
  */
-function smartestbusiness_insert_post($potype, $slug, $option, $page_title = '', $page_content = '', $post_parent = 0 ) {
+function smartestthemes_insert_post($potype, $slug, $option, $page_title = '', $page_content = '', $post_parent = 0 ) {
 	global $wpdb;
 	$option_value = get_option( $option );
 	if ( $option_value > 0 && get_post( $option_value ) )
@@ -52,7 +52,7 @@ function smartestbusiness_insert_post($potype, $slug, $option, $page_title = '',
 }
 /**
  * Create pages: about, home, storing page id's in variables.
- * Uses smartestbusiness_insert_post()
+ * Uses smartestthemes_insert_post()
  * 
  * Activate Smartest Reviews
  */
@@ -61,9 +61,9 @@ function smartestbusiness_after_setup() {
 	$atitle = sprintf(__('About %s','crucible'), $bn);
 	// if not disabled in options 
 	if(get_option('smartestthemes_stop_about') == 'false')
-		smartestbusiness_insert_post( 'page', esc_sql( _x('about', 'page_slug', 'crucible') ), 'smartestthemes_about_page_id', $atitle, '' );
+		smartestthemes_insert_post( 'page', esc_sql( _x('about', 'page_slug', 'crucible') ), 'smartestthemes_about_page_id', $atitle, '' );
 	if(get_option('smartestthemes_stop_home') == 'false')
-		smartestbusiness_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'crucible') ), 'smartestthemes_home_page_id', __('Home', 'crucible'), '' );
+		smartestthemes_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'crucible') ), 'smartestthemes_home_page_id', __('Home', 'crucible'), '' );
 	// Activate Smartest Reviews
 	if (!class_exists('SMARTESTReviewsBusiness') && (get_option('smartestthemes_add_reviews') == 'true'))
 		include_once(get_template_directory() .'/business-framework/modules/smartest-reviews/smartest-reviews.php');
