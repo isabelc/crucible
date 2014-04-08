@@ -1,6 +1,6 @@
 <?php
 /** 
- * Smartest Functions
+ * Smartest Themes Framework Functions
  * @package    Smartest Themes Business Framework
 */
 function smartestthemes_login_logo() {
@@ -252,7 +252,6 @@ function create_smartest_business_cpts() {
 		        	'rewrite' => array(
 							'slug' => __('news','crucible'),
 							'with_front' => false,
-
 					),
 		        	'exclude_from_search' => false,
 	        		'labels' => array(
@@ -290,7 +289,6 @@ function create_smartest_business_cpts() {
 		        	'rewrite' => array(
 							'slug' => __('services','crucible'),
 							'with_front' => false,
-
 					),
 		        	'exclude_from_search' => false,
 	        		'labels' => array(
@@ -779,7 +777,7 @@ function smartestthemes_tool_bar() {
 	$wp_admin_bar->remove_menu('customize');
 	$wp_admin_bar->add_menu( array(
 		'parent'	=> 'appearance',
-		'id'		=> 'smartestt-options',
+		'id'		=> 'smartestthemes-options',
 		'title'	=> $themename. __(' Options', 'crucible'),
 		'href'	=> admin_url( 'admin.php?page=$themeslug')
 	));// @test admin_url with var in param

@@ -148,10 +148,10 @@
  * Tweak:  Option to stop auto Home page.
 
 = 2013.03.14 - version 2.0.3 =
- * Tweaks: Removed errors from admin-interface. Smartest Reviews form is now responsive. Redesigned staff widget. Modifyed vt_resize, replaced deprecated image_resize with wp_get_image_editor.
+ * Tweaks: Removed errors from admin-interface. Reviews form is now responsive. Redesigned staff widget. Modifyed vt_resize, replaced deprecated image_resize with wp_get_image_editor.
 
 = 2013.03.11 - version 2.0.2 =
- * Changes: Moved smartest_share and smartestblankie_content_nav to framework. Added responsive css to frame.css for smartshare and comments. Removed FDIR definition. Removed  errors & undefined vars in smartest-reviews. Customized anchor text in smartestblankie_content_nav for cpts. Added responsive css to widgets.
+ * Changes: Moved _share and _content_nav to framework. Added responsive css to frame.css for_share and comments. Removed FDIR definition. Removed  errors & undefined vars in reviews. Customized anchor text in _content_nav for cpts. Added responsive css to widgets.
 
 = 2013.02.27 - version 2.0.1 =
  * Changes: Simplified functions (less code). Added framework stylesheet for functional CSS. Added slider with thumbnail preview column in admin. Added Featured News widget.
