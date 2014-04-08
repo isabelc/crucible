@@ -772,19 +772,20 @@ function custom_news_heading() {
 include dirname( __FILE__ ) . '/lib/mce-table/mce_table_buttons.php';
 
 /**
- * Change wp admin bar
+ * Change wp tool bar
  * Add link to theme options, remove customize link
  */
 function smartestthemes_tool_bar() {
-	$themename =  get_option('smartestthemes_themename');
-    global $wp_admin_bar;
-    $wp_admin_bar->remove_menu('customize');
-    $wp_admin_bar->add_menu( array(
-        'parent' => 'appearance',
-        'id' => 'smartestt-options',
-        'title' => $themename. __(' Options', 'crucible'),
-        'href' => admin_url( 'admin.php?page=smartestbthemes')
-    ) );
+	$themename = get_option('smartestthemes_themename');
+	$themeslug = get_option('smartestthemes_themeslug');
+	global $wp_admin_bar;
+	$wp_admin_bar->remove_menu('customize');
+	$wp_admin_bar->add_menu( array(
+		'parent'	=> 'appearance',
+		'id'		=> 'smartestt-options',
+		'title'	=> $themename. __(' Options', 'crucible'),
+		'href'	=> admin_url( 'admin.php?page=$themeslug')
+	));// @test admin_url with var in param
 }
 add_action( 'wp_before_admin_bar_render', 'smartestthemes_tool_bar' );
 

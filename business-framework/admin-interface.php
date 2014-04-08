@@ -6,17 +6,18 @@
 // Load static framework options pages 
 function smartestthemes_add_admin() {
 	global $query_string;
-	$themename =  get_option('smartestthemes_themename');      
-	if ( isset($_REQUEST['page']) && $_REQUEST['page'] == 'smartestbthemes' ) {
+	$themename = get_option('smartestthemes_themename');
+	$themeslug = get_option('smartestthemes_themeslug');
+	if ( isset($_REQUEST['page']) && $themeslug == $_REQUEST['page'] ) {
 		if (isset($_REQUEST['smartestthemes_save']) && 'reset' == $_REQUEST['smartestthemes_save']) {
-			$options =  get_option('smartestthemes_template'); 
-			smartestthemes_reset_options($options,'smartestbthemes');
-			header("Location: admin.php?page=smartestbthemes&reset=true");
+			$options =  get_option('smartestthemes_template');
+			smartestthemes_reset_options($options,$themeslug);
+			header("Location: admin.php?page=$themeslug&reset=true");// @test $themeslug
 			die;
 		}
 	}
 	$icon = get_template_directory_uri(). '/business-framework/images/smartestthemes-icon.png';
-	$sto=add_menu_page(sprintf(__('%s Options', 'crucible'), $themename), sprintf(__('%s Options', 'crucible'), $themename), 'activate_plugins','smartestbthemes', 'smartestthemes_options_page', $icon, 45);
+	$sto=add_menu_page(sprintf(__('%s Options', 'crucible'), $themename), sprintf(__('%s Options', 'crucible'), $themename), 'activate_plugins', $themeslug, 'smartestthemes_options_page', $icon, 45);
 	add_action( 'admin_head-'. $sto, 'smartestthemes_frame_load' );
 	add_smar_admin_menu_separator(44);
 } 
@@ -59,11 +60,10 @@ function smartestthemes_reset_options($options,$page = ''){
 				$query_inner .= "option_name = '$option_id'";
 			}
 		}
-			
 	}
 	
 	//When Theme Options page is reset - Add the smartestthemes_options option
-	if($page == 'smartestbthemes'){
+	if ( $page == get_option('smartestthemes_themeslug') ) {
 		$query_inner .= " OR option_name = 'smartestthemes_options'";
 	}
 	$query = "DELETE FROM $wpdb->options WHERE $query_inner";
@@ -71,16 +71,16 @@ function smartestthemes_reset_options($options,$page = ''){
 }
 /* Framework options panel */
 function smartestthemes_options_page(){
-    $options = get_option('smartestthemes_template');      
-    $manualurl = get_option('smartestthemes_manual');
+	$options = get_option('smartestthemes_template');      
+	$manualurl = get_option('smartestthemes_manual');
 	$themedata = wp_get_theme();
-    $themename = $themedata->Name;
+	$themename = $themedata->Name;
 	$local_version = $themedata->Version;
 	$fDIR = get_template_directory_uri().'/business-framework/'; ?>
 <div class="wrap" id="smartestthemes-container">
 <div id="smartestthemes-popup-save" class="smartestthemes-save-popup"><div class="smartestthemes-save-save"><?php _e('Options Updated', 'crucible'); ?></div></div>
 <div id="smartestthemes-popup-reset" class="smartestthemes-save-popup"><div class="smartestthemes-save-reset"><?php _e('Options Reset', 'crucible'); ?></div></div>
-    <form action="" enctype="multipart/form-data" id="smartestbform">
+    <form action="" enctype="multipart/form-data" id="smartestform">
         <div id="header">
            <div class="logo">
 		<?php echo apply_filters('smartestthemes_backend_branding', '<img alt="Smartest Themes" src="'. $fDIR. 'images/st_logo_admin.png" />'); ?>
@@ -96,7 +96,7 @@ function smartestthemes_options_page(){
 		</div>
         <?php 
 		// Rev up the Options Machine
-        $return = smartestbthemes_machine($options);
+        $return = smartestthemes_machine($options);
         ?>
 		<div id="support-links">
 <!--[if IE]>
@@ -156,7 +156,7 @@ function smartestthemes_options_page(){
         <img style="display:none" src="<?php echo $fDIR; ?>images/loading-bottom.gif" class="ajax-loading-img ajax-loading-img-bottom" alt="Working..." />
         <input type="submit" value="<?php _e('Save All Changes', 'crucible'); ?>" class="button submit-button" />        
         </form>
-        <form action="<?php echo esc_html( $_SERVER['REQUEST_URI'] ) ?>" method="post" style="display:inline" id="smartestbform-reset">
+        <form action="<?php echo esc_html( $_SERVER['REQUEST_URI'] ) ?>" method="post" style="display:inline" id="smartestform-reset">
             <span class="submit-footer-reset">
             <input name="reset" type="submit" value="<?php _e('Reset Options', 'crucible'); ?>" class="button submit-button reset-button" onclick="return confirm(localized_label.reset);" />
             <input type="hidden" name="smartestthemes_save" value="reset" /> 
@@ -211,18 +211,18 @@ function smartestthemes_frame_load() {
 			  <?php } } ?>
 		 
 });
-			</script>
-<?php //AJAX Upload
-		// Set localized php vars for js
+		</script>
+		<?php //AJAX Upload
+		// Localize vars for js
 		$upl = __('Uploading', 'crucible');
 		$upi = __('Upload Image', 'crucible');
 		$okr = __('Click OK to reset back to default settings. All custom theme settings will be lost!', 'crucible');
-?>
+		?>
 		<script>
 			var localized_label = {
-					uploading : "<?php echo $upl ?>",
-					uploadimage : "<?php echo $upi ?>",
-					reset : "<?php echo $okr ?>",
+				uploading : "<?php echo $upl ?>",
+				uploadimage : "<?php echo $upi ?>",
+				reset : "<?php echo $okr ?>"
 			}
 		</script>
 		<script type="text/javascript" src="<?php echo $fr; ?>js/ajaxupload.js"></script>
@@ -369,9 +369,9 @@ function smartestthemes_frame_load() {
 					return false; 
 				});   	 	
 			//Save everything else
-			jQuery('#smartestbform').submit(function(){
+			jQuery('#smartestform').submit(function(){
 					function newValues() {
-					  var serializedValues = jQuery("#smartestbform").serialize();
+					  var serializedValues = jQuery("#smartestform").serialize();
 					  return serializedValues;
 					}
 					jQuery(":checkbox, :radio").click(newValues);
@@ -380,7 +380,8 @@ function smartestthemes_frame_load() {
 					var serializedReturn = newValues();
 					var ajax_url = '<?php echo admin_url("admin-ajax.php"); ?>';
 					var data = {
-						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'smartestbthemes'){ ?>
+// @test end of next line was 'smartestbthemes'
+						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == get_option('smartestthemes_themeslug') ){ ?>
 						type: 'options',
 						<?php } ?>
 						action: 'smartestthemes_ajax_post_action',
@@ -586,7 +587,7 @@ add_action('wp_ajax_smartestthemes_ajax_post_action', 'smartestthemes_ajax_callb
 /**
  * Generates The Options
  */
-function smartestbthemes_machine($options) {
+function smartestthemes_machine($options) {
         
     $counter = 0;
 	$menu = '';
@@ -774,10 +775,10 @@ function smartestbthemes_machine($options) {
 			}
 		break;
 		case "upload":
-			$output .= smartestbthemes_uploader_function($value['id'],$value['std'],null);
+			$output .= smartestthemes_uploader_function($value['id'],$value['std'],null);
 		break;
 		case "upload_min":
-			$output .= smartestbthemes_uploader_function($value['id'],$value['std'],'min');
+			$output .= smartestthemes_uploader_function($value['id'],$value['std'],'min');
 		break;
 		case "color":
 			$val = $value['std'];
@@ -862,7 +863,7 @@ function smartestbthemes_machine($options) {
 
 }
 /* Smartest Themes Uploader */
-function smartestbthemes_uploader_function($id,$std,$mod){
+function smartestthemes_uploader_function($id,$std,$mod){
 	$uploader = '';
 	$upload = get_option($id);
 	if($mod != 'min') { 

@@ -361,10 +361,8 @@ class SMARTESTReviewsBusinessAdmin
         <div id="smar_respond_1" class="wrap">
             <h2>'. __('Smartest Reviews - Options', 'crucible'). '</h2>';
             if ($msg) { echo '<h3 style="color:#a00;">'.$msg.'</h3>'; }
-
-			// set var used below
-			$linkp = '<a href="'. admin_url('admin.php?page=smartestbthemes').'">Preferences</a>';
-
+			$admin_page = get_option('smartestthemes_themeslug');
+			$linkp = '<a href="'. admin_url("admin.php?page=$admin_page").'">Preferences</a>';// @test admin_rul with var
             echo '<div class="metabox-holder">
             <div class="postbox" style="width:700px;">
                 <h3 style="cursor:default;">'. __('About Smartest Reviews', 'crucible'). '</h3>

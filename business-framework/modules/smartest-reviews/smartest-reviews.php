@@ -606,7 +606,6 @@ function smartestthemes_create_reviews_page() {
 	if(get_option('smartestthemes_add_reviews') == 'true') {
 		smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[SMAR_INSERT]' );
 	}
-
 }
 function do_the_content($original_content) {
         global $post;
