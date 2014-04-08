@@ -77,7 +77,7 @@ function smartestthemes_options_page(){
     $themename = $themedata->Name;
 	$local_version = $themedata->Version;
 	$fDIR = get_template_directory_uri().'/business-framework/'; ?>
-<div class="wrap" id="smartestb_container">
+<div class="wrap" id="smartestthemes-container">
 <div id="smartestthemes-popup-save" class="smartestthemes-save-popup"><div class="smartestthemes-save-save"><?php _e('Options Updated', 'crucible'); ?></div></div>
 <div id="smartestthemes-popup-reset" class="smartestthemes-save-popup"><div class="smartestthemes-save-reset"><?php _e('Options Reset', 'crucible'); ?></div></div>
     <form action="" enctype="multipart/form-data" id="smartestbform">
