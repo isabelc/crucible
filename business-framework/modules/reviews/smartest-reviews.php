@@ -1012,7 +1012,7 @@ function do_the_content($original_content) {
 	}
     function include_admin() {
         global $SMARTESTReviewsBusinessAdmin;
-        require_once(get_template_directory().'/business-framework/modules/smartest-reviews/smartest-reviews-admin.php');
+        require_once(get_template_directory().'/business-framework/modules/reviews/smartest-reviews-admin.php');
 
     }
     function admin_init() {
@@ -1025,7 +1025,7 @@ function do_the_content($original_content) {
         $SMARTESTReviewsBusinessAdmin->enqueue_admin_stuff();
 	}
 	function getpluginurl() {
-        return get_template_directory_uri().'/business-framework/modules/smartest-reviews/';
+        return get_template_directory_uri().'/business-framework/modules/reviews/';
     }
 }
 if (!defined('IN_SMAR')) {global $SMARTESTReviewsBusiness;
