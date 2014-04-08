@@ -1,5 +1,18 @@
 <?php
+/*
 
+@test if this works here. i brought it in from top of admin-setup.php
+.
+. will require this theme slug hardcoded since too soon to get option
+.
+
+Add default options and show Options Panel after activate  */
+if (is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" ) {
+	add_action('admin_head','smartestthemes_option_setup');
+	// Do redirect.
+	header( 'Location: '.admin_url() . "admin.php?page=crucible" ) ;// @test maybe too soon to get option for themeslug??
+
+}
 /**
  * Set the content width based on the theme's design and stylesheet.
  */

@@ -20,6 +20,8 @@ The first thing to do is copy the `crucible` directory and change the name. Then
 
 6. Search for `_CRUCIBLE_` in all caps to capture the storename constant for EDD SL and replace with `_MEGATHERIUM_`
 
+7. Search for `page=crucible` and replace with `page=megatherium`
+
 Then, update the stylesheet header in style.css and the links in footer.php with your own information. Next, update or delete this readme. Change the crucible.pot filename to your textdomain.pot
 
 
