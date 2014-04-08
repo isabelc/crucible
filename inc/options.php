@@ -723,70 +723,70 @@ $options[] = array( 'name' => __( 'Contact Form','crucible' ),
 					'type' => 'heading');
 $options[] = array( 'name' => __( 'Your Name', 'crucible' ),
                     'desc' => __( 'How would you like to be addressed in messages sent from the contact form?', 'crucible' ),
-                    'id' => $shortname.'_sbfc_name',
+                    'id' => $shortname.'_contactform_name',
 					'std' => $admin_name,
                     'type' => 'text');
 $options[] = array( 'name' => __( 'Your Email', 'crucible' ),
                     'desc' => __( 'Where would you like to receive messages sent from the contact form? If blank, the default is the admin email set in `Settings -> General`', 'crucible' ),
-                    'id' => $shortname.'_sbfc_email',
+                    'id' => $shortname.'_contactform_email',
 					'std' => '',
                     'type' => 'text');
 $options[] = array( 'name' => __( 'Default Subject', 'crucible' ),
                     'desc' => __( 'What should be the default subject line for the contact messages? Default is "Message sent from your contact form".', 'crucible' ),
-                    'id' => $shortname.'_sbfc_subject',
+                    'id' => $shortname.'_contactform_subject',
 					'std' => __( 'Message sent from your contact form', 'crucible' ),
                     'type' => 'text');
 
 $options[] = array( 'name' => __( 'Success Message', 'crucible' ),
                     'desc' => __( 'When the form is sucessfully submitted, this message will be displayed to the sender. Default is "Success! Your message has been sent."', 'crucible' ),
-                    'id' => $shortname.'_sbfc_success',
+                    'id' => $shortname.'_contactform_success',
 					'std' => '<strong>' . __( 'Success! ', 'crucible' ) . '</strong> ' . __( 'Your message has been sent.', 'crucible'),
                     'type' => 'textarea');
 $options[] = array( 'name' => __( 'Error Message', 'crucible' ),
                     'desc' => __( 'If the user skips a required field, this message will be displayed. Default is "Please complete the required fields."', 'crucible' ),
-                    'id' => $shortname.'_sbfc_error',
+                    'id' => $shortname.'_contactform_error',
 					'std' => '<strong>' . __( 'Please complete the required fields.', 'crucible' ) . '</strong>',
                     'type' => 'textarea');
 
 $options[] = array( 'name' => __( 'Enable Captcha', 'crucible' ),
 					'desc' => __( 'Check this box if you want to enable the captcha (challenge question/answer).', 'crucible' ),
-					'id' => $shortname.'_sbfc_captcha',
+					'id' => $shortname.'_contactform_captcha',
 					'std' => 'true',
 					'type' => 'checkbox');
 $options[] = array( 'name' => __( 'Time Offset', 'crucible' ), 
                     'desc' => sprintf( __( 'Please specify the time offset from the "Current time" listed below. For example, +1 or -1. If no offset, enter "0" (zero).<br />Current time: %s <br /><br />', 'crucible' ), $currtime ),
-                    'id' => $shortname.'_sbfc_offset',
+                    'id' => $shortname.'_contactform_offset',
 					'std' => '',
                     'type' => 'text');
 $options[] = array( 'name' => __( 'Add Phone Number Field', 'crucible' ),
 					'desc' => __( 'Check this box to add a phone number field to the contact form.', 'crucible' ),
-					'id' => $shortname.'_sbfc_include_phone',
+					'id' => $shortname.'_contactform_include_phone',
 					'std' => 'false',
 					'type' => 'checkbox');
 $options[] = array(
 					'desc' => sprintf(__( 'Make the phone number %srequired.%s This has no effect if you do not check the box above.', 'crucible' ), '<strong>', '</strong>' ),
-					'id' => $shortname.'_sbfc_required_phone',
+					'id' => $shortname.'_contactform_required_phone',
 					'std' => 'false',
 					'type' => 'checkbox');
 $options[] = array( 'name' => __( 'Custom content before the form', 'crucible' ),
 					'desc' => __( 'Add some text/markup to appear <em>before</em> the contact form (optional).', 'crucible' ),
-					'id' => $shortname.'_sbfc_preform',
+					'id' => $shortname.'_contactform_preform',
 					'std' => '',
 					'type' => 'textarea');
 $options[] = array( 'name' => __( 'Custom content after the form', 'crucible' ),
 					'desc' => __( 'Add some text/markup to appear <em>after</em> the contact form (optional).', 'crucible' ),
-					'id' => $shortname.'_sbfc_appform',
+					'id' => $shortname.'_contactform_appform',
 					'std' => '<div style="clear:both;">&nbsp;</div>',
 					'type' => 'textarea');
 $options[] = array( 'name' => __( 'Custom content before results', 'crucible' ),
 					'desc' => __( 'Add some text/markup to appear <em>before</em> the success message (optional).', 'crucible' ),
-					'id' => $shortname.'_sbfc_prepend',
+					'id' => $shortname.'_contactform_prepend',
 					'std' => '',
 					'type' => 'textarea');
 
 $options[] = array( 'name' => __( 'Custom content after results', 'crucible' ),
 						'desc' => __( 'Add some text/markup to appear <em>after</em> the success message (optional).', 'crucible' ),
-					'id' => $shortname.'_sbfc_append',
+					'id' => $shortname.'_contactform_append',
 					'std' => '',
 					'type' => 'textarea');
 /* Scripts */
