@@ -3,7 +3,7 @@
  * Adds Featured Announcements widget to show selected announcements
  *
  * @author 	Smartest Themes
- * @package 	Smartest Business Framework
+ * @package 	Smartest Themes Business Framework
  * @extends 	WP_Widget
  */
 

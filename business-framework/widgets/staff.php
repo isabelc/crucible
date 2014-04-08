@@ -3,7 +3,7 @@
  * Adds Staff widget to list all staff members
  *
  * @author 		Smartest Themes
- * @package 	Smartest Business Framework
+ * @package 	Smartest Themes Business Framework
  * @extends 	WP_Widget
  */
 

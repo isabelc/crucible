@@ -3,7 +3,7 @@
  * Adds Featured Services widget to show selected services
  *
  * @author 		Smartest Themes
- * @package 	Smartest Business Framework
+ * @package 	Smartest Themes Business Framework
  * @extends 	WP_Widget
  */
 

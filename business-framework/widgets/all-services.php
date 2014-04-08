@@ -3,7 +3,7 @@
  * Adds Services widget to list all services
  *
  * @author 	Smartest Themes
- * @package 	Smartest Business Framework
+ * @package 	Smartest Themes Business Framework
  * @extends 	WP_Widget
  */
 
