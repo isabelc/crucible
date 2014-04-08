@@ -3,7 +3,7 @@
  * Smartest Functions
  * @package    Smartest Business Framework
 */
-function smartestb_login_logo() {
+function smartestthemes_login_logo() {
 	$buslogo =  get_option('smartestthemes_logo');
 	// if there is a logo, show it, else do text
 	if ($buslogo) {
@@ -14,7 +14,7 @@ function smartestb_login_logo() {
 		echo'<style type="text/css">.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. get_option('smartestthemes_logo_font'). ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}.login h1 a:hover {color:'.get_option('smartestthemes_logo_hover_color') . ';}</style>';
 	}
 }
-add_action('login_head', 'smartestb_login_logo');
+add_action('login_head', 'smartestthemes_login_logo');
 add_filter('login_headerurl',
     create_function(false,"return get_home_url();"));
 function isacustom_wp_login_title() {
@@ -359,7 +359,7 @@ function create_smartest_business_cpts() {
  * @since 2.2.1
  * @return void
  */
-function smartestb_set_taxonomies() {
+function smartestthemes_taxonomies() {
 	$category_labels = array(
 		'name' => __( 'Categories', 'crucible' ),
 		'singular_name' =>__( 'Category', 'crucible' ),
@@ -374,12 +374,12 @@ function smartestb_set_taxonomies() {
 		'menu_name' => __( 'Categories', 'crucible' ),
 	);
 	
-	$category_args = apply_filters( 'smartestb_service_category_args', array(
+	$category_args = apply_filters( 'smartestthemes_service_category_args', array(
 		'hierarchical'		=> true,
-		'labels'			=> apply_filters('smartestb_service_category_labels', $category_labels),
+		'labels'			=> apply_filters('smartestthemes_service_category_labels', $category_labels),
 		'show_ui'           => true,
 		'show_admin_column' => true,
-		'query_var' => true,
+		'query_var'		=> true,
 		'rewrite'			=> array(
 							'slug'		=> 'services/category',
 							'with_front'	=> false,
@@ -389,7 +389,7 @@ function smartestb_set_taxonomies() {
 	register_taxonomy( 'smartest_service_category', array('smartest_services'), $category_args );
 	register_taxonomy_for_object_type( 'smartest_service_category', 'smartest_services' );
 }
-add_action( 'init', 'smartestb_set_taxonomies', 0 );
+add_action( 'init', 'smartestthemes_taxonomies', 0 );
 /**
  * upload slideshow images, attach to slide posts and set as featured image (the post thumbnail)
  *
@@ -455,16 +455,16 @@ function smart_attach_external_image( $url = null, $post_id = null, $post_data =
 /**
 * adds CPT archives menu items to wp_nav_menu, also choose which menu to add to. priority matters. 
 */
-function smartestb_cpts_menu_links($items, $args) {
+function smartestthemes_cpts_menu_links($items, $args) {
 		/**
 		 * @new themes must use theme_loc = 'primary'
 		 */
 		$newitems = $items;
 		if(($args->theme_location == 'primary') && ( get_option('smartestthemes_show_staff') == 'true' )) {
-		        $newitems .= '<li class="staff"><a title="' . __( apply_filters( 'smartestb_staff_menu_label', 'Staff' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_staff' ) .'">' . __( apply_filters( 'smartestb_staff_menu_label', 'Staff' ), 'crucible' ) . '</a></li>';
+		        $newitems .= '<li class="staff"><a title="' . __( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_staff' ) .'">' . __( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ) . '</a></li>';
 	    }
 		if(($args->theme_location == 'primary') && ( get_option('smartestthemes_show_services') == 'true' )) {
-			$newitems .= '<li class="services"><a title="' . __( apply_filters( 'smartestb_services_menu_label', 'Services' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_services' ) .'">' . __( apply_filters( 'smartestb_services_menu_label', 'Services' ), 'crucible' ) . '</a>';
+			$newitems .= '<li class="services"><a title="' . __( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_services' ) .'">' . __( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ) . '</a>';
 
 			// if service cat tax terms exist, do sub-menu
 			$service_cats = get_terms('smartest_service_category');
@@ -481,28 +481,28 @@ function smartestb_cpts_menu_links($items, $args) {
 	    }
 
 	    if( ($args->theme_location == 'primary') && (get_option('smartestthemes_show_news') == 'true')) {
-	        $newitems .= '<li class="news"><a title="' . __( apply_filters( 'smartestb_news_menu_label', 'News' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_news' ) .'">' . __( apply_filters( 'smartestb_news_menu_label', 'News' ), 'crucible' ) . '</a></li>';
+	        $newitems .= '<li class="news"><a title="' . __( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_news' ) .'">' . __( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ) . '</a></li>';
 		 }
 	    return $newitems;
 }
 if(get_option('smartestthemes_stop_menuitems') == 'false') {
-		add_filter('wp_nav_menu_items', 'smartestb_cpts_menu_links', 30, 2);
+		add_filter('wp_nav_menu_items', 'smartestthemes_cpts_menu_links', 30, 2);
 }
 
 /**
  * Apply custom title labels to menu
  * @since Smartest Business Framework 2.1.0
  */
-function custom_smartestb_services_menu_label() {
+function custom_smartestthemes_services_menu_label() {
 	// if custom title entered
 	if ( get_option('smartestthemes_business_servicesmenulabel') != '' ) {
-		$custom = stripslashes(get_option( 'smartestb_business_servicesmenulabel' ));
+		$custom = stripslashes(get_option( 'smartestthemes_business_servicesmenulabel' ));
 	} else { 
 		$custom = __( 'Services', 'crucible' );
 	}
 	return $custom;
 }
-function custom_smartestb_staff_menu_label() {
+function custom_smartestthemes_staff_menu_label() {
 	// if custom title entered
 	if (get_option('smartestthemes_business_staffmenulabel') != '') {
 		$custom = stripslashes(get_option('smartestthemes_business_staffmenulabel'));
@@ -511,7 +511,7 @@ function custom_smartestb_staff_menu_label() {
 	}
 	return $custom;
 }
-function custom_smartestb_news_menu_label() {
+function custom_smartestthemes_news_menu_label() {
 	// if custom title entered
 	if (get_option('smartestthemes_business_newsmenulabel') != '') {
 		$custom = stripslashes(get_option('smartestthemes_business_newsmenulabel'));
@@ -521,22 +521,22 @@ function custom_smartestb_news_menu_label() {
 	return $custom;
 }
 
-add_filter( 'smartestb_services_menu_label', 'custom_smartestb_services_menu_label' );
-add_filter( 'smartestb_staff_menu_label', 'custom_smartestb_staff_menu_label' );
-add_filter( 'smartestb_news_menu_label', 'custom_smartestb_news_menu_label' );
+add_filter( 'smartestthemes_services_menu_label', 'custom_smartestthemes_services_menu_label' );
+add_filter( 'smartestthemes_staff_menu_label', 'custom_smartestthemes_staff_menu_label' );
+add_filter( 'smartestthemes_news_menu_label', 'custom_smartestthemes_news_menu_label' );
 
 /**
  * Custom metaboxes and fields
  * for staff cpt: occupational title & social links
  */
-add_filter( 'cmb_meta_boxes', 'smartestb_metaboxes' );
+add_filter( 'cmb_meta_boxes', 'smartestthemes_metaboxes' );
 /**
  * Define the metabox and field configurations.
  *
  * @param  array $meta_boxes
  * @return array
  */
-function smartestb_metaboxes( array $meta_boxes ) {
+function smartestthemes_metaboxes( array $meta_boxes ) {
 
 	$prefix = '_smab_';
 
@@ -692,17 +692,17 @@ add_action('after_switch_theme', 'smartest_flush_rewrite_rules', 10, 2);
 function smartest_flush_rewrite_rules() {
 	global $wp_rewrite;
 	$wp_rewrite->flush_rules();
-	update_option('smartestb_stop_home', 'false');
+	update_option('smartestthemes_stop_home', 'false');
 }
 /**
  * call widgets
  */
-add_action( 'widgets_init', 'smartestb_register_widgets' );
+add_action( 'widgets_init', 'smartestthemes_register_widgets' );
 
 /**
  * register widgets
  */
-function smartestb_register_widgets() {
+function smartestthemes_register_widgets() {
 
 	if( get_option('smartestthemes_show_news') == 'true'  ) { 
 			register_widget('SmartestAnnouncements');
@@ -717,7 +717,7 @@ function smartestb_register_widgets() {
 /**
  * insert custom scripts from theme options
  */
-function smartestb_add_customscripts() {
+function smartestthemes_add_customscripts() {
 
 	// get analytics script
 	$gascript =  get_option('smartestthemes_script_analytics');
@@ -732,14 +732,14 @@ function smartestb_add_customscripts() {
 	}
 
 }
-add_action('wp_head','smartestb_add_customscripts', 12);
+add_action('wp_head','smartestthemes_add_customscripts', 12);
 
 /* 
  * Filter archive page titles to allow custom heading
  * for staff, services, and news
  */
 
-add_filter('smartestb_staff_heading', 'custom_staff_heading');
+add_filter('smartestthemes_staff_heading', 'custom_staff_heading');
 function custom_staff_heading() {
 	if (get_option('smartestthemes_business_staffpagetitle') != '') {
 		echo stripslashes(get_option('smartestthemes_business_staffpagetitle'));
@@ -748,7 +748,7 @@ function custom_staff_heading() {
 	}
 }
 
-add_filter('smartestb_services_heading', 'custom_services_heading');
+add_filter('smartestthemes_services_heading', 'custom_services_heading');
 function custom_services_heading() {
 	if (get_option('smartestthemes_business_servicespagetitle') != '') {
 		echo stripslashes(get_option('smartestthemes_business_servicespagetitle'));
@@ -757,7 +757,7 @@ function custom_services_heading() {
 	}
 }
 
-add_filter('smartestb_news_heading', 'custom_news_heading');
+add_filter('smartestthemes_news_heading', 'custom_news_heading');
 function custom_news_heading() {
 	if (get_option('smartestthemes_business_newspagetitle') != '') {
 		echo stripslashes(get_option('smartestthemes_business_newspagetitle'));
@@ -775,7 +775,7 @@ include dirname( __FILE__ ) . '/lib/mce-table/mce_table_buttons.php';
  * Change wp admin bar
  * Add link to theme options, remove customize link
  */
-function smartestb_admin_bar_render() {
+function smartestthemes_tool_bar() {
 	$themename =  get_option('smartestthemes_themename');
     global $wp_admin_bar;
     $wp_admin_bar->remove_menu('customize');
@@ -786,7 +786,7 @@ function smartestb_admin_bar_render() {
         'href' => admin_url( 'admin.php?page=smartestbthemes')
     ) );
 }
-add_action( 'wp_before_admin_bar_render', 'smartestb_admin_bar_render' );
+add_action( 'wp_before_admin_bar_render', 'smartestthemes_tool_bar' );
 
 /** 
  * Add job title column to staff admin
@@ -929,7 +929,7 @@ function custom_options_page_logo() {
 	// backwards compat. if option = 'false' string, update it to ''.
 	$backlogo = get_option('smartestthemes_backend_logo');
 	if( 'false' == $backlogo ) {
-		delete_option( 'smartestb_backend_logo' );
+		delete_option( 'smartestthemes_backend_logo' );
 	}
 
 	if(get_option('smartestthemes_backend_logo')) {
@@ -938,7 +938,7 @@ function custom_options_page_logo() {
 		return '<img alt="Smartest Themes" src="'. get_template_directory_uri().'/business-framework/images/st_logo_admin.png" />';
 	}
 }
-add_filter('smartestb_backend_branding', 'custom_options_page_logo');
+add_filter('smartestthemes_backend_branding', 'custom_options_page_logo');
 
 // Replace WP footer with own custom text
 function smb_remove_footer_admin () {
@@ -953,14 +953,14 @@ function smb_remove_footer_admin () {
 }
 add_filter('admin_footer_text', 'smb_remove_footer_admin'); 
 
-function smartestb_admin_bar() {
+function smartestthemes_admin_bar() {
     global $wp_admin_bar;
 
 	if ( get_option('smartestthemes_remove_wplinks') == 'true' ) {
 		$wp_admin_bar->remove_menu('wp-logo');
 	}
 }
-add_action( 'wp_before_admin_bar_render', 'smartestb_admin_bar' );
+add_action( 'wp_before_admin_bar_render', 'smartestthemes_admin_bar' );
 
 function smartest_framework_enq() {
 	wp_register_style( 'frame', get_template_directory_uri().'/business-framework/css/frame.css');
@@ -1174,7 +1174,7 @@ add_action('wp_head', 'smartest_custom_style', 9999);
  * @uses is_main_query()
  * @since Smartest Business Framework 2.1.5
  */
-function smartestb_sort_staff($query) {
+function smartestthemes_sort_staff($query) {
 	if( !is_admin() && is_post_type_archive('smartest_staff') && $query->is_main_query() && isset( $query->query_vars['meta_key'] ) ) {
 	$query->query_vars['orderby'] = 'meta_value_num';
 	$query->query_vars['meta_key'] = '_smab_staff-order-number';
@@ -1182,7 +1182,7 @@ function smartestb_sort_staff($query) {
 	}
 	return $query;
 }
-add_filter( 'parse_query', 'smartestb_sort_staff' );
+add_filter( 'parse_query', 'smartestthemes_sort_staff' );
 
 /**
  * Sort services archive by service order number key
@@ -1192,7 +1192,7 @@ add_filter( 'parse_query', 'smartestb_sort_staff' );
  * @uses is_main_query()
  * @since Smartest Business Framework 2.2.6
  */
-function smartestb_sort_services($query) {
+function smartestthemes_sort_services($query) {
 	if( !is_admin() &&
 	( 
 	( is_post_type_archive('smartest_services') || is_tax( 'smartest_service_category' ) ) &&
@@ -1206,31 +1206,31 @@ function smartestb_sort_services($query) {
 	return $query;
 }
 if( get_option('smartestthemes_enable_service_sort') == 'true'  ) 
-	add_filter( 'parse_query', 'smartestb_sort_services' );
+	add_filter( 'parse_query', 'smartestthemes_sort_services' );
 
 /**
  * Check if the uploaded file is an image. If it is, then it processes it using the retina_support_create_images()
- * @uses smartestb_retina_create_images()
+ * @uses smartestthemes_retina_create_images()
  * @since Smartest Business Framework 2.3.0
  */
-function smartestb_retina_attachment_meta( $metadata, $attachment_id ) {
+function smartestthemes_retina_attachment_meta( $metadata, $attachment_id ) {
     foreach ( $metadata as $key => $value ) {
         if ( is_array( $value ) ) {
             foreach ( $value as $image => $attr ) {
                 if ( is_array( $attr ) )
-                    smartestb_retina_create_images( get_attached_file( $attachment_id ), $attr['width'], $attr['height'], true );
+                    smartestthemes_retina_create_images( get_attached_file( $attachment_id ), $attr['width'], $attr['height'], true );
             }
         }
     }
     return $metadata;
 }
-add_filter( 'wp_generate_attachment_metadata', 'smartestb_retina_attachment_meta', 10, 2 );
+add_filter( 'wp_generate_attachment_metadata', 'smartestthemes_retina_attachment_meta', 10, 2 );
 
 /**
  * Create retina-ready images
  * @since Smartest Business Framework 2.3.0
  */
-function smartestb_retina_create_images( $file, $width, $height, $crop = false ) {
+function smartestthemes_retina_create_images( $file, $width, $height, $crop = false ) {
     if ( $width || $height ) {
         $resized_file = wp_get_image_editor( $file );
         if ( ! is_wp_error( $resized_file ) ) {
@@ -1255,7 +1255,7 @@ function smartestb_retina_create_images( $file, $width, $height, $crop = false )
  * Delete retina-ready images
  * @since Smartest Business Framework 2.3.0
  */
-function smartestb_delete_retina_images( $attachment_id ) {
+function smartestthemes_delete_retina_images( $attachment_id ) {
 	$meta = wp_get_attachment_metadata( $attachment_id );
 	// Avoid error when uploading plugins, which appears to run 'delete_attachement'
 	if( ! is_array( $meta ) ) {
@@ -1274,7 +1274,7 @@ function smartestb_delete_retina_images( $attachment_id ) {
 		}
 	}
 }
-add_filter( 'delete_attachment', 'smartestb_delete_retina_images' );
+add_filter( 'delete_attachment', 'smartestthemes_delete_retina_images' );
 /**
 * get the attachment id by filename
  * @since Smartest Business Framework 2.3.0

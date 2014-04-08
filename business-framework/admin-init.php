@@ -6,11 +6,11 @@
  * @author     Smartest Themes <isa@smartestthemes.com>
  * @version    2.3.7
  */
-function smartestb_version_init(){
-    $smartestb_framework_version = '2.3.7';// @new @todo edit version per framework update, here and above
-    update_option('smartestb_framework_version',$smartestb_framework_version);
+function smartestthemes_version_init(){
+    $framework_version = '2.3.7';// @new @todo edit version per framework update, here and above
+    update_option('smartestthemes_framework_version',$framework_version);
 }
-add_action('init','smartestb_version_init');
+add_action('init','smartestthemes_version_init');
 if( class_exists( 'Quick_Business_Website' ) ) {
 	require_once (ABSPATH .'/wp-admin/includes/plugin.php');
 	deactivate_plugins( '/quick-business-website/quick-business-website.php' );
