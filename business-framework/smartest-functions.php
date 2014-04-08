@@ -30,7 +30,6 @@ add_filter('login_headertitle', 'isacustom_wp_login_title');
  * @param string $page_title (default: '') Title for the new page
  * @param string $page_content (default: '') Content for the new page
  * @param int $post_parent (default: 0) Parent for the new page
- * @since Smartest Business Framework 2.0.1
  */
 function smartestthemes_insert_post($potype, $slug, $option, $page_title = '', $page_content = '', $post_parent = 0 ) {
 	global $wpdb;
@@ -56,7 +55,7 @@ function smartestthemes_insert_post($potype, $slug, $option, $page_title = '', $
  * 
  * Activate Smartest Reviews
  */
-function smartestbusiness_after_setup() {
+function smartestthemes_after_setup() {
 	$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));if(!$bn) {$bn = get_bloginfo('name'); }
 	$atitle = sprintf(__('About %s','crucible'), $bn);
 	// if not disabled in options 
@@ -69,7 +68,7 @@ function smartestbusiness_after_setup() {
 		include_once(get_template_directory() .'/business-framework/modules/smartest-reviews/smartest-reviews.php');
 
 }
-add_action('after_setup_theme','smartestbusiness_after_setup');
+add_action('after_setup_theme','smartestthemes_after_setup');
 
 /**
  * if about page is disabled, delete it
@@ -356,7 +355,6 @@ function create_smartest_business_cpts() {
 
 /**
  * Registers custom taxonomy for services
- * @since 2.2.1
  * @return void
  */
 function smartestthemes_taxonomies() {
@@ -491,7 +489,6 @@ if(get_option('smartestthemes_stop_menuitems') == 'false') {
 
 /**
  * Apply custom title labels to menu
- * @since Smartest Business Framework 2.1.0
  */
 function custom_smartestthemes_services_menu_label() {
 	// if custom title entered
@@ -854,7 +851,6 @@ function smar_manage_services_columns( $column, $post_id ) {
 
 /** 
  * Add featured news column to news admin
- * @since Smartest Business Framework 2.0.1
  */
 
 add_filter( 'manage_edit-smartest_news_columns', 'smar_manage_edit_news_columns' ) ;
@@ -870,7 +866,6 @@ function smar_manage_edit_news_columns( $columns ) {
 
 /** 
  * Add data to featured news column in news admin
- * @since Smartest Business Framework 2.0.1
  */
 add_action( 'manage_smartest_news_posts_custom_column', 'smar_manage_news_columns', 10, 2 );
 function smar_manage_news_columns( $column, $post_id ) {
@@ -977,7 +972,6 @@ function smartest_framework_enq() {
 add_action('wp_enqueue_scripts', 'smartest_framework_enq');
 /**
  * Social Share Buttons
- * @since Smartest Business Framework 2.0.1
  */
 function smartest_share() { ?>
     <div id="smartshare">
@@ -1015,12 +1009,12 @@ data-dnt="true"><?php _e('Tweet', 'crucible'); ?></a>
  
 }
 
-if ( ! function_exists( 'smartestblankie_content_nav' ) ):
+if ( ! function_exists( 'smartestthemes_content_nav' ) ):
 /** 
  * Display navigation to next/previous pages when applicable
  *
  */
-function smartestblankie_content_nav( $nav_id ) {
+function smartestthemes_content_nav( $nav_id ) {
 	global $wp_query, $post;
 
 	// Don't print empty markup on single pages if there's nowhere to navigate.
@@ -1083,18 +1077,15 @@ if ( is_post_type_archive('smartest_staff') ) {
 	</nav><!-- #<?php echo $nav_id; ?> -->
 	<?php
 }
-endif; // smartestblankie_content_nav
+endif; // smartestthemes_content_nav
 /**
  * Creates a nicely formatted and more specific title element text for output
  * in head of document, based on current view.
- *
- * @since Smartest Business Framework 2.1.3
- *
  * @param string $title Default title text for current view.
  * @param string $sep Optional separator.
  * @return string The filtered title.
  */
-function smartestblankie_wp_title( $title, $sep ) {
+function smartestthemes_wp_title( $title, $sep ) {
 	global $paged, $page;
 
 	if ( is_feed() )
@@ -1112,14 +1103,13 @@ function smartestblankie_wp_title( $title, $sep ) {
 		$title = sprintf( __( 'Page %s', 'crucible' ), max( $paged, $page ) ) . " $title";
 	return $title;
 }
-add_filter( 'wp_title', 'smartestblankie_wp_title', 10, 2 );
+add_filter( 'wp_title', 'smartestthemes_wp_title', 10, 2 );
 
 /**
 * Add meta tags to head
-* @since Smartest Business Framework 2.1.3
 */
 
-function smartestblankie_head_meta() {
+function smartestthemes_head_meta() {
 
 	global $paged, $page;
 	$des = '';
@@ -1162,7 +1152,7 @@ function smartestblankie_head_meta() {
 	// Tell searchbots to not index duplicate pages or pages 2 and up of paged archives. Improves ranking.
 	if ( $paged >= 2 ) {echo '<meta name="robots" content="noindex, follow, noarchive" />';} 
 }
-add_action('wp_head', 'smartestblankie_head_meta');
+add_action('wp_head', 'smartestthemes_head_meta');
 function smartest_custom_style() {
 	get_template_part( 'inc/custom', 'style' );
 }
@@ -1173,7 +1163,6 @@ add_action('wp_head', 'smartest_custom_style', 9999);
  * @uses is_admin()
  * @uses is_post_type_archive()
  * @uses is_main_query()
- * @since Smartest Business Framework 2.1.5
  */
 function smartestthemes_sort_staff($query) {
 	if( !is_admin() && is_post_type_archive('smartest_staff') && $query->is_main_query() && isset( $query->query_vars['meta_key'] ) ) {
@@ -1191,7 +1180,6 @@ add_filter( 'parse_query', 'smartestthemes_sort_staff' );
  * @uses is_admin()
  * @uses is_post_type_archive()
  * @uses is_main_query()
- * @since Smartest Business Framework 2.2.6
  */
 function smartestthemes_sort_services($query) {
 	if( !is_admin() &&
@@ -1212,7 +1200,6 @@ if( get_option('smartestthemes_enable_service_sort') == 'true'  )
 /**
  * Check if the uploaded file is an image. If it is, then it processes it using the retina_support_create_images()
  * @uses smartestthemes_retina_create_images()
- * @since Smartest Business Framework 2.3.0
  */
 function smartestthemes_retina_attachment_meta( $metadata, $attachment_id ) {
     foreach ( $metadata as $key => $value ) {
@@ -1229,7 +1216,6 @@ add_filter( 'wp_generate_attachment_metadata', 'smartestthemes_retina_attachment
 
 /**
  * Create retina-ready images
- * @since Smartest Business Framework 2.3.0
  */
 function smartestthemes_retina_create_images( $file, $width, $height, $crop = false ) {
     if ( $width || $height ) {
@@ -1254,7 +1240,6 @@ function smartestthemes_retina_create_images( $file, $width, $height, $crop = fa
 
 /**
  * Delete retina-ready images
- * @since Smartest Business Framework 2.3.0
  */
 function smartestthemes_delete_retina_images( $attachment_id ) {
 	$meta = wp_get_attachment_metadata( $attachment_id );
@@ -1278,7 +1263,6 @@ function smartestthemes_delete_retina_images( $attachment_id ) {
 add_filter( 'delete_attachment', 'smartestthemes_delete_retina_images' );
 /**
 * get the attachment id by filename
- * @since Smartest Business Framework 2.3.0
 */
 function st_get_attachment_id_from_url( $attachment_url = '' ) {
 	global $wpdb;

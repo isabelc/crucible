@@ -515,7 +515,7 @@ class cmb_Meta_Box {
  * Adding scripts and styles
  */
 function cmb_scripts( $hook ) {
-	if ( ( ( $hook == 'post.php' ) || ( $hook == 'post-new.php' ) ) && in_array( smartestbf_get_current_post_type(), array( 'smartest_staff', 'smartest_services', 'smartest_news', 'smartest_slide' ) )
+	if ( ( ( $hook == 'post.php' ) || ( $hook == 'post-new.php' ) ) && in_array( smartestthemes_get_current_post_type(), array( 'smartest_staff', 'smartest_services', 'smartest_news', 'smartest_slide' ) )
 	) {
 		wp_register_script( 'cmb-timepicker', CMB_META_BOX_URL . 'js/jquery.timePicker.min.js' );
 		wp_register_script( 'cmb-scripts', CMB_META_BOX_URL . 'js/cmb.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker', 'media-upload', 'thickbox', 'farbtastic' ), '0.9.1' );
@@ -530,7 +530,7 @@ add_action( 'admin_enqueue_scripts', 'cmb_scripts', 10 );
 /**
 * gets the current post type in the WordPress Admin
 */
-function smartestbf_get_current_post_type() {
+function smartestthemes_get_current_post_type() {
 	global $post, $typenow, $current_screen;
 	//we have a post so we can just get the post type from that
 	if ( $post && $post->post_type )
