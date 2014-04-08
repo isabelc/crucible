@@ -109,7 +109,7 @@ function crucible_post_thumbnail() {
 	if ( ! has_post_thumbnail() ) {
 		if ( is_post_type_archive( 'smartest_news' ) && ( get_option('smartestthemes_stop_theme_icon') == 'false' ) ) {
 			// show news icon
-			$out .= '<div class="post-thumbnail newsicon"><a href="' . $full_image_url[0] . '" title="' . the_title_attribute('echo=0') . '"><img src="' . get_template_directory_uri(). '/images/newsicon.png'; . '" alt="' . the_title_attribute('echo=0') . '"></a></div>';
+			$out = '<div class="post-thumbnail newsicon"><a href="' . $full_image_url[0] . '" title="' . the_title_attribute('echo=0') . '"><img src="' . get_template_directory_uri(). '/images/newsicon.png' . '" alt="' . the_title_attribute('echo=0') . '"></a></div>';
 		} else {
 			return;
 		}
@@ -128,7 +128,7 @@ function crucible_post_thumbnail() {
 	$full_image_url = wp_get_attachment_image_src( $img, 'full');
 
 	if ( is_singular() ) :
-		$out .= '<div class="post-thumbnail"><a href="' . $full_image_url[0] . '" title="' . the_title_attribute('echo=0') . '"><img src="' . $full_image_url[0]; . '" alt="' . the_title_attribute('echo=0') . '"></a></div>';
+		$out .= '<div class="post-thumbnail"><a href="' . $full_image_url[0] . '" title="' . the_title_attribute('echo=0') . '"><img src="' . $full_image_url[0] . '" alt="' . the_title_attribute('echo=0') . '"></a></div>';
 
 	else : 
 
