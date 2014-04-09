@@ -4,7 +4,7 @@
 */
 // @new update.
 define( 'ST_CRUCIBLE_URL', 'http://smartestthemes.com' );
-define( 'ST_CRUCIBLE_DLNAME', 'Crucible WordPress Theme' ); // @new @todo after putting up download
+define( 'ST_CRUCIBLE_DLNAME', 'Crucible WordPress Theme' ); // @todo after putting up download
 
 if ( !class_exists( 'EDD_SL_Theme_Updater' ) ) {
 	include( dirname( __FILE__ ) . '/EDD_SL_Theme_Updater.php' );
