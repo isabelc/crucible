@@ -84,18 +84,7 @@
 #woo_container #support-links ul li a:hover {
 	color: #155876;
 }
-#smartestthemes-container #support-links ul li.changelog {
-	padding: 2px 0 2px 20px;
-	background: url('../images/ico-changelog.png') no-repeat left center;
-}
-#smartestthemes-container #support-links ul li.docs {
-	padding: 1px 0 1px 20px;
-	background: url('../images/ico-docs.png') no-repeat left top;
-}
-#smartestthemes-container #support-links ul li.forum {
-	padding: 1px 0 1px 20px;
-	background: url('../images/ico-forum.png') no-repeat left top;
-}
+/* @test remove unused icons */
 #smartestthemes-container #support-links ul li.right {
 	float: right;
 	margin-right: 6px;
