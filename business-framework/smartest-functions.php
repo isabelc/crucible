@@ -971,7 +971,7 @@ add_action('wp_enqueue_scripts', 'smartest_framework_enq');
 /**
  * Social Share Buttons
  */
-function smartest_share() { ?>
+function smartestthemes_share() { ?>
     <div id="smartshare">
        <div id="fb-root"></div><script>(function(d, s, id) {
               var js, fjs = d.getElementsByTagName(s)[0];

@@ -70,12 +70,10 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 		<?php echo '</a></figure>';
 		} else {
 				// if not stopped with option
-				if(get_option('smartestthemes_stop_theme_icon') != 'true') {
-				$smallimage = array('url' => get_template_directory_uri(). '/images/newsicon.png', 'width' => '40px', 'cl' => 'icon');
-					echo '<figure class="img-indent"><a href="'.get_permalink().'" title="'.get_the_title().'">'; ?>
 
-					<img class="icon" src="<?php echo get_template_directory_uri(); ?>/images/newsicon.png" width="40px" />
-					<?php echo '</a></figure>';
+				if(get_option('smartestthemes_stop_theme_icon') != 'true') {
+
+					echo '<a href="'.get_permalink().'" title="'.get_the_title().'"><div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div></a>';
 				}
 
 		}
