@@ -4,10 +4,10 @@
  * License: GNU General Public License
  * @package    Smartest Themes Business Framework
  * @author     Smartest Themes <isa@smartestthemes.com>
- * @version    2.3.7
+ * @version    2.4.0
  */
 function smartestthemes_version_init(){
-    $framework_version = '2.3.7';// @new @todo edit version per framework update, here and above
+    $framework_version = '2.4.0';// @new @todo edit version per framework update, here and above
     update_option('smartestthemes_framework_version',$framework_version);
 }
 add_action('init','smartestthemes_version_init');
@@ -18,7 +18,6 @@ if( class_exists( 'Quick_Business_Website' ) ) {
 	wp_die($msg, 'Theme Clashes With Plugin', array(back_link => true));
 } else {
 	$path = TEMPLATEPATH .'/business-framework/';
-	require_once ($path .'admin-setup.php');
 	require_once ($path .'admin-interface.php');
 	require_once ($path .'smartest-functions.php');
 	require_once ($path .'modules/contact/contact.php');
@@ -28,4 +27,4 @@ if( class_exists( 'Quick_Business_Website' ) ) {
 	include_once $path .'widgets/staff.php';
 	include_once $path .'widgets/featured-announcements.php';
 }
- ?>
+?>
