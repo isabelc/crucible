@@ -11,7 +11,7 @@
 
 <?php // if is single-service, get service sidebar
 
-if ( 'smartest_services' == get_post_type() ) :
+if ( 'smartest_services' == get_post_type() ) {
 	
 	if ( ! dynamic_sidebar( 'servicesidebar' ) ) {
 		the_widget( 'SmartestServices', array('title' => __('All Services', 'crucible')) );
@@ -20,7 +20,7 @@ if ( 'smartest_services' == get_post_type() ) :
 
 // if is single-staff, get staff sidebar
 
-elseif ( 'smartest_staff' == get_post_type() ) :
+} elseif ( 'smartest_staff' == get_post_type() ) {
 
 	// if staff sidebar not active
 	if ( ! dynamic_sidebar( 'staffsidebar' ) ) {
@@ -30,7 +30,7 @@ elseif ( 'smartest_staff' == get_post_type() ) :
 
 // if is single-announcement, get Announcement sidebar
 	
-elseif ( 'smartest_news' == get_post_type() ) :
+} elseif ( 'smartest_news' == get_post_type() ) {
 
 	// if Announcement sidebar not active
 
@@ -40,7 +40,7 @@ elseif ( 'smartest_news' == get_post_type() ) :
 		the_widget( 'SmartestAnnouncements', array( 'title' => __( 'Recent News', 'crucible' ),	'number' => 3 ) );
 	}
 
-else :
+} else {
 	if ( ! dynamic_sidebar( 'regularsidebar' ) ) { ?>
 		<aside id="search" class="widget widget_search">
 			<?php get_search_form(); ?>
@@ -61,5 +61,5 @@ else :
 			</ul>
 		</aside>
 	<?php }
-endif; ?>
+} ?>
 </div><!-- #secondary -->
