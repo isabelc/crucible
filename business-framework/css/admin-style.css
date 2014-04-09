@@ -102,43 +102,31 @@
 	margin-right: 6px;
 	margin-top: 4px;
 }
-#smartestthemes-container #support-links ul li.right input.submit-button {
+#smartestthemes-container #support-links ul li.right input.submit-button,#smartestthemes-container .save_bar_top input[type=submit].submit-button {
 	border-style: none;
 	border-color: inherit;
 	border-width: 0;
-	background: url('../images/smartestthemes-admin-buttons.png') -140px 0;
-	border-radius: 0!important;
-		width: 136px;
-		height: 27px;
-		margin-top: 3px;
-		color: #fff;
-	text-shadow: none;
-		font-weight: 700;
-		font-size: 14px;
-		text-shadow: 0 1px 0 #555!important;
+	
+	/* @test */
+	background: none repeat scroll 0% 0% #1CB841;
+	border-radius: 4px;
+	text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+	
+	width: 136px;
+	height: 27px;
+	margin-top: 3px;
+	color: #fff;
+	font-weight: 700;
+	font-size: 14px;
 }
 .reset-button {
-	background-position: -280px 0!important;
-	background-image: url('../images/smartestthemes-admin-buttons.png');
+	background: none repeat scroll 0% 0% #CA3C3C;
 }
-input.reset-button:hover {
-	background-position: -280px -30px!important;
-}
-#smartestthemes-container #support-links ul li.right input.submit-button:hover, #smartestthemes-container .save_bar_top input[type=submit].submit-button:hover {
-	background-position: -140px -30px;
-}
-#smartestthemes-container .save_bar_top input[type=submit].submit-button {
-	border-style: none;
-	border-color: inherit;
-	border-width: 0;
-	background: url('../images/smartestthemes-admin-buttons.png') -140px 0;
-	border-radius: 0!important;
-		width: 136px;
-		height: 27px;
-		color: #fff;
-		text-shadow: none;
-		font-weight: 700;
-		font-size: 14px;
+
+#smartestthemes-container #support-links ul li.right input.submit-button:hover, #smartestthemes-container .save_bar_top input[type=submit].submit-button:hover, input.reset-button:hover {
+
+	background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
+
 }
 #smartestthemes-container #support-links .ie ul li.right input.submit-button, #smartestthemes-container .ie .save_bar_top input[type=submit].submit-button, #smartestthemes-container .ie .save_bar_top input[type=submit].reset-button {
 	width: 140px;
@@ -180,17 +168,6 @@ a.support-button:hover {
 	border: 1px solid #ff9913;
 	background-color: #ffaf46;
 	background-image: linear-gradient(to bottom,#ffaf46,#e78404);
-}
-#smartestthemes-container #support-links button.support-button {
-	float: left;
-	height: 25px;
-	width: 140px;
-	text-align: center;
-	background: url('../images/smartestthemes-admin-buttons.png');
-	color: #fff;
-	text-decoration: none;
-	margin-top: 12px;
-	padding-top: 7px;
 }
 .support-section h3.support-title {
 	font-size: 20px;
