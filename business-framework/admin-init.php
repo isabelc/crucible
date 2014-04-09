@@ -22,10 +22,10 @@ if( class_exists( 'Quick_Business_Website' ) ) {
 	require_once ($path .'admin-interface.php');
 	require_once ($path .'smartest-functions.php');
 	require_once ($path .'modules/contact/contact.php');
-	include_once ($path .'widgets/announcements.php');
-	include_once ($path .'widgets/all-services.php');
-	include_once ($path .'widgets/featured-services.php');
-	include_once ($path .'widgets/staff.php');
-	include_once ($path .'widgets/featured-announcements.php');
+	include_once $path .'widgets/announcements.php';
+	include_once $path .'widgets/all-services.php';
+	include_once $path .'widgets/featured-services.php';
+	include_once $path .'widgets/staff.php';
+	include_once $path .'widgets/featured-announcements.php';
 }
  ?>

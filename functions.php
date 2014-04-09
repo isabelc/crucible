@@ -6,13 +6,11 @@
 /*-----------------------------------------------------------------------------------*/
 /* Please refrain from editing this section */
 /*-----------------------------------------------------------------------------------*/
-
-include( dirname( __FILE__ ) . '/inc/updater.php' );
+include dirname( __FILE__ ) . '/inc/updater.php';
 // Smartest Themes Business Framework
 require_once (TEMPLATEPATH . '/business-framework/admin-init.php'); 
-// Set path to theme specific functions
-$incpath = TEMPLATEPATH . '/inc/';
 // Theme specific functionality
+$incpath = TEMPLATEPATH . '/inc/';
 require_once ($incpath . 'options.php'); 	// Options panel settings
 require_once ($incpath . 'theme-functions.php'); 	// theme functions
 require_once ($incpath . 'enqueue.php');	// Load javascript and styles
