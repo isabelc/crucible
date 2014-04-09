@@ -207,19 +207,7 @@ function smartestthemes_excerpt_length($length) {
 	else
 	    return 23;
 }
-// @todo @new if needed add_filter('excerpt_length', 'smartestthemes_excerpt_length');
-
-
-/* @todo see what this hides, and maybe don't use if i get the customizer logo to work for me.
- * Hide unnecessary tabs on customize.php
- * Title text won't show if they choose logo instead, so hide this
- */
-
-function crucible_customizer_styles() {
-	echo '<style>#customize-section-title_tagline, #customize-section-static_front_page { display:none; }</style>';
-}
-// @todo add_action( 'customize_controls_print_styles','crucible_customizer_styles', 25 );
-
+// @new @todo if needed add_filter('excerpt_length', 'smartestthemes_excerpt_length');
 
 /**
  * Control the number of posts per page in taxonomy or cat archives
