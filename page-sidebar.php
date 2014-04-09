@@ -7,7 +7,7 @@
 
 get_header(); ?>
 
-	<div id="primary" class="content-area"><!-- @todo may need this to fit sidebar <?php post_class( 'content-area grid_8 alpha' ); ?> -->
+	<div id="primary" class="content-area"><!-- @new decide. may need this to fit sidebar <?php post_class( 'content-area grid_8 alpha' ); ?> -->
 		<main id="main" class="site-main" role="main">
 
 			<?php while ( have_posts() ) : the_post(); ?>

@@ -12,7 +12,7 @@
 
 get_header();
 /*
-// @todo may need something like this
+// @new decide. may need something like this
 
 if (is_page(get_option('smartestthemes_contact_page_id'))){
 	$postclass = 'grid_7 alpha';
@@ -20,7 +20,7 @@ if (is_page(get_option('smartestthemes_contact_page_id'))){
 	$postclass = 'grid_12';
 } 
 
-@todo end
+@new end
 */
  ?>
 
