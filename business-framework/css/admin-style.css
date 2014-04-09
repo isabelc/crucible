@@ -60,15 +60,14 @@
 #smartestthemes-container #support-links {
 	border: 1px solid #d8d8d8;
 	height: 45px;
-		padding: 0 0 0 12px;
-	background-color: #aaa;
-	background: #ededed url('../images/support-links-bg.png');
-		border-top-left-radius: 5px;
-		-moz-border-radius-topleft: 5px;
-		-webkit-border-top-left-radius: 5px;
-		-webkit-border-top-right-radius: 5px;
-		border-top-right-radius: 5px;
-		-moz-border-radius-topright: 5px;
+	padding: 0 0 0 12px;
+	background: #e2e2e2;
+	border-top-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	border-top-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
 }
 #smartestthemes-container #support-links ul li {
 	display: inline;
@@ -106,12 +105,9 @@
 	border-style: none;
 	border-color: inherit;
 	border-width: 0;
-	
-	/* @test */
 	background: none repeat scroll 0% 0% #1CB841;
 	border-radius: 4px;
 	text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
-	
 	width: 136px;
 	height: 27px;
 	margin-top: 3px;
@@ -122,18 +118,27 @@
 #smartestthemes-container .save_bar_top input.submit-button[type="submit"].reset-button {
 	background: none repeat scroll 0% 0% #CA3C3C;
 }
-
 #smartestthemes-container #support-links ul li.right input.submit-button:hover, #smartestthemes-container .save_bar_top input[type=submit].submit-button:hover, input.reset-button:hover {
-
 	background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
-
 }
 #smartestthemes-container #support-links .ie ul li.right input.submit-button{
 	margin-top:-8px;
 }
 #smartestthemes-container .save_bar_top {
 	height: 40px;
-	background: #ededed url('../images/support-links-bg.png');
+	background: #e2e2e2;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-top: 0 solid #ccc;
+	border-bottom: 1px solid #ccc;
+	padding: 6px 6px 0;
+	text-align: right;
+	border-bottom-left-radius: 5px;
+	-moz-border-radius-bottom-left: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	-moz-border-radius-bottom-right: 5px;
 }
 a.support-button {
 	float: right;
@@ -647,23 +652,6 @@ h4.support-section-title {
 	background: #99001e none;
 	color: #fff!important;
 	text-shadow: 0 1px 0 #555!important;
-}
-.save_bar_top {
-	background: #f3f3f3;
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	border-top: 0 solid #ccc;
-	border-bottom: 1px solid #ccc;
-	padding: 6px 6px 0;
-	height: 34px;
-	text-align: right;
-	background: url('../images/support-links-bg.png');
-	border-bottom-left-radius: 5px;
-	-moz-border-radius-bottom-left: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	border-bottom-right-radius: 5px;
-	-moz-border-radius-bottom-right: 5px;
 }
 .hide {
 	display: none;
