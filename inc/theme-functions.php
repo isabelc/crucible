@@ -33,7 +33,7 @@ function crucible_setup() {
 	 * Enable support for Post Thumbnails on posts and pages.
 	 */
 	add_theme_support( 'post-thumbnails' );
-	add_image_size( 'crucible-logo', 9999, 150 );// @new prefix @new max-height @todo
+	add_image_size( 'crucible-logo', 9999, 150 );// @new @todo prefix. @new @todo max-height.
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
@@ -218,4 +218,4 @@ function crucible_numberposts( $query ) {
         set_query_var('posts_per_page', 9);
     }
 }
-// @new @todo use if needed add_action( 'pre_get_posts', 'crucible_numberposts' );
+// @new @todo if needed add_action( 'pre_get_posts', 'crucible_numberposts' );
