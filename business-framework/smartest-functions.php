@@ -65,7 +65,7 @@ function smartestthemes_after_setup() {
 		smartestthemes_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'crucible') ), 'smartestthemes_home_page_id', __('Home', 'crucible'), '' );
 	// Activate Smartest Reviews
 	if (!class_exists('SMARTESTReviewsBusiness') && (get_option('smartestthemes_add_reviews') == 'true'))
-		include_once(get_template_directory() .'/business-framework/modules/reviews/smartest-reviews.php');
+		include_once get_template_directory() .'/business-framework/modules/reviews/smartest-reviews.php';
 
 }
 add_action('after_setup_theme','smartestthemes_after_setup');
