@@ -143,7 +143,7 @@ if ( get_option('smartestthemes_override_accent_color') == 'true' ) { // accent 
 
 // output CSS if needed.
 if ( isset($accent_color) && ! empty($accent_color) ) { ?>
-	a, .color-3, .widget ul a:hover, .widget ul li, .widget.widget_smartest_announcements ul li, .widget.widget_smartest_announcements ul a, .site-title a strong, .entry-meta.jobtitle,
+	a, .color-3, .widget ul a:hover, .fa-bullhorn, .widget ul li, .widget.widget_smartest_announcements ul li, .widget.widget_smartest_announcements ul a, .site-title a strong, .entry-meta.jobtitle,
 	.menu .current-menu-item a,
 	.menu li:hover a,
 	.menu li:hover li a:hover,
@@ -177,7 +177,7 @@ if ( isset($accent_color) && ! empty($accent_color) ) { ?>
 input[type="reset"],input[type="submit"], #contact-form input[type="reset"], #contact-form input[type="submit"] {
 	    background:<?php echo $accent_color; ?>;
 	}
-	.button:hover, button:hover, .commentlist .reply a:hover, .commentlist .reply a:active, html input[type="button"]:hover,
+	.button:hover, button:hover, .fa-bullhorn:hover, .commentlist .reply a:hover, .commentlist .reply a:active, html input[type="button"]:hover,
 input[type="reset"]:hover,input[type="submit"]:hover, #contact-form input[type="reset"]:hover, #contact-form input[type="submit"]:hover, #contact-form input[type="reset"]:active, #contact-form input[type="submit"]:active {
 	    background:<?php echo $hover_color; ?>;
 	}

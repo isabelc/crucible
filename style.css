@@ -336,16 +336,17 @@ textarea {
 /*--------------------------------------------------------------
 5.1 Links
 --------------------------------------------------------------*/
-a {
-	color: royalblue;
+a, .fa-bullhorn {
+	color: green;/* @new */
 }
 a:visited {
-	color: purple;
+	color: green;/* @new */
 }
 a:hover,
 a:focus,
-a:active {
-	color: midnightblue;
+a:active,
+a .fa-bullhorn:hover {
+	color: pink;
 }
 
 /*--------------------------------------------------------------
