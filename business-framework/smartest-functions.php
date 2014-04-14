@@ -779,8 +779,8 @@ function smartestthemes_tool_bar() {
 		'parent'	=> 'appearance',
 		'id'		=> 'smartestthemes-options',
 		'title'	=> $themename. __(' Options', 'crucible'),
-		'href'	=> admin_url( 'admin.php?page=$themeslug')
-	));// @test admin_url with var in param
+		'href'	=> admin_url( "admin.php?page=$themeslug" )
+	));
 }
 add_action( 'wp_before_admin_bar_render', 'smartestthemes_tool_bar' );
 
