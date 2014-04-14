@@ -47,7 +47,7 @@ function smartestthemes_add_admin() {
 		if (isset($_REQUEST['smartestthemes_save']) && 'reset' == $_REQUEST['smartestthemes_save']) {
 			$options =  get_option('smartestthemes_template');
 			smartestthemes_reset_options($options,$themeslug);
-			header("Location: admin.php?page=$themeslug&reset=true");// @test $themeslug
+			header("Location: admin.php?page=$themeslug&reset=true");
 			die;
 		}
 	}
@@ -725,7 +725,7 @@ function smartestthemes_machine($options) {
 			}
 				$std = esc_attr(get_option($value['id']));
 				if( $std != "") { $ta_value = esc_attr( $std ); }
-				$output .= '<textarea class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'" cols="'. $cols .'" rows="8">'.stripslashes($ta_value).'</textarea>';// 3.6
+				$output .= '<textarea class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'" cols="'. $cols .'" rows="8">'.stripslashes($ta_value).'</textarea>';
 		break;
 		case "radio":
 			 $select_value = get_option( $value['id']);
