@@ -189,32 +189,29 @@ endif;
  * Display Contact info with microdata from Schema.org
  */
 function crucible_contact_info() {
-	$output = '<div itemscope itemtype="http://schema.org/'.get_option('smartetthemes_business_itemtype'). '"><p><strong>';// @test 
+	$output = '<div itemscope itemtype="http://schema.org/'.get_option('smartetthemes_business_itemtype'). '"><p><strong itemprop="name">';// @todo why is the schema not showing up??
+	
 	$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));
 	if($bn) {
 		$output .= $bn;
 	} else {
 		$output .= get_bloginfo('name');
 	}
-	$output .= '</strong></p><dl class="main-address"><dt itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . get_option('smartestthemes_address_street') . '</span>&nbsp; ' . get_option('smartestthemes_address_suite') . '<br /><span itemprop="addressLocality"> ' . get_option('smartestthemes_address_city') . '</span>';
+	$output .= '</strong></p><p class="main-address"><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . get_option('smartestthemes_address_street') . '</span>&nbsp; ' . get_option('smartestthemes_address_suite') . '<br /><span itemprop="addressLocality"> ' . get_option('smartestthemes_address_city') . '</span>';
 	if ( get_option('smartestthemes_address_city') && get_option('smartestthemes_address_state') ) {
 		$output .= ', ';
 	}
-	$output .= '<span itemprop="addressRegion">' . get_option('smartestthemes_address_state') . '</span>&nbsp;<span temprop="postalCode">' . get_option('smartestthemes_address_zip') . '</span>&nbsp; ' . get_option('smartestthemes_address_country') . '</dt>	&nbsp;';
+	$output .= '<span itemprop="addressRegion">' . get_option('smartestthemes_address_state') . '</span>&nbsp;<span temprop="postalCode">' . get_option('smartestthemes_address_zip') . '</span>&nbsp; ' . get_option('smartestthemes_address_country') . '</span>	&nbsp;<br />';
 	if ( get_option('smartestthemes_phone_number') ) {
-		$output .= '<dd><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. get_option('smartestthemes_phone_number'). '</span> &nbsp;</dd>';
+		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. get_option('smartestthemes_phone_number'). '</span> &nbsp;';
 	}
 	if ( get_option('smartestthemes_fax_numb') ) {
-	$output .= '<dd><span class="strong">' . __('FAX:', 'crucible') . '</span>&nbsp;  <span itemprop="faxNumber">' . get_option('smartestthemes_fax_numb') . '</span>&nbsp;</dd>';
+	$output .= '<br /><span class="strong">' . __('FAX:', 'crucible') . '</span>&nbsp;  <span itemprop="faxNumber">' . get_option('smartestthemes_fax_numb') . '</span>&nbsp;';
 	} 
 	if ( get_option('smartestthemes_show_contactemail') == 'true' ) {
-	$output .= '<dd><span class="strong">' . __('Email:', 'crucible') . '</span>&nbsp;<a href="mailto:' . get_bloginfo('admin_email') . '"><span itemprop="email">' . get_bloginfo('admin_email') . '</span></a></dd>';
+	$output .= '<br /><span class="strong">' . __('Email:', 'crucible') . '</span>&nbsp;<a href="mailto:' . get_bloginfo('admin_email') . '"><span itemprop="email">' . get_bloginfo('admin_email') . '</span></a>';
 	}
-<<<<<<< HEAD
-	$output .= '</dl></div>';
-=======
-	$output .= '</dl>';
->>>>>>> 69fbc0d661b491756fad32aa6a8ec5801e042d98
+	$output .= '</p></div>';
 	echo $output;
 }
 add_action('crucible_contact_info', 'crucible_contact_info');
