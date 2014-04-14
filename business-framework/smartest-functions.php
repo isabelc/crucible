@@ -1277,12 +1277,10 @@ function st_get_attachment_id_from_url( $attachment_url = '' ) {
 }
 
 /**	 // @todo move this into framework functions 
- * Returns number of images there are for About page
+ * @return array of images there are for About page
  */
 
 function smartestthemes_about_page_images() {
-
-	// @test maybe have to pass post id, or use global $post
 
 	$img_url = '';
 	$full_featUrl = '';
@@ -1291,20 +1289,30 @@ function smartestthemes_about_page_images() {
 		$img = get_post_thumbnail_id(); 
 		$full_featUrl = wp_get_attachment_image_src( $img, 'full');
 	}
+	
+	// if there is an about page option picture, do it at top
+	
 	if ( get_option('smartestthemes_about_picture') ) {
 		$img_url = get_option('smartestthemes_about_picture');
 		$topImg = $img_url;
-	} elseif ( isset($full_featUrl) && ! empty($full_featUrl) ) {
-		$topImg = $full_featUrl[0];
+		
+	} elseif ( ! empty($full_featUrl) ) {
+	
+		// there's a featured image but no about page option picture
+		
+		$img_url = '';
+		$topImg	= $full_featUrl[0];
+		
 	}
-
 	$out = array();
 
-	if( isset($topImg) && ! empty($topImg) ) {
+	if( !empty($topImg) ) {
 		$out[] = '<figure><a href="' . $topImg . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $topImg . '" alt="' . the_title_attribute('echo=0') . '" /></a></figure>';
 	}
 
-	if ( isset($img_url) && $full_featUrl ) {
+	// if there's both an about page option picture and a featured image, do feat.image at bottom
+	
+	if ( !empty($img_url) && !empty($full_featUrl) ) {
 			
 		$out[] = '<figure><a href="' . $full_featUrl[0] . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $full_featUrl[0] . '" alt="' . the_title_attribute('echo=0') . '" /></a></figure>';
 	}
@@ -1336,5 +1344,6 @@ function smartestthemes_about_bottom_image() {
 		$out .= $imgs[1];
 	}
 	echo $out;
+	
 }
 ?>
