@@ -583,6 +583,7 @@ a .fa-bullhorn:hover {
 
 /* @test
 Layout: Content-Sidebar
+*/
 .content-area {
 	float: left;
 	margin: 0 -25% 0 0;
@@ -600,8 +601,8 @@ Layout: Content-Sidebar
 	clear: both;
 	width: 100%;
 }
-*/
-/* @test
+
+/* @note use for sidebar on left
 Layout: Sidebar-Content
 .content-area {
 	float: right;
