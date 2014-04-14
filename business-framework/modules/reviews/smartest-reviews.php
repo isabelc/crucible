@@ -984,7 +984,7 @@ function do_the_content($original_content) {
     }
 	function smartestreviews_scripts() {
 		if( get_option('smartestthemes_add_reviews') == 'true'  ) {
-			wp_register_style('smartest-reviews', $this->getpluginurl() . 'smartest-reviews.css', array(), $this->plugin_version);wp_enqueue_style('smartest-reviews');wp_register_script('smartest-reviews', $this->getpluginurl() . 'smartest-reviews.js', array('jquery'), $this->plugin_version);
+			wp_register_style('smartest-reviews', $this->getpluginurl() . 'reviews.css', array(), $this->plugin_version);wp_enqueue_style('smartest-reviews');wp_register_script('smartest-reviews', $this->getpluginurl() . 'reviews.js', array('jquery'), $this->plugin_version);
 			if( is_page(get_option('smartestthemes_reviews_page_id'))) {
 		        wp_enqueue_script('smartest-reviews');
 				$loc = array(
@@ -1012,7 +1012,7 @@ function do_the_content($original_content) {
 	}
     function include_admin() {
         global $SMARTESTReviewsBusinessAdmin;
-        require_once(get_template_directory().'/business-framework/modules/reviews/smartest-reviews-admin.php');
+        require_once(get_template_directory().'/business-framework/modules/reviews/reviews-admin.php');
 
     }
     function admin_init() {

@@ -99,10 +99,8 @@ class SMARTESTReviewsBusinessAdmin
 	function enqueue_admin_stuff() {
 			$pluginurl = $this->parentClass->getpluginurl();
             if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' || $this->p->page == 'smar_options' ) ) {
-                wp_register_script('smartest-reviews-admin',$pluginurl.'smartest-reviews-admin.js',array('jquery'));
-				wp_register_style('smartest-reviews-admin',$pluginurl.'smartest-reviews-admin.css');  
-				wp_enqueue_script('smartest-reviews-admin');
-				wp_enqueue_style('smartest-reviews-admin');
+				wp_enqueue_script('smartest-reviews-admin',$pluginurl.'reviews-admin.js',array('jquery'));
+				wp_enqueue_style('smartest-reviews-admin',$pluginurl.'reviews-admin.css');
             }
 	}
 
