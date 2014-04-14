@@ -210,7 +210,11 @@ function crucible_contact_info() {
 	if ( get_option('smartestthemes_show_contactemail') == 'true' ) {
 	$output .= '<dd><span class="strong">' . __('Email:', 'crucible') . '</span>&nbsp;<a href="mailto:' . get_bloginfo('admin_email') . '"><span itemprop="email">' . get_bloginfo('admin_email') . '</span></a></dd>';
 	}
+<<<<<<< HEAD
 	$output .= '</dl></div>';
+=======
+	$output .= '</dl>';
+>>>>>>> 69fbc0d661b491756fad32aa6a8ec5801e042d98
 	echo $output;
 }
 add_action('crucible_contact_info', 'crucible_contact_info');
