@@ -13,7 +13,10 @@
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); if ( is_front_page() ) { $schematype = get_option('smartetthemes_business_itemtype'); echo ' itemscope itemtype="http://schema.org/'.$schematype.'"';} ?>>
-<!-- @todo search everywhere for 'smartetthemes_business_itemtype' or '_business_itemtype' to replace it wirh 'smartetthemes_bus_schema' -->
+<!-- @todo search everywhere for 'smartetthemes_business_itemtype' or '_business_itemtype' to replace it wirh 'smartetthemes_bus_schema'
+// @todo why is this option not showing up?? 
+
+ -->
 <div id="page" class="hfeed site">
 
 <!-- 
