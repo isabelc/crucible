@@ -14,10 +14,8 @@
 
 	</header><!-- .entry-header -->
 
-	<div class="entry-meta">
-			<?php crucible_entry_meta(); ?>
-	</div><!-- .entry-meta -->
-
+	<?php crucible_staff_social_buttons(); ?>
+			
 	<div class="entry-summary">
 		<p>
 		<?php the_excerpt(); ?>
