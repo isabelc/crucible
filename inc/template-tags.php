@@ -132,7 +132,7 @@ function crucible_post_thumbnail() {
 
 	else : 
 
-		$out .= '<div class="post-thumbnail"><a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute('echo=0') . '"><img src="' . $full_image_url[0] . '" alt="' . the_title_attribute('echo=0') . '"></a></div>';
+		$out .= '<div class="post-thumbnail"><a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute('echo=0') . '">' . get_the_post_thumbnail( get_the_id(), 'thumbnail' ) . '</a></div>';
 
 	endif;
 
@@ -145,11 +145,13 @@ function crucible_post_thumbnail() {
 if ( ! function_exists( 'crucible_staff_social_buttons' ) ) :
 
 	function crucible_staff_social_buttons() {
+	
 		global $post;
+
 		if ( 'smartest_staff' != get_post_type() ) {
 			return;
 		}
-		
+
 		$tw = get_post_meta($post->ID, '_smab_staff_twitter', true);
 		$goo = get_post_meta($post->ID, '_smab_staff_gplus', true);
 		$fa = get_post_meta($post->ID, '_smab_staff_facebook', true);
@@ -164,16 +166,20 @@ if ( ! function_exists( 'crucible_staff_social_buttons' ) ) :
 			return;
 		}
 		if ($tw) {
-			$output .= '<li><a class="social-staff-twitter" target="_blank" href="https://twitter.com/' . $tw . '" title="' . __('Twitter', 'smartestb' ) . '"></a><i class="fa fa-2x fa-twitter-square"></li>';
+			$output .= '<li><a class="social-staff-twitter" target="_blank" href="https://twitter.com/' . $tw . '" title="' . __('Twitter', 'smartestb' ) . '"><i class="fa fa-twitter-square fa-2x"></i></a></li>';
 		} 
 		if ($goo) {
-			$output .= '<li><a class="social-staff-gplus" target="_blank" href="https://plus.google.com/' . $goo . '" rel="publisher" title="' . __('Google Plus', 'smartestb' ) . '"></a><i class="fa fa-2x fa-google-plus-square"></li>';
+			$output .= '<li><a class="social-staff-gplus" target="_blank" href="https://plus.google.com/' . $goo . '" rel="publisher" title="' . __('Google Plus', 'smartestb' ) . '"><i class="fa fa-google-plus-square fa-2x"></i></a></li>';
 		} 
 		if ($fa) {
-			$output .= '<li><a class="social-staff-facebook" target="_blank" href="https://facebook.com/' . $fa . '" title="' . __('Facebook', 'smartestb' ) . '"></a><i class="fa fa-2x fa-facebook-square"></li>';
+			$output .= '<li><a class="social-staff-facebook" target="_blank" href="https://facebook.com/' . $fa . '" title="' . __('Facebook', 'smartestb' ) . '"><i class="fa fa-facebook-square fa-2x"></i></a></li>';
 		} 
 		if ($li) {
-			$output .= '<li><a class="social-staff-linkedin" target="_blank" href="https://linkedin.com/' . $li . '" title="' . __('Linkedin', 'smartestb' ) . '"></a><i class="fa fa-2x fa-linkedin-square"></li>';
+			$output .= '<li><a class="social-staff-linkedin" target="_blank" href="https://linkedin.com/' . $li . '" title="' . __('Linkedin', 'smartestb' ) . '"><i class="fa fa-linkedin-square fa-2x"></i></a></li>';
+		}
+		
+		if ($in) {
+			$output .= '<li><a class="social-staff-instagram" target="_blank" href="http://instagram.com/' . $in . '" title="' . __('Instagram', 'smartestb' ) . '"><i class="fa fa-instagram fa-2x"></i></a></li>';
 		}
 
 		$output .= '</ul></div>';
