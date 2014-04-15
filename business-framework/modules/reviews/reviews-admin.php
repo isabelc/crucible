@@ -1,29 +1,27 @@
 <?php
-class SMARTESTReviewsBusinessAdmin
-{	var $parentClass = '';
+class SMARTESTReviewsBusinessAdmin {
+	var $parentClass = '';
 	function SMARTESTReviewsBusinessAdmin($parentClass) {
-            define('IN_SMAR_ADMIN',1);
+		define('IN_SMAR_ADMIN',1);
             
-            $this->parentClass = &$parentClass;
-            foreach ($this->parentClass as $col => $val) {
-                $this->$col = &$this->parentClass->$col;
-            }
+		$this->parentClass = &$parentClass;
+		foreach ($this->parentClass as $col => $val) {
+			$this->$col = &$this->parentClass->$col;
+		}
             
 	}
 	function real_admin_init() {
-            $this->parentClass->init();
-             register_setting( 'smar_options', 'smar_options' );
+		$this->parentClass->init();
+		register_setting( 'smar_options', 'smar_options' );
 	}
 	function real_admin_save_post($post_id) {
-            global $meta_box,$wpdb;
+		global $meta_box,$wpdb;
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+			return $post_id;
+		}
 
-            // check autosave
-            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-                return $post_id;
-            }
-
-            // check permissions
-          if ( isset($this->p->post_type) && $this->p->post_type == 'page' ) {
+		// check permissions
+		if ( isset($this->p->post_type) && $this->p->post_type == 'page' ) {
                 if (!current_user_can('edit_page', $post_id)) {
                     return $post_id;
                 }

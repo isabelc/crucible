@@ -45,12 +45,12 @@ class SMARTESTReviewsBusiness {
 		add_action('admin_enqueue_scripts', array(&$this, 'admin_scripts'));
     }
 
-    function addmenu() {
-        add_options_page(__('Smartest Reviews', 'crucible'), '<img src="' . $this->getpluginurl() . 'star.png" />&nbsp;'. __('Smartest Reviews', 'crucible'), 'manage_options', 'smar_options', array(&$this, 'admin_options'));
+	function addmenu() {
+		add_options_page(__('Smartest Reviews', 'crucible'), __('Smartest Reviews', 'crucible'), 'manage_options', 'smar_options', array(&$this, 'admin_options'));
 		if(get_option('smartestthemes_add_reviews') == 'true') {       
-			add_menu_page(__('Smartest Reviews', 'crucible'), __('Smartest Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array(&$this, 'admin_view_reviews'), $this->getpluginurl() . 'star.png', 62); /* was 50 */
+			add_menu_page(__('Smartest Reviews', 'crucible'), __('Smartest Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array(&$this, 'admin_view_reviews'), $this->getpluginurl() . 'star.png', 62);
 		}
-   }
+	}
     function admin_options() {
         global $SMARTESTReviewsBusinessAdmin;
         $this->include_admin(); /* include admin functions */
@@ -302,7 +302,7 @@ class SMARTESTReviewsBusiness {
 else {$show = false; }
 		if ($show) { /* we append like this to prevent newlines and wpautop issues */
        	
-			$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['smartestthemes_business_schema'] . '"';
+			$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['smartestthemes_business_itemtype'] . '"';
 			$aggregate_footer_output = '<div id="smar_respond_1"><div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
 			$smartestthemes_options = get_option('smartestthemes_options');
 			$bn = stripslashes_deep(esc_attr($smartestthemes_options['smartestthemes_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
@@ -467,7 +467,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
         }
         if (!$inside_div) {
             $reviews_content .= '<!-- no inside div --><div id="smar_respond_1"';
-				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['smartestthemes_business_schema'].'">
+				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['smartestthemes_business_itemtype'].'">
 							<span class="isa_vcard" id="hreview-smar-hcard-for-' . $review->id . '">
                                 <a itemprop="name" href="' . site_url('/') . '">' . $bn . '</a>
                                 <span itemprop="telephone">' . $smartestthemes_options['smartestthemes_phone_number'] . '</span>
@@ -486,7 +486,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
             $summary = $this->got_aggregate["text"];
             $best_score = 5;
             $average_score = number_format($this->got_aggregate["aggregate"], 1);
-			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['smartestthemes_business_schema'].'"><br />
+			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['smartestthemes_business_itemtype'].'"><br />
 							<span class="isa_vcard">
                                 <a itemprop="name" href="' . site_url('/') . '">' . $bn . '</a><br />
                                 <span itemprop="telephone">' . $smartestthemes_options['smartestthemes_phone_number'] . '</span><br />
