@@ -671,7 +671,7 @@ $options[] = array(
 
 $options[] = array( 'name' => __('Business Type','crucible'),
 					'desc' => __('Select the main category of your business. This is Microdata to maximize your search-engine ranking.','crucible'),
-					'id' => $shortname.'_business_schema',
+					'id' => $shortname.'_business_itemtype',
 					'type' => 'select2',
 					'std' => 'LocalBusiness',
 					'options' => $schema_itemtypes);
@@ -695,10 +695,15 @@ $options[] = array( 'name' => __('Home Page Meta Keywords','crucible'),
 $options[] = array( 'name' => __('Footer','crucible'),'class' => 'footer',
 					'type' => 'heading');
 $options[] = array( 'name' => __('Footer Text','crucible'),
-                    'desc' => __('Add some text or basic html (strong, a, em, br, etc) to the footer area. This will go <strong>under</strong> the current copyright notice on your footer.<br /><br />This will <strong>not</strong> automatically remove the default copyright notice. See the <strong>\'Advanced\'</strong> tab to override the default copyright notice.','crucible'),
+                    'desc' => __('Add some text or basic html (strong, a, em, br, etc) to the footer area. By default, this will go <strong>under</strong> the current copyright notice on your footer.<br /><br />To override the default copyright notice, check below.','crucible'),
                     'id' => $shortname.'_footer_text',
                     'std' => '',
                     'type' => 'textarea');
+$options[] = array( 'name' => __('Override the Default Footer Copyright Notice','crucible'),
+					'desc' => __('Check this to remove the default copyright text on the footer. This will allow your custom Footer text (that you entered above) to completely replace any default footer.', 'crucible'),
+					'id' => $shortname.'_override_footer',
+					'std' => 'false',
+					'type' => 'checkbox');
 /* Branding */
 $options[] = array( 'name' => __('Backend Branding','crucible'),'class' => 'branding',
 					'type' => 'heading');
@@ -845,11 +850,6 @@ $options[] = array( 'name' => sprintf( __('Disable Extra Items on wp_nav_menu','
 $options[] = array( 'name' => __('Disable Social Share Buttons','crucible'),
 					'desc' => __('Check this to stop inserting Facebook Like, Tweet, and Google +1 buttons at the bottom of single posts.', 'crucible'),
 					'id' => $shortname.'_stop_smartshare',
-					'std' => 'false',
-					'type' => 'checkbox');
-$options[] = array( 'name' => __('Override the Default Footer Copyright Notice','crucible'),
-					'desc' => __('Check this to get rid of the default copyright text on the footer. This will allow your custom Footer text (that you entered in the <strong>Footer</strong> tab) to completely replace any default footer.', 'crucible'),
-					'id' => $shortname.'_override_footer',
 					'std' => 'false',
 					'type' => 'checkbox');
 $options[] = array( 'name' => __('Disable Announcements Icon','crucible'),
