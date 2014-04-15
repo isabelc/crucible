@@ -53,15 +53,18 @@
 
 		} // end check for categories on this blog
 
-		printf(
-			$meta_text,
-			$category_list,
-			$tag_list,
-			get_permalink()
-		);
-	edit_post_link( __( 'Edit', 'crucible' ), '<span class="edit-link">', '</span>' ); 
-	if(get_option('smartestthemes_stop_smartshare') == 'false') {
-		echo smartestthemes_share(); 
-	} ?>
+		// do not do categories for cpts
+		if ( ! in_array( get_post_type(), array('smartest_staff', 'smartest_staff', 'smartest_staff') ) ) {
+			printf(
+				$meta_text,
+				$category_list,
+				$tag_list,
+				get_permalink()
+			);
+		}
+		edit_post_link( __( 'Edit', 'crucible' ), '<span class="edit-link">', '</span>' ); 
+		if(get_option('smartestthemes_stop_smartshare') == 'false') {
+			echo smartestthemes_share(); 
+		} ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->
