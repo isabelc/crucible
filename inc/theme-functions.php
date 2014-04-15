@@ -200,14 +200,14 @@ function crucible_nav_fallback() {
 
 // CHANGE EXCERPT LENGTH FOR custom post types
 
-function smartestthemes_excerpt_length($length) {
+function crucible_excerpt_length($length) {
     global $post;
 	if (in_array($post->post_type, array('smartest_staff', 'smartest_services')))
 		return 12;
 	else
 	    return 23;
 }
-// @new @todo if needed add_filter('excerpt_length', 'smartestthemes_excerpt_length');
+// @new @todo if needed add_filter('excerpt_length', 'crucible_excerpt_length');
 
 /**
  * Control the number of posts per page in taxonomy or cat archives
