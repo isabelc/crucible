@@ -19,11 +19,13 @@
 	</div><!-- .entry-meta -->
 
 	<div class="entry-summary">
-		<?php the_excerpt();
-		
-		// @test how read more link looks. maybe need conditional to show 'Details' on services cpt, and hide it on staff cpt. ?>
-		
-		<a class="read-more" href="'. get_permalink() . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span> . '</a>
+		<p>
+		<?php the_excerpt(); ?>
+		</p>
+		<?php
+		$anchor = is_post_type_archive('smartest_services') ? __('Details', 'crucible') : 'More';
+		?>
+		<a class="read-more" href="'. get_permalink() . '"><?php echo $anchor; ?></a>
 		
 	</div><!-- .entry-summary -->
 
