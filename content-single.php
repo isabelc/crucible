@@ -19,7 +19,7 @@
 		<?php the_content(); ?>
 		<?php
 		if ( 'smartest_staff' == get_post_type() ) {
-			// @todo get staff social tag here
+			crucible_staff_social_buttons();
 		}
 		wp_link_pages( array(
 			'before' => '<div class="page-links">' . __( 'Pages:', 'crucible' ),

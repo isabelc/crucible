@@ -84,7 +84,12 @@ endif; ?>
 					endif;
 				?>
 			</header><!-- .page-header -->
-
+			
+			<?php
+				if ( is_post_type_archive('smartest_staff') ) {
+					crucible_staff_social_buttons();
+				}
+			?>
 			<?php /* Start the Loop */ ?>
 			<?php while ( have_posts() ) : the_post(); ?>
 
