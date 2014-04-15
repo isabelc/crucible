@@ -47,5 +47,16 @@ do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per t
 			<?php wp_nav_menu( array( 'theme_location' => 'primary','fallback_cb' => 'crucible_nav_fallback', 'items_wrap' => '<ul class="%2$s">%3$s</ul>' ) ); ?>
 		</nav><!-- #site-navigation -->
 	</header><!-- #masthead -->
+	
+	<p>This is a @test.</p>
+	<?php 
+	
+		echo 'Schema: ' . get_option('smartetthemes_business_itemtype');
+	
+	?>
+	
+	
+	
+	
 
 	<div id="content" class="site-content">
