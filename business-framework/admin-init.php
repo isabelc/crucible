@@ -7,7 +7,7 @@
  * @version    2.4.0
  */
 function smartestthemes_version_init(){
-    $framework_version = '2.4.0';// @new @todo edit version per framework update, here and above
+    $framework_version = '2.4.0';// @todo edit version per framework update, here and above
     update_option('smartestthemes_framework_version',$framework_version);
 }
 add_action('init','smartestthemes_version_init');

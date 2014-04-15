@@ -540,7 +540,7 @@ function smartestthemes_metaboxes( array $meta_boxes ) {
 		'pages'      => array( 'smartest_staff', ), // Post type
 		'context'    => 'normal',
 		'priority'   => 'high',
-		'show_names' => true, // Show field names on the left
+		'show_names' => true,
 		'fields'     => array(
 			array(
 				'name' => __('Job Title', 'crucible'),
@@ -1275,7 +1275,7 @@ function st_get_attachment_id_from_url( $attachment_url = '' ) {
 	return $attachment_id;
 }
 
-/**	 // @todo move this into framework functions 
+/**
  * @return array of images there are for About page
  */
 
