@@ -96,7 +96,7 @@ class SMARTESTReviewsBusiness {
             'reviews_per_page' => 10,
             'show_custom' => array(),
             'show_fields' => array('fname' => 1, 'femail' => 0, 'fwebsite' => 0, 'ftitle' => 1, 'fage' => 0, 'fgender' => 0),
-            'show_hcard_on' => 1, 'biz_declare' => 0,
+            'show_hcard_on' => 1,
             'submit_button_text' => __('Submit your review', 'crucible'),
             'title_tag' => 'h2'
         );
@@ -300,36 +300,33 @@ class SMARTESTReviewsBusiness {
 						$show = true;
 					}
 else {$show = false; }
-       	if ($show) { /* we append like this to prevent newlines and wpautop issues */
-				// if set to declare business schema type, do it
-            	if ( $this->options['biz_declare'] == 1 ) {
-						$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['smartestthemes_business_itemtype'] . '"';
-		                $aggregate_footer_output = '<div id="smar_respond_1"><div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
+		if ($show) { /* we append like this to prevent newlines and wpautop issues */
+       	
+			$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['smartestthemes_business_itemtype'] . '"';
+			$aggregate_footer_output = '<div id="smar_respond_1"><div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
+			$smartestthemes_options = get_option('smartestthemes_options');
+			$bn = stripslashes_deep(esc_attr($smartestthemes_options['smartestthemes_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
 
-$smartestthemes_options = get_option('smartestthemes_options');
-	$bn = stripslashes_deep(esc_attr($smartestthemes_options['smartestthemes_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
-
-              $aggregate_footer_output .= '<a itemprop="name" href="' . site_url('/')
+			$aggregate_footer_output .= '<a itemprop="name" href="' . site_url('/')
  . '">' . $bn . '</a><br />';
-		                if (	$smartestthemes_options['smartestthemes_address_street'] != '' || 
-			                        $smartestthemes_options['smartestthemes_address_city'] != '' ||
-			                        $smartestthemes_options['smartestthemes_address_state'] != '' ||
-			                        $smartestthemes_options['smartestthemes_address_zip'] != '' ||
-			                        $smartestthemes_options['smartestthemes_address_country'] != ''
-			                   )
-			                {
-			                    $aggregate_footer_output .= '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
-			                    if ($smartestthemes_options['smartestthemes_address_street'] != '') {
-			                        $aggregate_footer_output .= '<span itemprop="streetAddress">' . $smartestthemes_options['smartestthemes_address_street'] . '</span>&nbsp;';
-			                    }
+				if ( $smartestthemes_options['smartestthemes_address_street'] != '' || 
+					$smartestthemes_options['smartestthemes_address_city'] != '' ||
+					$smartestthemes_options['smartestthemes_address_state'] != '' ||
+					$smartestthemes_options['smartestthemes_address_zip'] != '' ||
+					$smartestthemes_options['smartestthemes_address_country'] != ''
+				) {
+						$aggregate_footer_output .= '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
+						if ($smartestthemes_options['smartestthemes_address_street'] != '') {
+							$aggregate_footer_output .= '<span itemprop="streetAddress">' . $smartestthemes_options['smartestthemes_address_street'] . '</span>&nbsp;';
+						}
 
-								if ($smartestthemes_options['smartestthemes_address_suite'] != '') {
-											                        $aggregate_footer_output .= ' ' . $smartestthemes_options['smartestthemes_address_suite'] . '&nbsp;';
-											                    }
+						if ($smartestthemes_options['smartestthemes_address_suite'] != '') {
+							$aggregate_footer_output .= ' ' . $smartestthemes_options['smartestthemes_address_suite'] . '&nbsp;';
+						}
 
-			                    if ($smartestthemes_options['smartestthemes_address_city'] != '') {
-			                        $aggregate_footer_output .='<span itemprop="addressLocality">' . $smartestthemes_options['smartestthemes_address_city'] . '</span>,&nbsp;';
-			                    }
+						if ($smartestthemes_options['smartestthemes_address_city'] != '') {
+								$smartestthemes_options['smartestthemes_address_city'] . '</span>,&nbsp;';
+						}
 			                    if ($smartestthemes_options['smartestthemes_address_state'] != '') {
 			                        $aggregate_footer_output .='<span itemprop="addressRegion">' . $smartestthemes_options['smartestthemes_address_state'] . '</span>,&nbsp;';
 			                    }
@@ -346,9 +343,6 @@ $smartestthemes_options = get_option('smartestthemes_options');
 			                if ( $smartestthemes_options['smartestthemes_phone_number'] != '') {
 			                    $aggregate_footer_output .= '<br />&nbsp;&bull;&nbsp<span itemprop="telephone">' . $smartestthemes_options['smartestthemes_phone_number'] . '</span>';
 			                }
-					} else { // end if biz_declare, do else
-							$aggregate_footer_output = '<div id="smar_respond_1"><div id="smar_hcard_s" class="isa_vcard">';
-						}
 
 					// do agg rating for both scenarios
 $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" id="hreview-smar-aggregate"> '. __('Average rating:', 'crucible'). ' <span itemprop="ratingValue" class="average">' . $average_score . '</span> ' . __('out of', 'crucible'). ' <span itemprop="bestRating">' . $best_score . ' </span> '. __('based on', 'crucible').' <span itemprop="ratingCount">' . $this->got_aggregate["total"] . ' </span>';

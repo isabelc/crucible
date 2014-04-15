@@ -415,7 +415,6 @@ function smartestthemes_frame_load() {
 					var serializedReturn = newValues();
 					var ajax_url = '<?php echo admin_url("admin-ajax.php"); ?>';
 					var data = {
-// @test end of next line was 'smartestbthemes'
 						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == get_option('smartestthemes_themeslug') ){ ?>
 						type: 'options',
 						<?php } ?>
