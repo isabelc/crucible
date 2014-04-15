@@ -297,17 +297,17 @@ function crucible_social_buttons() {
 	if ( $tw ) {
 		$output .= '<li><a class="social-twitter" target="_blank" href="https://twitter.com/' . $tw . '" title="' . __( 'Twitter', 'crucible' ) . '"><i class="fa fa-twitter-square"></i></a></li>';
 	} if ( $goo ) {
-		$output .= '<li><a class="social-google" target="_blank" href="https://plus.google.com/' . $goo . '" rel="publisher" title="' . __( 'Google Plus', 'crucible' ) . '"><i class="fa fa-google-plus-square"></i></a></li>';
+		$output .= '<li><a class="social-google" target="_blank" href="https://plus.google.com/' . $goo . '" rel="publisher" title="' . __( 'Google Plus', 'crucible' ) . '"><i class="fa fa-2x fa-google-plus-square"></i></a></li>';
 	} if ( $fa ) {
-		$output .= '<li><a class="social-facebook" target="_blank" href="https://facebook.com/' . $fa . '" title="' . __( 'Facebook', 'crucible' ) . '"><i class="fa fa-facebook-square"></i></a></li>';
+		$output .= '<li><a class="social-facebook" target="_blank" href="https://facebook.com/' . $fa . '" title="' . __( 'Facebook', 'crucible' ) . '"><i class="fa fa-2x fa-facebook-square"></i></a></li>';
 	} if ( $yo ) {
-		$output .= '<li><a class="social-youtube" target="_blank" href="https://www.youtube.com/user/' . $yo . '" title="' . __( 'Youtube', 'crucible' ) . '"><i class="fa fa-youtube-square"></i></a></li>';
+		$output .= '<li><a class="social-youtube" target="_blank" href="https://www.youtube.com/user/' . $yo . '" title="' . __( 'Youtube', 'crucible' ) . '"><i class="fa fa-2x fa-youtube-square"></i></a></li>';
 	} if ( $li ) {
-		$output .= '<li><a class="social-linkedin" target="_blank" href="https://www.linkedin.com/' . $li . '" title="' . __( 'Linkedin', 'crucible' ) . '"><i class="fa fa-linkedin-square"></i></a></li>';
+		$output .= '<li><a class="social-linkedin" target="_blank" href="https://www.linkedin.com/' . $li . '" title="' . __( 'Linkedin', 'crucible' ) . '"><i class="fa fa-2x fa-linkedin-square"></i></a></li>';
 	}  if ( $in ) {
-		$output .= '<li><a class="social-instagram" target="_blank" href="http://instagram.com/' . $in . '" title="' . __( 'Instagram', 'crucible' ) . '"><i class="fa fa-instagram"></i></a></li>';
+		$output .= '<li><a class="social-instagram" target="_blank" href="http://instagram.com/' . $in . '" title="' . __( 'Instagram', 'crucible' ) . '"><i class="fa fa-2x fa-instagram"></i></a></li>';
 	}  if ( $li ) {
-		$output .= '<li><a class="social-pinterest" target="_blank" href="http://www.pinterest.com/' . $pi . '" title="' . __( 'Pinterest', 'crucible' ) . '"><i class="fa fa-pinterest-square"></i></a></li>';
+		$output .= '<li><a class="social-pinterest" target="_blank" href="http://www.pinterest.com/' . $pi . '" title="' . __( 'Pinterest', 'crucible' ) . '"><i class="fa fa-2x fa-pinterest-square"></i></a></li>';
 	}
 	$output .= '</ul></div><!-- .social -->';
 
