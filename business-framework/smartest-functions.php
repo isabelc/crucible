@@ -579,6 +579,12 @@ function smartestthemes_metaboxes( array $meta_boxes ) {
 				'id' => $prefix . 'staff_linkedin',
 				'type' => 'text_medium',
 			),
+			array(
+				'name' => __('Instagram Username', 'crucible'),
+				'desc' => __('The part of the profile address after "www.instagram.com/". Optional', 'crucible'),
+				'id' => $prefix . 'staff_instagram',
+				'type' => 'text_medium',
+			),			
 		)
 	);
 
