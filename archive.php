@@ -87,7 +87,7 @@ endif; ?>
 			
 			<?php
 				if ( is_post_type_archive('smartest_staff') ) {
-					crucible_staff_social_buttons();
+					// @test crucible_staff_social_buttons();
 				}
 			?>
 			<?php /* Start the Loop */ ?>
