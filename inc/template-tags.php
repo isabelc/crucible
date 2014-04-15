@@ -238,8 +238,7 @@ endif;
  * Display Contact info with microdata from Schema.org
  */
 function crucible_contact_info() {
-	$output = '<div itemscope itemtype="http://schema.org/'.get_option('smartetthemes_business_itemtype'). '"><p><strong itemprop="name">';// @todo why is the schema not showing up??
-	
+	$output = '<div itemscope itemtype="http://schema.org/'.get_option('smartestthemes_business_itemtype'). '"><p><strong itemprop="name">';
 	$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));
 	if($bn) {
 		$output .= $bn;
@@ -370,16 +369,12 @@ function crucible_social_buttons() {
 add_action('crucible_social_buttons', 'crucible_social_buttons');
 
 /**
- * Display the Footer with conditional footer text
+ * Display the site footer
  */
 function crucible_footer() {
 	$output = '';
 	if (get_option('smartestthemes_override_footer') == 'false') { // no override, so do default				
-		$output .= '<span>' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '"';
-		if ( is_front_page() ) {
-			$output .= ' itemprop="name"';
-		}
-		$output .= '>';
+		$output .= '<span>' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
 
 		$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));
 		if($bn) {

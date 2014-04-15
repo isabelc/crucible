@@ -12,8 +12,8 @@
 <title><?php wp_title( '|', true, 'right' ); ?></title>
 <?php wp_head(); ?>
 </head>
-<body <?php body_class(); if ( is_front_page() ) { $schematype = get_option('smartetthemes_business_itemtype'); echo ' itemscope itemtype="http://schema.org/'.$schematype.'"';} ?>>
-<!-- @todo search everywhere for 'smartetthemes_business_itemtype' or '_business_itemtype' to replace it wirh 'smartetthemes_bus_schema'
+<body <?php body_class(); if ( is_front_page() ) { $schematype = get_option('smartestthemes_business_itemtype'); echo ' itemscope itemtype="http://schema.org/'.$schematype.'"';} ?>>
+<!-- @todo search everywhere for 'smartestthemes_business_itemtype' or '_business_itemtype' to replace it wirh 'smartetthemes_bus_schema'
 // @todo why is this option not showing up?? 
 
  -->
@@ -47,16 +47,4 @@ do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per t
 			<?php wp_nav_menu( array( 'theme_location' => 'primary','fallback_cb' => 'crucible_nav_fallback', 'items_wrap' => '<ul class="%2$s">%3$s</ul>' ) ); ?>
 		</nav><!-- #site-navigation -->
 	</header><!-- #masthead -->
-	
-	<p>This is a @test.</p>
-	<?php 
-	
-		echo 'Schema: ' . get_option('smartetthemes_business_itemtype');
-	
-	?>
-	
-	
-	
-	
-
 	<div id="content" class="site-content">

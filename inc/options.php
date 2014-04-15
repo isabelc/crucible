@@ -118,7 +118,6 @@ $bodyfonts = array(
 $fontsizes = array('','11px','12px','13px','14px','16px','18px','20px','22px','24px','26px','28px','30px','32px','35px','36px','38px','40px','41px','44px','48px','52px','56px','60px');
 // @new custom color list, list default 1st
 $colors = array('green', 'red','orange','lime','blue','light blue','violet','bronze brown','sand','gray');
-$footcode = htmlentities('<span itemprop="name">YOUR BUSINESS NAME</span>');
 
 /* @new choices */
 $schema_itemtypes = array(
@@ -849,7 +848,7 @@ $options[] = array( 'name' => __('Disable Social Share Buttons','crucible'),
 					'std' => 'false',
 					'type' => 'checkbox');
 $options[] = array( 'name' => __('Override the Default Footer Copyright Notice','crucible'),
-					'desc' => sprintf(__('Check this to get rid of the default copyright text on the footer. This will allow your custom Footer text (that you entered in the <strong>Footer</strong> tab) to completely replace any default footer.  But know that this default footer copyright with your business name on it contains microdata that is necessary for your site to get Review stars on Google search results. Removing this copyright text will break the microdata markup. <br /><br />This does not matter if you are not using Reviews for stars. But if you ARE using Reviews to get stars on search results, you can restore the microdata while still overriding the text by including the itemprop="name" tag around your business name in your own custom footer text.<br />For example:<br />Copyright 2013 %s<br />', 'crucible'), $footcode),
+					'desc' => __('Check this to get rid of the default copyright text on the footer. This will allow your custom Footer text (that you entered in the <strong>Footer</strong> tab) to completely replace any default footer.', 'crucible'),
 					'id' => $shortname.'_override_footer',
 					'std' => 'false',
 					'type' => 'checkbox');
