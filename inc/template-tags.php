@@ -238,7 +238,7 @@ endif;
  * Display Contact info with microdata from Schema.org
  */
 function crucible_contact_info() {
-	$output = '<div itemscope itemtype="http://schema.org/'.get_option('smartestthemes_business_itemtype'). '"><p><strong itemprop="name">';
+	$output = '<div itemscope itemtype="http://schema.org/'.get_option('smartestthemes_business_schema'). '"><p><strong itemprop="name">';
 	$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));
 	if($bn) {
 		$output .= $bn;
