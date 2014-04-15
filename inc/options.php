@@ -173,15 +173,6 @@ $options[] = array( 'name' => __('Business Name','crucible'),
 					'desc' => __('Enter the name of your business or organization.','crucible'),
 					'id' => $shortname.'_business_name',
 					'type' => 'text');
-$options[] = array( 'name' => __('Tag Line','crucible'),
-					'desc' => __('Enter the tag line, slogan, or motto of your business.','crucible'),
-					'id' => $shortname.'_business_motto',
-					'type' => 'text');
-$options[] = array( 'name' => __( 'Show Tag Line on Site Header?', 'crucible' ),
-					'desc' => __( 'Check this to show the tag line at the top left of the site, under the site name. By default, it is displayed on the About page.', 'crucible' ),
-					'id' => $shortname.'_show_tagline',
-					'std' => 'false',
-					'type' => 'checkbox');
 $options[] = array( 'name' => __('Attention Grabber For Homepage','crucible'),
                     'desc' => __('The large tag line shown under the slider on the home page. For example, "How can we help you?"','crucible'),
                     'id' => $shortname.'_attention_grabber',
@@ -405,11 +396,17 @@ $options[] = array( 'name' => __('Custom Logo Image','crucible'),
 					'id' => $shortname.'_logo',
 					'std' => '',
 					'type' => 'upload');
+$options[] = array( 'name' => __( 'Show Tagline With Your Logo?', 'crucible' ),
+				'desc' => __( 'Check this to show the tagline under your logo. (You can edit your tagline at ettings -> General).', 'crucible' ),
+				'id' => $shortname.'_show_tagline',
+				'std' => 'false',
+				'type' => 'checkbox');
 $options[] = array( 'name' => __('Optional: Increase Logo Height','crucible'),
 					'desc' => __('By default, your logo will shrink to a max height of 150px to fit within the theme\'s header. Preview your site to see this. To increase the size, enter a maximum height greater than 150. Enter just the number. The width increases as the height increases. The logo will stop growing when it reaches a certain width, in order to keep it looking good on all screen sizes.<br /><br /><strong>Tip: banner images of 700px by 150px fit perfectly without needing height modifications.</strong>','crucible'),
 					'id' => $shortname.'_increase_logo',
 					'std' => '',
 					'type' => 'text');
+				
 $options[] = array( 'name' => __('Text Logo','crucible'),
 						'type' => 'info',
 						'std' => sprintf(__('The rest of this page is for using a text logo instead of an image. Here you can create a text-based logo with custom fonts and colors like this:%1$s %2$s %1$s Part 1 is all the text before the alternate color. Part 2 is the alternate color text; it is the same size as part 1, but gets its own color. Part 3 is after the alternate color; it is the same size and color as Part 1. Part 4 is the smaller text which gets its own size and color. To make a text logo, only Part 1 is required.','crucible'), '<br />', $sampleimg ));

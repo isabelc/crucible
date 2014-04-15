@@ -288,8 +288,8 @@ function crucible_logo() {
 		$output .= '<a href="' . home_url( '/' ) . '" title="' . $ti . '" id="logolink" rel="home">
 		<img id="customlogo" src="' . $src . '" alt="' . $ti . '" title="' . $ti . '" />
 		</a><br />';
-		if ( get_option("smartestthemes_business_motto") && ( get_option("smartestthemes_show_tagline") == 'true' ) ) {
-			$output .= '<h2 class="site-description">' . stripslashes_deep( get_option("smartestthemes_business_motto") ) . '</h2>';
+		if ( get_option("smartestthemes_show_tagline") == 'true' ) {
+			$output .= '<h2 class="site-description">' . get_bloginfo('description') . '</h2>';
 		}
 	} else {
 		//no logo option, use text logo 
@@ -311,10 +311,8 @@ function crucible_logo() {
 			if ( $logo_text_part_small ) {
 				$output .= '<span>' . $logo_text_part_small . '</span>';
 			}
-			$output .= '</h1>';
-			if ( get_option("smartestthemes_business_motto") && ( get_option("smartestthemes_show_tagline") == 'true' ) ) {
-				$output .= '<h2 class="site-description">' . stripslashes_deep( get_option("smartestthemes_business_motto") ) . '</h2>';
-			}
+			$output .= '</h1><h2 class="site-description">' . bloginfo('description') . '</h2>';
+			
 		} // end if $logo_text_part_1
 	} // end else no logo
 	echo $output;

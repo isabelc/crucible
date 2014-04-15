@@ -30,7 +30,7 @@
 			$ne = get_option('smartestthemes_show_news');
 			$se = get_option('smartestthemes_show_services');
 			$re = get_option('smartestthemes_add_reviews');
-			$mo = get_option('smartestthemes_business_motto');
+			$mo = get_bloginfo('description');
 			
 
 			/**
@@ -179,11 +179,7 @@
 			} elseif (in_array($combo, array($c1a, $c1b, $c1c, $c1d ))) {
 				$wid1style = 'class="widget grid_6" style="margin-left:auto;margin-right:auto;float:none;display:block;max-width:470px;"';
 			}
-	
-// set var for stripped motto
-$smo = esc_attr(stripslashes_deep(get_option('smartestthemes_business_motto')));
-
-// localize wid titles
+// localize widget titles
 $inst = array('title' => __('Testimonials', 'crucible'));
 $insf = array('title' => __('Featured Services', 'crucible'));
 $insn = array('title' => __('What\'s New?', 'crucible'), 'number' => 3,);
@@ -206,7 +202,7 @@ $insn = array('title' => __('What\'s New?', 'crucible'), 'number' => 3,);
 				
 				} elseif (in_array($combo, array($c2f, $c1d ))) {
 				
-						echo '<blockquote id="smotto">'.$smo.'</blockquote>';
+						echo '<blockquote id="smotto">'.$mo.'</blockquote>';
 				
 				}
 			
@@ -230,7 +226,7 @@ $insn = array('title' => __('What\'s New?', 'crucible'), 'number' => 3,);
 				
 					} elseif (in_array($combo, array($c3c, $c2c, $c2e ))) {
 				
-							echo '<blockquote id="smotto">'.$smo.'</blockquote>';
+							echo '<blockquote id="smotto">'.$mo.'</blockquote>';
 				
 					} elseif (in_array($combo, array($c2b, $c2d, $c2f ))) {
 					
@@ -254,7 +250,7 @@ $insn = array('title' => __('What\'s New?', 'crucible'), 'number' => 3,);
 						
 							} elseif (in_array($combo, array($c3b, $c3d ))) {
 						
-									echo '<blockquote id="smotto">'.$smo.'</blockquote>';
+									echo '<blockquote id="smotto">'.$mo.'</blockquote>';
 					
 							 }
 

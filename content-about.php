@@ -9,7 +9,7 @@
 	<?php smartestthemes_about_top_image(); ?>
 	<header class="entry-header">
 		<h1 class="entry-title"><?php the_title(); ?></h1>
-		<h3><?php echo stripslashes_deep(get_option('smartestthemes_business_motto')); ?></h3>
+		<h3><?php bloginfo('description'); ?></h3>
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
