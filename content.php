@@ -14,32 +14,19 @@
 
 	</header><!-- .entry-header -->
 
-<!-- 
+	<div class="entry-meta">
+			<?php crucible_entry_meta(); ?>
+	</div><!-- .entry-meta -->
 
-@todo 
-
-_services gets only crucible_post_thumbnail(), title, excerpt 
-
-_news gets only crucible_post_thumbnail(), title, enrty-meta (date), excerpt
-
-_staff gets only crucible_post_thumbnail(), title, enrty-meta (job title), excerpt, socials
-
--->
-	<?php if ( is_search() ) : // Only display Excerpts for Search ?>
 	<div class="entry-summary">
-		<?php the_excerpt(); ?>
+		<?php the_excerpt();
+		
+		// @test how read more link looks. maybe need conditional to show 'Details' on services cpt, and hide it on staff cpt. ?>
+		
+		<a class="read-more" href="'. get_permalink() . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span> . '</a>
+		
 	</div><!-- .entry-summary -->
-	<?php else : ?>
-	<div class="entry-content">
-		<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'crucible' ) ); ?>
-		<?php
-			wp_link_pages( array(
-				'before' => '<div class="page-links">' . __( 'Pages:', 'crucible' ),
-				'after'  => '</div>',
-			) );
-		?>
-	</div><!-- .entry-content -->
-	<?php endif; ?>
+
 
 	<footer class="entry-footer">
 		<?php if ( 'post' == get_post_type() ) : // Hide category and tag text for pages on Search ?>
