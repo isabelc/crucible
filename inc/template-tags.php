@@ -115,7 +115,7 @@ function crucible_post_thumbnail() {
 		}
 	}
 
-	/* @todo just a note that if i need exact size image for staff archives or so, use this below:
+	/* @todo just a note that if I need exact size image for staff archives or so, use this below:
 	
 			$feedthumb = vt_resize( get_post_thumbnail_id(), '', 250, 127, true);
 			$src = $feedthumb['url'];
@@ -273,20 +273,20 @@ function crucible_logo() {
 add_action('crucible_logo', 'crucible_logo');
 
 /**
- * Display the social buttons
+ * Display the social buttons for the business
  */
 function crucible_social_buttons() {
-
-// @todo add instagram and pinterest !!
 
 	$tw = get_option('smartestthemes_business_twitter');
 	$goo = get_option('smartestthemes_business_gplus');
 	$fa = get_option('smartestthemes_business_facebook');
 	$yo = get_option('smartestthemes_business_youtube');
 	$li = get_option('smartestthemes_business_linkedin');
+	$in = get_option('smartestthemes_business_instagram');
+	$pi = get_option('smartestthemes_business_pinterest');
 
 	// don't do unless at least one is entered
-	if( $tw || $goo || $fa || $yo || $li ) {
+	if( $tw || $goo || $fa || $yo || $li || $in || $pi ) {
 		$output = '<div class="social">';
 	} else {
 		// if no social, get out now 
@@ -295,15 +295,19 @@ function crucible_social_buttons() {
 
 	$output .= '<ul>';
 	if ( $tw ) {
-		$output .= '<li><a class="social-twitter" target="_blank" href="https://twitter.com/' . $tw . '" title="' . __( 'Twitter', 'crucible' ) . '"></a></li>';
+		$output .= '<li><a class="social-twitter" target="_blank" href="https://twitter.com/' . $tw . '" title="' . __( 'Twitter', 'crucible' ) . '"><i class="fa fa-twitter-square"></i></a></li>';
 	} if ( $goo ) {
-		$output .= '<li><a class="social-google" target="_blank" href="https://plus.google.com/' . $goo . '" rel="publisher" title="' . __( 'Google Plus', 'crucible' ) . '"></a></li>';
+		$output .= '<li><a class="social-google" target="_blank" href="https://plus.google.com/' . $goo . '" rel="publisher" title="' . __( 'Google Plus', 'crucible' ) . '"><i class="fa fa-google-plus-square"></i></a></li>';
 	} if ( $fa ) {
-		$output .= '<li><a class="social-facebook" target="_blank" href="https://facebook.com/' . $fa . '" title="' . __( 'Facebook', 'crucible' ) . '"></a></li>';
+		$output .= '<li><a class="social-facebook" target="_blank" href="https://facebook.com/' . $fa . '" title="' . __( 'Facebook', 'crucible' ) . '"><i class="fa fa-facebook-square"></i></a></li>';
 	} if ( $yo ) {
-		$output .= '<li><a class="social-youtube" target="_blank" href="https://www.youtube.com/user/' . $yo . '" title="' . __( 'Youtube', 'crucible' ) . '"></a></li>';
+		$output .= '<li><a class="social-youtube" target="_blank" href="https://www.youtube.com/user/' . $yo . '" title="' . __( 'Youtube', 'crucible' ) . '"><i class="fa fa-youtube-square"></i></a></li>';
 	} if ( $li ) {
-		$output .= '<li><a class="social-linkedin" target="_blank" href="https://www.linkedin.com/' . $li . '" title="' . __( 'Linkedin', 'crucible' ) . '"></a></li>';
+		$output .= '<li><a class="social-linkedin" target="_blank" href="https://www.linkedin.com/' . $li . '" title="' . __( 'Linkedin', 'crucible' ) . '"><i class="fa fa-linkedin-square"></i></a></li>';
+	}  if ( $in ) {
+		$output .= '<li><a class="social-instagram" target="_blank" href="http://instagram.com/' . $in . '" title="' . __( 'Instagram', 'crucible' ) . '"><i class="fa fa-instagram"></i></a></li>';
+	}  if ( $li ) {
+		$output .= '<li><a class="social-pinterest" target="_blank" href="http://www.pinterest.com/' . $pi . '" title="' . __( 'Pinterest', 'crucible' ) . '"><i class="fa fa-pinterest-square"></i></a></li>';
 	}
 	$output .= '</ul></div><!-- .social -->';
 

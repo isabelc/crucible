@@ -629,16 +629,27 @@ $options[] = array( 'name' => __('YouTube','crucible'),
                     'type' => 'text');
 
 $options[] = array( 'name' => __('Linkedin','crucible'),
-                    'desc' => sprintf(__('Your company Linkedin profile. The part of the profile address after %1$swww.linkedin.com/%2$s. Optional', 'crucible'), '<code>', '</code>'),
+                    'desc' => sprintf(__('Your company Linkedin profile. The part of the profile address after %1$swww.linkedin.com/%2$s.', 'crucible'), '<code>', '</code>'),
                     'id' => $shortname.'_business_linkedin',
                     'type' => 'text');
 
+					
+$options[] = array( 'name' => __('Instagram','crucible'),
+                    'desc' => sprintf(__('Your company\'s Instagram username. The part of the profile address after %1$swww.instagram.com/%2$s. ', 'crucible'), '<code>', '</code>'),
+                    'id' => $shortname.'_business_instagram',
+                    'type' => 'text');
+
+$options[] = array( 'name' => __('Pinterest','crucible'),
+                    'desc' => sprintf(__('Your company\'s Pinterest username. The part of the address after %1$swww.pinterest.com/%2$s. You can enter just the username, or a particular board, such as %1$susername/BOARD_NAME%2$s', 'crucible'), '<code>', '</code>'),
+                    'id' => $shortname.'_business_pinterest',
+                    'type' => 'text');
+
 $options[] = array( 'name' => __('Another Profile','crucible'),
-                    'desc' => __('Add another business profile URL.  Example: http://www.pinterest.com/YourName','crucible'),
+                    'desc' => __('Add another business profile URL.  Example: https://www.flickr.com/photos/YourUserName','crucible'),
                     'id' => $shortname.'_business_socialurl1',
                     'type' => 'text');
 $options[] = array(
-                    'desc' => __('Give a title for the business profile you entered above. Example: Pinterest','crucible'),
+                    'desc' => __('Give a title for the business profile you entered above. Example: Flickr','crucible'),
                     'id' => $shortname.'_business_sociallabel1',
                     'type' => 'text');
 
@@ -653,7 +664,7 @@ $options[] = array( 'name' => __('Use Colorful Social Media Buttons','crucible')
 					'desc' => __('Optional. Check this to use colorful social media follow buttons instead of the pale, colorless buttons. Note: the pale buttons do become colorful upon hover, and the colorful buttons become pale upon hover.','crucible'),
 					'id' => $shortname.'_colorful_social',
 					'std' => 'false',
-					'type' => 'checkbox');
+					'type' => 'checkbox');// @todo remove
 /* SEO */
 $options[] = array( 'name' => __('SEO','crucible'),'class' => 'seo',
 					'type' => 'heading');
