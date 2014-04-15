@@ -211,6 +211,8 @@ li > ol {
 	margin-bottom: 0;
 	margin-left: 1.5em;
 }
+.social ul {list-style:none;}
+.social li {display:inline-block;margin:6px;}
 dt {
 	font-weight: bold;
 }
