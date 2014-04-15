@@ -212,7 +212,7 @@ li > ol {
 	margin-left: 1.5em;
 }
 .social ul {list-style:none;}
-.social li {display:inline-block;margin:6px;}
+.social li, #social-staff li {display:inline-block;margin:6px;}
 dt {
 	font-weight: bold;
 }
@@ -338,7 +338,7 @@ textarea {
 /*--------------------------------------------------------------
 5.1 Links
 --------------------------------------------------------------*/
-a, .fa-bullhorn {
+a, i.fa {
 	color: green;/* @new */
 }
 a:visited {
@@ -347,7 +347,7 @@ a:visited {
 a:hover,
 a:focus,
 a:active,
-a .fa-bullhorn:hover {
+i.fa:hover {
 	color: pink;
 }
 
