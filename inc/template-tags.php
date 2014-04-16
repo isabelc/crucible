@@ -273,6 +273,10 @@ function crucible_logo() {
 	$ti = stripslashes(esc_attr(get_option('smartestthemes_home_meta_title')));
 	if(empty($ti)) $ti = $bn;
 	$output = '';
+	/* @test replace whole logo section
+	*
+	*
+	
 	if ( get_option('smartestthemes_logo') ) {
 		// there is a logo
 		if ( get_option('smartestthemes_increase_logo') ) {
@@ -287,9 +291,33 @@ function crucible_logo() {
 		$output .= '<a href="' . home_url( '/' ) . '" title="' . $ti . '" id="logolink" rel="home">
 		<img id="customlogo" src="' . $src . '" alt="' . $ti . '" title="' . $ti . '" />
 		</a><br />';
-		if ( get_option("smartestthemes_show_tagline") == 'true' ) {
+		if ( get_option("smartestthemes_show_tagline") == 'true' ) { // @test see if 'true' is the right thing to check for. what value is saved for checkboxes?
 			$output .= '<h2 class="site-description">' . get_bloginfo('description') . '</h2>';
 		}
+		
+		
+		
+		
+	*/
+	$test = get_theme_mod('smartestthemes_logo');
+	
+	if ( $test ) {
+		$output .= '<h3>THIS IS A @TEST </h3><br />' . $test;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	} else {
 		//no logo option, use text logo 
 		$logo_text_part_1		= stripslashes_deep( get_option("smartestthemes_logo_text_part_1") );
