@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Smartest Themes Business Framework
- * @subpackage Smartest Reviews
+ * @subpackage Reviews
  * Description: Get reviews from visitors, and aggregate ratings and stars for your business in search results. Adds Microdata markup (Schema.org) for rich snippets. Includes Testimonial widget. Optional: pulls aggregaterating to home page. Option to not pull it to home page, and just have a reviews page. Requires Smartest Themes for full functionality.
  */
 class SMARTESTReviewsBusiness {
@@ -46,9 +46,9 @@ class SMARTESTReviewsBusiness {
     }
 
 	function addmenu() {
-		add_options_page(__('Smartest Reviews', 'crucible'), __('Smartest Reviews', 'crucible'), 'manage_options', 'smar_options', array(&$this, 'admin_options'));
+		add_options_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'manage_options', 'smar_options', array(&$this, 'admin_options'));
 		if(get_option('smartestthemes_add_reviews') == 'true') {       
-			add_menu_page(__('Smartest Reviews', 'crucible'), __('Smartest Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array(&$this, 'admin_view_reviews'), $this->getpluginurl() . 'star.png', 62);
+			add_menu_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array(&$this, 'admin_view_reviews'), 'dashicons-star-filled', 62);
 		}
 	}
     function admin_options() {
