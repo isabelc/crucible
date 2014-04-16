@@ -4,14 +4,14 @@
  * @package    Smartest Themes Business Framework
 */
 function smartestthemes_login_logo() {
-	$buslogo =  get_option('smartestthemes_logo');
+	$buslogo =  smartestthemes_get_option('logo');
 	// if there is a logo, show it, else do text
 	if ($buslogo) {
 		$small_logo = vt_resize( '', $buslogo, 326, 67, false );
 	    echo '<style type="text/css">.login h1 a { background: url('.$small_logo['url'].') 50% 50% no-repeat !important;width: 326px;height: 70px;}</style>';
 	} else {
-		$col = get_option('smartestthemes_logo_color'); if (empty($col)) {$col = '#000000';}
-		echo'<style type="text/css">.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. get_option('smartestthemes_logo_font'). ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}.login h1 a:hover {color:'.get_option('smartestthemes_logo_hover_color') . ';}</style>';
+		$col = smartestthemes_get_option('logo_color'); if (empty($col)) {$col = '#000000';}
+		echo'<style type="text/css">.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. smartestthemes_get_option('logo_font'). ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}.login h1 a:hover {color:'.smartestthemes_get_option('logo_hover_color') . ';}</style>';
 	}
 }
 add_action('login_head', 'smartestthemes_login_logo');
@@ -33,9 +33,14 @@ add_filter('login_headertitle', 'isacustom_wp_login_title');
  */
 function smartestthemes_insert_post($potype, $slug, $option, $page_title = '', $page_content = '', $post_parent = 0 ) {
 	global $wpdb;
-	$option_value = get_option( $option );
-	if ( $option_value > 0 && get_post( $option_value ) )
+	
+	// If page already been created by theme, get out
+	$options_array = get_option('smartestthemes_options');// @test
+	$option_value = $options_array[$option];// @test
+	if ( $option_value > 0 && get_post( $option_value ) ) {
 		return;
+	}
+	
 	$page_data = array(
         'post_status' 		=> 'publish',
         'post_type' 		=> $potype,
@@ -53,20 +58,19 @@ function smartestthemes_insert_post($potype, $slug, $option, $page_title = '', $
 	update_option('smartestthemes_options',$smartestthemes_array); // @test
 }
 /**
- * Create pages: about, home, storing page id's in variables.
- * Activate Reviews
+ * Create About, Home pages and activate Reviews.
  * @uses smartestthemes_insert_post()
  */
 function smartestthemes_after_setup() {
-	$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));if(!$bn) {$bn = get_bloginfo('name'); }
+	$bn = stripslashes_deep(esc_attr(smartestthemes_get_option('business_name')));if(!$bn) {$bn = get_bloginfo('name'); }
 	$atitle = sprintf(__('About %s','crucible'), $bn);
 	// if not disabled in options 
-	if(get_option('smartestthemes_stop_about') == 'false')
+	if(smartestthemes_get_option('stop_about') == 'false')
 		smartestthemes_insert_post( 'page', esc_sql( _x('about', 'page_slug', 'crucible') ), 'smartestthemes_about_page_id', $atitle, '' );
-	if(get_option('smartestthemes_stop_home') == 'false')
+	if(smartestthemes_get_option('stop_home') == 'false')
 		smartestthemes_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'crucible') ), 'smartestthemes_home_page_id', __('Home', 'crucible'), '' );
 	// Activate Reviews
-	if (!class_exists('SMARTESTReviewsBusiness') && (get_option('smartestthemes_add_reviews') == 'true'))
+	if (!class_exists('SMARTESTReviewsBusiness') && (smartestthemes_get_option('add_reviews') == 'true'))
 		include_once get_template_directory() .'/business-framework/modules/reviews/reviews.php';
 
 }
@@ -75,28 +79,28 @@ add_action('after_setup_theme','smartestthemes_after_setup');
 /**
  * if about page is disabled, delete it
  */
-if(get_option('smartestthemes_stop_about') == 'true') {
-	wp_delete_post(get_option('smartestthemes_about_page_id'), true);
+if(smartestthemes_get_option('stop_about') == 'true') {
+	wp_delete_post(smartestthemes_get_option('about_page_id'), true);
 }
 /**
  * if auto Home page is disabled, delete it
  */
-if(get_option('smartestthemes_stop_home') == 'true') {
-	wp_delete_post(get_option('smartestthemes_home_page_id'), true);
+if(smartestthemes_get_option('stop_home') == 'true') {
+	wp_delete_post(smartestthemes_get_option('home_page_id'), true);
 }
-	update_post_meta(get_option('smartestthemes_home_page_id'), '_wp_page_template', 'smar-home.php');
+	update_post_meta(smartestthemes_get_option('home_page_id'), '_wp_page_template', 'smar-home.php');
 
 /**
  * set static front page, unless disabled
  */
 
-if( get_option('smartestthemes_stop_static') == 'false') {
+if( smartestthemes_get_option('stop_static') == 'false') {
 	update_option( 'show_on_front', 'page' );
 	update_option( 'page_on_front', smartestthemes_get_option('home_page_id') );
 }
 
 // Set the blog page, unless disabled
-if( get_option('smartestthemes_stop_blog') == 'false') {
+if( smartestthemes_get_option('stop_blog') == 'false') {
 	$blog   = get_page_by_title(__('Blog', 'crucible') );
 	if($blog) {
 		update_option( 'page_for_posts', $blog->ID );
@@ -202,9 +206,9 @@ function vt_resize( $attach_id = null, $img_url = null, $width, $height, $crop =
  */
 add_action('init', 'create_smartest_business_cpts');
 function create_smartest_business_cpts() {
-	$staff = get_option('smartestthemes_show_staff');
-	$news = get_option('smartestthemes_show_news');
-	$services = get_option('smartestthemes_show_services');
+	$staff = smartestthemes_get_option('show_staff');
+	$news = smartestthemes_get_option('show_news');
+	$services = smartestthemes_get_option('show_services');
 			if( $staff == 'true'  ) { 
 		    	$args = array(
 		        	'label' => __('Staff','crucible'),
@@ -318,7 +322,7 @@ function create_smartest_business_cpts() {
 			}// end if show services enabled
 
 			// if show homepage slideshow is enabled, do cpt
-			if(get_option('smartestthemes_show_slider') == 'true') {
+			if(smartestthemes_get_option('show_slider') == 'true') {
 
 				$args = array(
 		        	'label' => __('Slideshow','storefront'),
@@ -459,10 +463,13 @@ function smartestthemes_cpts_menu_links($items, $args) {
 		 * @new themes must use theme_loc = 'primary'
 		 */
 		$newitems = $items;
-		if(($args->theme_location == 'primary') && ( get_option('smartestthemes_show_staff') == 'true' )) {
+		
+		$options = get_option('smartestthemes_options');// @test
+		
+		if(($args->theme_location == 'primary') && ( $options['show_staff'] == 'true' )) {
 		        $newitems .= '<li class="staff"><a title="' . __( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_staff' ) .'">' . __( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ) . '</a></li>';
 	    }
-		if(($args->theme_location == 'primary') && ( get_option('smartestthemes_show_services') == 'true' )) {
+		if(($args->theme_location == 'primary') && ( $options['show_services'] == 'true' )) {
 			$newitems .= '<li class="services"><a title="' . __( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_services' ) .'">' . __( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ) . '</a>';
 
 			// if service cat tax terms exist, do sub-menu
@@ -479,12 +486,12 @@ function smartestthemes_cpts_menu_links($items, $args) {
 			$newitems .= '</li>';
 	    }
 
-	    if( ($args->theme_location == 'primary') && (get_option('smartestthemes_show_news') == 'true')) {
+	    if( ($args->theme_location == 'primary') && ($options['show_news'] == 'true')) {
 	        $newitems .= '<li class="news"><a title="' . __( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_news' ) .'">' . __( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ) . '</a></li>';
 		 }
 	    return $newitems;
 }
-if(get_option('smartestthemes_stop_menuitems') == 'false') {
+if(smartestthemes_get_option('stop_menuitems') == 'false') {
 		add_filter('wp_nav_menu_items', 'smartestthemes_cpts_menu_links', 30, 2);
 }
 
@@ -493,8 +500,9 @@ if(get_option('smartestthemes_stop_menuitems') == 'false') {
  */
 function custom_smartestthemes_services_menu_label() {
 	// if custom title entered
-	if ( get_option('smartestthemes_business_servicesmenulabel') != '' ) {
-		$custom = stripslashes(get_option( 'smartestthemes_business_servicesmenulabel' ));
+	$options = get_option('smartestthemes_options');// @test
+	if ( $options['business_servicesmenulabel'] != '' ) {
+		$custom = stripslashes($options['business_servicesmenulabel']);
 	} else { 
 		$custom = __( 'Services', 'crucible' );
 	}
@@ -502,8 +510,9 @@ function custom_smartestthemes_services_menu_label() {
 }
 function custom_smartestthemes_staff_menu_label() {
 	// if custom title entered
-	if (get_option('smartestthemes_business_staffmenulabel') != '') {
-		$custom = stripslashes(get_option('smartestthemes_business_staffmenulabel'));
+	$options = get_option('smartestthemes_options');// @test
+	if ($options['business_staffmenulabel'] != '') {
+		$custom = stripslashes($options['business_staffmenulabel']);
 	} else { 
 		$custom = __('Staff', 'crucible');
 	}
@@ -511,8 +520,9 @@ function custom_smartestthemes_staff_menu_label() {
 }
 function custom_smartestthemes_news_menu_label() {
 	// if custom title entered
-	if (get_option('smartestthemes_business_newsmenulabel') != '') {
-		$custom = stripslashes(get_option('smartestthemes_business_newsmenulabel'));
+	$options = get_option('smartestthemes_options');// @test
+	if ($options['business_newsmenulabel'] != '') {
+		$custom = stripslashes($options['business_newsmenulabel']);
 	} else { 
 		$custom = __('News', 'crucible');
 	}
@@ -610,7 +620,7 @@ function smartestthemes_metaboxes( array $meta_boxes ) {
 		)
 	);
 
-	if( get_option('smartestthemes_enable_service_sort') == 'true'  ) { 
+	if( smartestthemes_get_option('enable_service_sort') == 'true'  ) { 
 	
 		$meta_boxes[] = array(
 			'id'         => 'services-sort-order',
@@ -658,7 +668,7 @@ function smartestthemes_metaboxes( array $meta_boxes ) {
 			array(
 				'name' => __('Add A Picture', 'crucible'),
 				'desc' => sprintf(__('Set a featured image for this slide by clicking "Set featured image", which is normally located on the right hand side of this page. %s', 'crucible'),
-get_option('smartestthemes_sshow_description')),
+smartestthemes_get_option('sshow_description')),
 				'id'   => $prefix . 'slide_title',
 				'type' => 'title',
 			),
@@ -717,13 +727,13 @@ add_action( 'widgets_init', 'smartestthemes_register_widgets' );
  */
 function smartestthemes_register_widgets() {
 
-	if( get_option('smartestthemes_show_news') == 'true'  ) { 
+	if( smartestthemes_get_option('show_news') == 'true'  ) { 
 			register_widget('SmartestAnnouncements');
 			register_widget('SmartestFeaturedAnnounce');
 	}
-	if( get_option('smartestthemes_show_services') == 'true'  ) { 
+	if( smartestthemes_get_option('show_services') == 'true'  ) { 
 			register_widget('SmartestServices'); register_widget('SmartestFeaturedServices'); }
-	if( get_option('smartestthemes_show_staff') == 'true'  ) { register_widget('SmartestStaff'); }
+	if( smartestthemes_get_option('show_staff') == 'true'  ) { register_widget('SmartestStaff'); }
 
 }
 
@@ -732,15 +742,17 @@ function smartestthemes_register_widgets() {
  */
 function smartestthemes_add_customscripts() {
 
-	// get analytics script
-	$gascript =  get_option('smartestthemes_script_analytics');
-	// get other scripts
-	$oscripts =  get_option('smartestthemes_scripts_head');
+	$options =  get_option('smartestthemes_options');
 	
-	if (isset($gascript) && $gascript != '') {
+	// get analytics script
+	$gascript =  $options['script_analytics'];
+	// get other scripts
+	$oscripts =  $options['scripts_head'];
+	
+	if ( ! empty($gascript) ) {
 		echo stripslashes($gascript)."\r\n";
 	}
-	if (isset($oscripts) && $oscripts != '') {
+	if ( ! empty(oscripts) ) {
 		echo stripslashes($oscripts)."\r\n";
 	}
 
@@ -754,8 +766,11 @@ add_action('wp_head','smartestthemes_add_customscripts', 12);
 
 add_filter('smartestthemes_staff_heading', 'custom_staff_heading');
 function custom_staff_heading() {
-	if (get_option('smartestthemes_business_staffpagetitle') != '') {
-		echo stripslashes(get_option('smartestthemes_business_staffpagetitle'));
+
+	$options =  get_option('smartestthemes_options');
+	
+	if ($options['business_staffpagetitle'] != '') {
+		echo stripslashes($options['business_staffpagetitle']);// @test
 	} else { 
 		_e('Meet The Staff', 'crucible');
 	}
@@ -763,8 +778,10 @@ function custom_staff_heading() {
 
 add_filter('smartestthemes_services_heading', 'custom_services_heading');
 function custom_services_heading() {
-	if (get_option('smartestthemes_business_servicespagetitle') != '') {
-		echo stripslashes(get_option('smartestthemes_business_servicespagetitle'));
+
+	$options =  get_option('smartestthemes_options');
+	if ($options['business_servicespagetitle'] != '') {
+		echo stripslashes($options['business_servicespagetitle']);
 	} else { 
 		_e('Services', 'crucible');
 	}
@@ -772,8 +789,11 @@ function custom_services_heading() {
 
 add_filter('smartestthemes_news_heading', 'custom_news_heading');
 function custom_news_heading() {
-	if (get_option('smartestthemes_business_newspagetitle') != '') {
-		echo stripslashes(get_option('smartestthemes_business_newspagetitle'));
+
+	$options =  get_option('smartestthemes_options');
+
+	if ($options['business_newspagetitle'] != '') {
+		echo stripslashes($options['business_newspagetitle']);
 	} else { 
 		_e('Announcements', 'crucible');
 	}
@@ -782,17 +802,17 @@ function custom_news_heading() {
 /**
  * Include the Smartest_MCE_Table_Buttons class.
  */
-include dirname( __FILE__ ) . '/lib/mce-table/mce_table_buttons.php';
+include dirname( __FILE__ ) . '/lib/mce-table/mce_table_buttons.php';// @test this in WP 3.9, then push to svn repo if needed to update Tested up to tag.
 
 /**
- * Change wp tool bar
+ * Change WP tool bar
  * Add link to theme options, remove customize link
  */
 function smartestthemes_tool_bar() {
-	$themename = get_option('smartestthemes_themename');
-	$themeslug = get_option('smartestthemes_themeslug');
+	$themename = smartestthemes_get_option('themename');
+	$themeslug = smartestthemes_get_option('themeslug');
 	global $wp_admin_bar;
-	$wp_admin_bar->remove_menu('customize');
+	$wp_admin_bar->remove_menu('customize'); // @todo don't think i need this anymore
 	$wp_admin_bar->add_menu( array(
 		'parent'	=> 'appearance',
 		'id'		=> 'smartestthemes-options',
@@ -928,7 +948,7 @@ function smar_manage_slide_columns( $column, $post_id ) {
 	}
 }
 
-if(get_option('smartestthemes_show_slider') == 'true') {
+if(smartestthemes_get_option('show_slider') == 'true') {
 	add_filter( 'manage_edit-smartest_slide_columns', 'smar_manage_edit_slide_columns' ) ;
 	add_action( 'manage_smartest_slide_posts_custom_column', 'smar_manage_slide_columns', 10, 2 );
 }
@@ -938,26 +958,26 @@ if(get_option('smartestthemes_show_slider') == 'true') {
  * use custom logo on theme options page header
  */
 function custom_options_page_logo() {
-	// backwards compat. if option = 'false' string, update it to ''.
-	$backlogo = get_option('smartestthemes_backend_logo');
-	if( 'false' == $backlogo ) {
-		delete_option( 'smartestthemes_backend_logo' );
-	}
 
-	if(get_option('smartestthemes_backend_logo')) {
-		return '<img alt="logo" src="'.get_option('smartestthemes_backend_logo').'" class="custom-bb-logo"/>';
+	$logo = smartestthemes_get_option('backend_logo');
+
+	if($logo) {
+		return '<img alt="logo" src="'.$logo.'" class="custom-bb-logo"/>';
 	} else { 
 		return '<img alt="Smartest Themes" src="'. get_template_directory_uri().'/business-framework/images/st_logo_admin.png" />';
 	}
 }
 add_filter('smartestthemes_backend_branding', 'custom_options_page_logo');
 
-// Replace WP footer with own custom text
+// Replace WP admin footer with custom text
 function smb_remove_footer_admin () {
 
-	if ( (get_option('smartestthemes_admin_footer') != '') &&  (get_option('smartestthemes_remove_adminfooter') == 'false')) {
-		echo get_option('smartestthemes_admin_footer');
-	} elseif ( get_option('smartestthemes_remove_adminfooter') == 'true' ) {
+	$remove = smartestthemes_get_option('remove_adminfooter');
+	$admin_footer = smartestthemes_get_option('admin_footer');
+
+	if ( ( $admin_footer != '') &&  ($admin_footer == 'false')) {
+		echo $admin_footer;
+	} elseif ( $remove == 'true' ) {
 		echo '';
 	} else {
 		echo 'Thank you for creating with <a href="http://wordpress.org/">WordPress</a>.';
@@ -968,7 +988,7 @@ add_filter('admin_footer_text', 'smb_remove_footer_admin');
 function smartestthemes_admin_bar() {
     global $wp_admin_bar;
 
-	if ( get_option('smartestthemes_remove_wplinks') == 'true' ) {
+	if ( smartestthemes_get_option('remove_wplinks') == 'true' ) {
 		$wp_admin_bar->remove_menu('wp-logo');
 	}
 }
@@ -979,7 +999,7 @@ function smartest_framework_enq() {
 	wp_enqueue_style( 'frame' );
 	wp_register_script('responsive', get_template_directory_uri().'/business-framework/js/responsive.js', array('jquery'));
 	// not on reviews page
-	if( !is_page( get_option('smartestthemes_reviews_page_id') ) ) {	
+	if( !is_page( smartestthemes_get_option('reviews_page_id') ) ) {	
 		wp_enqueue_script('responsive');
 	}
 	wp_enqueue_script('retina', get_template_directory_uri().'/business-framework/js/retina-1.1.0.min.js', array(), false, true );
@@ -1106,9 +1126,9 @@ function smartestthemes_wp_title( $title, $sep ) {
 
 	if ( is_feed() )
 		return $title;
-	$bn = stripslashes(esc_attr(get_option('smartestthemes_business_name')));if(!$bn) { $bn = get_bloginfo('name'); }
+	$bn = stripslashes(esc_attr(smartestthemes_get_option('business_name')));if(!$bn) { $bn = get_bloginfo('name'); }
 	//seo title
-	$ti = stripslashes(esc_attr(get_option('smartestthemes_home_meta_title')));
+	$ti = stripslashes(esc_attr(smartestthemes_get_option('home_meta_title')));
 			if(empty($ti)) $ti = $bn;
 	if ( is_front_page() ) {
 		$title = $ti;
@@ -1139,9 +1159,9 @@ function smartestthemes_head_meta() {
 		$des .= strip_tags(tag_description());
 
 	if (is_front_page()) {
-		$des .= stripslashes(esc_attr(get_option('smartestthemes_home_meta_desc')));
+		$des .= stripslashes(esc_attr(smartestthemes_get_option('home_meta_desc')));
 		if(empty($des)) $des .= get_bloginfo('description');
-		$keys = stripslashes(esc_attr(get_option('smartestthemes_home_meta_key')));
+		$keys = stripslashes(esc_attr(smartestthemes_get_option('home_meta_key')));
 	}
 	
 	// if single get the excerpt
@@ -1210,7 +1230,7 @@ function smartestthemes_sort_services($query) {
 	}
 	return $query;
 }
-if( get_option('smartestthemes_enable_service_sort') == 'true'  ) 
+if( smartestthemes_get_option('enable_service_sort') == 'true'  ) 
 	add_filter( 'parse_query', 'smartestthemes_sort_services' );
 
 /**
@@ -1310,8 +1330,8 @@ function smartestthemes_about_page_images() {
 	
 	// if there is an about page option picture, do it at top
 	
-	if ( get_option('smartestthemes_about_picture') ) {
-		$img_url = get_option('smartestthemes_about_picture');
+	if ( smartestthemes_get_option('about_picture') ) {
+		$img_url = smartestthemes_get_option('about_picture');
 		$topImg = $img_url;
 		
 	} elseif ( ! empty($full_featUrl) ) {
