@@ -752,7 +752,7 @@ function smartestthemes_add_customscripts() {
 	if ( ! empty($gascript) ) {
 		echo stripslashes($gascript)."\r\n";
 	}
-	if ( ! empty(oscripts) ) {
+	if ( ! empty($oscripts) ) {
 		echo stripslashes($oscripts)."\r\n";
 	}
 
