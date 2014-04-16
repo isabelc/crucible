@@ -1,16 +1,11 @@
 <?php 
 /**
- * Smartest Themes Business Framework 
+ * Initialize the Smartest Themes Business Framework 
  * License: GNU General Public License
  * @package    Smartest Themes Business Framework
  * @author     Smartest Themes <isa@smartestthemes.com>
- * @version    2.4.0
+ * @version    0.0.1
  */
-function smartestthemes_version_init(){
-    $framework_version = '2.4.0';// @todo edit version per framework update, here and above
-    update_option('smartestthemes_framework_version',$framework_version);
-}
-add_action('init','smartestthemes_version_init');
 if( class_exists( 'Quick_Business_Website' ) ) {
 	require_once (ABSPATH .'/wp-admin/includes/plugin.php');
 	deactivate_plugins( '/quick-business-website/quick-business-website.php' );
