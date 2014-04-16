@@ -47,7 +47,10 @@ function smartestthemes_insert_post($potype, $slug, $option, $page_title = '', $
         'comment_status' 	=> 'closed'
     );
     $page_id = wp_insert_post( $page_data );
-    update_option( $option, $page_id );
+    // @test replace update_option( $option, $page_id );
+	
+	$smartestthemes_array[$option] = $page_id; //@test
+	update_option('smartestthemes_options',$smartestthemes_array); // @test
 }
 /**
  * Create pages: about, home, storing page id's in variables.
@@ -81,21 +84,35 @@ if(get_option('smartestthemes_stop_about') == 'true') {
 if(get_option('smartestthemes_stop_home') == 'true') {
 	wp_delete_post(get_option('smartestthemes_home_page_id'), true);
 }
-update_post_meta(get_option('smartestthemes_home_page_id'), '_wp_page_template', 'smar-home.php');
+	update_post_meta(get_option('smartestthemes_home_page_id'), '_wp_page_template', 'smar-home.php');
+
 /**
  * set static front page, unless disabled
  */
 
 if( get_option('smartestthemes_stop_static') == 'false') {
+
+/* @test replace below
+
 	update_option( 'show_on_front', 'page' );
 	update_option( 'page_on_front', get_option('smartestthemes_home_page_id') );
+	
+*/
+	$smartestthemes_array[show_on_front] = 'page'; //@test
+	$smartestthemes_array[page_on_front] = get_option('smartestthemes_home_page_id'); //@test
+	update_option('smartestthemes_options',$smartestthemes_array); // @test
+
 }
 
 // Set the blog page, unless disabled
 if( get_option('smartestthemes_stop_blog') == 'false') {
 	$blog   = get_page_by_title(__('Blog', 'crucible') );
 	if($blog) {
-		update_option( 'page_for_posts', $blog->ID );
+		// @test replace  update_option( 'page_for_posts', $blog->ID );
+		
+		$smartestthemes_array[page_for_posts] = $blog->ID; //@test
+		update_option('smartestthemes_options',$smartestthemes_array); // @test
+
 	}
 }
 /*
@@ -692,7 +709,16 @@ add_action('after_switch_theme', 'smartest_flush_rewrite_rules', 10, 2);
 function smartest_flush_rewrite_rules() {
 	global $wp_rewrite;
 	$wp_rewrite->flush_rules();
-	update_option('smartestthemes_stop_home', 'false');
+	
+
+// @test replace	update_option('smartestthemes_stop_home', 'false');
+
+
+	$smartestthemes_array[smartestthemes_stop_home] = 'false'; //@test
+	update_option('smartestthemes_options',$smartestthemes_array); // @test
+
+
+
 }
 /**
  * call widgets
@@ -1358,15 +1384,15 @@ function smartestthemes_about_bottom_image() {
 function smartestthemes_customize_register( $wp_customize ) {
 
 
-	$wp_customize->add_section('smartestthemes_site_logo', array(
+	$wp_customize->add_section('site_logo', array(
         'title'    => __('Site Logo', 'crucible'),
-        'priority' => 10,// @test
+        'priority' => 10,
     ));
 	
 //  =============================
     //  = Image Upload              =
     //  =============================
-    $wp_customize->add_setting('smartestthemes_logo', array(
+    $wp_customize->add_setting('smartestthemes_options[logo]', array(
         'default'           => '',
         'capability'        => 'edit_theme_options',
         'type'           => 'option',
@@ -1375,7 +1401,7 @@ function smartestthemes_customize_register( $wp_customize ) {
     $wp_customize->add_control( new WP_Customize_Image_Control($wp_customize, 'image_upload_logo', array(
         'label'    => __('Custom Logo Image', 'crucible'),
         'section'  => 'smartestthemes_site_logo',
-        'settings' => 'smartestthemes_logo',
+        'settings' => 'smartestthemes_options[logo]',
 		'priority'   => 1
     )));
 
@@ -1383,13 +1409,13 @@ function smartestthemes_customize_register( $wp_customize ) {
     //  =============================
     //  = Checkbox      @test             =
     //  =============================
-    $wp_customize->add_setting('smartestthemes_show_tagline', array(
+    $wp_customize->add_setting('smartestthemes_options[show_tagline]', array(
         'capability' => 'edit_theme_options',
         'type'       => 'option',
     ));
  
     $wp_customize->add_control('display_header_text', array(
-        'settings' => 'smartestthemes_show_tagline',
+        'settings' => 'smartestthemes_options[show_tagline]',
         'label'    => __('Show Tagline Under Your Logo?', 'crucible'),
         'section'  => 'smartestthemes_site_logo',
         'type'     => 'checkbox',
@@ -1398,7 +1424,7 @@ function smartestthemes_customize_register( $wp_customize ) {
 	//  =============================
     //  = Text Input                =
     //  =============================
-    $wp_customize->add_setting('smartestthemes_increase_logo', array(
+    $wp_customize->add_setting('smartestthemes_options[increase_logo]', array(
         'default'        => '',
         'capability'     => 'edit_theme_options',
         'type'           => 'option',
@@ -1408,10 +1434,9 @@ function smartestthemes_customize_register( $wp_customize ) {
     $wp_customize->add_control('smartestthemes_increase_logo_height', array(
         'label'      => __('Optional: Logo Height in px. Default is 150.', 'crucible'),
         'section'    => 'smartestthemes_site_logo',
-        'settings'   => 'smartestthemes_increase_logo',
+        'settings'   => 'smartestthemes_options[increase_logo]',
 		'priority'   => 35
     ));
-	
 }
 add_action( 'customize_register', 'smartestthemes_customize_register' );
 

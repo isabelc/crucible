@@ -1,5 +1,4 @@
 <?php
-add_action('init','smartestthemes_options');
 /**
  * @new edit name per diff framework
  */
@@ -8,7 +7,6 @@ $themeobject = wp_get_theme();
 $themename = $themeobject->Name;
 $themeslug = $themeobject->Template;
 $manualurl = 'http://www.smartestthemes.com/docs/category/'.$themeslug.'/';
-$mlink = '<a href="'.$manualurl.'" target="_blank">Smartest Themes</a>';
 $rlink = '<a href="'.admin_url('options-reading.php').'">'. __('Reading Settings', 'crucible').'</a>';
 $slink = '<a href="'.admin_url('options-general.php').'">'. __('Settings', 'crucible'). '</a>';
 $bnam = get_bloginfo('name');
@@ -21,9 +19,11 @@ if ($user_info == true) {
 $currtime = date("l, F jS, Y @ g:i a");
 /* @new edit shortname per diff framework */
 $shortname = 'smartestthemes';
+
 // Populate smartest Business Themes options in array for use in theme
-global $smartestthemes_options;
+// @test is this needed here????? global $smartestthemes_options;
 // @test $smartestthemes_options = get_option('smartestthemes_options');// @test is this needed here?????
+
 $sampleimg = '<br /><br /><img alt="logo text sample" src="'. get_bloginfo('template_directory') . '/images/text-logo-sample.png" /><br /><br />';
 
 /**
@@ -159,9 +159,9 @@ $textures = array(
 $options = array();
 $options[] = array( 'name' => __('Welcome','crucible'),
 					'type' => 'heading');
-$options[] = array( 'name' => sprintf( __('Welcome to Smartest %s!','crucible'), $themename ),
+$options[] = array( 'name' => sprintf( __('Welcome to %s by Smartest Themes!','crucible'), $themename ),
 				'type' => 'info',
-				'std' => __('Your business website is up and running. On the left are tabs to customize your site, but everything is optional.<br /><br />To make your website more complete, enter the <strong>Business Info</strong> tab on the left.<br /><br />Then, take a moment to browse all the tabs so you can see what options are available. <br /><br />To get started, first click the \'<strong>Save all Changes</strong>\' button to save the theme defaults.','crucible') );
+				'std' => __('Your business website is up and running. On the left are tabs to customize your site, but everything is optional.<br /><br />To make your website more complete, enter the <strong>Business Info</strong> tab on the left. <br /><br />Then, take a moment to browse all the tabs so you can see what options are available. You can upload your logo in Appearance -> Customize.<br /><br />To get started, first click the \'<strong>Save all Changes</strong>\' button to save the theme defaults.','crucible') );
 
 /* Business */
 
@@ -873,9 +873,30 @@ $options[] = array( 'name' => __('Backwards Compatibility: Use Old Clock Icon on
 					'id' => $shortname.'_old_clock',
 					'std' => 'false',
 					'type' => 'checkbox');
+					
+					/** @test replace options with array option.
+					
+					$smartestthemes_array[$id] = stripslashes($new_value); //@test
+					update_option('smartestthemes_options',$smartestthemes_array); // @test
+								
+					*/
+					
 update_option('smartestthemes_template',$options);   
+
+/* @test replace 
 update_option('smartestthemes_themename',$themename);
 update_option('smartestthemes_themeslug',$themeslug);
 update_option('smartestthemes_manual',$manualurl);
 update_option('smartestthemes_sshow_description','Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.');// @new update
-} ?>
+*/
+
+$smartestthemes_array[themename] = $themename; //@test
+$smartestthemes_array[themeslug] = $themeslug; //@test
+$smartestthemes_array[manual] = $manualurl; //@test
+$smartestthemes_array[sshow_description] = 'Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.'; //@test
+
+update_option('smartestthemes_options',$smartestthemes_array); // @test
+
+} 
+add_action('init','smartestthemes_options');
+?>

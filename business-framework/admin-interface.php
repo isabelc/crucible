@@ -22,11 +22,11 @@ function smartestthemes_option_setup(){
 					foreach($option['type'] as $child){
 						$c_id = $child['id'];
 						$c_std = $child['std'];
-						update_option($c_id,$c_std);
+// @test stop making this option. do array instead						update_option($c_id,$c_std);
 						$smartestthemes_array[$c_id] = $c_std; 
 					}
 				} else {
-					update_option($id,$std);
+// @test stop making this option. do array instead					update_option($id,$std);
 					$smartestthemes_array[$id] = $std;
 				}
 			}
@@ -96,6 +96,7 @@ function smartestthemes_reset_options($options,$page = ''){
 			}
 		}
 	}
+	
 	//When Theme Options page is reset - Add the smartestthemes_options option
 	if ( $page == get_option('smartestthemes_themeslug') ) {
 		$query_inner .= " OR option_name = 'smartestthemes_options'";
@@ -514,30 +515,62 @@ function smartestthemes_ajax_callback() {
 							if($array['type'] == 'text'){
 								$id = $array['id'];
 								$new_value = $output[$id];
-								update_option( $id, stripslashes($new_value));// isa, may conflict w url inputs that need slashes
+// @test replace below								update_option( $id, stripslashes($new_value));// isa, may conflict w url inputs that need slashes
+
+								$smartestthemes_array[$id] = stripslashes($new_value); //@test
+								update_option('smartestthemes_options',$smartestthemes_array); // @test
+
+
 							}
 						}                 
 					}
 					elseif($new_value == '' && $type == 'checkbox'){ // Checkbox Save
-						update_option($id,'false');
+					
+// @test replace below						update_option($id,'false');
+
+								$smartestthemes_array[$id] = 'false'; //@TEST
+								update_option('smartestthemes_options',$smartestthemes_array); // @test
+
 					}
 					elseif ($new_value == 'true' && $type == 'checkbox'){ // Checkbox Save
-						update_option($id,'true');
+					
+					
+						// @test replace below update_option($id,'true');
+						
+						$smartestthemes_array[$id] = 'true'; //@test
+						update_option('smartestthemes_options',$smartestthemes_array); // @test
+								
+								
 					}
 					elseif($type == 'multicheck'){ // Multi Check Save
 						$option_options = $option_array['options'];
 						foreach ($option_options as $options_id => $options_value){
 							$multicheck_id = $id . "_" . $options_id;
 							if(!isset($output[$multicheck_id])){
-							  update_option($multicheck_id,'false');
+							  // @test replace below	update_option($multicheck_id,'false');
+							  
+								$smartestthemes_array[$multicheck_id] = 'false'; //@test
+								update_option('smartestthemes_options',$smartestthemes_array); // @test
+						
+						
 							}
 							else{
-							   update_option($multicheck_id,'true'); 
+							   // @test replace below update_option($multicheck_id,'true'); 
+							   
+								$smartestthemes_array[$multicheck_id] = 'true'; //@test
+								update_option('smartestthemes_options',$smartestthemes_array); // @test
+								
+								
 							}
 						}
 					} 
 					elseif($type != 'upload_min'){
-						update_option($id,stripslashes($new_value));
+						// @test replace below update_option($id,stripslashes($new_value));
+						
+								$smartestthemes_array[$id] = stripslashes($new_value); //@test
+								update_option('smartestthemes_options',$smartestthemes_array); // @test
+								
+								
 					}
 				}
 			}	
