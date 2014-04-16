@@ -1377,7 +1377,11 @@ function smartestthemes_about_bottom_image() {
 	echo $out;
 }
 
-/**************** @test */
+/**************** @test 
+
+@todo move customizer to inc/ since these options will vary per theme 
+
+*/
 
 
 
@@ -1439,6 +1443,30 @@ function smartestthemes_customize_register( $wp_customize ) {
     ));
 }
 add_action( 'customize_register', 'smartestthemes_customize_register' );
+
+/* @test
+* Return the theme option value.
+* Needed because options are saved as serialized strings.
+*/
+
+if ( !function_exists( 'of_get_option' ) ) {
+	function smartestthemes_get_option($name, $default = false) {
+
+		$optionsframework_settings = get_option('smartestthemes_options');
+
+		// Gets the unique option id
+		$option_name = $optionsframework_settings['id'];
+
+		if ( get_option($option_name) ) {
+			$options = get_option($option_name);
+		}
+
+		if ( isset($options[$name]) ) {
+			return $options[$name];
+		} else {
+			return $default;
+	}
+}
 
 
 ?>
