@@ -211,7 +211,7 @@ if ( get_option('smartestthemes_logo_font_size_4') )
 if ( get_option('smartestthemes_increase_logo') )
 	echo 'a#logolink #customlogo {max-height:' . get_option('smartestthemes_increase_logo') . 'px !important;}';
 // tagline
-if ( get_option('smartestthemes_tagline_color') ) { 
+if ( get_option('smartestthemes_tagline_color') ) {
 		echo '#mast h4 { color:'. get_option('smartestthemes_tagline_color').'; }';
 }
 if ( get_option('smartestthemes_tagline_font') ) { ?>

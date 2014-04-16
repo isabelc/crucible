@@ -28,10 +28,19 @@ do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per t
 
 -->
 	<header id="masthead" class="site-header" role="banner">
+	
 		<div class="site-branding">
-			<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
+		<?php // @test @hold do_action( 'crucible_logo' ); ?>	
 		</div>
+	
+	
+	<?php // @test debus
+	
+	$test = get_theme_mod('smartestthemes_logo');
+	$test2 = get_option('smartestthemes_logo');
+	
+	echo '<h3>test 1, theme_mod:</h3> ' . $test . '<br /><br /><h3>Test 2, option: </h3>' . $test2; 
+	?>
 
 		<?php if ( get_option('smartestthemes_phone_number') ) {
 			echo get_option('smartestthemes_phone_number');

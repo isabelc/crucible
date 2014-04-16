@@ -1349,6 +1349,71 @@ function smartestthemes_about_bottom_image() {
 		$out .= $imgs[1];
 	}
 	echo $out;
+}
+
+/**************** @test */
+
+
+
+function smartestthemes_customize_register( $wp_customize ) {
+
+
+	$wp_customize->add_section('smartestthemes_site_logo', array(
+        'title'    => __('Site Logo', 'crucible'),
+        'priority' => 10,// @test
+    ));
+	
+//  =============================
+    //  = Image Upload              =
+    //  =============================
+    $wp_customize->add_setting('smartestthemes_logo', array(
+        'default'           => '',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+     ));
+ 
+    $wp_customize->add_control( new WP_Customize_Image_Control($wp_customize, 'image_upload_logo', array(
+        'label'    => __('Custom Logo Image', 'crucible'),
+        'section'  => 'smartestthemes_site_logo',
+        'settings' => 'smartestthemes_logo',
+		'priority'   => 1
+    )));
+
+	
+    //  =============================
+    //  = Checkbox      @test             =
+    //  =============================
+    $wp_customize->add_setting('smartestthemes_show_tagline', array(
+        'capability' => 'edit_theme_options',
+        'type'       => 'option',
+    ));
+ 
+    $wp_customize->add_control('display_header_text', array(
+        'settings' => 'smartestthemes_show_tagline',
+        'label'    => __('Show Tagline Under Your Logo?', 'crucible'),
+        'section'  => 'smartestthemes_site_logo',
+        'type'     => 'checkbox',
+		'priority'   => 25
+    ));
+	//  =============================
+    //  = Text Input                =
+    //  =============================
+    $wp_customize->add_setting('smartestthemes_increase_logo', array(
+        'default'        => '',
+        'capability'     => 'edit_theme_options',
+        'type'           => 'option',
+ 
+    ));
+ 
+    $wp_customize->add_control('smartestthemes_increase_logo_height', array(
+        'label'      => __('Optional: Logo Height in px. Default is 150.', 'crucible'),
+        'section'    => 'smartestthemes_site_logo',
+        'settings'   => 'smartestthemes_increase_logo',
+		'priority'   => 35
+    ));
 	
 }
+add_action( 'customize_register', 'smartestthemes_customize_register' );
+
+
 ?>

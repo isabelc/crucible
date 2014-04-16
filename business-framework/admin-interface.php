@@ -96,7 +96,6 @@ function smartestthemes_reset_options($options,$page = ''){
 			}
 		}
 	}
-	
 	//When Theme Options page is reset - Add the smartestthemes_options option
 	if ( $page == get_option('smartestthemes_themeslug') ) {
 		$query_inner .= " OR option_name = 'smartestthemes_options'";
