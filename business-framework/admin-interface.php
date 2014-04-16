@@ -41,13 +41,13 @@ function smartestthemes_option_setup(){
 // Load static framework options pages 
 function smartestthemes_add_admin() {
 	global $query_string;
-	$themename = get_option('smartestthemes_themename');
-	$themeslug = get_option('smartestthemes_themeslug');
+	$themename = smartestthemes_get_option('themename');
+	$themeslug = smartestthemes_get_option('themeslug');
 	if ( isset($_REQUEST['page']) && $themeslug == $_REQUEST['page'] ) {
 		if (isset($_REQUEST['smartestthemes_save']) && 'reset' == $_REQUEST['smartestthemes_save']) {
-			$options =  get_option('smartestthemes_template');
+			$options =  get_option('smartestthemes_template');// @todo did i save this separately?
 			smartestthemes_reset_options($options,$themeslug);
-			header("Location: admin.php?page=$themeslug&reset=true");
+			header("Location: admin.php?page=$themeslug&reset=true");// @test
 			die;
 		}
 	}
@@ -98,7 +98,7 @@ function smartestthemes_reset_options($options,$page = ''){
 	}
 	
 	//When Theme Options page is reset - Add the smartestthemes_options option
-	if ( $page == get_option('smartestthemes_themeslug') ) {
+	if ( $page == smartestthemes_get_option('themeslug') ) {
 		$query_inner .= " OR option_name = 'smartestthemes_options'";
 	}
 	$query = "DELETE FROM $wpdb->options WHERE $query_inner";
@@ -106,8 +106,8 @@ function smartestthemes_reset_options($options,$page = ''){
 }
 /* Framework options panel */
 function smartestthemes_options_page(){
-	$options = get_option('smartestthemes_template');      
-	$manualurl = get_option('smartestthemes_manual');
+	$options = get_option('smartestthemes_template');// @todo did i save this separately? 
+	$manualurl = smartestthemes_get_option('manual');
 	$themedata = wp_get_theme();
 	$themename = $themedata->Name;
 	$local_version = $themedata->Version;
@@ -220,7 +220,7 @@ function smartestthemes_frame_load() {
 				jQuery('#' + jQuery(this).attr('id')).mask("99-9999999");
 			});
 			//Color Picker
-			<?php $options = get_option('smartestthemes_template');
+			<?php $options = get_option('smartestthemes_template');// @test did i save this separately?
 			foreach($options as $option){ 
 			if($option['type'] == 'color'){//12.12
 					$option_id = $option['id'];
