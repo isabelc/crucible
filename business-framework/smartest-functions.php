@@ -341,7 +341,7 @@ function create_smartest_business_cpts() {
 						'not_found_in_trash' => __( 'No slides found in Trash','storefront' ),
 						'parent' => __( 'Parent Slide','storefront' ),
 					),
-				'menu_icon' => get_template_directory_uri(). '/images/slider-menu-icon.png',
+					'menu_icon' => 'dashicons-format-image',
 		        	'supports' => array('title', 'thumbnail')
 				);
 
