@@ -51,7 +51,7 @@ function smartestthemes_insert_post($potype, $slug, $option, $page_title = '', $
 }
 /**
  * Create pages: about, home, storing page id's in variables.
- * Activate Smartest Reviews
+ * Activate Reviews
  * @uses smartestthemes_insert_post()
  */
 function smartestthemes_after_setup() {
@@ -62,7 +62,7 @@ function smartestthemes_after_setup() {
 		smartestthemes_insert_post( 'page', esc_sql( _x('about', 'page_slug', 'crucible') ), 'smartestthemes_about_page_id', $atitle, '' );
 	if(get_option('smartestthemes_stop_home') == 'false')
 		smartestthemes_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'crucible') ), 'smartestthemes_home_page_id', __('Home', 'crucible'), '' );
-	// Activate Smartest Reviews
+	// Activate Reviews
 	if (!class_exists('SMARTESTReviewsBusiness') && (get_option('smartestthemes_add_reviews') == 'true'))
 		include_once get_template_directory() .'/business-framework/modules/reviews/reviews.php';
 

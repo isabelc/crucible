@@ -1,9 +1,9 @@
 <?php
 /**
- * Adds Smartest Reviews Testimonial widget
+ * Adds Reviews Testimonial widget
  *
  * @author 		Smartest Themes
- * @package 	Smartest Reviews
+ * @package 	Reviews
  * @extends 	WP_Widget
  */
 

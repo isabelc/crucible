@@ -346,15 +346,15 @@ class SMARTESTReviewsBusinessAdmin {
         
         echo '
         <div id="smar_respond_1" class="wrap">
-            <h2>'. __('Smartest Reviews - Options', 'crucible'). '</h2>';
+            <h2>'. __('Reviews - Options', 'crucible'). '</h2>';
             if ($msg) { echo '<h3 style="color:#a00;">'.$msg.'</h3>'; }
 			$admin_page = get_option('smartestthemes_themeslug');
 			$linkp = '<a href="'. admin_url("admin.php?page=$admin_page").'">Preferences</a>';
             echo '<div class="metabox-holder">
             <div class="postbox" style="width:700px;">
-                <h3 style="cursor:default;">'. __('About Smartest Reviews', 'crucible'). '</h3>
+                <h3 style="cursor:default;">'. __('About Reviews', 'crucible'). '</h3>
                 <div style="padding:10px; background:#ffffff;">
-                    <p>'. __('Smartest Reviews allows your customers and visitors to leave reviews or testimonials of your business. It also pulls aggregate ratings data from the Reviews page into your home page to create rich snippets for search engines on your home page and your Reviews page. Reviews are Schema.org microdata enabled.', 'crucible'). '<br /><br />'
+                    <p>'. __('Reviews allow your customers and visitors to leave reviews or testimonials of your business. Aggregate ratings data from the Reviews page will be pulled into your home page to create rich snippets for search engines on your home page and your Reviews page. Reviews are Schema.org microdata enabled.', 'crucible'). '<br /><br />'
 					. sprintf(__('Activate Reviews by checking the "Add Reviews Section" in %s.', 'crucible'), $linkp).
 '</p><br /> </div> </div>';
         $this->show_options();
@@ -575,7 +575,7 @@ class SMARTESTReviewsBusinessAdmin {
         ?>
         <div id="smar_respond_1" class="wrap">
             <div class="icon32" id="icon-edit-comments"><br /></div>
-            <h2><?php _e('Smartest Reviews', 'crucible'); ?> - <?php echo sprintf(__('%s Reviews', 'crucible'), $status_text); ?></h2>
+            <h2><?php _e('Reviews', 'crucible'); ?> - <?php echo sprintf(__('%s Reviews', 'crucible'), $status_text); ?></h2>
               <ul class="subsubsub">
                 <li class="all"><a <?php if ($this->p->review_status == -1) { echo 'class="current"'; } ?> href="?page=smar_view_reviews&amp;review_status=-1"><?php _e('All', 'crucible'); ?></a> |</li>
                 <li class="moderated"><a <?php if ($this->p->review_status == 0) { echo 'class="current"'; } ?> href="?page=smar_view_reviews&amp;review_status=0"><?php _e('Pending ', 'crucible'); ?>
