@@ -12,13 +12,13 @@ class SMARTESTReviewsBusiness {
 	var $options = array();
 	var $p = '';
 	var $page = 1;
-	var $plugin_version = '0.0.0';
+	var $version = '0.0.0';
 	var $shown_form = false;
 	var $shown_hcard = false;
 	var $status_msg = '';
 
 	function SMARTESTReviewsBusiness() {
-		global $wpdb;
+		global $wpdb, $smartestthemes_options;
 		define('IN_SMAR', 1);
         
         /* uncomment the below block to display strict/notice errors */
@@ -30,24 +30,26 @@ class SMARTESTReviewsBusiness {
         ini_set('display_errors',TRUE);
 */
 		$this->dbtable = $wpdb->prefix . $this->dbtable;
-		$this->plugin_version = get_option('smartestthemes_framework_version');
+	
+		$this->version = $smartestthemes_options['themeversion'];// @test
+		
 		add_action('the_content', array(&$this, 'do_the_content'), 10); /* prio 10 prevents a conflict with some odd themes */
-		add_action('init', array(&$this, 'init'));
-		add_action('admin_init', array(&$this, 'admin_init'));
-		add_action( 'widgets_init', array(&$this, 'smartest_reviews_register_widgets'));
-		add_action('template_redirect',array(&$this, 'template_redirect')); /* handle redirects and form posts, and add style/script if needed */
-		add_action('admin_menu', array(&$this, 'addmenu'));
-		add_action('wp_ajax_update_field', array(&$this, 'admin_view_reviews'));
-		add_action('save_post', array(&$this, 'admin_save_post'), 10, 2);
-		add_action( 'admin_init', array(&$this, 'smartestthemes_create_reviews_page'));//@note, but for stand-alone plugin hook to after_setup_theme
-		add_action('wp_enqueue_scripts', array(&$this, 'smartestreviews_scripts'));
-		add_action('admin_enqueue_scripts', array(&$this, 'smartestreviews_scripts'));
-		add_action('admin_enqueue_scripts', array(&$this, 'admin_scripts'));
+		add_action('init', array($this, 'init'));
+		add_action('admin_init', array($this, 'admin_init'));
+		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));
+		add_action('template_redirect',array($this, 'template_redirect')); /* handle redirects and form posts, and add style/script if needed */
+		add_action('admin_menu', array($this, 'addmenu'));
+		add_action('wp_ajax_update_field', array($this, 'admin_view_reviews'));
+		add_action('save_post', array($this, 'admin_save_post'), 10, 2);
+		add_action( 'admin_init', array($this, 'create_reviews_page'));//@note, but for stand-alone plugin hook to after_setup_theme
+		add_action('wp_enqueue_scripts', array($this, 'smartestreviews_scripts'));
+		add_action('admin_enqueue_scripts', array($this, 'smartestreviews_scripts'));
+		add_action('admin_enqueue_scripts', array($this, 'admin_scripts'));
     }
 
 	function addmenu() {
 		add_options_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'manage_options', 'smar_options', array(&$this, 'admin_options'));
-		if(get_option('smartestthemes_add_reviews') == 'true') {       
+		if(smartestthemes_get_option('add_reviews') == 'true') {       
 			add_menu_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array(&$this, 'admin_view_reviews'), 'dashicons-star-filled', 62);
 		}
 	}
@@ -68,7 +70,7 @@ class SMARTESTReviewsBusiness {
     }
     function get_jumplink_for_review($review,$page) {
        /* $page will be 1 for shortcode usage since it pulls most recent, which SHOULD all be on page 1 */
-       $link = get_permalink( get_option('smartestthemes_reviews_page_id') );
+       $link = get_permalink( smartestthemes_get_option('reviews_page_id') );
         if (strpos($link,'?') === false) {
             $link = trailingslashit($link) . "?smarp=$page#hreview-$review->id";
         } else {
@@ -80,8 +82,8 @@ class SMARTESTReviewsBusiness {
         $home_domain = @parse_url(get_home_url());
         $home_domain = $home_domain['scheme'] . "://" . $home_domain['host'] . '/';
         $default_options = array(
-            'act_email' => '',
-            'act_uniq' => '',
+            'act_email' => '',// @test see if i can delete if not used elsewhere
+            'act_uniq' => '',// @test see if i can delete if not used elsewhere
             'activate' => 0,
             'ask_custom' => array(),
             'ask_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0, 'fage' => 0, 'fgender' => 0),
@@ -144,13 +146,13 @@ class SMARTESTReviewsBusiness {
         $migrated = false;
         /* remove me after official release */
         $current_dbversion = intval(str_replace('.', '', $this->options['dbversion']));
-        $plugin_db_version = intval(str_replace('.', '', $this->plugin_version));
+        $plugin_db_version = intval(str_replace('.', '', $this->version));
         if ($current_dbversion == $plugin_db_version) {
             return false;
         }
         global $SMARTESTReviewsBusinessAdmin;
         $this->include_admin(); /* include admin functions */
-        $SMARTESTReviewsBusinessAdmin->createUpdateReviewtable(); /* creates AND updates table */
+        $SMARTESTReviewsBusinessAdmin->createUpdateReviewtable(); /* creates table */
         /* initial installation */
         if ($current_dbversion == 0) {
            $this->options['dbversion'] = $plugin_db_version;
@@ -158,18 +160,8 @@ class SMARTESTReviewsBusiness {
             update_option('smar_options', $this->options);
             return false;
         }
-        /* check for upgrades if needed */
-        /* upgrade to 2.0.0 */
-        if ($current_dbversion < 200) {
-            /* change all current reviews to use the selected page id */
-		$pageID = intval(get_option('smartestthemes_reviews_page_id'));
-		$wpdb->query("UPDATE `$this->dbtable` SET `page_id`=$pageID WHERE `page_id`=0");
-		$this->options['dbversion'] = 200;
-		$current_dbversion = 200;
-		update_option('smar_options', $this->options);
-		$migrated = true;
-        }
-        /* done with all migrations, push dbversion to current version */
+        
+        /* Push dbversion to current version */
         if ($current_dbversion != $plugin_db_version || $migrated == true) {
             $this->options['dbversion'] = $plugin_db_version;
             $current_dbversion = $plugin_db_version;
@@ -231,12 +223,12 @@ class SMARTESTReviewsBusiness {
         }
         return $str;
     }
-    function get_aggregate_reviews($pageID) {
+    function get_aggregate_reviews($pageID) {// @todo this param is not needed anymore
         if ($this->got_aggregate !== false) {
             return $this->got_aggregate;
         }
         global $wpdb;
-        $pageID = get_option('smartestthemes_reviews_page_id');// 3.11 was -1
+        $pageID = smartestthemes_get_option('reviews_page_id');// @test with new function
         $row = $wpdb->get_results("SELECT COUNT(*) AS `total`,AVG(review_rating) AS `aggregate_rating`,MAX(review_rating) AS `max_rating` FROM `$this->dbtable` WHERE `status`=1");
         /* make sure we have at least one review before continuing below */
         if ($wpdb->num_rows == 0 || $row[0]->total == 0) {
@@ -285,11 +277,19 @@ class SMARTESTReviewsBusiness {
         return array($reviews, $total_reviews);
     }
     function aggregate_footer() {// for home page
-		global $smartestthemes_options;
+	
+		
+		// @test without this. global $smartestthemes_options;
+		
+		$smartestthemes_options = get_option('smartestthemes_options');
+		
+		
 		// gather agg data
-		$postID = get_option('smartestthemes_reviews_page_id');// was -1
+		$postID = $smartestthemes_options['reviews_page_id'];// @test
+		
+		
 		$arr_Reviews = $this->get_reviews('', $this->options['reviews_per_page'], 1);
-	 	$reviews = $arr_Reviews[0];// 12.5 prob dont need
+	 	$reviews = $arr_Reviews[0];// 12.5 @test prob dont need
 		$total_reviews = intval($arr_Reviews[1]);
 		$this->get_aggregate_reviews($postID);
         $best_score = 5;
@@ -302,46 +302,46 @@ class SMARTESTReviewsBusiness {
 else {$show = false; }
 		if ($show) { /* we append like this to prevent newlines and wpautop issues */
        	
-			$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['smartestthemes_business_itemtype'] . '"';
+			$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['business_itemtype'] . '"';
 			$aggregate_footer_output = '<div id="smar_respond_1"><div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
-			$smartestthemes_options = get_option('smartestthemes_options');
-			$bn = stripslashes_deep(esc_attr($smartestthemes_options['smartestthemes_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
+			
+			$bn = stripslashes_deep(esc_attr($smartestthemes_options['business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
 
 			$aggregate_footer_output .= '<a itemprop="name" href="' . site_url('/')
  . '">' . $bn . '</a><br />';
-				if ( $smartestthemes_options['smartestthemes_address_street'] != '' || 
-					$smartestthemes_options['smartestthemes_address_city'] != '' ||
-					$smartestthemes_options['smartestthemes_address_state'] != '' ||
-					$smartestthemes_options['smartestthemes_address_zip'] != '' ||
-					$smartestthemes_options['smartestthemes_address_country'] != ''
+				if ( $smartestthemes_options['address_street'] != '' || 
+					$smartestthemes_options['address_city'] != '' ||
+					$smartestthemes_options['address_state'] != '' ||
+					$smartestthemes_options['address_zip'] != '' ||
+					$smartestthemes_options['address_country'] != ''
 				) {
 						$aggregate_footer_output .= '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
-						if ($smartestthemes_options['smartestthemes_address_street'] != '') {
-							$aggregate_footer_output .= '<span itemprop="streetAddress">' . $smartestthemes_options['smartestthemes_address_street'] . '</span>&nbsp;';
+						if ($smartestthemes_options['address_street'] != '') {
+							$aggregate_footer_output .= '<span itemprop="streetAddress">' . $smartestthemes_options['address_street'] . '</span>&nbsp;';
 						}
 
-						if ($smartestthemes_options['smartestthemes_address_suite'] != '') {
-							$aggregate_footer_output .= ' ' . $smartestthemes_options['smartestthemes_address_suite'] . '&nbsp;';
+						if ($smartestthemes_options['address_suite'] != '') {
+							$aggregate_footer_output .= ' ' . $smartestthemes_options['address_suite'] . '&nbsp;';
 						}
 
-						if ($smartestthemes_options['smartestthemes_address_city'] != '') {
-								$smartestthemes_options['smartestthemes_address_city'] . '</span>,&nbsp;';
+						if ($smartestthemes_options['address_city'] != '') {
+								$smartestthemes_options['address_city'] . '</span>,&nbsp;';
 						}
-			                    if ($smartestthemes_options['smartestthemes_address_state'] != '') {
-			                        $aggregate_footer_output .='<span itemprop="addressRegion">' . $smartestthemes_options['smartestthemes_address_state'] . '</span>,&nbsp;';
+			                    if ($smartestthemes_options['address_state'] != '') {
+			                        $aggregate_footer_output .='<span itemprop="addressRegion">' . $smartestthemes_options['address_state'] . '</span>,&nbsp;';
 			                    }
-			                    if ($smartestthemes_options['smartestthemes_address_zip'] != '') {
-			                        $aggregate_footer_output .='<span class="postal-code" itemprop="postalCode">' . $smartestthemes_options['smartestthemes_address_zip'] . '</span>&nbsp;';
+			                    if ($smartestthemes_options['address_zip'] != '') {
+			                        $aggregate_footer_output .='<span class="postal-code" itemprop="postalCode">' . $smartestthemes_options['address_zip'] . '</span>&nbsp;';
 			                    }
-			                    if ($smartestthemes_options['smartestthemes_address_country'] != '') {
-			                        $aggregate_footer_output .='<span itemprop="addressCountry">' . $smartestthemes_options['smartestthemes_address_country'] . '</span>&nbsp;';
+			                    if ($smartestthemes_options['address_country'] != '') {
+			                        $aggregate_footer_output .='<span itemprop="addressCountry">' . $smartestthemes_options['address_country'] . '</span>&nbsp;';
 			                    }
 			
 			                    $aggregate_footer_output .= '</span>';
 			                }
 			
-			                if ( $smartestthemes_options['smartestthemes_phone_number'] != '') {
-			                    $aggregate_footer_output .= '<br />&nbsp;&bull;&nbsp<span itemprop="telephone">' . $smartestthemes_options['smartestthemes_phone_number'] . '</span>';
+			                if ( $smartestthemes_options['phone_number'] != '') {
+			                    $aggregate_footer_output .= '<br />&nbsp;&bull;&nbsp<span itemprop="telephone">' . $smartestthemes_options['phone_number'] . '</span>';
 			                }
 
 					// do agg rating for both scenarios
@@ -451,13 +451,13 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
         $reviews_content = '';
         $hidesummary = '';
         $title_tag = $this->options['title_tag'];
-		global $smartestthemes_options;
+		// @test remove global $smartestthemes_options;
 		$smartestthemes_options = get_option('smartestthemes_options');
-		$bn = stripslashes_deep(esc_attr($smartestthemes_options['smartestthemes_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
+		$bn = stripslashes_deep(esc_attr($smartestthemes_options['business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
 /* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
          trying to access a page that does not exist -- send to main page 
         if ( isset($this->p->smarp) && $this->p->smarp != 1 && count($reviews) == 0 ) {
-            $url = get_permalink(get_option('smartestthemes_reviews_page_id'));
+            $url = get_permalink(smartestthemes_get_option('reviews_page_id'));
             $this->smar_redirect($url);
         }
 */        
@@ -467,34 +467,34 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
         }
         if (!$inside_div) {
             $reviews_content .= '<!-- no inside div --><div id="smar_respond_1"';
-				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['smartestthemes_business_itemtype'].'">
+				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['business_itemtype'].'">
 							<span class="isa_vcard" id="hreview-smar-hcard-for-' . $review->id . '">
                                 <a itemprop="name" href="' . site_url('/') . '">' . $bn . '</a>
-                                <span itemprop="telephone">' . $smartestthemes_options['smartestthemes_phone_number'] . '</span>
+                                <span itemprop="telephone">' . $smartestthemes_options['phone_number'] . '</span>
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                    <span itemprop="streetAddress">' . $smartestthemes_options['smartestthemes_address_street'] . ' ' .$smartestthemes_options['smartestthemes_address_suite'] . '</span>
-                                    <span itemprop="addressLocality">' . $smartestthemes_options['smartestthemes_address_city'] . '</span>
-                                    <span itemprop="addressRegion">' . $smartestthemes_options['smartestthemes_address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['smartestthemes_address_zip'] . '</span>
-                                    <span itemprop="addressCountry">' . $smartestthemes_options['smartestthemes_address_country'] . '</span></span></span><hr />';
+                    <span itemprop="streetAddress">' . $smartestthemes_options['address_street'] . ' ' .$smartestthemes_options['address_suite'] . '</span>
+                                    <span itemprop="addressLocality">' . $smartestthemes_options['address_city'] . '</span>
+                                    <span itemprop="addressRegion">' . $smartestthemes_options['address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['address_zip'] . '</span>
+                                    <span itemprop="addressCountry">' . $smartestthemes_options['address_country'] . '</span></span></span><hr />';
         }
         if (count($reviews) == 0) {
             $reviews_content .= '<p>'. __('There are no reviews yet. Be the first to leave yours!', 'crucible').'</p>';
-        } elseif ($smartestthemes_options['smartestthemes_add_reviews'] == 'false') {
+        } elseif ($smartestthemes_options['add_reviews'] == 'false') {
 				$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
-        } else {	   		$postid = get_option('smartestthemes_reviews_page_id');
+        } else {	   		$postid = $smartestthemes_options['reviews_page_id'];
             $this->get_aggregate_reviews($postid);
             $summary = $this->got_aggregate["text"];
             $best_score = 5;
             $average_score = number_format($this->got_aggregate["aggregate"], 1);
-			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['smartestthemes_business_itemtype'].'"><br />
+			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['business_itemtype'].'"><br />
 							<span class="isa_vcard">
                                 <a itemprop="name" href="' . site_url('/') . '">' . $bn . '</a><br />
-                                <span itemprop="telephone">' . $smartestthemes_options['smartestthemes_phone_number'] . '</span><br />
+                                <span itemprop="telephone">' . $smartestthemes_options['phone_number'] . '</span><br />
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                    <span itemprop="streetAddress">' . $smartestthemes_options['smartestthemes_address_street'] . ' ' .$smartestthemes_options['smartestthemes_address_suite'] . '</span><br />
-                                    <span itemprop="addressLocality">' . $smartestthemes_options['smartestthemes_address_city'] . '</span>
-                                    <span itemprop="addressRegion">' . $smartestthemes_options['smartestthemes_address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['smartestthemes_address_zip'] . '</span>
-                                    <span itemprop="addressCountry">' . $smartestthemes_options['smartestthemes_address_country'] . '</span>
+                                    <span itemprop="streetAddress">' . $smartestthemes_options['address_street'] . ' ' .$smartestthemes_options['address_suite'] . '</span><br />
+                                    <span itemprop="addressLocality">' . $smartestthemes_options['address_city'] . '</span>
+                                    <span itemprop="addressRegion">' . $smartestthemes_options['address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['address_zip'] . '</span>
+                                    <span itemprop="addressCountry">' . $smartestthemes_options['address_country'] . '</span>
                                 </span>
                             </span><hr />';
 
@@ -592,13 +592,12 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
     }
 
 /**
- * Create pages that the plugin relies on, storing page id's in variables.
+ * Create the Reviews page
  * @uses smartestthemes_insert_post()
  */
-function smartestthemes_create_reviews_page() {
-	// if set in theme options
-	if(get_option('smartestthemes_add_reviews') == 'true') {
-		smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[SMAR_INSERT]' );
+function create_reviews_page() {
+	if(smartestthemes_get_option('add_reviews') == 'true') {
+		smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[SMAR_INSERT]' );// @todo change to lowercase, better name
 	}
 }
 function do_the_content($original_content) {
@@ -922,9 +921,9 @@ function do_the_content($original_content) {
 
         $wpdb->query($query);
 
-		global $smartestthemes_options;
+		// @test remove global $smartestthemes_options;
 		$smartestthemes_options = get_option('smartestthemes_options');
-		$bn = stripslashes_deep($smartestthemes_options['smartestthemes_business_name']);if(!$bn) {$bn = get_bloginfo('name'); }
+		$bn = stripslashes_deep($smartestthemes_options['business_name']);if(!$bn) {$bn = get_bloginfo('name'); }
         $admin_linkpre = get_admin_url().'admin.php?page=smar_view_reviews';
         $admin_link = sprintf(__('Link to admin approval page: %s', 'crucible'), $admin_linkpre);
 		$ac = sprintf(__('A new review has been posted on %1$s\'s website.','crucible'),$bn) . "\n\n" .
@@ -977,9 +976,9 @@ function do_the_content($original_content) {
         return $this->do_the_content('shortcode_insert');        
     }
 	function smartestreviews_scripts() {
-		if( get_option('smartestthemes_add_reviews') == 'true'  ) {
-			wp_register_style('smartest-reviews', $this->getpluginurl() . 'reviews.css', array(), $this->plugin_version);wp_enqueue_style('smartest-reviews');wp_register_script('smartest-reviews', $this->getpluginurl() . 'reviews.js', array('jquery'), $this->plugin_version);
-			if( is_page(get_option('smartestthemes_reviews_page_id'))) {
+		if( smartestthemes_get_option('add_reviews') == 'true'  ) {
+			wp_register_style('smartest-reviews', $this->getpluginurl() . 'reviews.css', array(), $this->version);wp_enqueue_style('smartest-reviews');wp_register_script('smartest-reviews', $this->getpluginurl() . 'reviews.js', array('jquery'), $this->version);
+			if( is_page(smartestthemes_get_option('reviews_page_id'))) {
 		        wp_enqueue_script('smartest-reviews');
 				$loc = array(
 					'hidebutton' => __('Click here to hide form', 'crucible'),
@@ -1000,7 +999,7 @@ function do_the_content($original_content) {
 	 * widget
 	 */
 	function smartest_reviews_register_widgets() {
-		if( get_option('smartestthemes_add_reviews') == 'true'  ) {
+		if( smartestthemes_get_option('add_reviews') == 'true'  ) {
 			register_widget('SmartestReviewsTestimonial');
 		}
 	}

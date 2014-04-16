@@ -91,28 +91,15 @@ if(get_option('smartestthemes_stop_home') == 'true') {
  */
 
 if( get_option('smartestthemes_stop_static') == 'false') {
-
-/* @test replace below
-
 	update_option( 'show_on_front', 'page' );
-	update_option( 'page_on_front', get_option('smartestthemes_home_page_id') );
-	
-*/
-	$smartestthemes_array[show_on_front] = 'page'; //@test
-	$smartestthemes_array[page_on_front] = get_option('smartestthemes_home_page_id'); //@test
-	update_option('smartestthemes_options',$smartestthemes_array); // @test
-
+	update_option( 'page_on_front', smartestthemes_get_option('home_page_id') );
 }
 
 // Set the blog page, unless disabled
 if( get_option('smartestthemes_stop_blog') == 'false') {
 	$blog   = get_page_by_title(__('Blog', 'crucible') );
 	if($blog) {
-		// @test replace  update_option( 'page_for_posts', $blog->ID );
-		
-		$smartestthemes_array[page_for_posts] = $blog->ID; //@test
-		update_option('smartestthemes_options',$smartestthemes_array); // @test
-
+		update_option( 'page_for_posts', $blog->ID );
 	}
 }
 /*
