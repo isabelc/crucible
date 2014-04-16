@@ -889,11 +889,10 @@ update_option('smartestthemes_themeslug',$themeslug);
 update_option('smartestthemes_manual',$manualurl);
 update_option('smartestthemes_sshow_description','Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.');// @new update
 */
-$smartestthemes_array[themename] = $themename; //@test
-$smartestthemes_array[themeslug] = $themeslug; //@test
-$smartestthemes_array[themeversion] = $themeobject->Version; //@test
-$smartestthemes_array[manual] = $manualurl; //@test
-$smartestthemes_array[sshow_description] = 'Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.'; //@test
+$smartestthemes_array['themename'] = $themename; //@test
+$smartestthemes_array['themeslug'] = $themeslug; //@test
+$smartestthemes_array['manual'] = $manualurl; //@test
+$smartestthemes_array['sshow_description'] = 'Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.'; //@test
 
 update_option('smartestthemes_options',$smartestthemes_array); // @test
 

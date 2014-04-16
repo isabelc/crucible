@@ -3,6 +3,31 @@
  * Smartest Themes Framework Functions
  * @package    Smartest Themes Business Framework
 */
+/* @test
+* Return the theme option value.
+* Needed because options are saved as serialized strings.
+*/
+
+if ( !function_exists( 'smartestthemes_get_option' ) ) {
+	function smartestthemes_get_option($name, $default = false) {
+
+		$optionsframework_settings = get_option('smartestthemes_options');
+
+		// Gets the unique option id
+		$option_name = isset($optionsframework_settings['id']) ? $optionsframework_settings['id'] : '';
+
+		if ( get_option($option_name) ) {
+			$options = get_option($option_name);
+		}
+
+		if ( isset($options[$name]) ) {
+			return $options[$name];
+		} else {
+			return $default;
+		}
+	}
+}
+
 function smartestthemes_login_logo() {
 	$buslogo =  smartestthemes_get_option('logo');
 	// if there is a logo, show it, else do text
@@ -1450,30 +1475,4 @@ function smartestthemes_customize_register( $wp_customize ) {
     ));
 }
 add_action( 'customize_register', 'smartestthemes_customize_register' );
-
-/* @test
-* Return the theme option value.
-* Needed because options are saved as serialized strings.
-*/
-
-if ( !function_exists( 'of_get_option' ) ) {
-	function smartestthemes_get_option($name, $default = false) {
-
-		$optionsframework_settings = get_option('smartestthemes_options');
-
-		// Gets the unique option id
-		$option_name = $optionsframework_settings['id'];
-
-		if ( get_option($option_name) ) {
-			$options = get_option($option_name);
-		}
-
-		if ( isset($options[$name]) ) {
-			return $options[$name];
-		} else {
-			return $default;
-	}
-}
-
-
 ?>
