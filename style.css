@@ -583,9 +583,8 @@ i.fa:hover {
 10.4 Layout
 --------------------------------------------------------------*/
 
-/* @test
-Layout: Content-Sidebar
-*/
+/* Layout: Content-Sidebar */
+
 .content-area {
 	float: left;
 	margin: 0 -25% 0 0;
@@ -603,27 +602,6 @@ Layout: Content-Sidebar
 	clear: both;
 	width: 100%;
 }
-
-/* @note use for sidebar on left
-Layout: Sidebar-Content
-.content-area {
-	float: right;
-	margin: 0 0 0 -25%;
-	width: 100%;
-}
-.site-main {
-	margin: 0 0 0 25%;
-}
-.site-content .widget-area {
-	float: left;
-	overflow: hidden;
-	width: 25%;
-}
-.site-footer {
-	clear: both;
-	width: 100%;
-}
-*/
 
 /*--------------------------------------------------------------
 11.0 Infinite scroll
