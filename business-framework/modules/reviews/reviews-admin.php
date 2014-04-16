@@ -122,8 +122,6 @@ class SMARTESTReviewsBusinessAdmin {
             if ($this->options['activate'] == 0)
             {
                 $this->options['activate'] = 1;
-                $this->options['act_email'] = $this->p->email;
-
                 update_option('smar_options', $this->options);
                 $msg = 'Thank you. Please configure below.';
             }
