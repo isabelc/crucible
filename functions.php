@@ -92,7 +92,7 @@ function crucible_widgets_init() {
 		'after_title' => '</h3>'
 	));
  
-	isset($options['show_services']) {
+	if( isset($options['show_services']) ) {
 		if ( $options['show_services'] == 'true' ) { 
 			register_sidebar(array(
 				'id' => 'servicesidebar',
@@ -105,7 +105,7 @@ function crucible_widgets_init() {
 			));
 		}
 	}
-	isset($options['show_staff']) {
+	if( isset($options['show_staff']) ) {
 	
 		if ( $options['show_staff'] == 'true' ) {
 			register_sidebar(array(
@@ -119,7 +119,7 @@ function crucible_widgets_init() {
 			));
 		}
 	}
-	isset($options['show_news']) {
+	if( isset($options['show_news']) ) {
 		if ( $options['show_news'] == 'true' ) {
 			register_sidebar(array(
 				'id' => 'announcementsidebar',
