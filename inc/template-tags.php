@@ -295,21 +295,21 @@ function crucible_logo() {
 	*
 	*
 	
-	if ( get_option('smartestthemes_logo') ) {
+	if ( $options['logo'] ) {
 		// there is a logo
-		if ( get_option('smartestthemes_increase_logo') ) {
+		if ( $options['increase_logo'] ) {
 			// custom height is set, use full size image which is resized with CSS
-			$src = get_option('smartestthemes_logo');
+			$src = $options['logo'];
 		} else {
 			// use the logo_thumb which is cut during upload and has its retina ready counterpart
-			$src_id = st_get_attachment_id_from_url(get_option('smartestthemes_logo'));
+			$src_id = st_get_attachment_id_from_url($options['logo']);
 			$src_atts = wp_get_attachment_image_src($src_id, 'ps-logo');
 			$src = $src_atts[0];
 		}
 		$output .= '<a href="' . home_url( '/' ) . '" title="' . $ti . '" id="logolink" rel="home">
 		<img id="customlogo" src="' . $src . '" alt="' . $ti . '" title="' . $ti . '" />
 		</a><br />';
-		if ( get_option("smartestthemes_show_tagline") == 'true' ) { // @test see if 'true' is the right thing to check for. what value is saved for checkboxes?
+		if ( $options['show_tagline'] == 'true' ) { // @test see if 'true' is the right thing to check for. what value is saved for checkboxes?
 			$output .= '<h2 class="site-description">' . get_bloginfo('description') . '</h2>';
 		}
 		
@@ -368,9 +368,7 @@ add_action('crucible_logo', 'crucible_logo');
  * Display the social buttons for the business
  */
 function crucible_social_buttons() {
-
 	$options = get_option('smartestthemes_options');
-
 	$tw = $options['business_twitter'];
 	$goo = $options['business_gplus'];
 	$fa = $options['business_facebook'];
@@ -448,9 +446,7 @@ add_action( 'crucible_footer', 'crucible_footer' );
  */
 function crucible_clock_hours() {
 	$output = '';
-	
 	$option = smartestthemes_get_option('hours');
-	
 	if ($option) {
 		$output .= '<div class="clock-hours"><h3><i class="fa fa-clock-o"></i> ';
 		$output .= apply_filters('smartestthemes_hours_heading', __('Our Hours', 'crucible')) . '</h3><div class="hours">' . wpautop($option) . '</div></div>';
