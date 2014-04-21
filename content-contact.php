@@ -13,9 +13,9 @@
 	<?php smartestthemes_contact_form(); ?>
 	<?php do_action( 'crucible_clock_hours' );
 	do_action('crucible_contact_info');
-	if ( get_option('smartestthemes_google_map') ) { ?>
+	if ( smartestthemes_get_option('smartestthemes_google_map') ) { ?>
 		<figure id="goomap">
-		<?php echo get_option('smartestthemes_google_map'); ?>
+		<?php echo smartestthemes_get_option('smartestthemes_google_map'); ?>
 		</figure>
 	<?php } ?>
 	<?php

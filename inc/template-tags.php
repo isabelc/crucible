@@ -106,7 +106,7 @@ function crucible_post_thumbnail() {
 		return;
 	}
 	if ( ! has_post_thumbnail() ) {
-		if ( is_post_type_archive( 'smartest_news' ) && ( get_option('smartestthemes_stop_theme_icon') == 'false' ) ) {
+		if ( is_post_type_archive( 'smartest_news' ) && ( smartestthemes_get_option('smartestthemes_stop_theme_icon') == 'false' ) ) {
 			// show news icon
 			echo '<div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div>';
 			return;
@@ -238,25 +238,28 @@ endif;
  * Display Contact info with microdata from Schema.org
  */
 function crucible_contact_info() {
-	$output = '<div itemscope itemtype="http://schema.org/'.get_option('smartestthemes_business_schema'). '"><p><strong itemprop="name">';
-	$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));
+
+	$options = get_option('smartestthemes_options');
+
+	$output = '<div itemscope itemtype="http://schema.org/'.$options['business_schema']. '"><p><strong itemprop="name">';
+	$bn = stripslashes_deep(esc_attr($options['business_name']));
 	if($bn) {
 		$output .= $bn;
 	} else {
 		$output .= get_bloginfo('name');
 	}
-	$output .= '</strong></p><p class="main-address"><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . get_option('smartestthemes_address_street') . '</span>&nbsp; ' . get_option('smartestthemes_address_suite') . '<br /><span itemprop="addressLocality"> ' . get_option('smartestthemes_address_city') . '</span>';
-	if ( get_option('smartestthemes_address_city') && get_option('smartestthemes_address_state') ) {
+	$output .= '</strong></p><p class="main-address"><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . $options['address_street'] . '</span>&nbsp; ' . $options['address_suite'] . '<br /><span itemprop="addressLocality"> ' . $options['address_city'] . '</span>';
+	if ( $options['address_city'] && $options['address_state'] ) {
 		$output .= ', ';
 	}
-	$output .= '<span itemprop="addressRegion">' . get_option('smartestthemes_address_state') . '</span>&nbsp;<span temprop="postalCode">' . get_option('smartestthemes_address_zip') . '</span>&nbsp; ' . get_option('smartestthemes_address_country') . '</span>	&nbsp;<br />';
-	if ( get_option('smartestthemes_phone_number') ) {
-		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. get_option('smartestthemes_phone_number'). '</span> &nbsp;';
+	$output .= '<span itemprop="addressRegion">' . $options['address_state'] . '</span>&nbsp;<span temprop="postalCode">' . $options['address_zip'] . '</span>&nbsp; ' . $options['address_country'] . '</span>	&nbsp;<br />';
+	if ( $options['phone_number'] ) {
+		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. $options['phone_number']. '</span> &nbsp;';
 	}
-	if ( get_option('smartestthemes_fax_numb') ) {
-	$output .= '<br /><span class="strong">' . __('FAX:', 'crucible') . '</span>&nbsp;  <span itemprop="faxNumber">' . get_option('smartestthemes_fax_numb') . '</span>&nbsp;';
+	if ( $options['fax_numb'] ) {
+	$output .= '<br /><span class="strong">' . __('FAX:', 'crucible') . '</span>&nbsp;  <span itemprop="faxNumber">' . $options['fax_numb'] . '</span>&nbsp;';
 	} 
-	if ( get_option('smartestthemes_show_contactemail') == 'true' ) {
+	if ( $options['show_contactemail'] == 'true' ) {
 	$output .= '<br /><span class="strong">' . __('Email:', 'crucible') . '</span>&nbsp;<a href="mailto:' . get_bloginfo('admin_email') . '"><span itemprop="email">' . get_bloginfo('admin_email') . '</span></a>';
 	}
 	$output .= '</p></div>';
@@ -267,10 +270,13 @@ add_action('crucible_contact_info', 'crucible_contact_info');
  * Display the logo
  */
 function crucible_logo() {
-	$bn = stripslashes(esc_attr(get_option('smartestthemes_business_name')));
+
+	$options = get_option('smartestthemes_options');
+
+	$bn = stripslashes(esc_attr($options['business_name']));
 	if(!$bn) { $bn = get_bloginfo('name'); }
 	//seo title
-	$ti = stripslashes(esc_attr(get_option('smartestthemes_home_meta_title')));
+	$ti = stripslashes(esc_attr($options['home_meta_title']));
 	if(empty($ti)) $ti = $bn;
 	$output = '';
 	/* @test replace whole logo section
@@ -320,10 +326,10 @@ function crucible_logo() {
 	
 	} else {
 		//no logo option, use text logo 
-		$logo_text_part_1		= stripslashes_deep( get_option("smartestthemes_logo_text_part_1") );
-		$logo_text_part_orange	= stripslashes_deep( get_option("smartestthemes_logo_text_part_orange") );
-		$logo_text_part_3		= stripslashes_deep( get_option("smartestthemes_logo_text_part_3") );
-		$logo_text_part_small	= stripslashes_deep( get_option("smartestthemes_logo_text_part_small") );
+		$logo_text_part_1		= stripslashes_deep( $options['logo_text_part_1'] );
+		$logo_text_part_orange	= stripslashes_deep( $options['logo_text_part_orange'] );
+		$logo_text_part_3		= stripslashes_deep( $options['logo_text_part_3'] );
+		$logo_text_part_small	= stripslashes_deep( $options['logo_text_part_small'] );
 		// if all empty, use blogname
 		if ( empty($logo_text_part_1) && empty($logo_text_part_orange) && empty($logo_text_part_3) && empty($logo_text_part_small) ) $logo_text_part_1 = get_bloginfo('name');
 		if ( $logo_text_part_1 ) {
@@ -351,13 +357,15 @@ add_action('crucible_logo', 'crucible_logo');
  */
 function crucible_social_buttons() {
 
-	$tw = get_option('smartestthemes_business_twitter');
-	$goo = get_option('smartestthemes_business_gplus');
-	$fa = get_option('smartestthemes_business_facebook');
-	$yo = get_option('smartestthemes_business_youtube');
-	$li = get_option('smartestthemes_business_linkedin');
-	$in = get_option('smartestthemes_business_instagram');
-	$pi = get_option('smartestthemes_business_pinterest');
+	$options = get_option('smartestthemes_options');
+
+	$tw = $options['business_twitter'];
+	$goo = $options['business_gplus'];
+	$fa = $options['business_facebook'];
+	$yo = $options['business_youtube'];
+	$li = $options['business_linkedin'];
+	$in = $options['business_instagram'];
+	$pi = $options['business_pinterest'];
 
 	// don't do unless at least one is entered
 	if( $tw || $goo || $fa || $yo || $li || $in || $pi ) {
@@ -386,11 +394,11 @@ function crucible_social_buttons() {
 	$output .= '</ul></div><!-- .social -->';
 
 	// extra social links
-	if ( get_option('smartestthemes_business_socialurl1') ) {
-		$output .= '<br /><a href="' . get_option('smartestthemes_business_socialurl1') . '" target="_blank" rel="nofollow" title="' . __( 'Connect', 'crucible' ) . '">' . get_option('smartestthemes_business_sociallabel1') . '</a>';
+	if ( $options['business_socialurl1'] ) {
+		$output .= '<br /><a href="' . $options['business_socialurl1'] . '" target="_blank" rel="nofollow" title="' . __( 'Connect', 'crucible' ) . '">' . $options['business_sociallabel1'] . '</a>';
 	} 
-	if ( get_option('smartestthemes_business_socialurl2') ) {
-		$output .= '&nbsp;  <a href="' . get_option('smartestthemes_business_socialurl2') . '" title="' . __('Connect', 'crucible' ) . '" target="_blank" rel="nofollow">' . get_option('smartestthemes_business_sociallabel2') . '</a>';
+	if ( $options['business_socialurl2'] ) {
+		$output .= '&nbsp;  <a href="' . $options['business_socialurl2'] . '" title="' . __('Connect', 'crucible' ) . '" target="_blank" rel="nofollow">' . $options['business_sociallabel2'] . '</a>';
 	}
 	echo $output;
 }
@@ -400,23 +408,24 @@ add_action('crucible_social_buttons', 'crucible_social_buttons');
  * Display the site footer
  */
 function crucible_footer() {
+	$options = get_option('smartestthemes_options');
 	$output = '';
-	if (get_option('smartestthemes_override_footer') == 'false') { // no override, so do default				
+	if ($options['override_footer'] == 'false') { // no override, so do default				
 		$output .= '<span>' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
 
-		$bn = stripslashes_deep(esc_attr(get_option('smartestthemes_business_name')));
+		$bn = stripslashes_deep(esc_attr($options['business_name']));
 		if($bn) {
 			$output .= $bn;
 		} else {
 			$output .= get_bloginfo('name');
 		}
 		$output .= '</a>';
-		if ( get_option('smartestthemes_footer_text')) {
+		if ( $options['footer_text']) {
 			$output .= '<br />';// if default plus custom, need <br />
 		}
 	}
-	if (get_option('smartestthemes_footer_text')) {
-		$output .= stripslashes_deep(get_option('smartestthemes_footer_text'));
+	if ($options['footer_text']) {
+		$output .= stripslashes_deep($options['footer_text']);
 	} 
 	echo $output;
 }
@@ -427,9 +436,12 @@ add_action( 'crucible_footer', 'crucible_footer' );
  */
 function crucible_clock_hours() {
 	$output = '';
-	if (get_option('smartestthemes_hours')) {
+	
+	$option = smartestthemes_get_option('smartestthemes_hours');
+	
+	if ($option) {
 		$output .= '<div class="clock-hours"><h3><i class="fa fa-clock-o"></i> ';
-		$output .= apply_filters('smartestthemes_hours_heading', __('Our Hours', 'crucible')) . '</h3><div class="hours">' . wpautop(get_option('smartestthemes_hours')) . '</div></div>';
+		$output .= apply_filters('smartestthemes_hours_heading', __('Our Hours', 'crucible')) . '</h3><div class="hours">' . wpautop($option) . '</div></div>';
 	}
 	echo $output;
 }
