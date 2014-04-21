@@ -415,7 +415,7 @@ function smartestthemes_frame_load() {
 					var serializedReturn = newValues();
 					var ajax_url = '<?php echo admin_url("admin-ajax.php"); ?>';
 					var data = {
-						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == smartestthemes_get_option('smartestthemes_themeslug') ){ ?>
+						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == smartestthemes_get_option('themeslug') ){ ?>
 						type: 'options',
 						<?php } ?>
 						action: 'smartestthemes_ajax_post_action',
@@ -480,7 +480,7 @@ function smartestthemes_ajax_callback() {
 		$data = $_POST['data'];
 		parse_str($data,$output);
 
-        	$options = get_option('smartestthemes_template');
+        $options = get_option('smartestthemes_template');
 				
 		foreach($options as $option_array){
 			$id = isset($option_array['id']) ? $option_array['id'] : '';
@@ -733,7 +733,7 @@ function smartestthemes_machine($options) {
 		break;
 		case 'time':
 			$val = $value['std'];
-			$std = get_option($value['id']);
+			$std = smartestthemes_get_option($value['id']);
 			if ( $std != "") { $val = $std; }
 			$output .= '<input class="smartestthemes-input-time" name="'. $value['id'] .'" id="'. $value['id'] .'" type="text" value="'. $val .'" />';
 		break;
@@ -754,12 +754,12 @@ function smartestthemes_machine($options) {
 				}
 				
 			}
-				$std = esc_attr(get_option($value['id']));
+				$std = esc_attr(smartestthemes_get_option($value['id']));
 				if( $std != "") { $ta_value = esc_attr( $std ); }
 				$output .= '<textarea class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'" cols="'. $cols .'" rows="8">'.stripslashes($ta_value).'</textarea>';
 		break;
 		case "radio":
-			 $select_value = get_option( $value['id']);
+			 $select_value = smartestthemes_get_option( $value['id']);
 			 foreach ($value['options'] as $key => $option) 
 			 { 
 				 $checked = '';
@@ -772,7 +772,7 @@ function smartestthemes_machine($options) {
 			}
 		break;
 		case "radio2":
-			 $select_value = get_option( $value['id']);
+			 $select_value = smartestthemes_get_option( $value['id']);
 			 foreach ($value['options'] as $key => $option) 
 			 { 
 				 $checked = '';
@@ -794,7 +794,7 @@ function smartestthemes_machine($options) {
 	if( !empty($value['std']) ) {
 			$std = $value['std'];
 	}
-		   $saved_std = get_option($value['id']);
+		   $saved_std = smartestthemes_get_option($value['id']);
 		   $checked = '';
 			if(!empty($saved_std)) {
 				if($saved_std == 'true') {
@@ -820,7 +820,7 @@ function smartestthemes_machine($options) {
 			foreach ($value['options'] as $key => $option) {
 											 
 			$smartestthemes_key = $value['id'] . '_' . $key;
-			$saved_std = get_option($smartestthemes_key);
+			$saved_std = smartestthemes_get_option($smartestthemes_key);
 					
 			if(!empty($saved_std)) 
 			{ 
@@ -848,14 +848,14 @@ function smartestthemes_machine($options) {
 		break;
 		case "color":
 			$val = $value['std'];
-			$stored  = get_option( $value['id'] );
+			$stored  = smartestthemes_get_option( $value['id'] );
 			if ( $stored != "") { $val = $stored; }
 			$output .= '<div id="' . $value['id'] . '_picker" class="colorSelector"><div></div></div>';
 			$output .= '<input class="smartestthemes-color" name="'. $value['id'] .'" id="'. $value['id'] .'" type="text" value="'. $val .'" />';
 		break;   
 		case "images":
 			$i = 0;
-			$select_value = get_option( $value['id']);
+			$select_value = smartestthemes_get_option( $value['id']);
 			foreach ($value['options'] as $key => $option) 
 			 { 
 			 $i++;
@@ -900,13 +900,13 @@ function smartestthemes_machine($options) {
 		if ( is_array($value['type'])) {
 			foreach($value['type'] as $array){
 			
-					$id =   $array['id']; 
-					$std =   $array['std'];
-					$saved_std = get_option($id);
-					if($saved_std != $std && !empty($saved_std) ){$std = $saved_std;} 
-					$meta =   $array['meta'];
+				$id =   $array['id']; 
+				$std =   $array['std'];
+				$saved_std = smartestthemes_get_option($id);
+				if($saved_std != $std && !empty($saved_std) ){$std = $saved_std;} 
+				$meta =   $array['meta'];
 					
-					if($array['type'] == 'text') { // Only text at this point
+				if($array['type'] == 'text') { // Only text at this point
 						 
 						 $output .= '<input class="input-text-small smartestthemes-input" name="'. $id .'" id="'. $id .'" type="text" value="'. $std .'" />';  
 						 $output .= '<span class="meta-two">'.$meta.'</span>';
@@ -931,10 +931,10 @@ function smartestthemes_machine($options) {
 /* Smartest Themes Uploader */
 function smartestthemes_uploader_function($id,$std,$mod){
 	$uploader = '';
-	$upload = get_option($id);
+	$upload = smartestthemes_get_option($id);
 	if($mod != 'min') { 
 			$val = $std;
-            if ( get_option( $id ) != "") { $val = get_option($id); }
+            if ( smartestthemes_get_option( $id ) != "") { $val = smartestthemes_get_option($id); }
             $uploader .= '<input class="smartestthemes-input" name="'. $id .'" id="'. $id .'_upload" type="text" value="'. $val .'" />';
 	}
 	$uploader .= '<div class="upload_button_div"><span class="button image_upload_button" id="'.$id.'">'. __('Upload Image', 'crucible'). '</span>';
