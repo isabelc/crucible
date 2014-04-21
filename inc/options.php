@@ -881,7 +881,7 @@ $options[] = array( 'name' => __('Backwards Compatibility: Use Old Clock Icon on
 								
 					*/
 					
-update_option('smartestthemes_template',$options);   
+update_option('smartestthemes_template',$options);
 
 /* @test replace 
 update_option('smartestthemes_themename',$themename);
