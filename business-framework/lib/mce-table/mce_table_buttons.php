@@ -1,12 +1,9 @@
 <?php
 /**
- Plugin Name: MCE Table Buttons
- Plugin URI: http://10up.com/plugins-modules/wordpress-mce-table-buttons/
- Description: Add <strong>controls for table editing</strong> to the visual content editor with this <strong>light weight</strong> plug-in.
- Version: 3.0
- Author: Jake Goldman, 10up, Oomph
- Author URI: http://10up.com
- License: GPLv2 or later
+MCE Table Buttons
+Version: 3.0
+Author: Jake Goldman, 10up, Oomph
+License: GPLv2 or later
 */
 
 class MCE_Table_Buttons {
@@ -53,7 +50,7 @@ class MCE_Table_Buttons {
 		if ( version_compare( $tinymce_version, '400', '<' ) ) {
 			add_filter( 'mce_external_plugins', array( __CLASS__, 'mce_external_plugins_3_8' ) );
 			add_filter( 'mce_buttons_3', array( __CLASS__, 'mce_buttons_3_8' ) );
-			wp_register_style( 'mce-table-buttons', get_template_directory_uri() . '/smartest-business-framework/lib/mce-table/tinymce3-assets/mce-table-buttons.css' );/* @test may need include dirname( __FILE__ ) . '/ */
+			wp_register_style( 'mce-table-buttons', get_template_directory_uri() . '/business-framework/lib/mce-table/tinymce3-assets/mce-table-buttons.css' );/* @test may need include dirname( __FILE__ ) . '/ */
 			
 			wp_print_styles( 'mce-table-buttons' );
 		} else {
@@ -73,7 +70,7 @@ class MCE_Table_Buttons {
 	 * @return array Array of TinyMCE plugins
 	 */
 	public static function mce_external_plugins_3_8( $plugin_array ) {
-		$plugin_dir_url = get_template_directory_uri() . '/smartest-business-framework/lib/mce-table/';
+		$plugin_dir_url = get_template_directory_uri() . '/business-framework/lib/mce-table/';
 		$plugin_array['table'] = $plugin_dir_url . 'tinymce3-table/editor_plugin.js';
 		$plugin_array['mcetablebuttons'] = $plugin_dir_url . 'tinymce3-assets/mce-table-buttons.js';
 		return $plugin_array;
@@ -97,7 +94,7 @@ class MCE_Table_Buttons {
 	 * @return array Array of TinyMCE plugins
 	 */
 	public static function mce_external_plugins_3_9( $plugin_array ) {
-		$plugin_array['table'] = get_template_directory_uri() . '/smartest-business-framework/lib/mce-table/tinymce4-table/plugin.min.js';
+		$plugin_array['table'] = get_template_directory_uri() . '/business-framework/lib/mce-table/tinymce4-table/plugin.min.js';
    		return $plugin_array;
 	}
 
