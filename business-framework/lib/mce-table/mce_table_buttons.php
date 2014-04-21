@@ -97,8 +97,7 @@ class MCE_Table_Buttons {
 	 * @return array Array of TinyMCE plugins
 	 */
 	public static function mce_external_plugins_3_9( $plugin_array ) {
-		$variant = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min';
-		$plugin_array['table'] = get_template_directory_uri() . '/smartest-business-framework/lib/mce-table/tinymce4-table/plugin' . $variant . '.js';
+		$plugin_array['table'] = get_template_directory_uri() . '/smartest-business-framework/lib/mce-table/tinymce4-table/plugin.min.js';
    		return $plugin_array;
 	}
 
