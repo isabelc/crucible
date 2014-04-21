@@ -9,7 +9,7 @@
 	$jsdir = get_template_directory_uri(). '/js/';
 
 	if ( is_post_type_archive(array('smartest_staff', 'smartest_services'))) {
-		wp_register_script( 'equalheights', $jsdir . 'equalheights.js', array( 'jquery' ));
+		wp_register_script( 'equalheights', $jsdir . 'equalheights.js', array( 'jquery' ), false, true);
 		wp_enqueue_script('equalheights');	
 	}
 
@@ -21,7 +21,5 @@
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
-
-
 }
 add_action( 'wp_enqueue_scripts', 'crucible_enqueue' ); ?>

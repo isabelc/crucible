@@ -187,7 +187,7 @@ if(smartestthemes_get_option('stop_contact') == 'true') {
 * enqueue CSS and validation script
 */
 function stcf_enqueue_scripts() {
-	wp_register_script('stcf-validate', get_template_directory_uri().'/business-framework/modules/contact/stcf-validate.js', array('jquery'));
+	wp_register_script('stcf-validate', get_template_directory_uri().'/business-framework/modules/contact/stcf-validate.js', array('jquery'), false, true);// @test does it work even in footer
 	wp_register_style('contactstyle', get_template_directory_uri().'/business-framework/modules/contact/contact.css');
 	if (is_page(smartestthemes_get_option('contact_page_id'))){
 		wp_enqueue_script('stcf-validate');
