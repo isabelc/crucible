@@ -11,10 +11,11 @@
  */
 
 get_header();
+$options = get_option('smartestthemes_options');
 /*
 // @new decide. may need something like this
 
-if (is_page(get_option('smartestthemes_contact_page_id'))){
+if (is_page($options['contact_page_id'])){
 	$postclass = 'grid_7 alpha';
 } else {
 	$postclass = 'grid_12';
@@ -29,18 +30,19 @@ if (is_page(get_option('smartestthemes_contact_page_id'))){
 
 			<?php while ( have_posts() ) : the_post(); ?>
 
-				<?php if (is_page(get_option('smartestthemes_contact_page_id'))) :
-						get_template_part( 'content', 'contact' );
-					elseif (is_page(get_option('smartestthemes_about_page_id'))) :
-						get_template_part( 'content', 'about' );
-					else : 
-						get_template_part( 'content', 'page' );
+				<?php 
+				if (is_page($options['contact_page_id'])) :
+					get_template_part( 'content', 'contact' );
+				elseif (is_page($options['about_page_id'])) :
+					get_template_part( 'content', 'about' );
+				else : 
+					get_template_part( 'content', 'page' );
 							
-						// If comments are open or we have at least one comment, load up the comment template
-						if ( comments_open() || '0' != get_comments_number() ) :
-							comments_template();
-						endif;
+					// If comments are open or we have at least one comment, load up the comment template
+					if ( comments_open() || '0' != get_comments_number() ) :
+						comments_template();
 					endif;
+				endif;
 				?>
 
 			<?php endwhile; // end of the loop. ?>
