@@ -13,20 +13,19 @@ class SmartestStaff extends WP_Widget {
 	 */
 	public function __construct() {
 		parent::__construct(
-	 		'smartest_staff_list', // Base ID
-			__('Smartest Staff List', 'crucible'), // Name
+	 		'smartest_staff_list',
+			__('Smartest Staff List', 'crucible'),
 			array( 'description' => __( 'Display the full list of Staff members.', 'crucible' ), )
 		);
-		add_action('wp_enqueue_scripts', array( $this, 'smar_staff_css' ) );
+		add_action('wp_enqueue_scripts', array( $this, 'staff_css' ) );
 	}
 
 	/**
 	 * Register stylesheet
 	 */
-	function smar_staff_css() {
+	function staff_css() {
 		wp_register_style('sst',
 		get_template_directory_uri().'/business-framework/widgets/sst.css');
-		wp_enqueue_style('sst');		
 	} 
 
 	/**
@@ -41,6 +40,7 @@ class SmartestStaff extends WP_Widget {
 		// these are our widget options
 		$title = apply_filters('widget_title', $instance['title']);
 		echo $before_widget;
+		wp_enqueue_style('sst');
 		if ( ! empty( $title ) )
 			echo '<h3 class="widget-title">'. $title . '</h3>';
 		/** 

@@ -13,19 +13,18 @@ class SmartestAnnouncements extends WP_Widget {
 	 */
 	public function __construct() {
 		parent::__construct(
-	 		'smartest_announcements', // Base ID
-			__( 'Smartest Announcements', 'crucible' ), // Name
+	 		'smartest_announcements',
+			__( 'Smartest Announcements', 'crucible' ),
 			array( 'description' => __( 'Display the latest Announcements.', 'crucible' ), )
 		);
-		add_action( 'wp_enqueue_scripts', array( $this, 'smar_ann_css' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'ann_css' ) );
 	}
 
 	/**
 	 * Register stylesheet.
 	 */
-	public function smar_ann_css() {
+	public function ann_css() {
 		wp_register_style('san', get_template_directory_uri().'/business-framework/widgets/sa.css');
-		wp_enqueue_style('san');
 	} 
 
 	/**
@@ -37,11 +36,11 @@ class SmartestAnnouncements extends WP_Widget {
 	public function widget( $args, $instance ) {
 		extract( $args );
 		
-		// these are our widget options
 		$title = apply_filters('widget_title', $instance['title']);
 		$number = $instance['number'];
 
 		echo $before_widget;
+		wp_enqueue_style('san');
 		if ( ! empty( $title ) )
 			echo '<h3 class="widget-title">'. $title . '</h3>';
 		

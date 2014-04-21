@@ -14,16 +14,15 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 	 */
 	public function __construct() {
 		parent::__construct(
-	 		'smartest_featured_announce', // Base ID
-			__('Smartest Featured Announcements', 'crucible'), // Name
+	 		'smartest_featured_announce',
+			__('Smartest Featured Announcements', 'crucible'),
 			array( 'description' => __( 'Display selected featured announcements.', 'crucible' ), )
 		);
-		add_action('wp_enqueue_scripts', array( $this, 'smar_featnews_css' ) );
+		add_action('wp_enqueue_scripts', array( $this, 'featnews_css' ) );
 	}
 	/* add css */
-	function smar_featnews_css() {
+	function featnews_css() {
 		wp_register_style('sfa', get_template_directory_uri().'/business-framework/widgets/sfa.css');
-		wp_enqueue_style('sfa');
 	} 
 
 	/**
@@ -34,13 +33,12 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 
-
 		extract( $args );
-		
-		// these are our widget options
+	
 		$title = apply_filters('widget_title', $instance['title']);
 
 		echo $before_widget;
+		wp_enqueue_style('sfa');
 		if ( ! empty( $title ) )
 			echo '<h3 class="widget-title">'. $title . '</h3>';
 		

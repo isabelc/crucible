@@ -14,19 +14,18 @@ class SmartestFeaturedServices extends WP_Widget {
 	 */
 	public function __construct() {
 		parent::__construct(
-	 		'smartest_featured_services', // Base ID
-			__('Smartest Featured Services', 'crucible'), // Name
+	 		'smartest_featured_services',
+			__('Smartest Featured Services', 'crucible'),
 			array( 'description' => __( 'Display selected featured services.', 'crucible' ), )
 		);
-		add_action('wp_enqueue_scripts', array( $this, 'smar_featsvcs_css' ) );
+		add_action('wp_enqueue_scripts', array( $this, 'featsvcs_css' ) );
 	}
 	/**
 	* Register stylesheet
 	*/
-	function smar_featsvcs_css() {
+	function featsvcs_css() {
 		wp_register_style('sfs',
 		get_template_directory_uri().'/business-framework/widgets/sfs.css');
-		wp_enqueue_style('sfs');
 	} 
 
 	/**
@@ -37,13 +36,10 @@ class SmartestFeaturedServices extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 
-
 		extract( $args );
-		
-		// these are our widget options
 		$title = apply_filters('widget_title', $instance['title']);
-
 		echo $before_widget;
+		wp_enqueue_style('sfs');
 		if ( ! empty( $title ) )
 			echo '<h3 class="widget-title">'. $title . '</h3>';
 		

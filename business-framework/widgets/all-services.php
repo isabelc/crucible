@@ -13,8 +13,8 @@ class SmartestServices extends WP_Widget {
 	 */
 	public function __construct() {
 		parent::__construct(
-	 		'smartest_services_list', // Base ID
-			__('Smartest Services List', 'crucible'), // Name
+	 		'smartest_services_list',
+			__('Smartest Services List', 'crucible'),
 			array( 'description' => __( 'Display the full list of Services, or a selected segment.', 'crucible' ), )
 		);
 	}
