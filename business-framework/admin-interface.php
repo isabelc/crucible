@@ -615,9 +615,7 @@ function smartestthemes_ajax_callback() {
 		$query = "SELECT * FROM $wpdb->options WHERE $query_inner";
 				
 		$results = $wpdb->get_results($query);
-		
-		$output = "<ul>";
-		
+	
 		foreach ($results as $result){
 				$name = $result->option_name;
 				$value = $result->option_value;
@@ -630,19 +628,14 @@ function smartestthemes_ajax_callback() {
 					foreach($value as $v){
 						if(isset($v))
 							$temp_options .= $v . ',';
-						
 					}	
 					$value = $temp_options;
 					$smartestthemes_array[$name] = $smartestthemes_array_option;
 				} else {
 					$smartestthemes_array[$name] = $value;
 				}
-				
-				$output .= '<li><strong>' . $name . '</strong> - ' . $value . '</li>';
 		}
-		$output .= "</ul>";
 		update_option('smartestthemes_options',$smartestthemes_array);
-		update_option('smartestthemes_settings_encode',$output);
 		// this makes it finally flush, but only if you save twice. Isa
 		flush_rewrite_rules();
 	}
