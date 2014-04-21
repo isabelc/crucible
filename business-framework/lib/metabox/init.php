@@ -630,7 +630,7 @@ function cmb_oembed_ajax_results() {
 	$oembed_string = sanitize_text_field( $_REQUEST['oembed_url'] );
 
 	if ( empty( $oembed_string ) ) {
-		$return = '<p class="ui-state-error-text">'. __( 'Please Try Again', 'cmb' ) .'</p>';
+		$return = '<p class="ui-state-error-text">'. __( 'Please Try Again', 'crucible' ) .'</p>';
 		$found = 'not found';
 	} else {
 
@@ -647,13 +647,13 @@ function cmb_oembed_ajax_results() {
 
 		if ( $check_embed && $check_embed != $fallback ) {
 			// Embed data
-			$return = '<div class="embed_status">'. $check_embed .'<a href="#" class="cmb_remove_file_button" rel="'. $_REQUEST['field_id'] .'">'. __( 'Remove Embed', 'cmb' ) .'</a></div>';
+			$return = '<div class="embed_status">'. $check_embed .'<a href="#" class="cmb_remove_file_button" rel="'. $_REQUEST['field_id'] .'">'. __( 'Remove Embed', 'crucible' ) .'</a></div>';
 			// set our response id
 			$found = 'found';
 
 		} else {
 			// error info when no oEmbeds were found
-			$return = '<p class="ui-state-error-text">'.sprintf( __( 'No oEmbed Results Found for %s. View more info at', 'cmb' ), $fallback ) .' <a href="http://codex.wordpress.org/Embeds" target="_blank">codex.wordpress.org/Embeds</a>.</p>';
+			$return = '<p class="ui-state-error-text">'.sprintf( __( 'No oEmbed Results Found for %s. View more info at', 'crucible' ), $fallback ) .' <a href="http://codex.wordpress.org/Embeds" target="_blank">codex.wordpress.org/Embeds</a>.</p>';
 			// set our response id
 			$found = 'not found';
 		}
