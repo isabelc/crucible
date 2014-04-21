@@ -19,7 +19,7 @@
 		?>
 	</div><!-- .entry-content -->
 	<?php edit_post_link( __( 'Edit', 'crucible' ), '<footer class="entry-footer"><span class="edit-link">', '</span></footer>' ); ?>
-	<?php if(smartestthemes_get_option('smartestthemes_stop_smartshare') == 'false') {
+	<?php if(smartestthemes_get_option('stop_smartshare') == 'false') {
 		echo smartestthemes_share(); 
 	} ?>
 </article><!-- #post-## -->

@@ -12,7 +12,7 @@
 			<?php do_action( 'crucible_credits' );
 				do_action( 'crucible_footer' ); ?>
 			<span class="sep"> | </span>
-			<?php if ( smartestthemes_get_option('smartestthemes_remove_social_footer') != 'true'  ) {
+			<?php if ( smartestthemes_get_option('remove_social_footer') != 'true'  ) {// @todo add option for this if necessary, else remove this.
 				do_action( 'crucible_social_buttons' );
 			} ?>
 		</div><!-- .site-info -->

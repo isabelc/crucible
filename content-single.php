@@ -63,7 +63,7 @@
 			);
 		}
 		edit_post_link( __( 'Edit', 'crucible' ), '<span class="edit-link">', '</span>' ); 
-		if(smartestthemes_get_option('smartestthemes_stop_smartshare') == 'false') {
+		if(smartestthemes_get_option('stop_smartshare') == 'false') {
 			echo smartestthemes_share(); 
 		} ?>
 	</footer><!-- .entry-footer -->

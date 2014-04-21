@@ -12,7 +12,8 @@
 <title><?php wp_title( '|', true, 'right' ); ?></title>
 <?php wp_head(); ?>
 </head>
-<body <?php body_class(); if ( is_front_page() ) { $schematype = smartestthemes_get_option('smartestthemes_business_schema'); echo ' itemscope itemtype="http://schema.org/'.$schematype.'"';} ?>>
+<?php $options = get_option('smartestthemes_options'); ?>
+<body <?php body_class(); if ( is_front_page() ) { echo ' itemscope itemtype="http://schema.org/'.$options['business_schema'].'"';} ?>>
 
 <div id="page" class="hfeed site">
 
@@ -41,9 +42,8 @@ do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per t
 	
 	echo '<h3>test 1, theme_mod:</h3> ' . $test . '<br /><br /><h3>Test 2, option: </h3>' . $test2; 
 	?>
-
-		<?php if ( smartestthemes_get_option('smartestthemes_phone_number') ) {
-			echo smartestthemes_get_option('smartestthemes_phone_number');
+		<?php if ( $options['phone_number'] ) {
+			echo $options['phone_number'];
 		} ?>
 
 		<nav id="site-navigation" class="main-navigation" role="navigation">
