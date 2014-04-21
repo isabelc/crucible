@@ -16,8 +16,8 @@ if ( !function_exists( 'smartestthemes_get_option' ) ) {
 		// Gets the unique option id
 		$option_name = isset($optionsframework_settings['id']) ? $optionsframework_settings['id'] : '';
 
-		if ( get_option($option_name) ) {
-			$options = get_option($option_name);
+		if ( smartestthemes_get_option($option_name) ) {
+			$options = smartestthemes_get_option($option_name);
 		}
 
 		if ( isset($options[$name]) ) {

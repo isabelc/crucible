@@ -71,7 +71,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 		} else {
 				// if not stopped with option
 
-				if(get_option('smartestthemes_stop_theme_icon') != 'true') {
+				if(smartestthemes_get_option('smartestthemes_stop_theme_icon') != 'true') {
 
 					echo '<a href="'.get_permalink().'" title="'.get_the_title().'"><div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div></a>';
 				}

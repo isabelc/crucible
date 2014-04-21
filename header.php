@@ -12,7 +12,7 @@
 <title><?php wp_title( '|', true, 'right' ); ?></title>
 <?php wp_head(); ?>
 </head>
-<body <?php body_class(); if ( is_front_page() ) { $schematype = get_option('smartestthemes_business_schema'); echo ' itemscope itemtype="http://schema.org/'.$schematype.'"';} ?>>
+<body <?php body_class(); if ( is_front_page() ) { $schematype = smartestthemes_get_option('smartestthemes_business_schema'); echo ' itemscope itemtype="http://schema.org/'.$schematype.'"';} ?>>
 
 <div id="page" class="hfeed site">
 
@@ -37,13 +37,13 @@ do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per t
 	<?php // @test debus
 	
 	$test = get_theme_mod('smartestthemes_logo');
-	$test2 = get_option('smartestthemes_logo');
+	$test2 = smartestthemes_get_option('smartestthemes_logo');
 	
 	echo '<h3>test 1, theme_mod:</h3> ' . $test . '<br /><br /><h3>Test 2, option: </h3>' . $test2; 
 	?>
 
-		<?php if ( get_option('smartestthemes_phone_number') ) {
-			echo get_option('smartestthemes_phone_number');
+		<?php if ( smartestthemes_get_option('smartestthemes_phone_number') ) {
+			echo smartestthemes_get_option('smartestthemes_phone_number');
 		} ?>
 
 		<nav id="site-navigation" class="main-navigation" role="navigation">

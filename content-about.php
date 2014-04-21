@@ -13,7 +13,7 @@
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
-		<?php $aboutcontent =  stripslashes_deep(get_option('smartestthemes_about_page'));
+		<?php $aboutcontent =  stripslashes_deep(smartestthemes_get_option('smartestthemes_about_page'));
 		echo wpautop($aboutcontent); 
 		the_content();
 		smartestthemes_about_bottom_image();
