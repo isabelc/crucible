@@ -10,16 +10,12 @@
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
-	<?php smartestthemes_contact_form(); ?>
-	<?php do_action( 'crucible_clock_hours' );
+	<?php 
+	smartestthemes_contact_form();
+	do_action( 'crucible_clock_hours' );
 	do_action('crucible_contact_info');
-	if ( smartestthemes_get_option('smartestthemes_google_map') ) { ?>
-		<figure id="goomap">
-		<?php echo smartestthemes_get_option('smartestthemes_google_map'); ?>
-		</figure>
-	<?php } ?>
-	<?php
-		wp_link_pages( array(
+	crucible_google_map();
+	wp_link_pages( array(
 			'before' => '<div class="page-links">' . __( 'Pages:', 'crucible' ),
 			'after'  => '</div>',
 		) );

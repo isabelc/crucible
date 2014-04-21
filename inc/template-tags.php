@@ -266,6 +266,21 @@ function crucible_contact_info() {
 	echo $output;
 }
 add_action('crucible_contact_info', 'crucible_contact_info');
+
+/**
+ * Display the Google map
+ */
+function crucible_google_map() {
+
+	$map = smartestthemes_get_option('smartestthemes_google_map');
+	
+	if ( ! $map ) {
+		return;
+	}
+	
+	echo '<figure class="google-map">' . $map . '</figure>';
+}
+
 /**
  * Display the logo
  */
