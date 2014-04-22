@@ -59,12 +59,12 @@ function crucible_logofontface() {
 
 	$options = get_option('smartestthemes_options');
 	
-	if( $options['logo']) {// @test may have to check for logo differently based on customizer methods
+	if( isset($options['logo']) ? $options['logo'] : '') {// @test may have to check for logo differently based on customizer methods
 		return;
 	}
 
 	$fontdir = get_template_directory_uri(). '/inc/fonts/';
-	$needle2 = $options['logo_font'];
+	$needle2 = isset($options['logo_font']) ? $options['logo_font'] : '';
 		
 	/* FONT NAME VARS */
 	$font1 =  'qumpellkano12regular,Arial,Helvetica,sans-serif';
