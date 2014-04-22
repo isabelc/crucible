@@ -11,7 +11,9 @@ function smartestthemes_option_setup(){
 	$smartestthemes_array = array();
 	add_option('smartestthemes_options',$smartestthemes_array);
 	$template = get_option('smartestthemes_template');
-	$saved_options = get_option('smartestthemes_options');
+// @test replace belo	$saved_options = get_option('smartestthemes_options');
+	$smartestthemes_array = get_option('smartestthemes_options');// @test
+	
 	foreach($template as $option) {
 		if($option['type'] != 'heading'){
 			$id = isset($option['id']) ? $option['id'] : '';
@@ -23,13 +25,13 @@ function smartestthemes_option_setup(){
 						$c_id = $child['id'];
 						$c_std = $child['std'];
 						update_option($c_id,$c_std);
-					$smartestthemes_array[$c_id] = $c_std;
+
 					}
 				} else {
 					update_option($id,$std);
-					$smartestthemes_array[$id] = $std;
 				}
-			} else { //So just store the old values over again.
+			}
+			else { //So just store the old values over again.
 				$smartestthemes_array[$id] = $db_option;
 			}
 		}
@@ -40,8 +42,8 @@ function smartestthemes_option_setup(){
 // Load static framework options pages 
 function smartestthemes_add_admin() {
 	global $query_string;
-	$themename = get_option('themename');
-	$themeslug = get_option('themeslug');
+	$themename = smartestthemes_get_option('themename');
+	$themeslug = smartestthemes_get_option('themeslug');
 	if ( isset($_REQUEST['page']) && $themeslug == $_REQUEST['page'] ) {
 		if (isset($_REQUEST['smartestthemes_save']) && 'reset' == $_REQUEST['smartestthemes_save']) {
 			$options =  get_option('smartestthemes_template');
@@ -97,7 +99,7 @@ function smartestthemes_reset_options($options,$page = ''){
 	}
 	
 	//When Theme Options page is reset - Add the smartestthemes_options option
-	if ( $page == get_option('themeslug') ) {
+	if ( $page == smartestthemes_get_option('themeslug') ) {
 		$query_inner .= " OR option_name = 'smartestthemes_options'";
 	}
 	$query = "DELETE FROM $wpdb->options WHERE $query_inner";
@@ -106,7 +108,7 @@ function smartestthemes_reset_options($options,$page = ''){
 /* Framework options panel */
 function smartestthemes_options_page(){
 	$options = get_option('smartestthemes_template');
-	$manualurl = get_option('manual');
+	$manualurl = smartestthemes_get_option('manual');
 	$themedata = wp_get_theme();
 	$themename = $themedata->Name;
 	$local_version = $themedata->Version;
@@ -223,7 +225,7 @@ function smartestthemes_frame_load() {
 			foreach($options as $option){ 
 			if($option['type'] == 'color'){
 					$option_id = $option['id'];
-					$color = get_option($option_id); ?>
+					$color = smartestthemes_get_option($option_id); ?>
 				 jQuery('#<?php echo $option_id; ?>_picker').children('div').css('backgroundColor', '<?php echo $color; ?>');    
 				 jQuery('#<?php echo $option_id; ?>_picker').ColorPicker({
 					color: '<?php echo $color; ?>',
@@ -440,6 +442,10 @@ function smartestthemes_frame_load() {
  */
 function smartestthemes_ajax_callback() {
 	global $wpdb;
+	
+	// @test get all options here to then update array below
+	$smartestthemes_array = get_option('smartestthemes_options');// @test
+	
 	$save_type = $_POST['type'];
 	if($save_type == 'upload'){
 		$clickedID = $_POST['data']; // Acts as the name
@@ -506,6 +512,7 @@ function smartestthemes_ajax_callback() {
 					}
 					
 				} else {
+				
 			
 					$type = $option_array['type'];
 					
@@ -514,33 +521,68 @@ function smartestthemes_ajax_callback() {
 							if($array['type'] == 'text'){
 								$id = $array['id'];
 								$new_value = $output[$id];
-								update_option( $id, stripslashes($new_value));// isa, may conflict w url inputs that need slashes
+//@test replace below								update_option( $id, stripslashes($new_value));// isa, may conflict w url inputs that need slashes
+
+								$smartestthemes_array[$id] = stripslashes($new_value); //@test
+// @test do only once below								update_option('smartestthemes_options',$smartestthemes_array); // @test
+
 
 							}
 						}                 
 					}
 					elseif($new_value == '' && $type == 'checkbox'){ // Checkbox Save
-						update_option($id,'false');
+					
+// @test replace below						update_option($id,'false');
+
+								$smartestthemes_array[$id] = 'false'; //@TEST
+// @test do only once below								update_option('smartestthemes_options',$smartestthemes_array); // @test
+
 					}
 					elseif ($new_value == 'true' && $type == 'checkbox'){ // Checkbox Save
-						update_option($id,'true');
+					
+					
+						// @test replace below update_option($id,'true');
+						
+						$smartestthemes_array[$id] = 'true'; //@test
+// @test do only once below						update_option('smartestthemes_options',$smartestthemes_array); // @test
+								
+								
 					}
 					elseif($type == 'multicheck'){ // Multi Check Save
 						$option_options = $option_array['options'];
 						foreach ($option_options as $options_id => $options_value){
 							$multicheck_id = $id . "_" . $options_id;
 							if(!isset($output[$multicheck_id])){
-								update_option($multicheck_id,'false');
+							  // @test replace below	update_option($multicheck_id,'false');
+							  
+								$smartestthemes_array[$multicheck_id] = 'false'; //@test
+// @test do only once below								update_option('smartestthemes_options',$smartestthemes_array); // @test
+						
+						
 							}
 							else{
-							   update_option($multicheck_id,'true'); 
+							   // @test replace below update_option($multicheck_id,'true'); 
+							   
+								$smartestthemes_array[$multicheck_id] = 'true'; //@test
+// @test do only once below								update_option('smartestthemes_options',$smartestthemes_array); // @test
+								
 								
 							}
 						}
 					} 
 					elseif($type != 'upload_min'){
-						update_option($id,stripslashes($new_value));
+						// @test replace below update_option($id,stripslashes($new_value));
+						
+								$smartestthemes_array[$id] = stripslashes($new_value); //@test
+								// @test do only once below update_option('smartestthemes_options',$smartestthemes_array); // @test
+								
+								
 					}
+					
+					// @test update here to cover all of these.
+					
+					update_option('smartestthemes_options',$smartestthemes_array); // @test
+					
 				}
 			}	
 		}
@@ -584,7 +626,9 @@ function smartestthemes_ajax_callback() {
 		$query = "SELECT * FROM $wpdb->options WHERE $query_inner";
 				
 		$results = $wpdb->get_results($query);
-	
+		
+		$output = "<ul>";
+		
 		foreach ($results as $result){
 				$name = $result->option_name;
 				$value = $result->option_value;
@@ -597,15 +641,20 @@ function smartestthemes_ajax_callback() {
 					foreach($value as $v){
 						if(isset($v))
 							$temp_options .= $v . ',';
+						
 					}	
 					$value = $temp_options;
 					$smartestthemes_array[$name] = $smartestthemes_array_option;
 				} else {
 					$smartestthemes_array[$name] = $value;
 				}
+				
+				$output .= '<li><strong>' . $name . '</strong> - ' . $value . '</li>';
 		}
+		$output .= "</ul>";
 		update_option('smartestthemes_options',$smartestthemes_array);
-		// this makes it finally flush, but only if you save twice. Isa
+		update_option('smartestthemes_settings_encode',$output);// @test maybe remove this
+		
 		flush_rewrite_rules();
 	}
 	die();

@@ -18,11 +18,11 @@ if ($user_info == true) {
 }
 $currtime = date("l, F jS, Y @ g:i a");
 /* @new edit shortname per diff framework */
-$shortname = 'smartestthemes';
+$shortname = '';// @test 
 
 // Populate smartest Business Themes options in array for use in theme
-// @test is this needed here????? global $smartestthemes_options;
-// @test $smartestthemes_options = get_option('smartestthemes_options');// @test is this needed here?????
+global $smartestthemes_options;
+$smartestthemes_options = get_option('smartestthemes_options');// @test is this needed here?????
 
 $sampleimg = '<br /><br /><img alt="logo text sample" src="'. get_bloginfo('template_directory') . '/images/text-logo-sample.png" /><br /><br />';
 
