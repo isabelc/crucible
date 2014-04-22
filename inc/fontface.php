@@ -2,11 +2,11 @@
 function crucible_loadfonts() {
 	$fontdir = get_template_directory_uri(). '/inc/fonts/';
 	$options = get_option('smartestthemes_options'); // @todo this way or globalize?
-	$needle1 = $options['heading_font'];
-	$needle2 = $options['logo_font'];
-	$needle3 = $options['body_font'];
-	$needle4 = $options['tagline_font'];
-	$needle5 = $options['attention_grabber_font'];
+	$needle1 = $options['st_heading_font'];
+	$needle2 = $options['st_logo_font'];
+	$needle3 = $options['st_body_font'];
+	$needle4 = $options['st_tagline_font'];
+	$needle5 = $options['st_attention_grabber_font'];
 
 	// @new list font css output from theme options $logofonts array index [2]
 	$font1 = 'qumpellkano12regular,Arial,Helvetica,sans-serif';
@@ -59,12 +59,12 @@ function crucible_logofontface() {
 
 	$options = get_option('smartestthemes_options'); // @todo this way or globalize?
 	
-	if( isset($options['logo']) ? $options['logo'] : '') {// @test may have to check for logo differently based on customizer methods
+	if( isset($options['st_logo']) ? $options['st_logo'] : '') {// @test may have to check for logo differently based on customizer methods
 		return;
 	}
 
 	$fontdir = get_template_directory_uri(). '/inc/fonts/';
-	$needle2 = isset($options['logo_font']) ? $options['logo_font'] : '';
+	$needle2 = isset($options['st_logo_font']) ? $options['st_logo_font'] : '';
 		
 	/* FONT NAME VARS */
 	$font1 =  'qumpellkano12regular,Arial,Helvetica,sans-serif';

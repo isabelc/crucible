@@ -875,28 +875,11 @@ $options[] = array( 'name' => __('Backwards Compatibility: Use Old Clock Icon on
 					'std' => 'false',
 					'type' => 'checkbox');
 					
-					/** @test replace options with array option.
-					
-					$smartestthemes_array[$id] = stripslashes($new_value); //@test
-					update_option('smartestthemes_options',$smartestthemes_array); // @test
-								
-					*/
-					
-/* @test replace 
-update_option('smartestthemes_themename',$themename);
-update_option('smartestthemes_themeslug',$themeslug);
-update_option('smartestthemes_manual',$manualurl);
-update_option('smartestthemes_sshow_description','Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.');// @new update
-*/
-$smartestthemes_options['themename'] = $themename; //@test
-$smartestthemes_options['themeslug'] = $themeslug; //@test
-$smartestthemes_options['manual'] = $manualurl; //@test
-$smartestthemes_options['sshow_description'] = 'Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.'; //@test
-
-update_option('smartestthemes_options',$smartestthemes_options); // @test
-
-update_option('smartestthemes_template',$options);
-
-} 
+update_option('st_template',$options);
+update_option('st_themename',$themename);
+update_option('st_themeslug',$themeslug);
+update_option('st_manual',$manualurl);
+update_option('st_sshow_description','Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.');// @new update
+}
 add_action('init','smartestthemes_options');
 ?>
