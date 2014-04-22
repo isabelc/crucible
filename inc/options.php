@@ -875,7 +875,7 @@ $options[] = array( 'name' => __('Backwards Compatibility: Use Old Clock Icon on
 					'std' => 'false',
 					'type' => 'checkbox');
 					
-update_option('st_template',$options);
+update_option('smartestthemes_template',$options);
 update_option('st_themename',$themename);
 update_option('st_themeslug',$themeslug);
 update_option('st_manual',$manualurl);
