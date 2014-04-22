@@ -102,11 +102,17 @@ add_action( 'save_post',     'crucible_category_transient_flusher' );
  */
 
 function crucible_post_thumbnail() {
+	
 	if ( post_password_required() ) {
 		return;
 	}
+	
+	global $smartestthemes_options;
+	$stop = isset($smartestthemes_options['stop_theme_icon']) ? $smartestthemes_options['stop_theme_icon'] : ''; // @test 
+	
+	
 	if ( ! has_post_thumbnail() ) {
-		if ( is_post_type_archive( 'smartest_news' ) && ( get_option('stop_theme_icon') == 'false' ) ) {
+		if ( is_post_type_archive( 'smartest_news' ) && ( $stop == 'false' ) ) {
 			// show news icon
 			echo '<div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div>';
 			return;
@@ -239,7 +245,7 @@ endif;
  */
 function crucible_contact_info() {
 
-	$options = get_option('smartestthemes_options');
+	$options = get_option('smartestthemes_options'); // @todo this or globalize?
 
 	$output = '<div itemscope itemtype="http://schema.org/'.$options['business_schema']. '"><p><strong itemprop="name">';
 	$bn = stripslashes_deep(esc_attr($options['business_name']));
@@ -283,7 +289,7 @@ function crucible_google_map() {
  */
 function crucible_logo() {
 
-	$options = get_option('smartestthemes_options');
+	$options = get_option('smartestthemes_options'); // @todo this or globalize?
 
 	$bn = stripslashes(esc_attr($options['business_name']));
 	if(!$bn) { $bn = get_bloginfo('name'); }
@@ -368,7 +374,7 @@ add_action('crucible_logo', 'crucible_logo');
  * Display the social buttons for the business
  */
 function crucible_social_buttons() {
-	$options = get_option('smartestthemes_options');
+	$options = get_option('smartestthemes_options'); // @todo this or globalize?
 	$tw = $options['business_twitter'];
 	$goo = $options['business_gplus'];
 	$fa = $options['business_facebook'];
@@ -418,7 +424,7 @@ add_action('crucible_social_buttons', 'crucible_social_buttons');
  * Display the site footer
  */
 function crucible_footer() {
-	$options = get_option('smartestthemes_options');
+	$options = get_option('smartestthemes_options'); // @todo this or globalize?
 	$output = '';
 	if ($options['override_footer'] == 'false') { // no override, so do default				
 		$output .= '<span>' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
@@ -445,11 +451,14 @@ add_action( 'crucible_footer', 'crucible_footer' );
  * Display the clock icon with the Our Hours heading
  */
 function crucible_clock_hours() {
+	global $smartestthemes_options;
+	$hours = isset($smartestthemes_options['hours']) ? $smartestthemes_options['hours'] : '';// @test 
+	
 	$output = '';
-	$option = get_option('hours');
-	if ($option) {
+	
+	if ($hours) {
 		$output .= '<div class="clock-hours"><h3><i class="fa fa-clock-o"></i> ';
-		$output .= apply_filters('smartestthemes_hours_heading', __('Our Hours', 'crucible')) . '</h3><div class="hours">' . wpautop($option) . '</div></div>';
+		$output .= apply_filters('smartestthemes_hours_heading', __('Our Hours', 'crucible')) . '</h3><div class="hours">' . wpautop($hours) . '</div></div>';
 	}
 	echo $output;
 }

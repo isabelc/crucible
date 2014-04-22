@@ -809,8 +809,8 @@ include dirname( __FILE__ ) . '/lib/mce-table/mce_table_buttons.php';// @test th
  * Add link to theme options, remove customize link
  */
 function smartestthemes_tool_bar() {
-	$themename = get_option('themename');
-	$themeslug = get_option('themeslug');
+	$themename = get_option('st_themename');
+	$themeslug = get_option('st_themeslug');
 	global $wp_admin_bar;
 	$wp_admin_bar->remove_menu('customize'); // @todo don't think i need this anymore
 	$wp_admin_bar->add_menu( array(

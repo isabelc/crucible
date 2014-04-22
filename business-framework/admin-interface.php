@@ -11,8 +11,8 @@ function smartestthemes_option_setup(){
 	$smartestthemes_array = array();
 	add_option('smartestthemes_options',$smartestthemes_array);
 	$template = get_option('smartestthemes_template');
-// @test replace belo	$saved_options = get_option('smartestthemes_options');
-	$smartestthemes_array = get_option('smartestthemes_options');// @test
+	$saved_options = get_option('smartestthemes_options');
+	
 	
 	foreach($template as $option) {
 		if($option['type'] != 'heading'){
@@ -25,10 +25,12 @@ function smartestthemes_option_setup(){
 						$c_id = $child['id'];
 						$c_std = $child['std'];
 						update_option($c_id,$c_std);
+						$smartestthemes_array[$c_id] = $c_std;
 
 					}
 				} else {
 					update_option($id,$std);
+					$smartestthemes_array[$id] = $std;
 				}
 			}
 			else { //So just store the old values over again.
@@ -42,8 +44,9 @@ function smartestthemes_option_setup(){
 // Load static framework options pages 
 function smartestthemes_add_admin() {
 	global $query_string;
-	$themename = smartestthemes_get_option('themename');
-	$themeslug = smartestthemes_get_option('themeslug');
+	$themename = get_option('st_themename');// @test
+	$themeslug = get_option('st_themeslug');// @test
+
 	if ( isset($_REQUEST['page']) && $themeslug == $_REQUEST['page'] ) {
 		if (isset($_REQUEST['smartestthemes_save']) && 'reset' == $_REQUEST['smartestthemes_save']) {
 			$options =  get_option('smartestthemes_template');
@@ -99,7 +102,7 @@ function smartestthemes_reset_options($options,$page = ''){
 	}
 	
 	//When Theme Options page is reset - Add the smartestthemes_options option
-	if ( $page == smartestthemes_get_option('themeslug') ) {
+	if ( $page == get_option('st_themeslug') ) {
 		$query_inner .= " OR option_name = 'smartestthemes_options'";
 	}
 	$query = "DELETE FROM $wpdb->options WHERE $query_inner";
@@ -108,7 +111,7 @@ function smartestthemes_reset_options($options,$page = ''){
 /* Framework options panel */
 function smartestthemes_options_page(){
 	$options = get_option('smartestthemes_template');
-	$manualurl = smartestthemes_get_option('manual');
+	$manualurl = get_option('st_manual');// @test
 	$themedata = wp_get_theme();
 	$themename = $themedata->Name;
 	$local_version = $themedata->Version;
@@ -225,7 +228,7 @@ function smartestthemes_frame_load() {
 			foreach($options as $option){ 
 			if($option['type'] == 'color'){
 					$option_id = $option['id'];
-					$color = smartestthemes_get_option($option_id); ?>
+					$color = get_option($option_id); ?>
 				 jQuery('#<?php echo $option_id; ?>_picker').children('div').css('backgroundColor', '<?php echo $color; ?>');    
 				 jQuery('#<?php echo $option_id; ?>_picker').ColorPicker({
 					color: '<?php echo $color; ?>',
@@ -416,7 +419,7 @@ function smartestthemes_frame_load() {
 					var serializedReturn = newValues();
 					var ajax_url = '<?php echo admin_url("admin-ajax.php"); ?>';
 					var data = {
-						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == get_option('themeslug') ){ ?>
+						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == get_option('st_themeslug') ){ ?>
 						type: 'options',
 						<?php } ?>
 						action: 'smartestthemes_ajax_post_action',
@@ -442,10 +445,6 @@ function smartestthemes_frame_load() {
  */
 function smartestthemes_ajax_callback() {
 	global $wpdb;
-	
-	// @test get all options here to then update array below
-	$smartestthemes_array = get_option('smartestthemes_options');// @test
-	
 	$save_type = $_POST['type'];
 	if($save_type == 'upload'){
 		$clickedID = $_POST['data']; // Acts as the name
@@ -521,30 +520,21 @@ function smartestthemes_ajax_callback() {
 							if($array['type'] == 'text'){
 								$id = $array['id'];
 								$new_value = $output[$id];
-//@test replace below								update_option( $id, stripslashes($new_value));// isa, may conflict w url inputs that need slashes
-
-								$smartestthemes_array[$id] = stripslashes($new_value); //@test
-// @test do only once below								update_option('smartestthemes_options',$smartestthemes_array); // @test
-
-
+								update_option( $id, stripslashes($new_value));// isa, may conflict w url inputs that need slashes
 							}
 						}                 
 					}
 					elseif($new_value == '' && $type == 'checkbox'){ // Checkbox Save
 					
-// @test replace below						update_option($id,'false');
-
-								$smartestthemes_array[$id] = 'false'; //@TEST
-// @test do only once below								update_option('smartestthemes_options',$smartestthemes_array); // @test
+						update_option($id,'false');
 
 					}
 					elseif ($new_value == 'true' && $type == 'checkbox'){ // Checkbox Save
 					
 					
-						// @test replace below update_option($id,'true');
+						update_option($id,'true');
 						
-						$smartestthemes_array[$id] = 'true'; //@test
-// @test do only once below						update_option('smartestthemes_options',$smartestthemes_array); // @test
+						
 								
 								
 					}
@@ -553,36 +543,17 @@ function smartestthemes_ajax_callback() {
 						foreach ($option_options as $options_id => $options_value){
 							$multicheck_id = $id . "_" . $options_id;
 							if(!isset($output[$multicheck_id])){
-							  // @test replace below	update_option($multicheck_id,'false');
-							  
-								$smartestthemes_array[$multicheck_id] = 'false'; //@test
-// @test do only once below								update_option('smartestthemes_options',$smartestthemes_array); // @test
-						
-						
+								update_option($multicheck_id,'false');
 							}
 							else{
-							   // @test replace below update_option($multicheck_id,'true'); 
-							   
-								$smartestthemes_array[$multicheck_id] = 'true'; //@test
-// @test do only once below								update_option('smartestthemes_options',$smartestthemes_array); // @test
-								
-								
+								update_option($multicheck_id,'true'); 
 							}
 						}
 					} 
 					elseif($type != 'upload_min'){
-						// @test replace below update_option($id,stripslashes($new_value));
-						
-								$smartestthemes_array[$id] = stripslashes($new_value); //@test
-								// @test do only once below update_option('smartestthemes_options',$smartestthemes_array); // @test
-								
-								
+						update_option($id,stripslashes($new_value));
 					}
-					
-					// @test update here to cover all of these.
-					
-					update_option('smartestthemes_options',$smartestthemes_array); // @test
-					
+				
 				}
 			}	
 		}

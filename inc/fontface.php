@@ -1,7 +1,7 @@
 <?php // Conditionally load fontface stylesheets
 function crucible_loadfonts() {
 	$fontdir = get_template_directory_uri(). '/inc/fonts/';
-	$options = get_option('smartestthemes_options');
+	$options = get_option('smartestthemes_options'); // @todo this way or globalize?
 	$needle1 = $options['heading_font'];
 	$needle2 = $options['logo_font'];
 	$needle3 = $options['body_font'];
@@ -57,7 +57,7 @@ add_action( 'wp_enqueue_scripts', 'crucible_loadfonts' );
  */
 function crucible_logofontface() {
 
-	$options = get_option('smartestthemes_options');
+	$options = get_option('smartestthemes_options'); // @todo this way or globalize?
 	
 	if( isset($options['logo']) ? $options['logo'] : '') {// @test may have to check for logo differently based on customizer methods
 		return;

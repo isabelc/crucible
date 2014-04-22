@@ -18,7 +18,7 @@ if ($user_info == true) {
 }
 $currtime = date("l, F jS, Y @ g:i a");
 /* @new edit shortname per diff framework */
-$shortname = '';// @test 
+$shortname = 'st';// @test  @todo update all option names in theme
 
 // Globalize theme options variable for use in theme
 global $smartestthemes_options;

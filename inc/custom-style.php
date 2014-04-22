@@ -1,6 +1,6 @@
 <style>
 <?php
-$options = get_option('smartestthemes_options');
+$options = get_option('smartestthemes_options');// @test this way or do global??
 if ( $options['header_color'] ) { ?>
 	#navigation, #primary-navigation.toggled-on .menu{background:<?php echo $options['header_color']; ?>; }
 <?php } if ( $options['footer_color'] ) { ?>
