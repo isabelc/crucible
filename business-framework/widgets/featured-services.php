@@ -45,7 +45,7 @@ class SmartestFeaturedServices extends WP_Widget {
 		
 		/* loop through announcements */
 
-		if( smartestthemes_get_option('enable_service_sort') == 'true'  ) {
+		if( get_option('enable_service_sort') == 'true'  ) {
 
 			// custom sort order is enabled
 

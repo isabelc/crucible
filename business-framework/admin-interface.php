@@ -40,8 +40,8 @@ function smartestthemes_option_setup(){
 // Load static framework options pages 
 function smartestthemes_add_admin() {
 	global $query_string;
-	$themename = smartestthemes_get_option('themename');
-	$themeslug = smartestthemes_get_option('themeslug');
+	$themename = get_option('themename');
+	$themeslug = get_option('themeslug');
 	if ( isset($_REQUEST['page']) && $themeslug == $_REQUEST['page'] ) {
 		if (isset($_REQUEST['smartestthemes_save']) && 'reset' == $_REQUEST['smartestthemes_save']) {
 			$options =  get_option('smartestthemes_template');
@@ -97,7 +97,7 @@ function smartestthemes_reset_options($options,$page = ''){
 	}
 	
 	//When Theme Options page is reset - Add the smartestthemes_options option
-	if ( $page == smartestthemes_get_option('themeslug') ) {
+	if ( $page == get_option('themeslug') ) {
 		$query_inner .= " OR option_name = 'smartestthemes_options'";
 	}
 	$query = "DELETE FROM $wpdb->options WHERE $query_inner";
@@ -106,7 +106,7 @@ function smartestthemes_reset_options($options,$page = ''){
 /* Framework options panel */
 function smartestthemes_options_page(){
 	$options = get_option('smartestthemes_template');
-	$manualurl = smartestthemes_get_option('manual');
+	$manualurl = get_option('manual');
 	$themedata = wp_get_theme();
 	$themename = $themedata->Name;
 	$local_version = $themedata->Version;
@@ -223,7 +223,7 @@ function smartestthemes_frame_load() {
 			foreach($options as $option){ 
 			if($option['type'] == 'color'){
 					$option_id = $option['id'];
-					$color = smartestthemes_get_option($option_id); ?>
+					$color = get_option($option_id); ?>
 				 jQuery('#<?php echo $option_id; ?>_picker').children('div').css('backgroundColor', '<?php echo $color; ?>');    
 				 jQuery('#<?php echo $option_id; ?>_picker').ColorPicker({
 					color: '<?php echo $color; ?>',
@@ -414,7 +414,7 @@ function smartestthemes_frame_load() {
 					var serializedReturn = newValues();
 					var ajax_url = '<?php echo admin_url("admin-ajax.php"); ?>';
 					var data = {
-						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == smartestthemes_get_option('themeslug') ){ ?>
+						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == get_option('themeslug') ){ ?>
 						type: 'options',
 						<?php } ?>
 						action: 'smartestthemes_ajax_post_action',
@@ -483,7 +483,7 @@ function smartestthemes_ajax_callback() {
 				
 		foreach($options as $option_array){
 			$id = isset($option_array['id']) ? $option_array['id'] : '';
-			$old_value = smartestthemes_get_option($id);
+			$old_value = get_option($id);
 			$new_value = '';
 			if(isset($output[$id])){
 				$new_value = $output[$option_array['id']];
@@ -642,13 +642,13 @@ function smartestthemes_machine($options) {
 	if( !empty($value['std']) ) {
 			$val = esc_attr($value['std']);
 		}
-			$std = esc_attr(smartestthemes_get_option($value['id']));
+			$std = esc_attr(get_option($value['id']));
 			if ( $std != "") { $val = $std; }
 			$output .= '<input class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'" type="'. $value['type'] .'" value="'. stripslashes($val) .'" />';
 		break;
 		case 'select':
 			$output .= '<select class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'">';
-			$select_value = smartestthemes_get_option($value['id']);
+			$select_value = get_option($value['id']);
 			foreach ($value['options'] as $option) {
 				$selected = '';
 				 if($select_value != '') {
@@ -667,7 +667,7 @@ function smartestthemes_machine($options) {
 		break;
 		case 'select2':
 			$output .= '<select class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'">';
-			$select_value = smartestthemes_get_option($value['id']);
+			$select_value = get_option($value['id']);
 			foreach ($value['options'] as $option => $name) {
 				$selected = '';
 				 if($select_value != '') {
@@ -688,14 +688,14 @@ function smartestthemes_machine($options) {
 		case 'calendar':
 		
 			$val = $value['std'];
-			$std = smartestthemes_get_option($value['id']);
+			$std = get_option($value['id']);
 			if ( $std != "") { $val = $std; }
             $output .= '<input class="smartestthemes-input-calendar" type="text" name="'.$value['id'].'" id="'.$value['id'].'" value="'.$val.'">';
 		
 		break;
 		case 'time':
 			$val = $value['std'];
-			$std = smartestthemes_get_option($value['id']);
+			$std = get_option($value['id']);
 			if ( $std != "") { $val = $std; }
 			$output .= '<input class="smartestthemes-input-time" name="'. $value['id'] .'" id="'. $value['id'] .'" type="text" value="'. $val .'" />';
 		break;
@@ -716,12 +716,12 @@ function smartestthemes_machine($options) {
 				}
 				
 			}
-				$std = esc_attr(smartestthemes_get_option($value['id']));
+				$std = esc_attr(get_option($value['id']));
 				if( $std != "") { $ta_value = esc_attr( $std ); }
 				$output .= '<textarea class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'" cols="'. $cols .'" rows="8">'.stripslashes($ta_value).'</textarea>';
 		break;
 		case "radio":
-			 $select_value = smartestthemes_get_option( $value['id']);
+			 $select_value = get_option( $value['id']);
 			 foreach ($value['options'] as $key => $option) 
 			 { 
 				 $checked = '';
@@ -734,7 +734,7 @@ function smartestthemes_machine($options) {
 			}
 		break;
 		case "radio2":
-			 $select_value = smartestthemes_get_option( $value['id']);
+			 $select_value = get_option( $value['id']);
 			 foreach ($value['options'] as $key => $option) 
 			 { 
 				 $checked = '';
@@ -756,7 +756,7 @@ function smartestthemes_machine($options) {
 	if( !empty($value['std']) ) {
 			$std = $value['std'];
 	}
-		   $saved_std = smartestthemes_get_option($value['id']);
+		   $saved_std = get_option($value['id']);
 		   $checked = '';
 			if(!empty($saved_std)) {
 				if($saved_std == 'true') {
@@ -782,7 +782,7 @@ function smartestthemes_machine($options) {
 			foreach ($value['options'] as $key => $option) {
 											 
 			$smartestthemes_key = $value['id'] . '_' . $key;
-			$saved_std = smartestthemes_get_option($smartestthemes_key);
+			$saved_std = get_option($smartestthemes_key);
 					
 			if(!empty($saved_std)) 
 			{ 
@@ -810,14 +810,14 @@ function smartestthemes_machine($options) {
 		break;
 		case "color":
 			$val = $value['std'];
-			$stored  = smartestthemes_get_option( $value['id'] );
+			$stored  = get_option( $value['id'] );
 			if ( $stored != "") { $val = $stored; }
 			$output .= '<div id="' . $value['id'] . '_picker" class="colorSelector"><div></div></div>';
 			$output .= '<input class="smartestthemes-color" name="'. $value['id'] .'" id="'. $value['id'] .'" type="text" value="'. $val .'" />';
 		break;   
 		case "images":
 			$i = 0;
-			$select_value = smartestthemes_get_option( $value['id']);
+			$select_value = get_option( $value['id']);
 			foreach ($value['options'] as $key => $option) 
 			 { 
 			 $i++;
@@ -864,7 +864,7 @@ function smartestthemes_machine($options) {
 			
 				$id =   $array['id']; 
 				$std =   $array['std'];
-				$saved_std = smartestthemes_get_option($id);
+				$saved_std = get_option($id);
 				if($saved_std != $std && !empty($saved_std) ){$std = $saved_std;} 
 				$meta =   $array['meta'];
 					
@@ -893,10 +893,10 @@ function smartestthemes_machine($options) {
 /* Smartest Themes Uploader */
 function smartestthemes_uploader_function($id,$std,$mod){
 	$uploader = '';
-	$upload = smartestthemes_get_option($id);
+	$upload = get_option($id);
 	if($mod != 'min') { 
 			$val = $std;
-            if ( smartestthemes_get_option( $id ) != "") { $val = smartestthemes_get_option($id); }
+            if ( get_option( $id ) != "") { $val = get_option($id); }
             $uploader .= '<input class="smartestthemes-input" name="'. $id .'" id="'. $id .'_upload" type="text" value="'. $val .'" />';
 	}
 	$uploader .= '<div class="upload_button_div"><span class="button image_upload_button" id="'.$id.'">'. __('Upload Image', 'crucible'). '</span>';

@@ -12,7 +12,7 @@ $value_response	= isset($_POST['stcf_response']) ? htmlentities($_POST['stcf_res
 $value_message		= isset($_POST['stcf_message']) ? htmlentities($_POST['stcf_message']) : '';
 $value_phone		= isset($_POST['stcf_phone']) ? htmlentities($_POST['stcf_phone']) : '';
 
-if ( smartestthemes_get_option('contactform_required_phone') == 'true' ) {
+if ( get_option('contactform_required_phone') == 'true' ) {
 	$require_phone = ' class="required"';
 } else {
 	$require_phone = '';
@@ -170,9 +170,9 @@ function smartestthemes_contact_form() {
  * create contact page with working contact form
  */
 function sbf_create_contact_page() {
-	if(smartestthemes_get_option('stop_contact') == 'false') {
+	if(get_option('stop_contact') == 'false') {
 		// CONTACT form is not disabled so do it	
-		$bn = stripslashes_deep(esc_attr(smartestthemes_get_option('business_name')));
+		$bn = stripslashes_deep(esc_attr(get_option('business_name')));
 		$contitle = sprintf(__('Contact %s','crucible'), $bn);
 		smartestthemes_insert_post( 'page', esc_sql( _x('contact', 'page_slug', 'crucible') ), 'smartestthemes_contact_page_id', $contitle );// @todo sync in whole theme the issue that this, and only this, option whill not be part of the options array. So it will have the prefix 'smartestthemes_
 
@@ -180,8 +180,8 @@ function sbf_create_contact_page() {
 }
 add_action('after_setup_theme', 'sbf_create_contact_page');
 // if contact page is disabled, delete the page
-if(smartestthemes_get_option('stop_contact') == 'true') {
-	wp_delete_post(smartestthemes_get_option('contact_page_id'), true);
+if(get_option('stop_contact') == 'true') {
+	wp_delete_post(get_option('contact_page_id'), true);
 }
 /**
 * enqueue CSS and validation script
@@ -189,7 +189,7 @@ if(smartestthemes_get_option('stop_contact') == 'true') {
 function stcf_enqueue_scripts() {
 	wp_register_script('stcf-validate', get_template_directory_uri().'/business-framework/modules/contact/stcf-validate.js', array('jquery'), false, true);// @test does it work even in footer
 	wp_register_style('contactstyle', get_template_directory_uri().'/business-framework/modules/contact/contact.css');
-	if (is_page(smartestthemes_get_option('contact_page_id'))){
+	if (is_page(get_option('contact_page_id'))){
 		wp_enqueue_script('stcf-validate');
 		wp_enqueue_style('contactstyle');
 	}

@@ -106,7 +106,7 @@ function crucible_post_thumbnail() {
 		return;
 	}
 	if ( ! has_post_thumbnail() ) {
-		if ( is_post_type_archive( 'smartest_news' ) && ( smartestthemes_get_option('stop_theme_icon') == 'false' ) ) {
+		if ( is_post_type_archive( 'smartest_news' ) && ( get_option('stop_theme_icon') == 'false' ) ) {
 			// show news icon
 			echo '<div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div>';
 			return;
@@ -271,7 +271,7 @@ add_action('crucible_contact_info', 'crucible_contact_info');
  * Display the Google map
  */
 function crucible_google_map() {
-	$map = smartestthemes_get_option('google_map');
+	$map = get_option('google_map');
 	if ( ! $map ) {
 		return;
 	}
@@ -446,7 +446,7 @@ add_action( 'crucible_footer', 'crucible_footer' );
  */
 function crucible_clock_hours() {
 	$output = '';
-	$option = smartestthemes_get_option('hours');
+	$option = get_option('hours');
 	if ($option) {
 		$output .= '<div class="clock-hours"><h3><i class="fa fa-clock-o"></i> ';
 		$output .= apply_filters('smartestthemes_hours_heading', __('Our Hours', 'crucible')) . '</h3><div class="hours">' . wpautop($option) . '</div></div>';
