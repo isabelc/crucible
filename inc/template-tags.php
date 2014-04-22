@@ -247,25 +247,25 @@ function crucible_contact_info() {
 
 	$options = get_option('smartestthemes_options'); // @todo this or globalize?
 
-	$output = '<div itemscope itemtype="http://schema.org/'.$options['business_schema']. '"><p><strong itemprop="name">';
-	$bn = stripslashes_deep(esc_attr($options['business_name']));
+	$output = '<div itemscope itemtype="http://schema.org/'.$options['st_business_schema']. '"><p><strong itemprop="name">';
+	$bn = stripslashes_deep(esc_attr($options['st_business_name']));
 	if($bn) {
 		$output .= $bn;
 	} else {
 		$output .= get_bloginfo('name');
 	}
-	$output .= '</strong></p><p class="main-address"><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . $options['address_street'] . '</span>&nbsp; ' . $options['address_suite'] . '<br /><span itemprop="addressLocality"> ' . $options['address_city'] . '</span>';
-	if ( $options['address_city'] && $options['address_state'] ) {
+	$output .= '</strong></p><p class="main-address"><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . $options['st_address_street'] . '</span>&nbsp; ' . $options['st_address_suite'] . '<br /><span itemprop="addressLocality"> ' . $options['st_address_city'] . '</span>';
+	if ( $options['st_address_city'] && $options['st_address_state'] ) {
 		$output .= ', ';
 	}
-	$output .= '<span itemprop="addressRegion">' . $options['address_state'] . '</span>&nbsp;<span temprop="postalCode">' . $options['address_zip'] . '</span>&nbsp; ' . $options['address_country'] . '</span>	&nbsp;<br />';
-	if ( $options['phone_number'] ) {
-		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. $options['phone_number']. '</span> &nbsp;';
+	$output .= '<span itemprop="addressRegion">' . $options['st_address_state'] . '</span>&nbsp;<span temprop="postalCode">' . $options['st_address_zip'] . '</span>&nbsp; ' . $options['st_address_country'] . '</span>	&nbsp;<br />';
+	if ( $options['st_phone_number'] ) {
+		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. $options['st_phone_number']. '</span> &nbsp;';
 	}
-	if ( $options['fax_numb'] ) {
-	$output .= '<br /><span class="strong">' . __('FAX:', 'crucible') . '</span>&nbsp;  <span itemprop="faxNumber">' . $options['fax_numb'] . '</span>&nbsp;';
+	if ( $options['st_fax_numb'] ) {
+	$output .= '<br /><span class="strong">' . __('FAX:', 'crucible') . '</span>&nbsp;  <span itemprop="faxNumber">' . $options['st_fax_numb'] . '</span>&nbsp;';
 	} 
-	if ( $options['show_contactemail'] == 'true' ) {
+	if ( $options['st_show_contactemail'] == 'true' ) {
 	$output .= '<br /><span class="strong">' . __('Email:', 'crucible') . '</span>&nbsp;<a href="mailto:' . get_bloginfo('admin_email') . '"><span itemprop="email">' . get_bloginfo('admin_email') . '</span></a>';
 	}
 	$output .= '</p></div>';
@@ -277,7 +277,7 @@ add_action('crucible_contact_info', 'crucible_contact_info');
  * Display the Google map
  */
 function crucible_google_map() {
-	$map = get_option('google_map');
+	$map = get_option('st_google_map');
 	if ( ! $map ) {
 		return;
 	}
@@ -291,31 +291,31 @@ function crucible_logo() {
 
 	$options = get_option('smartestthemes_options'); // @todo this or globalize?
 
-	$bn = stripslashes(esc_attr($options['business_name']));
+	$bn = stripslashes(esc_attr($options['st_business_name']));
 	if(!$bn) { $bn = get_bloginfo('name'); }
 	//seo title
-	$ti = stripslashes(esc_attr($options['home_meta_title']));
+	$ti = stripslashes(esc_attr($options['st_home_meta_title']));
 	if(empty($ti)) $ti = $bn;
 	$output = '';
 	/* @test replace whole logo section
 	*
 	*
 	
-	if ( $options['logo'] ) {
+	if ( $options['st_logo'] ) {
 		// there is a logo
-		if ( $options['increase_logo'] ) {
+		if ( $options['st_increase_logo'] ) {
 			// custom height is set, use full size image which is resized with CSS
-			$src = $options['logo'];
+			$src = $options['st_logo'];
 		} else {
 			// use the logo_thumb which is cut during upload and has its retina ready counterpart
-			$src_id = st_get_attachment_id_from_url($options['logo']);
+			$src_id = st_get_attachment_id_from_url($options['st_logo']);
 			$src_atts = wp_get_attachment_image_src($src_id, 'ps-logo');
 			$src = $src_atts[0];
 		}
 		$output .= '<a href="' . home_url( '/' ) . '" title="' . $ti . '" id="logolink" rel="home">
 		<img id="customlogo" src="' . $src . '" alt="' . $ti . '" title="' . $ti . '" />
 		</a><br />';
-		if ( $options['show_tagline'] == 'true' ) { // @test see if 'true' is the right thing to check for. what value is saved for checkboxes?
+		if ( $options['st_show_tagline'] == 'true' ) { // @test see if 'true' is the right thing to check for. what value is saved for checkboxes?
 			$output .= '<h2 class="site-description">' . get_bloginfo('description') . '</h2>';
 		}
 		
@@ -344,10 +344,10 @@ function crucible_logo() {
 	
 	} else {
 		//no logo option, use text logo 
-		$logo_text_part_1		= stripslashes_deep( $options['logo_text_part_1'] );
-		$logo_text_part_orange	= stripslashes_deep( $options['logo_text_part_orange'] );
-		$logo_text_part_3		= stripslashes_deep( $options['logo_text_part_3'] );
-		$logo_text_part_small	= stripslashes_deep( $options['logo_text_part_small'] );
+		$logo_text_part_1		= stripslashes_deep( $options['st_logo_text_part_1'] );
+		$logo_text_part_orange	= stripslashes_deep( $options['st_logo_text_part_orange'] );
+		$logo_text_part_3		= stripslashes_deep( $options['st_logo_text_part_3'] );
+		$logo_text_part_small	= stripslashes_deep( $options['st_logo_text_part_small'] );
 		// if all empty, use blogname
 		if ( empty($logo_text_part_1) && empty($logo_text_part_orange) && empty($logo_text_part_3) && empty($logo_text_part_small) ) $logo_text_part_1 = get_bloginfo('name');
 		if ( $logo_text_part_1 ) {
@@ -375,13 +375,13 @@ add_action('crucible_logo', 'crucible_logo');
  */
 function crucible_social_buttons() {
 	$options = get_option('smartestthemes_options'); // @todo this or globalize?
-	$tw = $options['business_twitter'];
-	$goo = $options['business_gplus'];
-	$fa = $options['business_facebook'];
-	$yo = $options['business_youtube'];
-	$li = $options['business_linkedin'];
-	$in = $options['business_instagram'];
-	$pi = $options['business_pinterest'];
+	$tw = $options['st_business_twitter'];
+	$goo = $options['st_business_gplus'];
+	$fa = $options['st_business_facebook'];
+	$yo = $options['st_business_youtube'];
+	$li = $options['st_business_linkedin'];
+	$in = $options['st_business_instagram'];
+	$pi = $options['st_business_pinterest'];
 
 	// don't do unless at least one is entered
 	if( $tw || $goo || $fa || $yo || $li || $in || $pi ) {
@@ -410,11 +410,11 @@ function crucible_social_buttons() {
 	$output .= '</ul></div><!-- .social -->';
 
 	// extra social links
-	if ( $options['business_socialurl1'] ) {
-		$output .= '<br /><a href="' . $options['business_socialurl1'] . '" target="_blank" rel="nofollow" title="' . __( 'Connect', 'crucible' ) . '">' . $options['business_sociallabel1'] . '</a>';
+	if ( $options['st_business_socialurl1'] ) {
+		$output .= '<br /><a href="' . $options['st_business_socialurl1'] . '" target="_blank" rel="nofollow" title="' . __( 'Connect', 'crucible' ) . '">' . $options['st_business_sociallabel1'] . '</a>';
 	} 
-	if ( $options['business_socialurl2'] ) {
-		$output .= '&nbsp;  <a href="' . $options['business_socialurl2'] . '" title="' . __('Connect', 'crucible' ) . '" target="_blank" rel="nofollow">' . $options['business_sociallabel2'] . '</a>';
+	if ( $options['st_business_socialurl2'] ) {
+		$output .= '&nbsp;  <a href="' . $options['st_business_socialurl2'] . '" title="' . __('Connect', 'crucible' ) . '" target="_blank" rel="nofollow">' . $options['st_business_sociallabel2'] . '</a>';
 	}
 	echo $output;
 }
@@ -426,22 +426,22 @@ add_action('crucible_social_buttons', 'crucible_social_buttons');
 function crucible_footer() {
 	$options = get_option('smartestthemes_options'); // @todo this or globalize?
 	$output = '';
-	if ($options['override_footer'] == 'false') { // no override, so do default				
+	if ($options['st_override_footer'] == 'false') { // no override, so do default				
 		$output .= '<span>' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
 
-		$bn = stripslashes_deep(esc_attr($options['business_name']));
+		$bn = stripslashes_deep(esc_attr($options['st_business_name']));
 		if($bn) {
 			$output .= $bn;
 		} else {
 			$output .= get_bloginfo('name');
 		}
 		$output .= '</a>';
-		if ( $options['footer_text']) {
+		if ( $options['st_footer_text']) {
 			$output .= '<br />';// if default plus custom, need <br />
 		}
 	}
-	if ($options['footer_text']) {
-		$output .= stripslashes_deep($options['footer_text']);
+	if ($options['st_footer_text']) {
+		$output .= stripslashes_deep($options['st_footer_text']);
 	} 
 	echo $output;
 }
