@@ -81,7 +81,7 @@ class SMARTESTReviewsBusinessAdmin {
         }
 	
 	function force_update_cache() {
-			return; /* testing to increase performance */
+			return; /* @todo maybe remove testing to increase performance */
 			global $wpdb;
 				
 			/* update all pages */
@@ -346,7 +346,8 @@ class SMARTESTReviewsBusinessAdmin {
         <div id="smar_respond_1" class="wrap">
             <h2>'. __('Reviews - Options', 'crucible'). '</h2>';
             if ($msg) { echo '<h3 style="color:#a00;">'.$msg.'</h3>'; }
-			$admin_page = get_option('st_themeslug');// @test with new function
+			$themeobject = wp_get_theme();
+			$admin_page = $themeobject->Template;// @test
 			$linkp = '<a href="'. admin_url("admin.php?page=$admin_page").'">Preferences</a>';
             echo '<div class="metabox-holder">
             <div class="postbox" style="width:700px;">

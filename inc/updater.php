@@ -30,7 +30,10 @@ add_action( 'admin_init', 'crucible_edd_sl_updater' );
 * Add menu item
 */
 function crucible_license_menu() {
-	add_theme_page( __( 'Theme License', 'crucible' ), __( 'Theme License', 'crucible' ), 'manage_options', 'themename-license', 'crucible_license_page' );
+
+	$themeobject = wp_get_theme();
+	$slug = $themeobject->Template;
+	add_theme_page( __( 'Theme License', 'crucible' ), __( 'Theme License', 'crucible' ), 'manage_options', $slug . 'license', 'crucible_license_page' );
 }
 add_action('admin_menu', 'crucible_license_menu');
 
@@ -41,7 +44,6 @@ function crucible_license_page() {
 	$license 	= get_option( 'st_crucible_license_key' );
 	$status 	= get_option( 'st_crucible_license_key_status' );
 	$themeobject = wp_get_theme();
-	$themename = $themeobject->Name;
 	$themeslug = $themeobject->Template;
 	$themeurl = 'http://smartestthemes.com/downloads/'.$themeslug.'/';
 

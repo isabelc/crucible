@@ -44,8 +44,9 @@ function smartestthemes_option_setup(){
 // Load static framework options pages 
 function smartestthemes_add_admin() {
 	global $query_string;
-	$themename = get_option('st_themename');// @test
-	$themeslug = get_option('st_themeslug');// @test
+	$themeobject = wp_get_theme();
+	$themename = $themeobject->Name;// @test
+	$themeslug = $themeobject->Template;// @test
 
 	if ( isset($_REQUEST['page']) && $themeslug == $_REQUEST['page'] ) {
 		if (isset($_REQUEST['smartestthemes_save']) && 'reset' == $_REQUEST['smartestthemes_save']) {
@@ -102,7 +103,10 @@ function smartestthemes_reset_options($options,$page = ''){
 	}
 	
 	//When Theme Options page is reset - Add the smartestthemes_options option
-	if ( $page == get_option('st_themeslug') ) {
+	$themeobject = wp_get_theme();
+	$themeslug = $themeobject->Template;
+
+	if ( $page == $themeslug ) {
 		$query_inner .= " OR option_name = 'smartestthemes_options'";
 	}
 	$query = "DELETE FROM $wpdb->options WHERE $query_inner";
@@ -419,7 +423,10 @@ function smartestthemes_frame_load() {
 					var serializedReturn = newValues();
 					var ajax_url = '<?php echo admin_url("admin-ajax.php"); ?>';
 					var data = {
-						<?php if(isset($_REQUEST['page']) && $_REQUEST['page'] == get_option('st_themeslug') ){ ?>
+						<?php 
+						$themeobject = wp_get_theme();
+						$themeslug = $themeobject->Template;
+						if(isset($_REQUEST['page']) && $_REQUEST['page'] == $themeslug ){ ?>
 						type: 'options',
 						<?php } ?>
 						action: 'smartestthemes_ajax_post_action',
