@@ -13,7 +13,7 @@
 <?php wp_head(); ?>
 </head>
 <?php $options = get_option('smartestthemes_options'); ?>
-<body <?php body_class(); if ( is_front_page() ) { echo ' itemscope itemtype="http://schema.org/'.$options['business_schema'].'"';} ?>>
+<body <?php body_class(); if ( is_front_page() ) { echo ' itemscope itemtype="http://schema.org/'.$options['st_business_schema'].'"';} ?>>
 
 <div id="page" class="hfeed site">
 
@@ -38,12 +38,12 @@ do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per t
 	<?php // @test debus
 	
 	$test = get_theme_mod('smartestthemes_logo');
-	$test2 = get_option('smartestthemes_logo');
+	$test2 = get_option('st_smartestthemes_logo');
 	
 	echo '<h3>test 1, theme_mod:</h3> ' . $test . '<br /><br /><h3>Test 2, option: </h3>' . $test2; 
 	?>
-		<?php if ( $options['phone_number'] ) {
-			echo $options['phone_number'];
+		<?php if ( $options['st_phone_number'] ) {
+			echo $options['st_phone_number'];
 		} ?>
 
 		<nav id="site-navigation" class="main-navigation" role="navigation">

@@ -24,9 +24,9 @@
 	} else { // no active dynamic footer sidebars, so hard code widgets
 		
 		$options = get_option('smartestthemes_options');
-		$ne = $options['show_news'];
-		$se = $options['show_services'];
-		$re = $options['add_reviews'];
+		$ne = $options['st_show_news'];
+		$se = $options['st_show_services'];
+		$re = $options['st_add_reviews'];
 		$mo = get_bloginfo('description');
 			
 		/**

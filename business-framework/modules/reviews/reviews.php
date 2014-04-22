@@ -49,7 +49,7 @@ class SMARTESTReviewsBusiness {
 
 	function addmenu() {
 		add_options_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'manage_options', 'smar_options', array(&$this, 'admin_options'));
-		if(get_option('add_reviews') == 'true') {       
+		if(get_option('st_add_reviews') == 'true') {       
 			add_menu_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array(&$this, 'admin_view_reviews'), 'dashicons-star-filled', 62);
 		}
 	}
@@ -70,7 +70,7 @@ class SMARTESTReviewsBusiness {
     }
     function get_jumplink_for_review($review,$page) {
        /* $page will be 1 for shortcode usage since it pulls most recent, which SHOULD all be on page 1 */
-       $link = get_permalink( get_option('reviews_page_id') );
+       $link = get_permalink( get_option('st_reviews_page_id') );
         if (strpos($link,'?') === false) {
             $link = trailingslashit($link) . "?smarp=$page#hreview-$review->id";
         } else {
@@ -228,7 +228,7 @@ class SMARTESTReviewsBusiness {
             return $this->got_aggregate;
         }
         global $wpdb;
-        $pageID = get_option('reviews_page_id');// @test with new function
+        $pageID = get_option('st_reviews_page_id');// @test with new function
         $row = $wpdb->get_results("SELECT COUNT(*) AS `total`,AVG(review_rating) AS `aggregate_rating`,MAX(review_rating) AS `max_rating` FROM `$this->dbtable` WHERE `status`=1");
         /* make sure we have at least one review before continuing below */
         if ($wpdb->num_rows == 0 || $row[0]->total == 0) {
@@ -296,7 +296,7 @@ class SMARTESTReviewsBusiness {
         $average_score = number_format($this->got_aggregate["aggregate"], 1);
 	    $aggregate_footer_output = '';
 		/* only if set to agg Business ratings on front page and is front page & if home page is static then show. */
-		if ( ($this->options['show_hcard_on'] == 1) && is_front_page() && (get_option('show_on_front') == 'page') ) {
+		if ( ($this->options['show_hcard_on'] == 1) && is_front_page() && (get_option('st_show_on_front') == 'page') ) {
 						$show = true;
 					}
 else {$show = false; }
@@ -457,7 +457,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
 /* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
          trying to access a page that does not exist -- send to main page 
         if ( isset($this->p->smarp) && $this->p->smarp != 1 && count($reviews) == 0 ) {
-            $url = get_permalink(get_option('reviews_page_id'));
+            $url = get_permalink(get_option('st_reviews_page_id'));
             $this->smar_redirect($url);
         }
 */        
@@ -596,7 +596,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
  * @uses smartestthemes_insert_post()
  */
 function create_reviews_page() {
-	if(get_option('add_reviews') == 'true') {
+	if(get_option('st_add_reviews') == 'true') {
 		smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[SMAR_INSERT]' );// @todo change to lowercase, better name
 	}
 }
@@ -976,10 +976,10 @@ function do_the_content($original_content) {
         return $this->do_the_content('shortcode_insert');        
     }
 	function smartestreviews_scripts() {
-		if( get_option('add_reviews') == 'true'  ) {
+		if( get_option('st_add_reviews') == 'true'  ) {
 			wp_register_style('smartest-reviews', $this->getpluginurl() . 'reviews.css', array(), $this->version);wp_enqueue_style('smartest-reviews');
 			wp_register_script('smartest-reviews', $this->getpluginurl() . 'reviews.js', array('jquery'), $this->version, true);
-			if( is_page(get_option('reviews_page_id'))) {
+			if( is_page(get_option('st_reviews_page_id'))) {
 		        wp_enqueue_script('smartest-reviews');
 				$loc = array(
 					'hidebutton' => __('Click here to hide form', 'crucible'),
@@ -1000,7 +1000,7 @@ function do_the_content($original_content) {
 	 * widget
 	 */
 	function smartest_reviews_register_widgets() {
-		if( get_option('add_reviews') == 'true'  ) {
+		if( get_option('st_add_reviews') == 'true'  ) {
 			register_widget('SmartestReviewsTestimonial');
 		}
 	}

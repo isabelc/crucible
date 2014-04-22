@@ -15,7 +15,7 @@ $options = get_option('smartestthemes_options');
 /*
 // @new decide. may need something like this
 
-if (is_page($options['contact_page_id'])){
+if (is_page($options['st_contact_page_id'])){
 	$postclass = 'grid_7 alpha';
 } else {
 	$postclass = 'grid_12';
@@ -31,9 +31,9 @@ if (is_page($options['contact_page_id'])){
 			<?php while ( have_posts() ) : the_post(); ?>
 
 				<?php 
-				if (is_page($options['contact_page_id'])) :
+				if (is_page($options['st_contact_page_id'])) :
 					get_template_part( 'content', 'contact' );
-				elseif (is_page($options['about_page_id'])) :
+				elseif (is_page($options['st_about_page_id'])) :
 					get_template_part( 'content', 'about' );
 				else : 
 					get_template_part( 'content', 'page' );

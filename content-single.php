@@ -63,7 +63,7 @@
 			);
 		}
 		edit_post_link( __( 'Edit', 'crucible' ), '<span class="edit-link">', '</span>' ); 
-		if(get_option('stop_smartshare') == 'false') {
+		if(get_option('st_stop_smartshare') == 'false') {
 			echo smartestthemes_share(); 
 		} ?>
 	</footer><!-- .entry-footer -->

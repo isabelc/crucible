@@ -10,7 +10,7 @@ get_header(); ?>
 		<main id="main" class="site-main" role="main">
 			<?php while ( have_posts() ) : the_post(); ?>
 
-				<?php $attention = get_option('attention_grabber');
+				<?php $attention = get_option('st_attention_grabber');
 				if( !empty($attention) ) : ?>
 					<div class="attention-grab"><?php echo stripslashes_deep( $attention ); ?></div>
 				<?php endif; ?>
