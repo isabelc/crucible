@@ -20,9 +20,10 @@ $currtime = date("l, F jS, Y @ g:i a");
 /* @new edit shortname per diff framework */
 $shortname = '';// @test 
 
-// Populate smartest Business Themes options in array for use in theme
+// Globalize theme options variable for use in theme
 global $smartestthemes_options;
-$smartestthemes_options = get_option('smartestthemes_options');// @test is this needed here?????
+$smartestthemes_options = array();
+$smartestthemes_options = get_option('smartestthemes_options');
 
 $sampleimg = '<br /><br /><img alt="logo text sample" src="'. get_bloginfo('template_directory') . '/images/text-logo-sample.png" /><br /><br />';
 
@@ -881,20 +882,20 @@ $options[] = array( 'name' => __('Backwards Compatibility: Use Old Clock Icon on
 								
 					*/
 					
-update_option('smartestthemes_template',$options);
-
 /* @test replace 
 update_option('smartestthemes_themename',$themename);
 update_option('smartestthemes_themeslug',$themeslug);
 update_option('smartestthemes_manual',$manualurl);
 update_option('smartestthemes_sshow_description','Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.');// @new update
 */
-$smartestthemes_array['themename'] = $themename; //@test
-$smartestthemes_array['themeslug'] = $themeslug; //@test
-$smartestthemes_array['manual'] = $manualurl; //@test
-$smartestthemes_array['sshow_description'] = 'Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.'; //@test
+$smartestthemes_options['themename'] = $themename; //@test
+$smartestthemes_options['themeslug'] = $themeslug; //@test
+$smartestthemes_options['manual'] = $manualurl; //@test
+$smartestthemes_options['sshow_description'] = 'Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.'; //@test
 
-update_option('smartestthemes_options',$smartestthemes_array); // @test
+update_option('smartestthemes_options',$smartestthemes_options); // @test
+
+update_option('smartestthemes_template',$options);
 
 } 
 add_action('init','smartestthemes_options');
