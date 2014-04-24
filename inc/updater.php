@@ -74,12 +74,11 @@ function crucible_license_page() {
 							</th>
 							<td>
 								<?php if( $status !== false && 'valid' == $status ) { ?>
-									<span style="color:green;font-weight:bold;padding:12px;"><?php _e('Status: active  ', 'crucible'); ?> &nbsp;</span>
+									<span style="color:green;font-weight:bold;padding:12px;"><?php _e('Status: valid  ', 'crucible'); ?> &nbsp;</span>
 									<?php wp_nonce_field( 'st_crucible_nonce', 'st_crucible_nonce' ); ?>
-									<input type="submit" class="button-secondary" name="edd_theme_license_deactivate" value="<?php _e('Deactivate License', 'crucible'); ?>"/><br/ ><br/ ><br/ >
-<input type="submit" class="button-secondary" name="crucible_license_check" value="<?php _e('Check Status', 'crucible'); ?>"/>
+									<input type="submit" class="button-secondary" name="edd_theme_license_deactivate" value="<?php _e('Deactivate License', 'crucible'); ?>"/>
 								<?php } else { ?>
-		<span style="color:red;font-weight:bold;padding:12px;"><?php _e('Status: not active', 'crucible'); ?></span>
+		<span style="color:red;font-weight:bold;padding:12px;"><?php _e('Status: not valid', 'crucible'); ?></span>
 
 <?php wp_nonce_field( 'st_crucible_nonce', 'st_crucible_nonce' ); ?>
 									<input type="submit" class="button-secondary" name="edd_theme_license_activate" value="<?php _e('Activate License', 'crucible'); ?>"/>
@@ -136,7 +135,6 @@ function crucible_activate_license() {
 			return false;
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
-		// $license_data->license will be either "active" or "inactive"
 		update_option( 'st_crucible_license_key_status', $license_data->license );
 	}
 }
@@ -173,68 +171,3 @@ function crucible_deactivate_license() {
 	}
 }
 add_action('admin_init', 'crucible_deactivate_license');
-
-/**
-* Check if license is valid
-*/
-
-function crucible_check_license() {
-
-	global $wp_version;
-	$license = trim( get_option( 'st_crucible_license_key' ) );
-	$api_params = array(
-		'edd_action' => 'check_license',
-		'license' => $license,
-		'item_name' => urlencode( ST_CRUCIBLE_DLNAME )
-	);
-
-	$response = wp_remote_get( add_query_arg( $api_params, ST_CRUCIBLE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
-
-	if ( is_wp_error( $response ) )
-		return false;
-
-	$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-	if( $license_data->license == 'valid' ) {
-		echo 'valid'; exit;
-		// this license is still valid
-	} else {
-		echo 'invalid'; exit;
-		// this license is no longer valid
-	}
-}
-/**
-* Checks license status in options page when secondary button is clicked.
-* @return string expired/active/inactive
-*/
-
-function crucible_check_status() {
-
-	// listen for our check status button to be clicked
-	if( isset( $_POST['crucible_license_check'] ) ) {
-
-		global $wp_version;
-		$license = trim( get_option( 'st_crucible_license_key' ) );
-		$api_params = array(
-			'edd_action' => 'check_license',
-			'license' => $license,
-			'item_name' => urlencode( ST_CRUCIBLE_DLNAME )
-		);
-	
-		$response = wp_remote_get( add_query_arg( $api_params, ST_CRUCIBLE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
-	
-		if ( is_wp_error( $response ) )
-			return false;
-	
-		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-	
-		if( 'expired' == $license_data->license )
-			$status = 'expired';
-		elseif( 'valid' == $license_data->license )
-			$status = 'active';
-		else
-			$status = 'inactive';
-
-		update_option( 'st_crucible_license_key_status', $status );
-	}
-}
-add_action('admin_init', 'crucible_check_status');
