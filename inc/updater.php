@@ -19,7 +19,8 @@ function crucible_edd_sl_updater() {
 			'version' 			=> '1.0.0', // @todo update match from style.css
 			'license' 			=> $license,
 			'item_name' 		=> ST_CRUCIBLE_DLNAME,
-			'author'			=> 'Smartest Themes'
+			'author'			=> 'Smartest Themes',
+			'url'           => home_url()
 		)
 	);
 }
@@ -77,9 +78,8 @@ function crucible_license_page() {
 									<?php wp_nonce_field( 'st_crucible_nonce', 'st_crucible_nonce' ); ?>
 									<input type="submit" class="button-secondary" name="edd_theme_license_deactivate" value="<?php _e('Deactivate License', 'crucible'); ?>"/><br/ ><br/ ><br/ >
 <input type="submit" class="button-secondary" name="crucible_license_check" value="<?php _e('Check Status', 'crucible'); ?>"/>
-								<?php } else {
-if( empty( $status ) ) $status == 'not active'; ?>
-		<span style="color:red;font-weight:bold;padding:12px;"><?php printf( __('Status: %s', 'crucible'), $status ); ?></span>
+								<?php } else { ?>
+		<span style="color:red;font-weight:bold;padding:12px;"><?php _e('Status: not active', 'crucible'); ?></span>
 
 <?php wp_nonce_field( 'st_crucible_nonce', 'st_crucible_nonce' ); ?>
 									<input type="submit" class="button-secondary" name="edd_theme_license_activate" value="<?php _e('Activate License', 'crucible'); ?>"/>
@@ -122,12 +122,12 @@ function crucible_activate_license() {
 	 	if( ! check_admin_referer( 'st_crucible_nonce', 'st_crucible_nonce' ) )
 			return; // get out if we didn't click the Activate button
 
-		global $wp_version;
 		$license = trim( get_option( 'st_crucible_license_key' ) );
 		$api_params = array(
 			'edd_action' => 'activate_license',
 			'license' => $license,
-			'item_name' => urlencode( ST_CRUCIBLE_DLNAME )
+			'item_name' => urlencode( ST_CRUCIBLE_DLNAME ),
+			'url' => home_url()
 		);
 
 		$response = wp_remote_get( add_query_arg( $api_params, ST_CRUCIBLE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
