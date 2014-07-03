@@ -207,9 +207,10 @@ if ( $options['st_logo_font_size'] )
 	echo '.site-title a {font-size:'.$options['st_logo_font_size'].'; }';
 if ( $options['st_logo_font_size_4'] )
 	echo '.site-title span {font-size:'.$options['st_logo_font_size_4'].';line-height:'.$options['st_logo_font_size_4'].'; }';
-
-if ( $options['st_increase_logo'] )
-	echo 'a#logolink #customlogo {max-height:' . $options['st_increase_logo'] . 'px !important;}';
+$increase_logo = $options['st_increase_logo'] ;
+if ( $increase_logo ) {
+	echo 'a#logolink #customlogo {max-height:' . $increase_logo . 'px !important;}';
+}
 // tagline
 if ( $options['st_tagline_color'] ) {
 		echo '#mast h4 { color:'. $options['st_tagline_color'].'; }';
