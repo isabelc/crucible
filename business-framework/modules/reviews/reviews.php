@@ -301,7 +301,7 @@ class SMARTESTReviewsBusiness {
 else {$show = false; }
 		if ($show) { /* we append like this to prevent newlines and wpautop issues */
        	
-			$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['business_itemtype'] . '"';
+			$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['st_business_itemtype'] . '"';
 			$aggregate_footer_output = '<div id="smar_respond_1"><div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
 			
 			$bn = stripslashes_deep(esc_attr($smartestthemes_options['business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
@@ -462,7 +462,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
 */        
 		if (!$inside_div) {
             $reviews_content .= '<!-- no inside div --><div id="smar_respond_1"';
-				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['business_itemtype'].'">
+				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['st_business_itemtype'].'">
 							<span class="isa_vcard" id="hreview-smar-hcard-for-' . $review->id . '">
                                 <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a>
                                 <span itemprop="telephone">' . $smartestthemes_options['phone_number'] . '</span>
@@ -482,7 +482,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
 			$summary = $this->got_aggregate["text"];
 			$best_score = 5;
 			$average_score = number_format($this->got_aggregate["aggregate"], 1);
-			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['business_itemtype'].'"><br />
+			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['st_business_itemtype'].'"><br />
 							<span class="isa_vcard">
                                 <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a><br />
                                 <span itemprop="telephone">' . $smartestthemes_options['phone_number'] . '</span><br />

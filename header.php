@@ -13,7 +13,7 @@
 <?php wp_head(); ?>
 </head>
 <?php $options = get_option('smartestthemes_options'); ?>
-<body <?php body_class(); if ( is_front_page() ) { echo ' itemscope itemtype="http://schema.org/'.$options['st_business_schema'].'"';} ?>>
+<body <?php body_class(); if ( is_front_page() ) { echo ' itemscope itemtype="http://schema.org/'.$options['st_business_itemtype'].'"';} ?>>
 
 <div id="page" class="hfeed site">
 

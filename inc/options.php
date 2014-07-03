@@ -683,7 +683,7 @@ $options[] = array(
 
 $options[] = array( 'name' => __('Business Type','crucible'),
 					'desc' => __('Select the main category of your business. This is Microdata to maximize your search-engine ranking.','crucible'),
-					'id' => $shortname.'_business_schema',
+					'id' => $shortname.'_business_itemtype',
 					'type' => 'select2',
 					'std' => 'LocalBusiness',
 					'options' => $schema_itemtypes);
