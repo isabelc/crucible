@@ -390,33 +390,8 @@ $options[] = array( 'name' => __('Custom CSS','crucible'),
 /* Logo */
 $options[] = array( 'name' => __('Logo','crucible'),'class' => 'image',
 					'type' => 'heading');
-/** @test move this option to customizer					
-$options[] = array( 'name' => __('Custom Logo Image','crucible'),
-					'desc' => __('Upload a logo for your theme, or specify the image address of your online logo, like http://yoursite.com/logo.png','crucible'),
-					'id' => $shortname.'_logo',
-					'std' => '',
-					'type' => 'upload');
 
-					
-
-*
-$options[] = array( 'name' => __( 'Show Tagline With Your Logo?', 'crucible' ),
-				'desc' => __( 'Check this to show the tagline under your logo. (You can edit your tagline at ettings -> General).', 'crucible' ),
-				'id' => $shortname.'_show_tagline',
-				'std' => 'false',
-				'type' => 'checkbox');
-				
-
-
-
-$options[] = array( 'name' => __('Optional: Increase Logo Height','crucible'),
-					'desc' => __('By default, your logo will shrink to a max height of 150px to fit within the theme\'s header. Preview your site to see this. To increase the size, enter a maximum height greater than 150. Enter just the number. The width increases as the height increases. The logo will stop growing when it reaches a certain width, in order to keep it looking good on all screen sizes.<br /><br /><strong>Tip: banner images of 700px by 150px fit perfectly without needing height modifications.</strong>','crucible'),
-					'id' => $shortname.'_increase_logo',
-					'std' => '',
-					'type' => 'text');
-*/
-
-
+/* @todo a better intro, referencing the fact that img logos are to be done in the customizer */
 				
 $options[] = array( 'name' => __('Text Logo','crucible'),
 						'type' => 'info',
