@@ -1325,6 +1325,8 @@ function smartestthemes_about_page_images() {
 	if ( get_option('st_about_picture') ) {
 		$img_url = get_option('st_about_picture');
 		$topImg = $img_url;
+		$top_width = '';
+		$top_height = '';
 		
 	} elseif ( ! empty($full_featUrl) ) {
 	
@@ -1332,12 +1334,14 @@ function smartestthemes_about_page_images() {
 		
 		$img_url = '';
 		$topImg	= $full_featUrl[0];
+		$top_width = $width;
+		$top_height = $height;
 		
 	}
 	$out = array();
 
 	if( !empty($topImg) ) {
-		$out[] = '<figure><a href="' . $topImg . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $topImg . '" alt="' . the_title_attribute('echo=0') . '" width="' . $width . '" height="' . $height . '" /></a></figure>';
+		$out[] = '<figure><a href="' . $topImg . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $topImg . '" alt="' . the_title_attribute('echo=0') . '" width="' . $top_width . '" height="' . $top_height . '" /></a></figure>';
 	}
 
 	// if there's both an about page option picture and a featured image, do feat.image at bottom
