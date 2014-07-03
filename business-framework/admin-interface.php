@@ -11,7 +11,7 @@ function smartestthemes_option_setup(){
 	$smartestthemes_array = array();
 	add_option('smartestthemes_options',$smartestthemes_array);
 	$template = get_option('smartestthemes_template');
-	$saved_options = get_option('smartestthemes_options');
+	$saved_options = get_option('smartestthemes_options');// @test if needed
 	
 	
 	foreach($template as $option) {
@@ -115,7 +115,7 @@ function smartestthemes_reset_options($options,$page = ''){
 /* Framework options panel */
 function smartestthemes_options_page(){
 	$options = get_option('smartestthemes_template');
-	$manualurl = get_option('st_manual');
+	$manualurl = get_option('st_manual');// @test option name if correct
 	$themedata = wp_get_theme();
 	$themename = $themedata->Name;
 	$local_version = $themedata->Version;

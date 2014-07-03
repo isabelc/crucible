@@ -108,7 +108,7 @@ function crucible_post_thumbnail() {
 	}
 	
 	global $smartestthemes_options;
-	$stop = isset($smartestthemes_options['stop_theme_icon']) ? $smartestthemes_options['stop_theme_icon'] : ''; // @test 
+	$stop = isset($smartestthemes_options['st_stop_theme_icon']) ? $smartestthemes_options['st_stop_theme_icon'] : ''; // @test this method of global, or do i use get_option
 	
 	
 	if ( ! has_post_thumbnail() ) {
@@ -452,7 +452,7 @@ add_action( 'crucible_footer', 'crucible_footer' );
  */
 function crucible_clock_hours() {
 	global $smartestthemes_options;
-	$hours = isset($smartestthemes_options['hours']) ? $smartestthemes_options['hours'] : '';// @test 
+	$hours = isset($smartestthemes_options['st_hours']) ? $smartestthemes_options['st_hours'] : '';// @test 
 	
 	$output = '';
 	

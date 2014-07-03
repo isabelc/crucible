@@ -35,7 +35,7 @@ do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per t
 		</div>
 	
 	
-	<?php // @test debus
+	<?php // @test debug
 	
 	$test = get_theme_mod('smartestthemes_logo');
 	$test2 = get_option('st_smartestthemes_logo');
