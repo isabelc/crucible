@@ -245,7 +245,7 @@ endif;
  */
 function crucible_contact_info() {
 
-	$options = get_option('smartestthemes_options'); // @todo this or globalize?
+	$options = get_option('smartestthemes_options');
 
 	$output = '<div itemscope itemtype="http://schema.org/'.$options['st_business_schema']. '"><p><strong itemprop="name">';
 	$bn = stripslashes_deep(esc_attr($options['st_business_name']));
