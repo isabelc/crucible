@@ -315,7 +315,7 @@ function crucible_logo() {
 		$output .= '<a href="' . home_url( '/' ) . '" title="' . $ti . '" id="logolink" rel="home">
 		<img id="customlogo" src="' . $src . '" alt="' . $ti . '" title="' . $ti . '" />
 		</a><br />';
-		if ( $options['st_show_tagline'] == 'true' ) { // @test see if 'true' is the right thing to check for. what value is saved for checkboxes?
+		if ( $options['st_show_tagline'] == 'true' ) { // @test see if 'true' is the right thing to check for. what value is saved for checkboxes? now will be crucible_show_tagline.
 			$output .= '<h2 class="site-description">' . get_bloginfo('description') . '</h2>';
 		}
 		

@@ -25,7 +25,7 @@ If it works well, consider using that instead of my logo creator in panel.
 
 do_action( 'crucible_logo' ); // hold
 
-do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per theme
+do_action( 'crucible_social_buttons' ); // @new @todo here or in footer, decide per theme
 
 -->
 	<header id="masthead" class="site-header" role="banner">
@@ -37,11 +37,14 @@ do_action( 'crucible_social_buttons' ); // @todo here or in footer, decide per t
 	
 	<?php // @test debug
 	
-	$test = get_theme_mod('smartestthemes_logo');
-	$test2 = get_option('st_smartestthemes_logo');
-	
-	echo '<h3>test 1, theme_mod:</h3> ' . $test . '<br /><br /><h3>Test 2, option: </h3>' . $test2; 
+	$test = $options['increase_logo'];// @test
+	$test2 = $options['logo_setting'];// @test
+	$test3 = $options['show_tagline'];// @test
+		
+	echo '<h3>test 1, st_increase_logo:</h3> ' . $test . '<br /><br /><h3>Test 2, crucible_logo_setting: </h3>' . $test2. '<br /><br /><h3>Test 3, crucible_show_tagline </h3>' . $test3;
 	?>
+	
+	
 		<?php if ( $options['st_phone_number'] ) {
 			echo $options['st_phone_number'];
 		} ?>
