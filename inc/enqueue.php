@@ -4,11 +4,11 @@
 
 	wp_enqueue_style('font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css');
 
-/* @todo see if i need this
+/* @new @todo see if i need this, depending on theme's style. if not, delete the file.
 
 	$jsdir = get_template_directory_uri(). '/js/';
 
-	if ( is_post_type_archive(array('smartest_staff', 'smartest_services'))) {
+	if ( is_post_type_archive(array('smartest_staff', 'smartest_services')) || is_tax( 'smartest_service_category' ) ) {
 		wp_register_script( 'equalheights', $jsdir . 'equalheights.js', array( 'jquery' ), false, true);
 		wp_enqueue_script('equalheights');	
 	}
