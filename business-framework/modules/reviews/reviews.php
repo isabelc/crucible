@@ -222,12 +222,12 @@ class SMARTESTReviewsBusiness {
         }
         return $str;
     }
-    function get_aggregate_reviews($pageID) {// @todo this param is not needed anymore
+    function get_aggregate_reviews() {// @test this param ($pageID) is not needed anymore
         if ($this->got_aggregate !== false) {
             return $this->got_aggregate;
         }
         global $wpdb;
-        $pageID = get_option('st_reviews_page_id');// @test with new function
+        $pageID = get_option('st_reviews_page_id');// @test with new function below
         $row = $wpdb->get_results("SELECT COUNT(*) AS `total`,AVG(review_rating) AS `aggregate_rating`,MAX(review_rating) AS `max_rating` FROM `$this->dbtable` WHERE `status`=1");
         /* make sure we have at least one review before continuing below */
         if ($wpdb->num_rows == 0 || $row[0]->total == 0) {
@@ -284,13 +284,13 @@ class SMARTESTReviewsBusiness {
 		
 		
 		// gather agg data
-		$postID = $smartestthemes_options['reviews_page_id'];// @test
+		// @test not needed $postID = $smartestthemes_options['reviews_page_id'];// @test
 		
 		
 		$arr_Reviews = $this->get_reviews('', $this->options['reviews_per_page'], 1);
 	 	$reviews = $arr_Reviews[0];// 12.5 @test prob dont need
 		$total_reviews = intval($arr_Reviews[1]);
-		$this->get_aggregate_reviews($postID);
+		$this->get_aggregate_reviews();// @test without param $postID
         $best_score = 5;
         $average_score = number_format($this->got_aggregate["aggregate"], 1);
 	    $aggregate_footer_output = '';
@@ -438,7 +438,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
             return $out;
         }
     }
-    function output_reviews_show($inside_div, $postid, $perpage, $max, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
+    function output_reviews_show($inside_div, $perpage, $max, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
         if ($max != -1) {
             $thispage = 1;
         } else {
@@ -460,11 +460,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
             $this->smar_redirect($url);
         }
 */        
-        if ($postid == 0) {
-            /* NOTE: if using shortcode to show reviews for all pages, could do weird things when using product type */
-            $postid = $reviews[0]->page_id;
-        }
-        if (!$inside_div) {
+		if (!$inside_div) {
             $reviews_content .= '<!-- no inside div --><div id="smar_respond_1"';
 				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['business_itemtype'].'">
 							<span class="isa_vcard" id="hreview-smar-hcard-for-' . $review->id . '">
@@ -476,15 +472,16 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
                                     <span itemprop="addressRegion">' . $smartestthemes_options['address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['address_zip'] . '</span>
                                     <span itemprop="addressCountry">' . $smartestthemes_options['address_country'] . '</span></span></span><hr />';
         }
-        if (count($reviews) == 0) {
-            $reviews_content .= '<p>'. __('There are no reviews yet. Be the first to leave yours!', 'crucible').'</p>';
-        } elseif ($smartestthemes_options['add_reviews'] == 'false') {
-				$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
-        } else {	   		$postid = $smartestthemes_options['reviews_page_id'];
-            $this->get_aggregate_reviews($postid);
-            $summary = $this->got_aggregate["text"];
-            $best_score = 5;
-            $average_score = number_format($this->got_aggregate["aggregate"], 1);
+		if (count($reviews) == 0) {
+			$reviews_content .= '<p>'. __('There are no reviews yet. Be the first to leave yours!', 'crucible').'</p>';
+		} elseif ($smartestthemes_options['add_reviews'] == 'false') {
+			$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
+		} else {	   		
+			// @test not needed $postid = $smartestthemes_options['reviews_page_id'];
+			$this->get_aggregate_reviews();// @test without param $postid
+			$summary = $this->got_aggregate["text"];
+			$best_score = 5;
+			$average_score = number_format($this->got_aggregate["aggregate"], 1);
 			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['business_itemtype'].'"><br />
 							<span class="isa_vcard">
                                 <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a><br />
@@ -615,14 +612,14 @@ function do_the_content($original_content) {
             return $original_content . $the_content;
         }
         
-		$the_content .= '<div id="smar_respond_1"><!-- do the content -->';
+		$the_content .= '<div id="smar_respond_1">';
         $inside_div = true;
        
-        if ($this->options['form_location'] == 0) {
-            $the_content .= $this->show_reviews_form();
-        }
+		if ($this->options['form_location'] == 0) {
+			$the_content .= $this->show_reviews_form();
+		}
 
-	        $ret_Arr = $this->output_reviews_show( $inside_div, $post->ID, $this->options['reviews_per_page'], -1 );
+		$ret_Arr = $this->output_reviews_show( $inside_div, $this->options['reviews_per_page'], -1 );
         $the_content .= $ret_Arr[0];
         $total_reviews = $ret_Arr[1];
         
