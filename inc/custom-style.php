@@ -1,6 +1,5 @@
 <style>
-<?php
-$options = get_option('smartestthemes_options');// @test this way or do global??
+<?php $options = get_option('smartestthemes_options');
 if ( $options['st_header_color'] ) { ?>
 	#navigation, #primary-navigation.toggled-on .menu{background:<?php echo $options['st_header_color']; ?>; }
 <?php } if ( $options['st_footer_color'] ) { ?>
@@ -70,12 +69,12 @@ if ( $options['st_heading_one_font_size'] ) { ?>
 <?php } 
 
 // HIGHLIGHT MENU
-// @new active menu item style from css.
+// @new active menu item style from css. @test the page id options may have to got like get_option()
 ?>
-body.page-id-<?php echo $options['st_about_page_id']; ?> .menu li.about a, 
-body.page-id-<?php echo $options['st_contact_page_id']; ?> .menu li.contact a, 
-body.page-id-<?php echo $options['st_reviews_page_id']; ?> .menu li.reviews a,
-body.page-id-<?php echo $options['st_home_page_id']; ?> .menu > li.home > a,
+body.page-id-<?php echo get_option('st_about_page_id'); ?> .menu li.about a, 
+body.page-id-<?php echo get_option('st_contact_page_id'); ?> .menu li.contact a, 
+body.page-id-<?php echo get_option('st_reviews_page_id'); ?> .menu li.reviews a,
+body.page-id-<?php echo get_option('st_home_page_id'); ?> .menu > li.home > a,
 .menu .current-menu-item a,
 body.post-type-archive-smartest_staff .menu li.staff a,
 	body.post-type-archive-smartest_services .menu li.services a,
@@ -165,10 +164,10 @@ if ( isset($accent_color) && ! empty($accent_color) ) { ?>
 	body.archive.category .menu li.blog a,
 	body.archive.tag .menu li.blog a,
 	body.archive.date .menu li.blog a,
-	body.page-id-<?php echo $options['st_about_page_id']; ?> .menu li.about a, 
-	body.page-id-<?php echo $options['st_contact_page_id']; ?> .menu li.contact a, 
-	body.page-id-<?php echo $options['st_reviews_page_id']; ?> .menu li.reviews a,
-	body.page-id-<?php echo $options['st_home_page_id']; ?> .menu > li.home > a {
+	body.page-id-<?php echo get_option('st_about_page_id'); ?> .menu li.about a, 
+	body.page-id-<?php echo get_option('st_contact_page_id'); ?> .menu li.contact a, 
+	body.page-id-<?php echo get_option('st_reviews_page_id'); ?> .menu li.reviews a,
+	body.page-id-<?php echo get_option('st_home_page_id'); ?> .menu > li.home > a {
 	     color:<?php echo $accent_color; ?>;
 	}
 	.site-title a:hover {
@@ -252,10 +251,10 @@ if ( $options['st_menu_hover_color'] ) { ?>
 	body.archive.category .menu li.blog a,
 	body.archive.tag .menu li.blog a,
 	body.archive.date .menu li.blog a,
-	body.page-id-<?php echo $options['st_about_page_id']; ?> .menu li.about a, 
-	body.page-id-<?php echo $options['st_contact_page_id']; ?> .menu li.contact a, 
-	body.page-id-<?php echo $options['st_reviews_page_id']; ?> .menu li.reviews a,
-	body.page-id-<?php echo $options['st_home_page_id']; ?> .menu > li.home > a
+	body.page-id-<?php echo get_option('st_about_page_id'); ?> .menu li.about a, 
+	body.page-id-<?php echo get_option('st_contact_page_id'); ?> .menu li.contact a, 
+	body.page-id-<?php echo get_option('st_reviews_page_id'); ?> .menu li.reviews a,
+	body.page-id-<?php echo get_option('st_home_page_id'); ?> .menu > li.home > a
 	{color:<?php echo $options['st_menu_hover_color']; ?>;}
 <?php } if ( $options['st_colorful_social'] == 'true' ) { ?>
 .social-google{background-position: 0 -168px;}.social-google:hover{background-position:0 -112px}.social-facebook{background-position:0 -56px}.social-facebook:hover{background-position:0 0}.social-twitter{background-position:0 -392px}.social-twitter:hover{background-position:0 -336px}.social-linkedin{background-position:0 -280px}.social-linkedin:hover{background-position:0 -224px}.social-youtube{background-position:0 -504px}.social-youtube:hover{background-position:0 -448px}
