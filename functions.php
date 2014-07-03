@@ -182,7 +182,7 @@ function crucible_nav_fallback() {
 	echo '<ul class="menu">'; ?>
 	<li class="home"><a title="<?php echo $sbn; ?>" href="<?php echo site_url('/'); ?>"><?php _e('Home', 'crucible'); ?></a></li>
 	<?php if(($options['st_about_page'] || $options['st_about_picture']) && ($options['st_stop_about'] == 'false')) { ?>
-		<li class="about"><a title="<?php _e('About', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link($options['st_about_page_id']); ?>">
+		<li class="about"><a title="<?php _e('About', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('st_about_page_id')); ?>">
 		<?php _e('About', 'crucible'); ?></a></li>
 	<?php } if($options['st_show_services'] == 'true') { ?>
 		<li class="services"><a title="<?php _e( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_services' ); ?>">
@@ -208,12 +208,12 @@ function crucible_nav_fallback() {
 		<li class="news"><a title="<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_news' ); ?>">
 		<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>
 		</a></li>
-	<?php } if($options['st_stop_contact'] == 'false') { ?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link($options['st_contact_page_id']); ?>">
+	<?php } if($options['st_stop_contact'] == 'false') { ?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('st_contact_page_id')); ?>">
 		<?php _e('Contact', 'crucible'); ?>
 		</a></li>
 	<?php }
 	if ($options['st_add_reviews'] == 'true') {
-		$smartest_reviewspage_uri = get_page_link($options['st_reviews_page_id']);
+		$smartest_reviewspage_uri = get_page_link(get_option('st_reviews_page_id'));
 		echo '<li class="reviews"><a title="' . __('Reviews', 'crucible') . '" href="'. $smartest_reviewspage_uri .'">'. __('Reviews', 'crucible'). '</a></li>';
 	}
    	echo '</ul>';
