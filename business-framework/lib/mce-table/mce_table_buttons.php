@@ -46,12 +46,10 @@ class MCE_Table_Buttons {
 	 */
 	public static function the_editor( $editor ) {
 		global $tinymce_version;
-
 		if ( version_compare( $tinymce_version, '400', '<' ) ) {
 			add_filter( 'mce_external_plugins', array( __CLASS__, 'mce_external_plugins_3_8' ) );
 			add_filter( 'mce_buttons_3', array( __CLASS__, 'mce_buttons_3_8' ) );
-			wp_register_style( 'mce-table-buttons', get_template_directory_uri() . '/business-framework/lib/mce-table/tinymce3-assets/mce-table-buttons.css' );/* @test may need include dirname( __FILE__ ) . '/ */
-			
+			wp_register_style( 'mce-table-buttons', get_template_directory_uri() . '/business-framework/lib/mce-table/tinymce3-assets/mce-table-buttons.css' );
 			wp_print_styles( 'mce-table-buttons' );
 		} else {
 			add_filter( 'mce_external_plugins', array( __CLASS__, 'mce_external_plugins_3_9' ) );

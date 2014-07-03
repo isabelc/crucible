@@ -45,14 +45,14 @@ function smartestthemes_option_setup(){
 function smartestthemes_add_admin() {
 	global $query_string;
 	$themeobject = wp_get_theme();
-	$themename = $themeobject->Name;// @test
-	$themeslug = $themeobject->Template;// @test
+	$themename = $themeobject->Name;
+	$themeslug = $themeobject->Template;
 
 	if ( isset($_REQUEST['page']) && $themeslug == $_REQUEST['page'] ) {
 		if (isset($_REQUEST['smartestthemes_save']) && 'reset' == $_REQUEST['smartestthemes_save']) {
 			$options =  get_option('smartestthemes_template');
 			smartestthemes_reset_options($options,$themeslug);
-			header("Location: admin.php?page=$themeslug&reset=true");// @test
+			header("Location: admin.php?page=$themeslug&reset=true");
 			die;
 		}
 	}
@@ -115,7 +115,7 @@ function smartestthemes_reset_options($options,$page = ''){
 /* Framework options panel */
 function smartestthemes_options_page(){
 	$options = get_option('smartestthemes_template');
-	$manualurl = get_option('st_manual');// @test
+	$manualurl = get_option('st_manual');
 	$themedata = wp_get_theme();
 	$themename = $themedata->Name;
 	$local_version = $themedata->Version;
