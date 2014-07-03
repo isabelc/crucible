@@ -10,17 +10,17 @@
  */
 include dirname( __FILE__ ) . '/inc/updater.php';
 // Smartest Themes Business Framework
-require_once (TEMPLATEPATH . '/business-framework/admin-init.php'); // @test debug 
+require_once TEMPLATEPATH . '/business-framework/admin-init.php'; // @test debug 
 // Theme specific functionality
 $incpath = TEMPLATEPATH . '/inc/';
-require_once ($incpath . 'options.php');
-require_once ($incpath . 'enqueue.php');
-require_once ($incpath . 'fontface.php');
+require_once $incpath . 'options.php';
+require_once $incpath . 'enqueue.php';
+require_once $incpath . 'fontface.php';
 
 /* Add default options and show Options Panel after activating  */
 if (is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" ) {
 	add_action('admin_head','smartestthemes_option_setup');
-	header( 'Location: '.admin_url() . "admin.php?page=crucible" );
+	header( 'Location: '.admin_url() . "admin.php?page=crucible" );// @new
 }
 /**
  * Set the content width based on the theme's design and stylesheet.

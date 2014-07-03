@@ -306,8 +306,8 @@ else {$show = false; }
 			
 			$bn = stripslashes_deep(esc_attr($smartestthemes_options['business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
 
-			$aggregate_footer_output .= '<a itemprop="name" href="' . site_url('/')
- . '">' . $bn . '</a><br />';
+			$aggregate_footer_output .= '<a href="' . site_url('/')
+ . '"><span itemprop="name">' . $bn . '</span></a><br />';
 				if ( $smartestthemes_options['address_street'] != '' || 
 					$smartestthemes_options['address_city'] != '' ||
 					$smartestthemes_options['address_state'] != '' ||
@@ -468,7 +468,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
             $reviews_content .= '<!-- no inside div --><div id="smar_respond_1"';
 				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['business_itemtype'].'">
 							<span class="isa_vcard" id="hreview-smar-hcard-for-' . $review->id . '">
-                                <a itemprop="name" href="' . site_url('/') . '">' . $bn . '</a>
+                                <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a>
                                 <span itemprop="telephone">' . $smartestthemes_options['phone_number'] . '</span>
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
                     <span itemprop="streetAddress">' . $smartestthemes_options['address_street'] . ' ' .$smartestthemes_options['address_suite'] . '</span>
@@ -487,7 +487,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
             $average_score = number_format($this->got_aggregate["aggregate"], 1);
 			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['business_itemtype'].'"><br />
 							<span class="isa_vcard">
-                                <a itemprop="name" href="' . site_url('/') . '">' . $bn . '</a><br />
+                                <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a><br />
                                 <span itemprop="telephone">' . $smartestthemes_options['phone_number'] . '</span><br />
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
                                     <span itemprop="streetAddress">' . $smartestthemes_options['address_street'] . ' ' .$smartestthemes_options['address_suite'] . '</span><br />
