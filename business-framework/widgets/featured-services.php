@@ -87,7 +87,7 @@ class SmartestFeaturedServices extends WP_Widget {
 					echo '<figure id="sfsfig"><a href="'.get_permalink().'" title="'.get_the_title().'">';
 					$thumb = get_post_thumbnail_id(); 
 					$smallimage = vt_resize( $thumb, '', 152, 96, true); ?>
-					<img src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" />
+					<img src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" />
 <?php
 				echo '</a></figure>';
 				}

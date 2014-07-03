@@ -64,7 +64,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 			$smallimage = vt_resize( $thumb, '', 40, 65, true);
 			echo '<figure id="sfafig"><a href="'.get_permalink().'" title="'.get_the_title().'">';
 			?>
-			<img class="thumb" src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" />
+			<img class="thumb" src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" />
 		<?php echo '</a></figure>';
 		} else {
 				// if not stopped with option
