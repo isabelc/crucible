@@ -15,7 +15,7 @@
 	<div class="entry-content">
 		<?php 
 		$options = get_option('smartestthemes_options');
-		$aboutcontent = stripslashes_deep($options['st_about_page']);// @test
+		$aboutcontent = stripslashes_deep($options['st_about_page']);
 		echo wpautop($aboutcontent); 
 		the_content();
 		smartestthemes_about_bottom_image();
