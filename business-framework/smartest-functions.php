@@ -1304,17 +1304,20 @@ function st_get_attachment_id_from_url( $attachment_url = '' ) {
 }
 
 /**
- * @return array of images there are for About page
+ * @return array of images for About page
  */
 
 function smartestthemes_about_page_images() {
-
 	$img_url = '';
 	$full_featUrl = '';
+	$width = '';
+	$height = '';
 	$topImg = '';
 	if ( has_post_thumbnail() ) {
 		$img = get_post_thumbnail_id(); 
 		$full_featUrl = wp_get_attachment_image_src( $img, 'full');
+		$width = $full_featUrl[1];
+		$height = $full_featUrl[2];
 	}
 	
 	// if there is an about page option picture, do it at top
@@ -1334,14 +1337,14 @@ function smartestthemes_about_page_images() {
 	$out = array();
 
 	if( !empty($topImg) ) {
-		$out[] = '<figure><a href="' . $topImg . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $topImg . '" alt="' . the_title_attribute('echo=0') . '" /></a></figure>';
+		$out[] = '<figure><a href="' . $topImg . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $topImg . '" alt="' . the_title_attribute('echo=0') . '" width="' . $width . '" height="' . $height . '" /></a></figure>';
 	}
 
 	// if there's both an about page option picture and a featured image, do feat.image at bottom
 	
 	if ( !empty($img_url) && !empty($full_featUrl) ) {
 			
-		$out[] = '<figure><a href="' . $full_featUrl[0] . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $full_featUrl[0] . '" alt="' . the_title_attribute('echo=0') . '" /></a></figure>';
+		$out[] = '<figure><a href="' . $full_featUrl[0] . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $full_featUrl[0] . '" alt="' . the_title_attribute('echo=0') . '" width="' . $width . '" height="' . $height . '" /></a></figure>';
 	}
 
 	return $out;
