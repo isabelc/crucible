@@ -181,7 +181,7 @@ function sbf_create_contact_page() {
 add_action('after_setup_theme', 'sbf_create_contact_page');
 // if contact page is disabled, delete the page
 if(get_option('st_stop_contact') == 'true') {
-	wp_delete_post(get_option('st_contact_page_id'), true);
+	wp_delete_post(get_option('smartestthemes_contact_page_id'), true);
 }
 /**
 * enqueue CSS and validation script
@@ -189,7 +189,7 @@ if(get_option('st_stop_contact') == 'true') {
 function stcf_enqueue_scripts() {
 	wp_register_script('stcf-validate', get_template_directory_uri().'/business-framework/modules/contact/stcf-validate.js', array('jquery'), false, true);// @test does it work even in footer
 	wp_register_style('contactstyle', get_template_directory_uri().'/business-framework/modules/contact/contact.css');
-	if (is_page(get_option('st_contact_page_id'))){
+	if (is_page(get_option('smartestthemes_contact_page_id'))){
 		wp_enqueue_script('stcf-validate');
 		wp_enqueue_style('contactstyle');
 	}

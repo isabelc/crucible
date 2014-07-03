@@ -38,7 +38,7 @@ class SmartestReviewsTestimonial extends WP_Widget {
 
 		global $wpdb;
 		// get the permalink by page id.
-		$reviews_pageurl = get_permalink(get_option('st_reviews_page_id'));
+		$reviews_pageurl = get_permalink(get_option('smartestthemes_reviews_page_id'));
 
 		$pre = $wpdb->base_prefix;
 

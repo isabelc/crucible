@@ -69,7 +69,7 @@ class SMARTESTReviewsBusiness {
     }
     function get_jumplink_for_review($review,$page) {
        /* $page will be 1 for shortcode usage since it pulls most recent, which SHOULD all be on page 1 */
-       $link = get_permalink( get_option('st_reviews_page_id') );
+       $link = get_permalink( get_option('smartestthemes_reviews_page_id') );
         if (strpos($link,'?') === false) {
             $link = trailingslashit($link) . "?smarp=$page#hreview-$review->id";
         } else {
@@ -227,7 +227,7 @@ class SMARTESTReviewsBusiness {
             return $this->got_aggregate;
         }
         global $wpdb;
-        $pageID = get_option('st_reviews_page_id');// @test with new function below
+        $pageID = get_option('smartestthemes_reviews_page_id');// @test with new function below
         $row = $wpdb->get_results("SELECT COUNT(*) AS `total`,AVG(review_rating) AS `aggregate_rating`,MAX(review_rating) AS `max_rating` FROM `$this->dbtable` WHERE `status`=1");
         /* make sure we have at least one review before continuing below */
         if ($wpdb->num_rows == 0 || $row[0]->total == 0) {
@@ -456,7 +456,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
 /* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
          trying to access a page that does not exist -- send to main page 
         if ( isset($this->p->smarp) && $this->p->smarp != 1 && count($reviews) == 0 ) {
-            $url = get_permalink(get_option('st_reviews_page_id'));
+            $url = get_permalink(get_option('smartestthemes_reviews_page_id'));
             $this->smar_redirect($url);
         }
 */        
@@ -975,7 +975,7 @@ function do_the_content($original_content) {
 		if( get_option('st_add_reviews') == 'true'  ) {
 			wp_register_style('smartest-reviews', $this->getpluginurl() . 'reviews.css', array(), $this->version);wp_enqueue_style('smartest-reviews');
 			wp_register_script('smartest-reviews', $this->getpluginurl() . 'reviews.js', array('jquery'), $this->version, true);
-			if( is_page(get_option('st_reviews_page_id'))) {
+			if( is_page(get_option('smartestthemes_reviews_page_id'))) {
 		        wp_enqueue_script('smartest-reviews');
 				$loc = array(
 					'hidebutton' => __('Click here to hide form', 'crucible'),
