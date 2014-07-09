@@ -110,7 +110,6 @@ function crucible_post_thumbnail() {
 	global $smartestthemes_options;
 	$stop = isset($smartestthemes_options['st_stop_theme_icon']) ? $smartestthemes_options['st_stop_theme_icon'] : ''; // @test this method of global, or do i use get_option
 	
-	
 	if ( ! has_post_thumbnail() ) {
 		if ( is_post_type_archive( 'smartest_news' ) && ( $stop == 'false' ) ) {
 			// show news icon
@@ -290,81 +289,43 @@ function crucible_google_map() {
 function crucible_logo() {
 
 	$options = get_option('smartestthemes_options'); // @todo this or globalize?
-
+	$name = get_bloginfo('name');
+	$description = get_bloginfo('description');
+	
 	$bn = stripslashes(esc_attr($options['st_business_name']));
-	if(!$bn) { $bn = get_bloginfo('name'); }
+	if(!$bn) { $bn = $name; }
 	//seo title
 	$ti = stripslashes(esc_attr($options['st_home_meta_title']));
 	if(empty($ti)) $ti = $bn;
 	$output = '';
-	/* @test replace whole logo section
-	*
-	*
-	
-	if ( $options['st_logo'] ) {
+
+	if ( $options['logo_setting'] ) {
 		// there is a logo
-		if ( $options['st_increase_logo'] ) {
+		if ( $options['increase_logo'] ) {
 			// custom height is set, use full size image which is resized with CSS
-			$src = $options['st_logo'];
+			$src = $options['logo_setting'];
 		} else {
 			// use the logo_thumb which is cut during upload and has its retina ready counterpart
-			$src_id = st_get_attachment_id_from_url($options['st_logo']);
-			$src_atts = wp_get_attachment_image_src($src_id, 'ps-logo');
+			$src_id = st_get_attachment_id_from_url($options['logo_setting']);
+			$src_atts = wp_get_attachment_image_src($src_id, 'crucible-logo');
 			$src = $src_atts[0];
 		}
 		$output .= '<a href="' . home_url( '/' ) . '" title="' . $ti . '" id="logolink" rel="home">
 		<img id="customlogo" src="' . $src . '" alt="' . $ti . '" title="' . $ti . '" />
 		</a><br />';
-		if ( $options['st_show_tagline'] == 'true' ) { // @test see if 'true' is the right thing to check for. what value is saved for checkboxes? now will be crucible_show_tagline.
-			$output .= '<h2 class="site-description">' . get_bloginfo('description') . '</h2>';
+		if ( empty($options['hide_tagline']) ) {
+			$output .= '<h2 class="site-description">' . $description . '</h2>';
 		}
+	} else { 
 		
-		
-		
-		
-	*/
-	$test = get_theme_mod('smartestthemes_logo');
-	
-	if ( $test ) {
-		$output .= '<h3>THIS IS A @TEST </h3><br />' . $test;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	} else {
-		//no logo option, use text logo 
-		$logo_text_part_1		= stripslashes_deep( $options['st_logo_text_part_1'] );
-		$logo_text_part_orange	= stripslashes_deep( $options['st_logo_text_part_orange'] );
-		$logo_text_part_3		= stripslashes_deep( $options['st_logo_text_part_3'] );
-		$logo_text_part_small	= stripslashes_deep( $options['st_logo_text_part_small'] );
-		// if all empty, use blogname
-		if ( empty($logo_text_part_1) && empty($logo_text_part_orange) && empty($logo_text_part_3) && empty($logo_text_part_small) ) $logo_text_part_1 = get_bloginfo('name');
-		if ( $logo_text_part_1 ) {
-			$output .= '<h1 class="site-title"><a href="' . home_url( '/' ) . '" title="' . $ti . '" rel="home">' . $logo_text_part_1;
-			if ( $logo_text_part_orange ) {
-				$output .= '<strong>' . $logo_text_part_orange . '</strong>';
-			}
-			if ( $logo_text_part_3 ) {
-				$output .= $logo_text_part_3;
-			}
-			$output .= '</a>';
-			if ( $logo_text_part_small ) {
-				$output .= '<span>' . $logo_text_part_small . '</span>';
-			}
-			$output .= '</h1><h2 class="site-description">' . bloginfo('description') . '</h2>';
+		// no logo image, so use text logo 
+		if ( $name ) {
+			$output .= '<h1 class="site-title"><a href="' . home_url( '/' ) . '" title="' . $ti . '" rel="home">' . $name . '</a></h1>';
+		}
+		if ( empty($options['hide_tagline']) ) {
+			$output .= '<h2 class="site-description">' . $description . '</h2>';
+		}
 			
-		} // end if $logo_text_part_1
 	} // end else no logo
 	echo $output;
 }

@@ -184,43 +184,39 @@ input[type="reset"]:hover,input[type="submit"]:hover, #contact-form input[type="
 <?php }
 
 // LOGO
-if ( $options['st_logo_color'] ) {
-	echo '.site-title a { color:'. $options['st_logo_color'].'; }';
+if ( $options['logo_color'] ) {
+	echo '.site-title a { color:'. $options['logo_color'].'; }';
 }
 
-if ( $options['st_logo_color_2'] ) {
-	echo '.site-title a strong { color:'. $options['st_logo_color_2'].'; }';
-}
-if ( $options['st_logo_color_4'] ) {
-	echo '.site-title span { color:'. $options['st_logo_color_4'].'; }';
+if ( $options['logo_hover_color'] ) {
+	echo '.site-title a:hover { color:'.$options['logo_hover_color'].'; }';
 }
 
-if ( $options['st_logo_hover_color'] ) {
-	echo '.site-title a:hover { color:'.$options['st_logo_hover_color'].'; }';
-}
-
-$logo_font = $options['st_logo_font'];
+$logo_font = $options['logo_font'];
 if ( $logo_font )
 	echo '.site-title a,.site-title span {font-family:'. $logo_font. ' }';
-if( in_array($logo_font, array('florante_at_lauraregular,Arial,Helvetica,sans-serif') ) ) echo '.site-title a{letter-spacing: -3px;}';
-if ( $options['st_logo_font_size'] )
-	echo '.site-title a {font-size:'.$options['st_logo_font_size'].'; }';
-if ( $options['st_logo_font_size_4'] )
-	echo '.site-title span {font-size:'.$options['st_logo_font_size_4'].';line-height:'.$options['st_logo_font_size_4'].'; }';
-$increase_logo = $options['st_increase_logo'] ;
+
+if ( $options['logo_fontsize'] )
+	echo '.site-title a {font-size:'.$options['logo_fontsize'].'; }';
+	
+$increase_logo = $options['increase_logo'] ;
 if ( $increase_logo ) {
 	echo 'a#logolink #customlogo {max-height:' . $increase_logo . 'px !important;}';
 }
+
 // tagline
-if ( $options['st_tagline_color'] ) {
-		echo '#mast h4 { color:'. $options['st_tagline_color'].'; }';
+if( empty($options['hide_tagline']) ) {
+	if ( $options['tagline_color'] ) {
+		echo 'h2.site-description { color:'. $options['tagline_color'].'; }';
+	}
+	if ( $options['tagline_font'] ) { ?>
+		h2.site-description{font-family:<?php echo $options['tagline_font']; ?>;}
+	<?php } 
+	 if ( $options['tagline_size'] ) { ?>
+		h2.site-description{font-size:<?php echo $options['tagline_size']; ?>;}
+	<?php }
 }
-if ( $options['st_tagline_font'] ) { ?>
-	#mast h4 {font-family:<?php echo $options['st_tagline_font']; ?>;}
-<?php } 
- if ( $options['st_tagline_font_size'] ) { ?>
-	#mast h4 {font-size:<?php echo $options['st_tagline_font_size']; ?>;}
-<?php }
+
 // attention grabber
 if ( $options['st_attention_grabber_color'] ) { 
 		echo '.titles { color:'. $options['st_attention_grabber_color'].'; }';

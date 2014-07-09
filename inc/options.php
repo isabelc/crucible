@@ -393,6 +393,12 @@ $options[] = array( 'name' => __('Logo','crucible'),'class' => 'image',
 
 /* @todo a better intro, referencing the fact that img logos are to be done in the customizer */
 				
+/* @test replace with customizer !! 
+
+*
+*
+
+				
 $options[] = array( 'name' => __('Text Logo','crucible'),
 						'type' => 'info',
 						'std' => sprintf(__('The rest of this page is for using a text logo instead of an image. Here you can create a text-based logo with custom fonts and colors like this:%1$s %2$s %1$s Part 1 is all the text before the alternate color. Part 2 is the alternate color text; it is the same size as part 1, but gets its own color. Part 3 is after the alternate color; it is the same size and color as Part 1. Part 4 is the smaller text which gets its own size and color. To make a text logo, only Part 1 is required.','crucible'), '<br />', $sampleimg ));
@@ -456,6 +462,10 @@ $options[] = array( 'name' => __('Logo Hover Color','crucible'),
 					'id' => $shortname.'_logo_hover_color',
 					'std' => '',
 					'type' => 'color');
+					
+*/
+
+					
 /* Fonts */
 $options[] = array( 'name' => __('Fonts','crucible'),'class' => 'typography',
 					'type' => 'heading'); 
@@ -487,16 +497,29 @@ $options[] = array( 'name' => __('Footer Text Color','crucible'),
 					'id' => $shortname.'_footer_text_color',
 					'std' => '',
 					'type' => 'color');
+
+
+					/* @test move to customizer
+					
 $options[] = array( 'name' => __('Tag Line Color','crucible'),
 					'desc' => __('The color of your tag line text.','crucible'),
 					'id' => $shortname.'_tagline_color',
 					'std' => '',
 					'type' => 'color');
+					
+					*/
+					
+					
 $options[] = array( 'name' => __('Attention Grabber Color','crucible'),
 					'desc' => __('The color of your home page Attention Grabber text.','crucible'),
 					'id' => $shortname.'_attention_grabber_color',
 					'std' => '',
 					'type' => 'color');
+					
+					/* @test move to customizer
+					*
+					
+					
 $options[] = array( 'name' => __('Tag Line Font','crucible'),
 					'desc' => __('Select which font you would like to use for your tag line text.  Leave blank to use the default.','crucible'),
 					'id' => $shortname.'_tagline_font',
@@ -504,12 +527,17 @@ $options[] = array( 'name' => __('Tag Line Font','crucible'),
 					'class' => 'clearfix',
 					'std' => '',
 					'options' => $headfonts);
+					
 $options[] = array( 'name' => __('Tag Line Font Size','crucible'),
 					'desc' => __('Select a font-size for your tag line. Leave blank to use the default.','crucible'),
 					'id' => $shortname.'_tagline_font_size',
 					'type' => 'select',
 					'std' => '',
 					'options' => $fontsizes);
+					
+*/
+
+					
 $options[] = array( 'name' => __('Attention Grabber Font','crucible'),
 					'desc' => __('Select which font you would like to use for your Attention Grabber text.  Leave blank to use the default.','crucible'),
 					'id' => $shortname.'_attention_grabber_font',

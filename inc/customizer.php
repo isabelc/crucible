@@ -17,7 +17,7 @@ function crucible_customize_register( $wp_customize ) {
 	
 	$wp_customize->add_section('crucible_site_logo_section', array(
         'title'    => __('Site Logo', 'crucible'),
-		'description' => 'Upload a logo to replace the default site name and description in the header',
+		'description' => 'Upload a logo to replace the default site name in the header',
         'priority' => 10,
     ));
 	
@@ -36,23 +36,6 @@ function crucible_customize_register( $wp_customize ) {
     'settings' => 'smartestthemes_options[logo_setting]',
 ) ) );
 	
-    //  =============================
-    //  = Checkbox      @todo checkbox output if '1' if on or nothing.
-    //  =============================
-    $wp_customize->add_setting('smartestthemes_options[show_tagline]', array(
-        'default'           => '',
-        'type'           => 'option',
-     ));
- 
-     $wp_customize->add_control('crucible_display_tagline', array(
-        'settings' => 'smartestthemes_options[show_tagline]',
-        'label'    => __('Show Tagline Under Your Logo?', 'crucible'),
-        'section'  => 'crucible_site_logo_section',
-        'type'     => 'checkbox',
-		'priority'   => 25
-    ));
-	
-	
 	//  =============================
     //  = Text Input                =
     //  =============================
@@ -67,6 +50,178 @@ function crucible_customize_register( $wp_customize ) {
         'settings'   => 'smartestthemes_options[increase_logo]',
 		'priority'   => 35
     ));
+	
+	
+	// =============================
+	// = Select Box =
+	// =============================
+	$wp_customize->add_setting('smartestthemes_options[logo_font]', array(
+		'default' => 'Copperplate Bold, Copperplate Gothic Bold, serif',// @new default logo font
+		'type' => 'option'
+	));
+	$wp_customize->add_control( 'logo_font_select', array(
+		'settings' => 'smartestthemes_options[logo_font]',
+		'label' => 'Site Title Font:',
+		'section' => 'title_tagline',
+		'type' => 'select',
+		'choices' => array(
+			'Arial,Helvetica,sans-serif' => 'Arial',
+			'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
+			'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
+			'Copperplate Bold, Copperplate Gothic Bold, serif' => 'Copperplate Gothic Bold',
+			'Garamond, Hoefler Text, Times New Roman, Times, serif' => 'Garamond',
+			'Georgia, Times, Times New Roman, serif' => 'Georgia',
+			'GillSans, Calibri, Trebuchet MS, sans-serif' => 'GillSans, Calibri',
+			'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' => 'Impact',
+			'Monotype Corsiva, Arial, sans-serif' => 'Monotype Corsiva',
+			'Lucida Console,Monaco,monospace' => 'Lucida Console, Monaco, monospace',
+			'Lucida Sans Unicode,Lucida Grande,sans-serif' => 'Lucida Sans',
+			'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua, serif',
+			'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
+			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
+			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
+		),
+		'priority'   => 62
+	));
+
+
+	//  =============================
+    //  = Color Input                =
+    //  =============================
+	$wp_customize->add_setting('smartestthemes_options[logo_color]', array(
+        'default'           => '',
+        'type'           => 'option',
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_logo_color', 
+			array(
+				'label'      => __( 'Site Title Color', 'crucible' ),
+				'section'    => 'title_tagline',
+				'settings'   => 'smartestthemes_options[logo_color]',
+				'priority'   => 63
+			)
+	));
+
+
+	//  =============================
+    //  = Color Input                =
+    //  =============================
+	$wp_customize->add_setting('smartestthemes_options[logo_hover_color]', array(
+        'default'           => '',
+        'type'           => 'option',
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_logo_hover_color', 
+			array(
+				'label'      => __( 'Site Title Hover Color', 'crucible' ),
+				'section'    => 'title_tagline',
+				'settings'   => 'smartestthemes_options[logo_hover_color]',
+				'priority'   => 64
+			)
+	));
+
+	//  =============================
+    //  = Text Input                =
+    //  =============================
+    $wp_customize->add_setting('smartestthemes_options[logo_fontsize]', array(
+        'default'           => '',
+        'type'           => 'option',
+     ));
+	
+	$wp_customize->add_control('crucible_logo_font_size', array(
+        'label'      => __('Optional: Logo Font Size. Default is 36px.', 'crucible'),// @new default size
+        'section'    => 'title_tagline',
+        'settings'   => 'smartestthemes_options[logo_fontsize]',
+		'priority'   => 65
+    ));
+	
+	
+	//  =============================
+    //  = Checkbox      checkbox outputs '1' if checked, or nothing if not checked.
+    //  =============================
+    $wp_customize->add_setting('smartestthemes_options[hide_tagline]', array(
+        'default'           => '',
+        'type'           => 'option',
+     ));
+ 
+     $wp_customize->add_control('crucible_display_tagline', array(
+        'settings' => 'smartestthemes_options[hide_tagline]',
+        'label'    => __('Hide The Tagline From Header?', 'crucible'),
+        'section'  => 'title_tagline',
+        'type'     => 'checkbox',
+		'priority'   => 15
+    ));
+	// =============================
+	// = Select Box =
+	// =============================
+	$wp_customize->add_setting('smartestthemes_options[tagline_font]', array(
+		'default' => 'Copperplate Bold, Copperplate Gothic Bold, serif',// @new default logo font
+		'type' => 'option'
+	));
+	$wp_customize->add_control( 'tagline_font_select', array(
+		'settings' => 'smartestthemes_options[tagline_font]',
+		'label' => 'Tagline Font:',
+		'section' => 'title_tagline',
+		'type' => 'select',
+		'choices' => array(
+			'Arial,Helvetica,sans-serif' => 'Arial',
+			'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
+			'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
+			'Copperplate Bold, Copperplate Gothic Bold, serif' => 'Copperplate Gothic Bold',
+			'Garamond, Hoefler Text, Times New Roman, Times, serif' => 'Garamond',
+			'Georgia, Times, Times New Roman, serif' => 'Georgia',
+			'GillSans, Calibri, Trebuchet MS, sans-serif' => 'GillSans, Calibri',
+			'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' => 'Impact',
+			'Monotype Corsiva, Arial, sans-serif' => 'Monotype Corsiva',
+			'Lucida Console,Monaco,monospace' => 'Lucida Console, Monaco, monospace',
+			'Lucida Sans Unicode,Lucida Grande,sans-serif' => 'Lucida Sans',
+			'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua, serif',
+			'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
+			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
+			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
+		),
+		'priority'   => 66
+	));
+
+
+	//  =============================
+    //  = Color Input                =
+    //  =============================
+	$wp_customize->add_setting('smartestthemes_options[tagline_color]', array(
+        'default'           => '',
+        'type'           => 'option',
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_tagline_color', 
+			array(
+				'label'      => __( 'Tagline Color', 'crucible' ),
+				'section'    => 'title_tagline',
+				'settings'   => 'smartestthemes_options[tagline_color]',
+				'priority'   => 67
+			)
+	));
+	//  =============================
+    //  = Text Input                =
+    //  =============================
+    $wp_customize->add_setting('smartestthemes_options[tagline_size]', array(
+        'default'           => '',
+        'type'           => 'option',
+     ));
+	
+	$wp_customize->add_control('crucible_tagline_font_size', array(
+        'label'      => __('Optional: Tagline Font Size. Default is 24px.', 'crucible'),// @new default size
+        'section'    => 'title_tagline',
+        'settings'   => 'smartestthemes_options[tagline_size]',
+		'priority'   => 68
+    ));
+
+
 }
 add_action( 'customize_register', 'crucible_customize_register' );
 
