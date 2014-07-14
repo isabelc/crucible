@@ -133,7 +133,7 @@ function crucible_post_thumbnail() {
 	$full_image_url = wp_get_attachment_image_src( $img, 'full');
 
 	if ( is_singular() ) :
-		$out .= '<div class="post-thumbnail"><a href="' . $full_image_url[0] . '" title="' . the_title_attribute('echo=0') . '"><img src="' . $full_image_url[0] . '" alt="' . the_title_attribute('echo=0') . '"></a></div>';
+		$out .= '<div class="post-thumbnail"><a href="' . $full_image_url[0] . '" title="' . the_title_attribute('echo=0') . '"><img src="' . $full_image_url[0] . '" alt="' . the_title_attribute('echo=0') . '" width="' . $full_image_url[1] . '" height="' . $full_image_url[2] . '" /></a></div>';
 
 	else : 
 
