@@ -985,8 +985,8 @@ add_action( 'wp_before_admin_bar_render', 'smartestthemes_admin_bar' );
 
 function smartest_framework_enq() {
 	wp_register_style( 'frame', get_template_directory_uri().'/business-framework/css/frame.css');
-	wp_enqueue_style( 'frame' );
-	wp_register_script('responsive', get_template_directory_uri().'/business-framework/js/responsive.js', array('jquery'), false, true);
+	wp_enqueue_style( 'frame' );// @todo sync with style sheet.
+	wp_register_script('responsive', get_template_directory_uri().'/business-framework/js/responsive.js', array('jquery'), false, true);// @todo possibly make inline in wp-head
 	// not on reviews page
 	if( !is_page( get_option('smartestthemes_reviews_page_id') ) ) {	
 		wp_enqueue_script('responsive');
