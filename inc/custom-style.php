@@ -1,5 +1,4 @@
-<style>
-<?php $options = get_option('smartestthemes_options');
+<style><?php global $smartestthemes_options;
 if ( $options['st_header_color'] ) { ?>
 	#navigation, #primary-navigation.toggled-on .menu{background:<?php echo $options['st_header_color']; ?>; }
 <?php } if ( $options['st_footer_color'] ) { ?>
