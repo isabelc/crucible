@@ -68,9 +68,8 @@ endif; ?>
 						elseif ( is_post_type_archive('smartest_news') ) :
 							echo apply_filters('smartestthemes_news_heading', __('Announcements', 'crucible'));
 						elseif (is_tax('smartest_service_category')) :
-							$taxonomy = get_query_var( 'taxonomy' );
 							$queried_object = get_queried_object();
-							echo $queried_object->name;
+							echo $queried_object->name;// @test
 						else :
 							_e( 'Archives', 'crucible' );
 						endif;
