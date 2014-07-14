@@ -31,7 +31,6 @@ add_action( 'admin_init', 'crucible_edd_sl_updater' );
 * Add menu item
 */
 function crucible_license_menu() {
-
 	$themeobject = wp_get_theme();
 	$slug = $themeobject->Template;
 	add_theme_page( __( 'Theme License', 'crucible' ), __( 'Theme License', 'crucible' ), 'manage_options', $slug . 'license', 'crucible_license_page' );
