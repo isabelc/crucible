@@ -241,3 +241,4 @@ function crucible_numberposts( $query ) {
     }
 }
 // @new @todo if needed add_action( 'pre_get_posts', 'crucible_numberposts' );
+add_filter('widget_text', 'do_shortcode');
