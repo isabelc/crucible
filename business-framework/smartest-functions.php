@@ -671,7 +671,7 @@ get_option('st_sshow_description')),
 		)
 	);
 
-	return $meta_boxes;
+	return apply_filters( 'smartestthemes_cmb', $meta_boxes );
 }
 
 add_action( 'init', 'smar_initialize_cmb_meta_boxes', 9999 );
