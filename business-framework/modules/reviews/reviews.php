@@ -663,8 +663,6 @@ function do_the_content($original_content) {
         if ($this->options['form_location'] == 1) {
             $the_content .= $this->show_reviews_form();
         }
-        
-        // @test remove $the_content .= $this->aggregate_footer(); /* check if we need to show something in the footer also */
         $the_content .= '</div>';
         $the_content = preg_replace('/\n\r|\r\n|\n|\r|\t/', '', $the_content); /* minify to prevent automatic line breaks, not removing double spaces */
 
