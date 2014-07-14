@@ -68,7 +68,7 @@ class SMARTESTReviewsBusiness {
         $SMARTESTReviewsBusinessAdmin->real_admin_view_reviews();
     }
     function get_jumplink_for_review($review,$page) {
-       /* $page will be 1 for shortcode usage since it pulls most recent, which SHOULD all be on page 1 */
+
        $link = get_permalink( get_option('smartestthemes_reviews_page_id') );
         if (strpos($link,'?') === false) {
             $link = trailingslashit($link) . "?smarp=$page#hreview-$review->id";
@@ -98,7 +98,9 @@ class SMARTESTReviewsBusiness {
             'show_custom' => array(),
             'show_fields' => array('fname' => 1, 'femail' => 0, 'fwebsite' => 0, 'ftitle' => 1, 'fage' => 0, 'fgender' => 0),
             'show_hcard_on' => 1,
-            'submit_button_text' => __('Submit your review', 'crucible'),
+            'biz_declare' => 0,
+			'biz_declare_shortcode' => 0,
+			'submit_button_text' => __('Submit your review', 'crucible'),
             'title_tag' => 'h2'
         );
          $this->options = get_option('smar_options', $default_options);
@@ -222,12 +224,12 @@ class SMARTESTReviewsBusiness {
         }
         return $str;
     }
-    function get_aggregate_reviews() {// @test this param ($pageID) is not needed anymore
+    function get_aggregate_reviews() {
         if ($this->got_aggregate !== false) {
             return $this->got_aggregate;
         }
         global $wpdb;
-        $pageID = get_option('smartestthemes_reviews_page_id');// @test with new function below
+        $pageID = get_option('smartestthemes_reviews_page_id');// @test with new query below, on line 242
         $row = $wpdb->get_results("SELECT COUNT(*) AS `total`,AVG(review_rating) AS `aggregate_rating`,MAX(review_rating) AS `max_rating` FROM `$this->dbtable` WHERE `status`=1");
         /* make sure we have at least one review before continuing below */
         if ($wpdb->num_rows == 0 || $row[0]->total == 0) {
@@ -275,93 +277,128 @@ class SMARTESTReviewsBusiness {
 
         return array($reviews, $total_reviews);
     }
-    function aggregate_footer() {// for home page
 	
+	/**
+	* Returns the html string for the business declaration prefix to aggregate footer
+	*/
+	function aggregate_footer_business_prefix() {
+		global $smartestthemes_options;
 		
-		// @test without this. global $smartestthemes_options;
-		
-		$smartestthemes_options = get_option('smartestthemes_options');
-		
-		
-		// gather agg data
-		// @test not needed $postID = $smartestthemes_options['st_reviews_page_id'];// @test
-		
-		
-		$arr_Reviews = $this->get_reviews('', $this->options['reviews_per_page'], 1);
-	 	$reviews = $arr_Reviews[0];// 12.5 @test prob dont need
-		$total_reviews = intval($arr_Reviews[1]);
-		$this->get_aggregate_reviews();// @test without param $postID
-        $best_score = 5;
-        $average_score = number_format($this->got_aggregate["aggregate"], 1);
-	    $aggregate_footer_output = '';
-		/* only if set to agg Business ratings on front page and is front page & if home page is static then show. */
-		if ( ($this->options['show_hcard_on'] == 1) && is_front_page() && (get_option('st_show_on_front') == 'page') ) {
-						$show = true;
+		$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['st_business_itemtype'] . '"';
+		$aggregate_rating_prefix = '<div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
+		$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
+		if(!$bn) {
+			$bn = get_bloginfo('name');
+		}
+		$aggregate_rating_prefix .= '<a href="' . site_url('/')
+ . '"><span itemprop="name" id="agg-rating-bn">' . $bn . '</span></a><br />';
+		if ( $smartestthemes_options['st_address_street'] != '' || 
+							$smartestthemes_options['st_address_city'] != '' ||
+							$smartestthemes_options['st_address_state'] != '' ||
+							$smartestthemes_options['st_address_zip'] != '' ||
+							$smartestthemes_options['st_address_country'] != ''
+			) {
+					$aggregate_rating_prefix .= '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" id="agg-rating-postal">';
+					if ($smartestthemes_options['st_address_street'] != '') {
+						$aggregate_rating_prefix .= '<span itemprop="streetAddress" id="agg-rating-street">' . $smartestthemes_options['st_address_street'] . '</span>&nbsp;';
 					}
-else {$show = false; }
-		if ($show) { /* we append like this to prevent newlines and wpautop issues */
-       	
-			$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['st_business_itemtype'] . '"';
-			$aggregate_footer_output = '<div id="smar_respond_1"><div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
-			
-			$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
 
-			$aggregate_footer_output .= '<a href="' . site_url('/')
- . '"><span itemprop="name">' . $bn . '</span></a><br />';
-				if ( $smartestthemes_options['st_address_street'] != '' || 
-					$smartestthemes_options['st_address_city'] != '' ||
-					$smartestthemes_options['st_address_state'] != '' ||
-					$smartestthemes_options['st_address_zip'] != '' ||
-					$smartestthemes_options['st_address_country'] != ''
-				) {
-						$aggregate_footer_output .= '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
-						if ($smartestthemes_options['st_address_street'] != '') {
-							$aggregate_footer_output .= '<span itemprop="streetAddress">' . $smartestthemes_options['st_address_street'] . '</span>&nbsp;';
-						}
-
-						if ($smartestthemes_options['st_address_suite'] != '') {
-							$aggregate_footer_output .= ' ' . $smartestthemes_options['st_address_suite'] . '&nbsp;';
-						}
-
-						if ($smartestthemes_options['st_address_city'] != '') {
-								$smartestthemes_options['st_address_city'] . '</span>,&nbsp;';
-						}
-			                    if ($smartestthemes_options['st_address_state'] != '') {
-			                        $aggregate_footer_output .='<span itemprop="addressRegion">' . $smartestthemes_options['st_address_state'] . '</span>,&nbsp;';
+					if ($smartestthemes_options['st_address_suite'] != '') {
+						$aggregate_rating_prefix .= ' ' . $smartestthemes_options['st_address_suite'] . '&nbsp;';
+					}
+                    if ($smartestthemes_options['st_address_city'] != '') {
+	                        $aggregate_rating_prefix .='<span itemprop="addressLocality" id="agg-rating-city">' . $smartestthemes_options['st_address_city'] . '</span>,&nbsp;';
+                    }
+                    if ($smartestthemes_options['st_address_state'] != '') {
+			                        $aggregate_rating_prefix .='<span itemprop="addressRegion" id="agg-rating-state">' . $smartestthemes_options['st_address_state'] . '</span>,&nbsp;';
 			                    }
 			                    if ($smartestthemes_options['st_address_zip'] != '') {
-			                        $aggregate_footer_output .='<span class="postal-code" itemprop="postalCode">' . $smartestthemes_options['st_address_zip'] . '</span>&nbsp;';
+			                        $aggregate_rating_prefix .='<span class="postal-code" itemprop="postalCode">' . $smartestthemes_options['st_address_zip'] . '</span>&nbsp;';
 			                    }
 			                    if ($smartestthemes_options['st_address_country'] != '') {
-			                        $aggregate_footer_output .='<span itemprop="addressCountry">' . $smartestthemes_options['st_address_country'] . '</span>&nbsp;';
+			                        $aggregate_rating_prefix .='<span itemprop="addressCountry" id="agg-rating-country">' . $smartestthemes_options['st_address_country'] . '</span>&nbsp;';
 			                    }
 			
-			                    $aggregate_footer_output .= '</span>';
+			                    $aggregate_rating_prefix .= '</span>';
 			                }
 			
 			                if ( $smartestthemes_options['st_phone_number'] != '') {
-			                    $aggregate_footer_output .= '<br />&nbsp;&bull;&nbsp<span itemprop="telephone">' . $smartestthemes_options['st_phone_number'] . '</span>';
+			                    $aggregate_rating_prefix .= '<br /><span itemprop="telephone" id="agg-rating-telephone">' . $smartestthemes_options['st_phone_number'] . '</span>';
 			                }
+		return $aggregate_rating_prefix;
+	}
+	
+	/**
+	* Returns the html string for the aggregate rating
+	*/
+	function aggregate_footer_output($is_shortcode=NULL) {
+		// @test remove global $smartestthemes_options;
+		// gather agg data
+		$arr_Reviews = $this->get_reviews('', $this->options['reviews_per_page'], 1);
+		
+		$total_reviews = intval($arr_Reviews[1]);
+		$this->get_aggregate_reviews();
+		$best_score = 5;
+        $average_score = number_format($this->got_aggregate["aggregate"], 1);
+		
+		$aggregate_footer_output = '<div id="smar_respond_1">';
+		
+		/* we append like this to prevent newlines and wpautop issues */
+		
+		// if is home and is set to declare business type on home, do it
+		// or
+		// if is shortcode and is set to declare business type on shortcode
+		
+		// prepend the business type declaration if needed
+		
+		if ( $this->options['biz_declare'] == 1 && is_front_page() ) {
+			$aggregate_footer_output .= $this->aggregate_footer_business_prefix();
+		} elseif ( (true == $is_shortcode) && ($this->options['biz_declare_shortcode'] == 1) ) {
+			// override the #smar_respond_1, so do not concatenate 
+			$aggregate_footer_output = '<div id="agg-rating-shortcode">' . $this->aggregate_footer_business_prefix();
+		} elseif (true == $is_shortcode) {
+		
+			// no business type declaration, but override the #smar_respond_1, so do not concatenate 
+			$aggregate_footer_output = '<div id="agg-rating-shortcode"><div id="smar_hcard_s" class="isa_vcard">';
+		
+		} else {
+			// no business type declaration
+			$aggregate_footer_output .= '<div id="smar_hcard_s" class="isa_vcard">';
+		}
 
-					// do agg rating for both scenarios
-$aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" id="hreview-smar-aggregate"> '. __('Average rating:', 'crucible'). ' <span itemprop="ratingValue" class="average">' . $average_score . '</span> ' . __('out of', 'crucible'). ' <span itemprop="bestRating">' . $best_score . ' </span> '. __('based on', 'crucible').' <span itemprop="ratingCount">' . $this->got_aggregate["total"] . ' </span>';
-				
-					if($this->got_aggregate["total"] == 1)
-					    $basedon = __('review.', 'crucible');
-					else
-					    $basedon = __('reviews.', 'crucible');
-					$aggregate_footer_output .= sprintf(__('%s', 'crucible'), $basedon). '</span>';
-	                $aggregate_footer_output .= '</div></div><!-- end agg footer -->';
-            
-			}// end if $show
-		        return $aggregate_footer_output;
+		// do agg rating for all scenarios
+		$aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" id="hreview-smar-aggregate"> '. __('Average rating:', 'crucible'). ' <span itemprop="ratingValue" class="average">' . $average_score . '</span> ' . __('out of', 'crucible'). ' <span itemprop="bestRating">' . $best_score . ' </span> '. __('based on', 'crucible').' <span itemprop="ratingCount">' . $this->got_aggregate["total"] . ' </span>';
+		if($this->got_aggregate["total"] == 1)
+			$basedon = __('review.', 'crucible');
+		else
+			$basedon = __('reviews.', 'crucible');
+		$aggregate_footer_output .= sprintf(__('%s', 'crucible'), $basedon). '</span>';
+		$aggregate_footer_output .= '</div></div><!-- end agg footer -->';
+		return $aggregate_footer_output;
+	}
+	
+	/*
+	* Adds the Aggregate footer on the home page
+	*/
+    function aggregate_footer() {
+		/* only if set to agg Business ratings on front page and is front page & if home page is static then show. */
+		if ( ($this->options['show_hcard_on'] == 1) && is_front_page() && (get_option('show_on_front') == 'page') ) {
+			return $this->aggregate_footer_output();
+		}
     }
-    function iso8601($time=false) {
-        if ($time === false)
-            $time = time();
-        $date = date('Y-m-d\TH:i:sO', $time);
-        return (substr($date, 0, strlen($date) - 2) . ':' . substr($date, -2));
+	/*
+	* Shortcode for the Aggregate footer
+	*/
+    function aggregate_footer_func() {
+		return $this->aggregate_footer_output(true);
     }
+
+	function iso8601($time=false) {
+		if ($time === false)
+			$time = time();
+		$date = date('Y-m-d\TH:i:sO', $time);
+		return (substr($date, 0, strlen($date) - 2) . ':' . substr($date, -2));
+	}
 
     function pagination($total_results, $reviews_per_page) {
         global $post; /* will exist if on a post */
@@ -450,7 +487,6 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
         $reviews_content = '';
         $hidesummary = '';
         $title_tag = $this->options['title_tag'];
-		// @test remove global $smartestthemes_options;
 		$smartestthemes_options = get_option('smartestthemes_options');
 		$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
 /* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
@@ -477,8 +513,7 @@ $aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope it
 		} elseif ($smartestthemes_options['st_add_reviews'] == 'false') {
 			$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
 		} else {	   		
-			// @test not needed $postid = $smartestthemes_options['st_reviews_page_id'];
-			$this->get_aggregate_reviews();// @test without param $postid
+			$this->get_aggregate_reviews();
 			$summary = $this->got_aggregate["text"];
 			$best_score = 5;
 			$average_score = number_format($this->got_aggregate["aggregate"], 1);
@@ -607,7 +642,7 @@ function do_the_content($original_content) {
         $the_content = '';
         $is_active_page = $this->is_active_page();
         /* return normal content if this is not an enabled page, or if this is a post not on single post view */
-        if (!$is_active_page) {/* 12.13 think this is inserted into post with no wrap */
+        if (!$is_active_page) {
            $the_content .= $this->aggregate_footer(); /* check if we need to show something in the footer then */
             return $original_content . $the_content;
         }
@@ -629,8 +664,8 @@ function do_the_content($original_content) {
             $the_content .= $this->show_reviews_form();
         }
         
-        $the_content .= $this->aggregate_footer(); /* check if we need to show something in the footer also */
-        $the_content .= '</div><!-- do the content -->';
+        // @test remove $the_content .= $this->aggregate_footer(); /* check if we need to show something in the footer also */
+        $the_content .= '</div>';
         $the_content = preg_replace('/\n\r|\r\n|\n|\r|\t/', '', $the_content); /* minify to prevent automatic line breaks, not removing double spaces */
 
         return $original_content . $the_content;
@@ -916,8 +951,6 @@ function do_the_content($original_content) {
                 VALUES (%s, %s, %s, %s, %s, %s, %d, %d, %s, %s, %d)", $date_time, $this->p->fname, $this->p->femail, $ip, $this->p->ftitle, $this->p->ftext, 0, $this->p->frating, $this->p->fwebsite, $custom_insert, $pageID);
 
         $wpdb->query($query);
-
-		// @test remove global $smartestthemes_options;
 		$smartestthemes_options = get_option('smartestthemes_options');
 		$bn = stripslashes_deep($smartestthemes_options['st_business_name']);if(!$bn) {$bn = get_bloginfo('name'); }
         $admin_linkpre = get_admin_url().'admin.php?page=smar_view_reviews';
@@ -1002,7 +1035,7 @@ function do_the_content($original_content) {
 	}
     function include_admin() {
         global $SMARTESTReviewsBusinessAdmin;
-        require_once(get_template_directory().'/business-framework/modules/reviews/reviews-admin.php');
+        require_once get_template_directory().'/business-framework/modules/reviews/reviews-admin.php';
 
     }
     function admin_init() {
@@ -1024,4 +1057,5 @@ add_action ('after_setup_theme', array(&$SMARTESTReviewsBusiness,'activate'));
 }
 /* get widget */
 include_once('widget-testimonial.php');
+add_shortcode( 'aggregate_rating', array( $SMARTESTReviewsBusiness, 'aggregate_footer_func' ) );
 ?>

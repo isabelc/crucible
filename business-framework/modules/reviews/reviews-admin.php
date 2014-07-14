@@ -176,13 +176,17 @@ class SMARTESTReviewsBusinessAdmin {
             }
             
             /* prevent E_NOTICE warnings */
-            if (!isset($this->p->goto_show_button)) { $this->p->goto_show_button = 0; }
-            if (!isset($this->p->show_hcard_on)) { $this->p->show_hcard_on = 0; }
-            /* some int validation */
-            $updated_options['form_location'] = intval($this->p->form_location);
-            $updated_options['goto_show_button'] = intval($this->p->goto_show_button);
-            $updated_options['reviews_per_page'] = intval($this->p->reviews_per_page);
-            $updated_options['show_hcard_on'] = intval($this->p->show_hcard_on);
+			if (!isset($this->p->goto_show_button)) { $this->p->goto_show_button = 0; }
+			if (!isset($this->p->show_hcard_on)) { $this->p->show_hcard_on = 0; }
+			if (!isset($this->p->biz_declare)) { $this->p->biz_declare = 0; }
+			if (!isset($this->p->biz_declare_shortcode)) { $this->p->biz_declare_shortcode = 0; }
+
+			$updated_options['form_location'] = intval($this->p->form_location);
+			$updated_options['goto_show_button'] = intval($this->p->goto_show_button);
+			$updated_options['reviews_per_page'] = intval($this->p->reviews_per_page);
+			$updated_options['show_hcard_on'] = intval($this->p->show_hcard_on);
+			$updated_options['biz_declare'] = intval($this->p->biz_declare);
+			$updated_options['biz_declare_shortcode'] = intval($this->p->biz_declare_shortcode);
             if ($updated_options['reviews_per_page'] < 1) { $updated_options['reviews_per_page'] = 10; }
             $msg .= 'Your settings have been saved.';
             update_option('smar_options', $updated_options);
@@ -194,7 +198,16 @@ class SMARTESTReviewsBusinessAdmin {
         $su_checked = '';
         if ($this->options['show_hcard_on']) {
             $su_checked = 'checked';
-        } 
+        }
+		$bizdeclare_checked = '';
+		if ($this->options['biz_declare']) {
+			$bizdeclare_checked = 'checked';
+		}
+		$biz_declare_shortcode_checked = '';
+		if ($this->options['biz_declare_shortcode']) {
+			$biz_declare_shortcode_checked = 'checked';
+		}
+
         $goto_show_button_checked = '';
         if ($this->options['goto_show_button']) {
             $goto_show_button_checked = 'checked';
@@ -221,8 +234,14 @@ class SMARTESTReviewsBusinessAdmin {
                     </div>                    
 <div style="padding:10px;"><input id="show_hcard_on" name="show_hcard_on" type="checkbox" '.$su_checked.' value="1" />&nbsp;
 <label for="show_hcard_on">'. __('Enable Aggregate Rating on Home Page.', 'crucible').'</label>
-<br /><br /> <small>'. __('This will pull data from your Reviews page, then add `aggregateRating` Schema.org Microdata to your home page.', 'crucible'). '</small>
+<br /><br /> <small>'. __('This will pull data from your Reviews page, then add <code>aggregateRating</code> Schema.org Microdata to your home page.', 'crucible'). '</small><br /><br /><input id="biz_declare" name="biz_declare" type="checkbox" '.$bizdeclare_checked.' value="1" />&nbsp;
+<label for="biz_declare">'. __('Add the LocalBusiness type to the Aggregate Rating on Home Page', 'crucible').'</label>
 <br /><br />
+<small>'. __('Add the LocalBusiness type to the Aggregate Rating above. NOTE: Don\'t check this if you\'re using the theme as is, which already adds your business type. This option is useful if you use a custom template for the home page which may be missing your business microdata.', 'crucible').'</small><br />
+<br /><input id="biz_declare_shortcode" name="biz_declare_shortcode" type="checkbox" '.$biz_declare_shortcode_checked.' value="1" />&nbsp;
+<label for="biz_declare_shortcode">'. __('Add the LocalBusiness type to the Aggregate Rating Shortcode', 'crucible').'</label>
+<br /><br /> <small>'. __('Add the LocalBusiness type to the Aggregate Rating shortcode. This only applies to you if you use the Aggregate Rating shortcode. This is necessary for stars if you use the shortcode on any page besides the home page, the Reviews page, or the Contact page.', 'crucible').'</small><br /><br />
+
 <div class="submit" style="padding:10px 0px 0px 0px;"><input type="submit" class="button-primary" value="'. __('Save Changes', 'crucible') .'" name="Submit"></div>
 </div>         <div style="background:#eaf2fa;padding:6px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;"><legend>'. __('Review Page Settings', 'crucible'). '</legend></div>
                     <div style="padding:10px;padding-bottom:10px;"><label for="reviews_per_page">'. __('Reviews shown per page: ', 'crucible') . '</label><input style="width:40px;" type="text" id="reviews_per_page" name="reviews_per_page" value="'.$this->options['reviews_per_page'].'" />
