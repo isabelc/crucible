@@ -540,7 +540,7 @@ i.fa:hover {
 --------------------------------------------------------------*/
 .sticky {
 }
-.hentry {
+.status-draft,.status-private,.status-publish {
 	margin: 0 0 1.5em;
 }
 .byline,

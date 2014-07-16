@@ -49,7 +49,7 @@ if ( $options['st_body_font_size'] ) { ?>
 		#content .main, #home-footer, #home-footer a {line-height:<?php echo $font_size_pre; ?>;}
 	<?php }
 } if($options['st_heading_font_color']) { ?>
-		h3, .indent-left h3, .pad h3, .page-title, #entry-title, h4, h6, h2, article.hentry h1{
+		h3, .indent-left h3, .pad h3, .page-title, #entry-title, h4, h6, h2, article.status-draft h1,article.status-private h1,article.status-publish h1{
 		color:<?php echo $options['st_heading_font_color']; ?>;
 		}
 <?php }
