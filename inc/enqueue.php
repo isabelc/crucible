@@ -1,4 +1,11 @@
-<?php function crucible_enqueue( ) {
+<?php function crucible_wp_head() {
+	if( !is_page( get_option('smartest_reviews_page_id') ) ) {
+		$out .= "<script>jQuery(function(){jQuery('table').wrap('<div class=\"overflow\">');});</script>";
+		echo $out;
+	}
+}
+add_action('wp_head','crucible_wp_head');
+function crucible_enqueue( ) {
 
 	wp_enqueue_style( 'crucible-style', get_stylesheet_uri() );
 
