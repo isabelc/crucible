@@ -287,33 +287,32 @@ function crucible_google_map() {
  * Display the logo
  */
 function crucible_logo() {
-
-	$options = get_option('smartestthemes_options'); // @todo this or globalize?
+	global $smartestthemes_options;
 	$name = get_bloginfo('name');
 	$description = get_bloginfo('description');
 	
-	$bn = stripslashes(esc_attr($options['st_business_name']));
+	$bn = stripslashes(esc_attr($smartestthemes_options['st_business_name']));
 	if(!$bn) { $bn = $name; }
 	//seo title
-	$ti = stripslashes(esc_attr($options['st_home_meta_title']));
+	$ti = stripslashes(esc_attr($smartestthemes_options['st_home_meta_title']));
 	if(empty($ti)) $ti = $bn;
 	$output = '';
 
-	if ( $options['logo_setting'] ) {
+	if ( $smartestthemes_options['logo_setting'] ) {
 		// there is a logo
-		if ( $options['increase_logo'] ) {
+		if ( $smartestthemes_options['increase_logo'] ) {
 			// custom height is set, use full size image which is resized with CSS
-			$src = $options['logo_setting'];
+			$src = $smartestthemes_options['logo_setting'];
 		} else {
 			// use the logo_thumb which is cut during upload and has its retina ready counterpart
-			$src_id = st_get_attachment_id_from_url($options['logo_setting']);
+			$src_id = st_get_attachment_id_from_url($smartestthemes_options['logo_setting']);
 			$src_atts = wp_get_attachment_image_src($src_id, 'crucible-logo');
 			$src = $src_atts[0];
 		}
 		$output .= '<a href="' . home_url( '/' ) . '" title="' . $ti . '" id="logolink" rel="home">
 		<img id="customlogo" src="' . $src . '" alt="' . $ti . '" title="' . $ti . '" />
 		</a><br />';
-		if ( empty($options['hide_tagline']) ) {
+		if ( empty($smartestthemes_options['hide_tagline']) ) {
 			$output .= '<h2 class="site-description">' . $description . '</h2>';
 		}
 	} else { 
@@ -322,7 +321,7 @@ function crucible_logo() {
 		if ( $name ) {
 			$output .= '<h1 class="site-title"><a href="' . home_url( '/' ) . '" title="' . $ti . '" rel="home">' . $name . '</a></h1>';
 		}
-		if ( empty($options['hide_tagline']) ) {
+		if ( empty($smartestthemes_options['hide_tagline']) ) {
 			$output .= '<h2 class="site-description">' . $description . '</h2>';
 		}
 			
@@ -335,14 +334,14 @@ add_action('crucible_logo', 'crucible_logo');
  * Display the social buttons for the business
  */
 function crucible_social_buttons() {
-	$options = get_option('smartestthemes_options'); // @todo this or globalize?
-	$tw = $options['st_business_twitter'];
-	$goo = $options['st_business_gplus'];
-	$fa = $options['st_business_facebook'];
-	$yo = $options['st_business_youtube'];
-	$li = $options['st_business_linkedin'];
-	$in = $options['st_business_instagram'];
-	$pi = $options['st_business_pinterest'];
+	global $smartestthemes_options;
+	$tw = $smartestthemes_options['st_business_twitter'];
+	$goo = $smartestthemes_options['st_business_gplus'];
+	$fa = $smartestthemes_options['st_business_facebook'];
+	$yo = $smartestthemes_options['st_business_youtube'];
+	$li = $smartestthemes_options['st_business_linkedin'];
+	$in = $smartestthemes_options['st_business_instagram'];
+	$pi = $smartestthemes_options['st_business_pinterest'];
 
 	// don't do unless at least one is entered
 	if( $tw || $goo || $fa || $yo || $li || $in || $pi ) {
@@ -371,11 +370,11 @@ function crucible_social_buttons() {
 	$output .= '</ul></div><!-- .social -->';
 
 	// extra social links
-	if ( $options['st_business_socialurl1'] ) {
-		$output .= '<br /><a href="' . $options['st_business_socialurl1'] . '" target="_blank" rel="nofollow" title="' . __( 'Connect', 'crucible' ) . '">' . $options['st_business_sociallabel1'] . '</a>';
+	if ( $smartestthemes_options['st_business_socialurl1'] ) {
+		$output .= '<br /><a href="' . $smartestthemes_options['st_business_socialurl1'] . '" target="_blank" rel="nofollow" title="' . __( 'Connect', 'crucible' ) . '">' . $smartestthemes_options['st_business_sociallabel1'] . '</a>';
 	} 
-	if ( $options['st_business_socialurl2'] ) {
-		$output .= '&nbsp;  <a href="' . $options['st_business_socialurl2'] . '" title="' . __('Connect', 'crucible' ) . '" target="_blank" rel="nofollow">' . $options['st_business_sociallabel2'] . '</a>';
+	if ( $smartestthemes_options['st_business_socialurl2'] ) {
+		$output .= '&nbsp;  <a href="' . $smartestthemes_options['st_business_socialurl2'] . '" title="' . __('Connect', 'crucible' ) . '" target="_blank" rel="nofollow">' . $smartestthemes_options['st_business_sociallabel2'] . '</a>';
 	}
 	echo $output;
 }
@@ -385,24 +384,24 @@ add_action('crucible_social_buttons', 'crucible_social_buttons');
  * Display the site footer
  */
 function crucible_footer() {
-	$options = get_option('smartestthemes_options'); // @todo this or globalize?
+	global $smartestthemes_options;
 	$output = '';
-	if ($options['st_override_footer'] == 'false') { // no override, so do default				
+	if ($smartestthemes_options['st_override_footer'] == 'false') { // no override, so do default				
 		$output .= '<span>' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
 
-		$bn = stripslashes_deep(esc_attr($options['st_business_name']));
+		$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 		if($bn) {
 			$output .= $bn;
 		} else {
 			$output .= get_bloginfo('name');
 		}
 		$output .= '</a>';
-		if ( $options['st_footer_text']) {
+		if ( $smartestthemes_options['st_footer_text']) {
 			$output .= '<br />';// if default plus custom, need <br />
 		}
 	}
-	if ($options['st_footer_text']) {
-		$output .= stripslashes_deep($options['st_footer_text']);
+	if ($smartestthemes_options['st_footer_text']) {
+		$output .= stripslashes_deep($smartestthemes_options['st_footer_text']);
 	} 
 	echo $output;
 }
