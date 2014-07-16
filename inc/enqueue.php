@@ -1,7 +1,6 @@
 <?php function crucible_wp_head() {
 	if( !is_page( get_option('smartest_reviews_page_id') ) ) {
-		$out .= "<script>jQuery(function(){jQuery('table').wrap('<div class=\"overflow\">');});</script>";
-		echo $out;
+		echo "<script>jQuery(function(){jQuery('table').wrap('<div class=\"overflow\">');});</script>";
 	}
 }
 add_action('wp_head','crucible_wp_head');
