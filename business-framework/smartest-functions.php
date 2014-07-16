@@ -1137,9 +1137,10 @@ add_filter( 'wp_title', 'smartestthemes_wp_title', 10, 2 );
 function smartestthemes_head_meta() {
 
 	global $smartestthemes_options;
-
-	if( $smartestthemes_options['st_disable_seo'] == 'true' ) {// @test
-		return;
+	if (isset($smartestthemes_options['st_disable_seo']) ) {
+		if( $smartestthemes_options['st_disable_seo'] == 'true' ) {// @test
+			return;
+		}
 	}
 	global $paged, $page;
 	$des = '';
