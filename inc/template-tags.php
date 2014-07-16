@@ -224,7 +224,7 @@ function crucible_entry_meta() {
 					) . '</span>';
 	} elseif ( 'post' == get_post_type() ) {
 
-		$out .= '<span class="posted-on">' . sprintf( __( 'Posted on <time class="entry-date" datetime="%1$s">%2$s</time><span class="byline"> by <span class="author vcard"><a class="url fn n" href="%3$s" title="%4$s" rel="author">%5$s</a></span></span>', 'crucible' ),
+		$out .= '<span class="posted-on">' . sprintf( __( 'Posted on <meta itemprop="datePublished" content="%1$s"><time class="entry-date" datetime="%1$s">%2$s</time><span class="byline"> by <span itemprop="author" itemscope itemtype="http://schema.org/Person" class="author"><a itemprop="url" class="url" href="%3$s" title="%4$s"><span class="name">%5$s</span></a></span></span>', 'crucible' ),
 				esc_attr( get_the_date( 'c' ) ),
 				esc_html( get_the_date() ),
 				esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),

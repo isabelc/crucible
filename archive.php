@@ -26,7 +26,7 @@ endif; ?>
 							single_tag_title();
 
 						elseif ( is_author() ) :
-							printf( __( 'Author: %s', 'crucible' ), '<span class="vcard">' . get_the_author() . '</span>' );
+							printf( __( 'Author: %s', 'crucible' ), get_the_author() );
 
 						elseif ( is_day() ) :
 							printf( __( 'Day: %s', 'crucible' ), '<span>' . get_the_date() . '</span>' );
