@@ -18,6 +18,7 @@ if ( post_password_required() ) {
 
 <div id="comments" class="comments-area">
 	<?php if ( have_comments() ) : ?>
+		<meta itemprop="interactionCount" content="UserComments:<?php printf( _n( '%1$s', get_comments_number(), 'crucible' ), number_format_i18n( get_comments_number() ) ); ?>" />
 		<h2 class="comments-title">
 			<?php
 				printf( _nx( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'comments title', 'crucible' ),
