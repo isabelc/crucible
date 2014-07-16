@@ -872,12 +872,12 @@ $options[] = array( 'name' => __('Disable Announcements Icon','crucible'),
 					'id' => $shortname.'_stop_theme_icon',
 					'std' => 'false',
 					'type' => 'checkbox');
-$options[] = array( 'name' => __('Backwards Compatibility: Use Old Clock Icon on Contact Page','crucible'),
-					'desc' => __('As of version 1.1.6, there is a new clock icon that is Retina ready for high resolution screens. Check this box to use the old clock icon instead.', 'crucible'),
-					'id' => $shortname.'_old_clock',
-					'std' => 'false',
-					'type' => 'checkbox');
-					
+$options[] = array( 'name' => __('Disable SEO Meta Tags','crucible'),
+	'desc' => __('Check this to disable the description meta tag. This will also disable the robots meta tag that gets added to page 2 and up of your archives. Check this option if you prefer to use a separate plugin for SEO.', 'crucible'),
+	'id' => $shortname.'_disable_seo',
+	'std' => 'false',
+	'type' => 'checkbox');
+			
 update_option('smartestthemes_template',$options);
 update_option('st_manual',$manualurl);
 update_option('st_sshow_description','Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.');// @new update

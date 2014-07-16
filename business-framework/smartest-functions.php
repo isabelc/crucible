@@ -1136,10 +1136,15 @@ add_filter( 'wp_title', 'smartestthemes_wp_title', 10, 2 );
 
 function smartestthemes_head_meta() {
 
+	global $smartestthemes_options;
+
+	if( $smartestthemes_options['st_disable_seo'] == 'true' ) {// @test
+		return;
+	}
 	global $paged, $page;
 	$des = '';
 	if ( $paged >= 2 || $page >= 2 )
-		$des .= sprintf( 'Page %s - ', max( $paged, $page ) );
+		$des .= sprintf( __('Page %s - ', 'crucible'), max( $paged, $page ) );
 
 	if ( is_category() )
 		$des .= strip_tags(category_description());
@@ -1148,33 +1153,32 @@ function smartestthemes_head_meta() {
 		$des .= strip_tags(tag_description());
 
 	if (is_front_page()) {
-		$des .= stripslashes(esc_attr(get_option('st_home_meta_desc')));
+		$des .= stripslashes( esc_attr( $smartestthemes_options['st_home_meta_desc'] ) );
 		if(empty($des)) $des .= get_bloginfo('description');
-		$keys = stripslashes(esc_attr(get_option('st_home_meta_key')));
+		$keys = stripslashes( esc_attr( $smartestthemes_options['st_home_meta_key'] ) );
 	}
 	
 	// if single get the excerpt
-	if ( is_single() ) {
-		if ( have_posts() ) : while(have_posts()) : the_post();
-		$des .= strip_tags(get_the_excerpt());
-		endwhile;
-		endif;
+	if ( is_single() && $post_id = get_queried_object_id() ) {
+		if ( get_post_field( 'post_excerpt', $post_id ) ) {
+			$description = get_post_field( 'post_excerpt', $post_id );
+		} else {
+            $description = get_post_field( 'post_content', $post_id );
+		}
+		$description = trim( wp_strip_all_tags( $description, true ) );
+		$des .= substr( $description, 0, 150 );
 	}
-
 	if( !empty($des) ) {
 	?>
 		<meta name="description" content="<?php echo $des;?>" />
 	<?php
-
 	}
-
 	if( !empty($keys) ) {
 	?>
 		<meta name="keywords" content="<?php echo $keys;?>" />
 	<?php 
 	}
-
-	// Tell searchbots to not index duplicate pages or pages 2 and up of paged archives. Improves ranking.
+	// Tell searchbots to not index pages 2+ of paged archives. Improves ranking.
 	if ( $paged >= 2 ) {echo '<meta name="robots" content="noindex, follow, noarchive" />';} 
 }
 add_action('wp_head', 'smartestthemes_head_meta');
