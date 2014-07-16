@@ -837,7 +837,7 @@ $options[] = array( 'name' => __('Advanced','crucible'),'class' => 'settings',
 					'type' => 'heading');
 $options[] = array( 'name' => __('Disable Automatic Smartest Theme Actions','crucible'),
 						'type' => 'info',
-						'std' => __('This Smartest Theme does things by default that regular themes don\'t do. You may decide that you don\'t need such performance.<br /><br />Here you can disable some of these actions.<br /><br /><strong>Caution: </strong>disabling these actions will break the smart functionality of this Smartest Theme, and thus make it function like a regular, plain WordPress theme. Do not proceed unless you know what you\'re doing.','crucible'));
+						'std' => __('This Smartest Theme does things by default that regular themes don\'t do. You may decide that you don\'t need such performance.<br /><br />Here you can disable some of these actions.','crucible'));
 $options[] = array( 'name' => __('Front Page and Posts Page Settings','crucible'),
 					'desc' => sprintf(__('Check this to stop forcing \'Posts Page\' setting to a page titled \'Blog\'. Checking this will allow you to choose your own Posts Page in %s.', 'crucible'), $rlink),
 					'id' => $shortname.'_stop_blog',
