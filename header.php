@@ -30,7 +30,8 @@
 		} ?>
 
 		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<h1 class="menu-toggle"><?php _e( 'Menu', 'crucible' ); ?></h1>
+			<!-- test if menu toggle works on windows phone, too -->
+			<div class="menu-toggle"><?php _e( 'Menu', 'crucible' ); ?></div>
 			<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'crucible' ); ?></a>
 
 			<?php wp_nav_menu( array( 'theme_location' => 'primary','fallback_cb' => 'crucible_nav_fallback', 'items_wrap' => '<ul class="%2$s">%3$s</ul>' ) ); ?>
