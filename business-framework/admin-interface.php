@@ -115,7 +115,7 @@ function smartestthemes_reset_options($options,$page = ''){
 /* Framework options panel */
 function smartestthemes_options_page(){
 	$options = get_option('smartestthemes_template');
-	$manualurl = get_option('st_manual');// @test option name if correct
+	$manualurl = get_option('st_manual');
 	$themedata = wp_get_theme();
 	$themename = $themedata->Name;
 	$local_version = $themedata->Version;
