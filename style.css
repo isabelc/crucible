@@ -18,6 +18,8 @@ Tags: @todo
 1.0 - Reset
 2.0 - Typography
 3.0 - Elements
+	3.1 - Message Boxes
+	3.2 - Social Links
 4.0 - Forms
 5.0 - Navigation
 	5.1 - Links
@@ -33,6 +35,7 @@ Tags: @todo
 	10.4 - Layout
 11.0 - Infinite scroll
 12.0 - Media
+
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
@@ -234,6 +237,23 @@ th {
 	font-weight: bold;
 }
 
+tr td:first-child, thead th:first-child, tr th:first-child, table caption {padding-left:10px;}
+
+/* reset Reviews plugin table */
+#smar_table_2 tbody tr:nth-child(even), #smar_table_2 tbody tr:nth-child(2n) {background-color:inherit;}
+
+/*--------------------------------------------------------------
+3.1 Message Boxes
+--------------------------------------------------------------*/
+
+/* @todo add error, info, success, warning message box styles */
+
+/*--------------------------------------------------------------
+3.2 Social Links
+--------------------------------------------------------------*/
+
+/* @todo smartshare without .js. Bring in the CSS and DO the HTML OUTPUT IN THE FUNCTION. */
+
 /*--------------------------------------------------------------
 4.0 Forms
 --------------------------------------------------------------*/
@@ -335,6 +355,7 @@ textarea {
 /*--------------------------------------------------------------
 5.0 Navigation
 --------------------------------------------------------------*/
+#nav-above{margin-bottom:1em}
 /*--------------------------------------------------------------
 5.1 Links
 --------------------------------------------------------------*/
@@ -511,7 +532,8 @@ i.fa:hover {
 .comment-content:after,
 .site-header:after,
 .site-content:after,
-.site-footer:after {
+.site-footer:after,
+#nav-below {
 	clear: both;
 }
 
@@ -579,6 +601,21 @@ i.fa:hover {
 }
 
 
+/**
+begin Comments from frame.css  ******************************************************************************/
+
+#comments,#reply{margin:1.6em}
+.comments-title{padding-bottom:1em;margin-bottom:.5em;border-bottom:4px double #ededed;font-size:24px}
+.commentlist .reply{text-align:right}.commentlist .reply a{display:inline-block;text-decoration:none;padding:5px 15px 6px;font-size:13px;line-height:1.23em;font-weight:700;color:#000;background:#999;cursor:pointer;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px}.commentlist .reply a:hover,.commentlist .reply a:active{background:#000}.commentlist .comment-author span.says{display:inline}.commentlist .comment-author img{display:block}.commentlist li.comment{padding:1em 1em 2em}.commentlist .children li.comment{padding-bottom:0}.commentlist article.comment{border-bottom:4px double #ededed;margin-bottom:1em;padding-bottom:1em;word-wrap:break-word;-moz-hyphens:auto}.commentlist .commentmetadata time{font-size:10px}.commentlist .comment footer{width:auto;padding:0;text-align:left;width:28%}.commentlist .comment footer,.commentlist .comment .comment-content{float:left;margin-left:0;margin-right:0;display:block}.commentlist .comment .comment-content{width:72%;margin-left:0;margin-right:0}.commentlist .children{padding-left:2em}#respond{clear:both}span.required{color:red}
+#commentform label{margin-right:5px}
+#commentform input[type=text],
+#commentform textarea{border:thin solid #d5d5d5;padding:5px 10px;font-family:Arial,Helvetica,sans-serif;background:none repeat scroll 0 0 #fff;border-radius:2px}
+
+/**
+end Comments from frame.css ******************************************************************************/
+
+
+
 /*--------------------------------------------------------------
 10.4 Layout
 --------------------------------------------------------------*/
@@ -602,6 +639,10 @@ i.fa:hover {
 	clear: both;
 	width: 100%;
 }
+
+/* Layout: Columns */
+
+.one-fourth,.one-half,.one-third{margin:1.5em 0;padding-left:2%;padding-right:2%;float:left}.one-half{width:46%}.wrapper .one-half:nth-child(odd){padding-left:0;clear:left}.wrapper .one-half:nth-child(even){padding-right:0}.one-third{width:29.3%}.wrapper .one-third:nth-child(3n-2){padding-left:0;clear:left}.wrapper .one-third:nth-child(3n+3){padding-right:0}.one-fourth{width:21%}.wrapper .one-fourth:nth-child(4n-3){padding-left:0;clear:left}.wrapper .one-fourth:nth-child(4n+4){padding-right:0}.one-fourth+h2,.one-fourth+h3,.one-half+h2,.one-half+h3,.one-third+h2,.one-third+h3{clear:both;padding-top:1em}
 
 /*--------------------------------------------------------------
 11.0 Infinite scroll
@@ -666,4 +707,15 @@ embed,
 iframe,
 object {
 	max-width: 100%;
+}
+
+@media only screen and (max-device-width: 767px) {
+	
+	.overflow { overflow: auto; }/* wrap around tables to make responsive */
+	
+}
+
+@media screen and (max-device-width: 568px){
+
+	article footer.entry-meta{padding:2em 0}#comments,#reply{margin:0}.commentlist{width:100%!important}.commentlist>li.comment{padding:0}.commentlist .children{padding-left:0}.commentlist .children li.comment{margin:1.625em 0 0;padding:2px}#commentform input[type=text],#commentform textarea{width:90%}#searchsubmit{display:block;margin-top:5px}.one-half,.one-third,.one-fourth{margin:1.5em auto;padding-left:2%;padding-right:2%;float:none;width:96%;display:block}
 }
