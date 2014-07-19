@@ -20,6 +20,7 @@ class SmartestFeaturedServices extends WP_Widget {
 		);
 		add_action('wp_enqueue_scripts', array( $this, 'featsvcs_css' ) );
 	}
+	
 	/**
 	* Register stylesheet
 	*/

@@ -17,16 +17,7 @@ class SmartestAnnouncements extends WP_Widget {
 			__( 'Smartest Announcements', 'crucible' ),
 			array( 'description' => __( 'Display the latest Announcements.', 'crucible' ), )
 		);
-		add_action( 'wp_enqueue_scripts', array( $this, 'ann_css' ) );
 	}
-
-	/**
-	 * Register stylesheet.
-	 */
-	public function ann_css() {
-		wp_register_style('san', get_template_directory_uri().'/business-framework/widgets/sa.css');
-	} 
-
 	/**
 	 * Front-end display of widget.
 	 *
@@ -40,7 +31,6 @@ class SmartestAnnouncements extends WP_Widget {
 		$number = $instance['number'];
 
 		echo $before_widget;
-		wp_enqueue_style('san');
 		if ( ! empty( $title ) )
 			echo '<h3 class="widget-title">'. $title . '</h3>';
 		
