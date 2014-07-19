@@ -554,6 +554,10 @@ i.fa:hover {
 	display: none;
 }
 
+/* Announements widget */
+.widget_smartest_announcements p {margin-left: 10%;} .widget_smartest_announcements time {font-style:italic;font-size: 75%;color:#333333;padding-left:8px;}
+
+
 /*--------------------------------------------------------------
 10.0 Content
 --------------------------------------------------------------*/
