@@ -808,7 +808,7 @@ $options[] = array( 'name' => __( 'Custom content before the form', 'crucible' )
 $options[] = array( 'name' => __( 'Custom content after the form', 'crucible' ),
 		'desc' => __( 'Add some text/markup to appear <em>after</em> the contact form (optional).', 'crucible' ),
 		'id' => $shortname.'_contactform_appform',
-		'std' => '<div style="clear:both;">&nbsp;</div>',
+		'std' => '',// @test removed <div style="clear:both;">&nbsp;</div>
 		'type' => 'textarea');
 $options[] = array( 'name' => __( 'Custom content before results', 'crucible' ),
 		'desc' => __( 'Add some text/markup to appear <em>before</em> the success message (optional).', 'crucible' ),
