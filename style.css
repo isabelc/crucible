@@ -190,7 +190,9 @@ small {
 big {
 	font-size: 125%;
 }
-
+.site-title a {/* @new @todo default font-family */
+	font-size:36px;
+}
 /*--------------------------------------------------------------
 3.0 Elements
 --------------------------------------------------------------*/
@@ -759,6 +761,10 @@ embed,
 iframe,
 object {
 	max-width: 100%;
+}
+img#customlogo{
+	max-height:150px;
+    width: auto;
 }
 
 @media only screen and (max-device-width: 767px) {
