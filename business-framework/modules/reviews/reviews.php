@@ -1004,9 +1004,10 @@ function do_the_content($original_content) {
     }
 	function smartestreviews_scripts() {
 		if( get_option('st_add_reviews') == 'true'  ) {
-			wp_register_style('smartest-reviews', $this->getpluginurl() . 'reviews.css', array(), $this->version);wp_enqueue_style('smartest-reviews');
+			wp_register_style('smartest-reviews', $this->getpluginurl() . 'reviews.css', array(), $this->version);
 			wp_register_script('smartest-reviews', $this->getpluginurl() . 'reviews.js', array('jquery'), $this->version);
 			if( is_page(get_option('smartestthemes_reviews_page_id'))) {
+				wp_enqueue_style('smartest-reviews');
 		        wp_enqueue_script('smartest-reviews');
 				$loc = array(
 					'hidebutton' => __('Click here to hide form', 'crucible'),
