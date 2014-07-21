@@ -45,7 +45,6 @@ function stcf_malicious_input($input) {
  * check for spam
  */
 function stcf_spam_question($input) {
-	global $smartestthemes_options;// @test if this is needed
 	$response = '2';
 	$response = stripslashes(trim($response));
 	return ($input == $response);
@@ -132,15 +131,15 @@ function stcf_input_filter() {
 		return true;
 	} else {
 		if($fail == 'malicious') {
-			$stcf_strings['error'] = '<p id="stcf-isa-error">' . __( 'Please do not include any of the following in the Name or Email fields: linebreaks, or the phrases "mime-version", "content-type", "cc:" or "to:"', 'crucible' ) . '</p>';
+			$stcf_strings['error'] = '<p class="st-error">' . __( 'Please do not include any of the following in the Name or Email fields: linebreaks, or the phrases "mime-version", "content-type", "cc:" or "to:"', 'crucible' ) . '</p>';
 		} elseif($fail == 'empty') {
 
 			$posted_msg = stripslashes($smartestthemes_options['st_contactform_error']);
 			// in case they erase the default in admin
 			$msg = ($posted_msg) ? $posted_msg : __( 'Please complete the required fields.', 'crucible' );
-			$stcf_strings['error'] = '<p id="stcf-isa-error">' . $msg . '</p>';
+			$stcf_strings['error'] = '<p class="st-error">' . $msg . '</p>';
 		} elseif($fail == 'wrong') {
-			$stcf_strings['error'] = '<p id="stcf-isa-error">' . __( 'Oops. Incorrect answer for the security question. Please try again.', 'crucible' ) . '<br />' . __( 'Hint: 1 + 1 = 2', 'crucible' ) . '</p>';
+			$stcf_strings['error'] = '<p class="st-error">' . __( 'Oops. Incorrect answer for the security question. Please try again.', 'crucible' ) . '<br />' . __( 'Hint: 1 + 1 = 2', 'crucible' ) . '</p>';
 		}
 		return false;
 	}
@@ -187,7 +186,7 @@ if(get_option('st_stop_contact') == 'true') {
 * enqueue CSS and validation script
 */
 function stcf_enqueue_scripts() {
-	wp_register_script('stcf-validate', get_template_directory_uri().'/business-framework/modules/contact/stcf-validate.js', array('jquery'), false, true);// @test does it work even in footer
+	wp_register_script('stcf-validate', get_template_directory_uri().'/business-framework/modules/contact/stcf-validate.js', array('jquery'), false, true);
 	wp_register_style('contactstyle', get_template_directory_uri().'/business-framework/modules/contact/contact.css');
 	if (is_page(get_option('smartestthemes_contact_page_id'))){
 		wp_enqueue_script('stcf-validate');
@@ -277,7 +276,7 @@ $local_agent  $agent
 ");
 	$fullmsg = stripslashes(strip_tags(trim($fullmsg)));
 	wp_mail($recipient, $topic, $fullmsg, $headers);
-	$results = ($prepend . '<div id="stcf-isa-success"><div id="isa-success">' . $success . '</div>
+	$results = ($prepend . '<div id="stcf-success"><div class="st-success">' . $success . '</div>
 <pre>' . $local_name . ' ' . $name    . '
  ' . $local_email . ' ' . $email   . '
  ' . $local_date . ' ' . $date . ' 
