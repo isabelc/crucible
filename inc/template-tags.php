@@ -290,22 +290,28 @@ function crucible_logo() {
 	global $smartestthemes_options;
 	$name = get_bloginfo('name');
 	$description = get_bloginfo('description');
-	
 	$bn = stripslashes(esc_attr($smartestthemes_options['st_business_name']));
-	if(!$bn) { $bn = $name; }
-	//seo title
+	if(!$bn) { 
+		$bn = $name;
+	}
+	// seo title
 	$ti = stripslashes(esc_attr($smartestthemes_options['st_home_meta_title']));
-	if(empty($ti)) $ti = $bn;
+	if(empty($ti)) {
+		$ti = $bn;
+	}
+	
 	$output = '';
 
-	if ( $smartestthemes_options['logo_setting'] ) {
+	$custom_logo = isset($smartestthemes_options['logo_setting']) ? $smartestthemes_options['logo_setting'] : '';// @test
+	
+	if ( $custom_logo ) {
 		// there is a logo
 		if ( $smartestthemes_options['increase_logo'] ) {
 			// custom height is set, use full size image which is resized with CSS
-			$src = $smartestthemes_options['logo_setting'];
+			$src = $custom_logo;
 		} else {
 			// use the logo_thumb which is cut during upload and has its retina ready counterpart
-			$src_id = st_get_attachment_id_from_url($smartestthemes_options['logo_setting']);
+			$src_id = st_get_attachment_id_from_url($custom_logo);
 			$src_atts = wp_get_attachment_image_src($src_id, 'crucible-logo');
 			$src = $src_atts[0];
 		}
