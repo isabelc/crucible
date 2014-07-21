@@ -252,7 +252,32 @@ tr td:first-child, thead th:first-child, tr th:first-child, table caption {paddi
 3.2 Social Links
 --------------------------------------------------------------*/
 
-/* @todo smartshare without .js. Bring in the CSS and DO the HTML OUTPUT IN THE FUNCTION. */
+#smartshare{
+    margin-top:2.5em;
+}
+.simple-share {
+    margin:10px 5px;
+    line-height: 1;
+    color:#fff;
+    padding:3px 6px;
+    text-decoration:none;
+}
+.simple-share:hover{
+    color:#fff;
+    text-decoration:none;
+}
+.simple-share.ss-facebook {
+    background-color: #3B5998;
+}
+.simple-share.ss-twitter {
+    background-color:#00aced;
+}
+.simple-share.ss-gplus {
+    background-color:#dd4b39;
+}
+.simple-share.ss-pinterest {
+    background-color:#cb2027;
+}
 
 /*--------------------------------------------------------------
 4.0 Forms

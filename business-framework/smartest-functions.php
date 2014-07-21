@@ -991,37 +991,14 @@ add_action('wp_enqueue_scripts', 'smartest_framework_enq');
  * Social Share Buttons
  */
 function smartestthemes_share() { ?>
-    <div id="smartshare">
-       <div id="fb-root"></div><script>(function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
-    <div class="fb-like" data-send="false" data-layout="button_count"
-       data-width="90" data-show-faces="false"></div>
-    <div id="isa_gt">
-       <a href="https://twitter.com/share" class="twitter-share-button"
-data-dnt="true"><?php _e('Tweet', 'crucible'); ?></a>
-    <script>!function(d,s,id){
-       var js,fjs=d.getElementsByTagName(s)[0];
-       if(!d.getElementById(id)){js=d.createElement(s);
-       js.id=id;js.src="//platform.twitter.com/widgets.js";
-      fjs.parentNode.insertBefore(js,fjs);}}
-      (document,"script","twitter-wjs");</script>
+    <div id="smartshare"><a target="_blank" href="https://plus.google.com/share?url=<?php echo urlencode(get_permalink()); ?>" class="simple-share ss-gplus" title="Share on G+">G+ Share</a>
+ 
+<a target="_blank" href="https://twitter.com/share?text=<?php the_title_attribute(); ?>" class="simple-share ss-twitter" title="Tweet">Tweet</a>
+ 
+<a target="_blank" href="http://www.facebook.com/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" class="simple-share ss-facebook" title="Share on Facebook">Share</a>
+ 
+<a href="http://www.pinterest.com/pin/create/button/?url=<?php echo urlencode(get_permalink()); ?>&media=<?php if(has_post_thumbnail()) echo wp_get_attachment_url(get_post_thumbnail_id()); ?>&description=<?php echo the_title_attribute('echo=0') . ' - ' . get_permalink(); ?>" class="simple-share ss-pinterest" target="_blank">Pin It</a>
      </div>
-    <script type="text/javascript">
-      (function() {
-        var po = document.createElement('script');
-           po.type = 'text/javascript'; po.async = true;
-        po.src = 'https://apis.google.com/js/plusone.js';
-        var s = document.getElementsByTagName('script')[0];
-           s.parentNode.insertBefore(po, s);
-      })();
-    </script>
-    <div id="isa_g"><div class="g-plusone" data-size="medium"
-       data-annotation="inline" data-width="120"></div></div></div>
 <?php
  
 }
