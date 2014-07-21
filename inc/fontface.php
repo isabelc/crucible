@@ -1,12 +1,10 @@
 <?php // Conditionally load fontface stylesheets
 function crucible_loadfonts() {
-	$fontdir = get_template_directory_uri(). '/inc/fonts/';
-	
 	global $smartestthemes_options;
 	$needle1 = $smartestthemes_options['st_heading_font'];// @todo
-	$needle2 = $smartestthemes_options['logo_font'];
+	$needle2 = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : '';
 	$needle3 = $smartestthemes_options['st_body_font'];// @test
-	$needle4 = $smartestthemes_options['tagline_font'];
+	$needle4 = isset($smartestthemes_options['tagline_font']) ? $smartestthemes_options['tagline_font'] : '';
 	$needle5 = $smartestthemes_options['st_attention_grabber_font'];// @todo
 
 	// @new list font css output from theme options $logofonts array index [2]
@@ -20,6 +18,8 @@ function crucible_loadfonts() {
 	$font8 = 'roboto_slabregular,Arial,Helvetica,sans-serif';
 	$font9 = 'roboto_slabbold,Arial,Helvetica,sans-serif';
 
+	$fontdir = get_template_directory_uri(). '/inc/fonts/';
+	
 	/* if only 1 family per font, do it this way */
 
 	if ( in_array($font1,array($needle1, $needle2, $needle4, $needle5)) ) {
