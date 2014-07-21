@@ -193,7 +193,7 @@ if ( $smartestthemes_options['logo_hover_color'] ) {
 
 $logo_font = $smartestthemes_options['logo_font'];
 if ( $logo_font )
-	echo '.site-title a,.site-title span {font-family:'. $logo_font. ' }';
+	echo '.site-title a {font-family:'. $logo_font. ' }';
 
 if ( $smartestthemes_options['logo_fontsize'] )
 	echo '.site-title a {font-size:'.$smartestthemes_options['logo_fontsize'].'; }';
