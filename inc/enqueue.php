@@ -1,5 +1,5 @@
 <?php function crucible_wp_head() {
-	if( !is_page( get_option('smartest_reviews_page_id') ) ) {
+	if( !is_page( get_option('smartestthemes_reviews_page_id') ) ) {
 		echo "<script>jQuery(function(){jQuery('table').wrap('<div class=\"overflow\">');});</script>";
 	}
 }
