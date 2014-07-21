@@ -393,80 +393,10 @@ $options[] = array( 'name' => __('Logo','crucible'),'class' => 'image',
 
 /* @todo a better intro, referencing the fact that img logos are to be done in the customizer */
 				
-/* @test replace with customizer !! 
 
-*
-*
-
-				
-$options[] = array( 'name' => __('Text Logo','crucible'),
-						'type' => 'info',
-						'std' => sprintf(__('The rest of this page is for using a text logo instead of an image. Here you can create a text-based logo with custom fonts and colors like this:%1$s %2$s %1$s Part 1 is all the text before the alternate color. Part 2 is the alternate color text; it is the same size as part 1, but gets its own color. Part 3 is after the alternate color; it is the same size and color as Part 1. Part 4 is the smaller text which gets its own size and color. To make a text logo, only Part 1 is required.','crucible'), '<br />', $sampleimg ));
-
-$options[] = array( 'name' => __('Logo Text Part 1','crucible'),
-                    'desc' => __('Enter Part 1 of your logo text here. If you want the whole logo to be 1 color, then enter all of the text here and skip Parts 2 through 4.','crucible'),
-                    'id' => $shortname.'_logo_text_part_1',
-                    'std' => $bnam,
-                    'type' => 'text');
-$options[] = array( 'name' => __('Logo Text Part 2','crucible'),
-                    'desc' => __('The alternate color part of your logo. It does not have to be a single letter. By default, this text will be the same color as the accent color for the site. You can change this alternate color below. Leave this blank if you do not want alternate color text. ','crucible'),
-                    'id' => $shortname.'_logo_text_part_orange',
-                    'std' => '',
-                    'type' => 'text');
-$options[] = array( 'name' => __('Logo Text Part 3','crucible'),
-                    'desc' => __('The part after the alternate color. This text is the same color and size of Part 1. If you left Part 2 blank, you do not need to fill this in. Instead, add it to Part 1.','crucible'),
-                    'id' => $shortname.'_logo_text_part_3',
-                    'std' => '',
-                    'type' => 'text');
-$options[] = array( 'name' => __('Logo Text Part 4','crucible'),
-                    'desc' => __('The text at the end with its own size and color. Leave this blank if you do not want this.','crucible'),
-                    'id' => $shortname.'_logo_text_part_small',
-                    'std' => '',
-                    'type' => 'text');
-$options[] = array( 'name' => __('Logo Font','crucible'),
-					'desc' => __('Select which font you would like to use for your text-based logo.','crucible'),
-					'id' => $shortname.'_logo_font',
-					'std' => 'forqueregular,Arial,Helvetica,sans-serif',// @new default
-					'type' => 'radio2',
-					'options' => $logofonts);
-$options[] = array( 'name' => __('Size for Parts 1, 2, and 3','crucible'),
-					'desc' => __('Select a font-size for your text-based logo. This size will apply to parts 1, 2, and 3 of the logo.','crucible'),
-					'id' => $shortname.'_logo_font_size',
-					'type' => 'select',
-					'std' => '54px',// @new default
-					'options' => $fontsizes);
-$options[] = array( 'name' => __('Size for Part 4','crucible'),
-					'desc' => __('Select a font-size for your part 4 of the logo.','crucible'),
-					'id' => $shortname.'_logo_font_size_4',
-					'type' => 'select',
-					'std' => '28px',// @new default
-					'options' => $fontsizes);
-$options[] = array( 'name' => __('Logo Color for Part 1 and 3','crucible'),
-					'desc' => __('Customize the color of your logo text. Leave blank to use the default. NOTE: Only in effect if you are not using an image for a logo, but rather just text.','crucible'),
-					'id' => $shortname.'_logo_color',
-					'std' => '',
-					'type' => 'color');						
-$options[] = array( 'name' => __('Logo Color for Part 2','crucible'),
-					'desc' => __('Customize the alternate color. Leave blank to use the default accent color. NOTE: Only in effect if you are not using an image for a logo, but rather just text.','crucible'),
-					'id' => $shortname.'_logo_color_2',
-					'std' => '',
-					'type' => 'color');
-$options[] = array( 'name' => __('Logo Color for Part 4','crucible'),
-					'desc' => __('Customize the color of the smaller logo text. Leave blank to use the default. NOTE: Only in effect if you are not using an image for a logo, but rather just text.','crucible'),
-					'id' => $shortname.'_logo_color_4',
-					'std' => '',
-					'type' => 'color');
-				
-$options[] = array( 'name' => __('Logo Hover Color','crucible'),
-					'desc' => __('Customize the color of your logo text when hovered. NOTE: Only in effect if you are not using an image for a logo, but rather just text.','crucible'),
-					'id' => $shortname.'_logo_hover_color',
-					'std' => '',
-					'type' => 'color');
-					
+/* Fonts 
+@TODO PERHAPS  THESE ALSO IN CUSTOMIZER
 */
-
-					
-/* Fonts */
 $options[] = array( 'name' => __('Fonts','crucible'),'class' => 'typography',
 					'type' => 'heading'); 
 $options[] = array( 'name' => __('Customize Heading Fonts','crucible'),
@@ -497,46 +427,11 @@ $options[] = array( 'name' => __('Footer Text Color','crucible'),
 					'id' => $shortname.'_footer_text_color',
 					'std' => '',
 					'type' => 'color');
-
-
-					/* @test move to customizer
-					
-$options[] = array( 'name' => __('Tag Line Color','crucible'),
-					'desc' => __('The color of your tag line text.','crucible'),
-					'id' => $shortname.'_tagline_color',
-					'std' => '',
-					'type' => 'color');
-					
-					*/
-					
-					
 $options[] = array( 'name' => __('Attention Grabber Color','crucible'),
 					'desc' => __('The color of your home page Attention Grabber text.','crucible'),
 					'id' => $shortname.'_attention_grabber_color',
 					'std' => '',
 					'type' => 'color');
-					
-					/* @test move to customizer
-					*
-					
-					
-$options[] = array( 'name' => __('Tag Line Font','crucible'),
-					'desc' => __('Select which font you would like to use for your tag line text.  Leave blank to use the default.','crucible'),
-					'id' => $shortname.'_tagline_font',
-					'type' => 'select2',
-					'class' => 'clearfix',
-					'std' => '',
-					'options' => $headfonts);
-					
-$options[] = array( 'name' => __('Tag Line Font Size','crucible'),
-					'desc' => __('Select a font-size for your tag line. Leave blank to use the default.','crucible'),
-					'id' => $shortname.'_tagline_font_size',
-					'type' => 'select',
-					'std' => '',
-					'options' => $fontsizes);
-					
-*/
-
 					
 $options[] = array( 'name' => __('Attention Grabber Font','crucible'),
 					'desc' => __('Select which font you would like to use for your Attention Grabber text.  Leave blank to use the default.','crucible'),
@@ -762,9 +657,7 @@ $options[] = array( 'name' => __( 'Show "From:" Your Visitor', 'crucible' ),
 		'desc' => sprintf(__( 'Check this box if you want the %1$s"From:"%2$s in the email header to be the name and email of the visitor. Please note that some web hosts, such as DreamHost and BlueHost, will not send these messages. (GoDaddy hosting is okay with this option.) Test this option after you enable it. If left unchecked, the default is "From" your email setting from above.','smartestb' ), '<strong>', '</strong>'),
 		'id' => $shortname.'_contactform_header_from',
 		'std' => 'false',
-		'type' => 'checkbox');// @test
-					
-					
+		'type' => 'checkbox');
 $options[] = array( 'name' => __( 'Default Subject', 'crucible' ),
 		'desc' => __( 'What should be the default subject line for the contact messages? Default is "Message sent from your contact form".', 'crucible' ),
 		'id' => $shortname.'_contactform_subject',
@@ -808,7 +701,7 @@ $options[] = array( 'name' => __( 'Custom content before the form', 'crucible' )
 $options[] = array( 'name' => __( 'Custom content after the form', 'crucible' ),
 		'desc' => __( 'Add some text/markup to appear <em>after</em> the contact form (optional).', 'crucible' ),
 		'id' => $shortname.'_contactform_appform',
-		'std' => '',// @test removed <div style="clear:both;">&nbsp;</div>
+		'std' => '',
 		'type' => 'textarea');
 $options[] = array( 'name' => __( 'Custom content before results', 'crucible' ),
 		'desc' => __( 'Add some text/markup to appear <em>before</em> the success message (optional).', 'crucible' ),
