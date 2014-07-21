@@ -16,8 +16,11 @@
 			$( '.site-description' ).text( to );
 		} );
 	} );
-	// Header text color.
-	wp.customize( 'header_textcolor', function( value ) {
+
+	
+	/* @test hold
+	
+	wp.customize( 'smartestthemes_options[logo_color]', function( value ) {
 		value.bind( function( to ) {
 			if ( 'blank' === to ) {
 				$( '.site-title, .site-description' ).css( {
@@ -33,4 +36,33 @@
 			}
 		} );
 	} );
+	
+	*/
+	
+
+	// logo font @test
+	wp.customize( 'smartestthemes_options[logo_font]', function( value ) {
+		value.bind( function( newval ) {
+			$('.site-title a').css('font-family', newval );
+		
+		} );
+	} );
+	
+	// Logo color. @test
+	wp.customize( 'smartestthemes_options[logo_color]', function( value ) {
+		value.bind( function( to ) {
+			$( '.site-title a' ).css( 'color': to );
+		} );
+	} );
+	
+	// Logo color. @test
+	wp.customize( 'smartestthemes_options[logo_hover_color]', function( value ) {
+		value.bind( function( to ) {
+			$( '.site-title a:hover' ).css( 'color': to );
+		} );
+	} );
+	
+
+
+	
 } )( jQuery );
