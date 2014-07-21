@@ -45,7 +45,7 @@ function stcf_malicious_input($input) {
  * check for spam
  */
 function stcf_spam_question($input) {
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test if this is needed
 	$response = '2';
 	$response = stripslashes(trim($response));
 	return ($input == $response);
@@ -225,7 +225,13 @@ function stcf_process_contact_form($content='') {
 	$append  = stripslashes($smartestthemes_options['st_contactform_append']);
 
 	$headers   = "MIME-Version: 1.0\n";
-	$headers .= "From: " . get_bloginfo('name') . " <$recipient>\n";
+	
+	
+	if ($smartestthemes_options['st_contactform_header_from'] == 'true') {
+		$headers .= "From: $name <$email>\n";
+	} else {
+		$headers .= "From: " . get_bloginfo('name') . " <$recipient>\n";
+	}
 	$headers .= "Reply-To: $email\n";
 	$headers  .= "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"";
 
