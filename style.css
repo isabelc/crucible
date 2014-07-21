@@ -246,8 +246,31 @@ tr td:first-child, thead th:first-child, tr th:first-child, table caption {paddi
 3.1 Message Boxes
 --------------------------------------------------------------*/
 
-/* @todo add error, info, success, warning message box styles */
-
+.st-info, .st-success, .st-warning, .st-error {
+    margin: 10px 0px;
+    padding:12px;
+}
+.st-info, .st-info i.fa {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+.st-success, .st-success i.fa {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.st-warning, .st-warning i.fa {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.st-error, .st-error i.fa {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+.st-info i, .st-success i, .st-warning i, .st-error i {
+    margin:10px 22px;
+    font-size:2em;
+    vertical-align:middle;
+}
 /*--------------------------------------------------------------
 3.2 Social Links
 --------------------------------------------------------------*/
