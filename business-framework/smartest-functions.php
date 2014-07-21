@@ -1353,16 +1353,6 @@ function smartestthemes_about_bottom_image() {
 	}
 	echo $out;
 }
-/**
- * Shortcode for message boxes
- 
-<div class="st-info"><i class="fa fa-info-circle"></i> INfo box.</div>
-<div class="st-success"> <i class="fa fa-check"></i>  Success box</div>
-<div class="st-warning"><i class="fa fa-warning"></i> Warning box.</div>
-<div class="st-error"><i class="fa fa-times-circle"></i> Replace this text with your own text. Error message,</div>
-
-
- */
 /* Info message box shortcode */
 function smartestthemes_info_shortcode( $atts, $content = null ) {
 	return '<div class="st-info"><i class="fa fa-info-circle"></i>' . $content . '</div>';
@@ -1382,23 +1372,4 @@ add_shortcode( 'warning', 'smartestthemes_warning_shortcode' );
 function smartestthemes_error_shortcode( $atts, $content = null ) {
 	return '<div class="st-error"><i class="fa fa-times-circle"></i>' . $content . '</div>';
 }
-add_shortcode( 'error', 'smartestthemes_error_shortcode' );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-?>
+add_shortcode( 'error', 'smartestthemes_error_shortcode' ); ?>
