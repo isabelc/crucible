@@ -1,12 +1,13 @@
 <?php // Conditionally load fontface stylesheets
 function crucible_loadfonts() {
 	$fontdir = get_template_directory_uri(). '/inc/fonts/';
-	$options = get_option('smartestthemes_options'); // @todo this way or globalize?
-	$needle1 = $options['st_heading_font'];
-	$needle2 = $options['st_logo_font'];
-	$needle3 = $options['st_body_font'];
-	$needle4 = $options['st_tagline_font'];
-	$needle5 = $options['st_attention_grabber_font'];
+	
+	global $smartestthemes_options;
+	$needle1 = $smartestthemes_options['st_heading_font'];// @todo
+	$needle2 = $smartestthemes_options['logo_font'];
+	$needle3 = $smartestthemes_options['st_body_font'];// @test
+	$needle4 = $smartestthemes_options['tagline_font'];
+	$needle5 = $smartestthemes_options['st_attention_grabber_font'];// @todo
 
 	// @new list font css output from theme options $logofonts array index [2]
 	$font1 = 'qumpellkano12regular,Arial,Helvetica,sans-serif';
@@ -57,14 +58,14 @@ add_action( 'wp_enqueue_scripts', 'crucible_loadfonts' );
  */
 function crucible_logofontface() {
 
-	$options = get_option('smartestthemes_options'); // @todo this way or globalize?
-	
-	if( isset($options['st_logo']) ? $options['st_logo'] : '') {// @test may have to check for logo differently based on customizer methods
+	global $smartestthemes_options;
+	// @test logo login
+	if( isset($smartestthemes_options['logo_setting']) ? $smartestthemes_options['logo_setting'] : '') {
 		return;
 	}
 
 	$fontdir = get_template_directory_uri(). '/inc/fonts/';
-	$needle2 = isset($options['st_logo_font']) ? $options['st_logo_font'] : '';
+	$needle2 = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : '';
 		
 	/* FONT NAME VARS */
 	$font1 =  'qumpellkano12regular,Arial,Helvetica,sans-serif';
