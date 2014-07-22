@@ -97,46 +97,48 @@ body.post-type-archive-smartest_staff .menu li.staff a,
 
 $link_color = isset($smartestthemes_options['link_color']) ? $smartestthemes_options['link_color'] : 'green';// @new default
 $link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';// @new default
+?>
+a, i.fa, .widget ul li, .entry-meta.jobtitle,
+.menu .current-menu-item a,
+body.post-type-archive-smartest_staff .menu li.staff a,
+body.post-type-archive-smartest_services .menu li.services a,
+body.post-type-archive-smartest_news .menu li.news a,
+body.tax-smartest_service_category .menu li.services a,
+body.single-smartest_services .menu .services a,
+body.single-smartest_staff .menu .staff a,
+body.single-smartest_news .menu .news a,
+body.about .menu li.about a, 
+body.contact .menu li.contact a,
+body.reviews .menu li.reviews a,
+body.single-post .menu li.blog a,
+body.archive.author .menu li.blog a,
+body.archive.category .menu li.blog a,
+body.archive.tag .menu li.blog a,
+body.archive.date .menu li.blog a,
+body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, 
+body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, 
+body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,
+body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a {
+     color:<?php echo $link_color; ?>;
+}
+	
+.button, button, html input[type="button"], #smar_pagination .smar_current, #smar_pagination a:hover, input[type="reset"],input[type="submit"],#smar_button_1,#smar_submit_btn{
+    background:<?php echo $link_color; ?>;
+}
+	
+a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{
+	color:<?php echo $link_hover_color; ?>;
+}
+	
+.button:hover, button:hover, input[type="button"]:hover,input[type="reset"]:hover,input[type="submit"]:hover,#smar_button_1:hover,#smar_submit_btn:hover{
+    background:<?php echo $link_hover_color; ?>;
+}
 
-// output CSS if needed.
-if ( $link_color ) { ?>
-	a, i.fa, .widget ul li, .entry-meta.jobtitle,
-	.menu .current-menu-item a,
-	body.post-type-archive-smartest_staff .menu li.staff a,
-	body.post-type-archive-smartest_services .menu li.services a,
-	body.post-type-archive-smartest_news .menu li.news a,
-	body.tax-smartest_service_category .menu li.services a,
-	body.single-smartest_services .menu .services a,
-	body.single-smartest_staff .menu .staff a,
-	body.single-smartest_news .menu .news a,
-	body.about .menu li.about a, 
-	body.contact .menu li.contact a,
-	body.reviews .menu li.reviews a,
-	body.single-post .menu li.blog a,
-	body.archive.author .menu li.blog a,
-	body.archive.category .menu li.blog a,
-	body.archive.tag .menu li.blog a,
-	body.archive.date .menu li.blog a,
-	body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, 
-	body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, 
-	body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,
-	body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a {
-	     color:<?php echo $link_color; ?>;
-	}
 	
-	.button, button, html input[type="button"], #smar_pagination .smar_current, #smar_pagination a:hover, input[type="reset"],input[type="submit"] {
-	    background:<?php echo $link_color; ?>;
-	}
 	
-	a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{
-		color:<?php echo $link_hover_color; ?>;
-	}
 	
-	.button:hover, button:hover, input[type="button"]:hover,
-input[type="reset"]:hover,input[type="submit"]:hover{
-	    background:<?php echo $link_hover_color; ?>;
-	}
-<?php }
+	
+<?php
 
 
 

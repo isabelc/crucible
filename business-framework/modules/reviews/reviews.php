@@ -809,7 +809,7 @@ function do_the_content($original_content) {
                                     ' . $some_required . '
                                     <div class="smar_clear"></div>    
                                     <input type="checkbox" name="' . $rand_prefixes[6] . '-fconfirm1" id="fconfirm1" value="1" />
-                                    <div class="smar_fl"><input type="checkbox" name="' . $rand_prefixes[7] . '-fconfirm2" id="fconfirm2" value="1" /></div><div class="smar_fl" style="margin:-2px 0px 0px 5px"><label for="fconfirm2">'. __('Check this box to confirm you are human.', 'crucible').'</label></div>
+                                    <div class="smar_fl"><input type="checkbox" name="' . $rand_prefixes[7] . '-fconfirm2" id="fconfirm2" value="1" /></div><div class="smar_fl smar_checklabel"><label for="fconfirm2">'. __('Check this box to confirm you are human.', 'crucible').'</label></div>
                                     <div class="smar_clear"></div>
                                     <input type="checkbox" name="' . $rand_prefixes[8] . '-fconfirm3" id="fconfirm3" value="1" />
                                 </td>

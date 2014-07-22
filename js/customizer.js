@@ -125,7 +125,7 @@
 			
 			$( "a, i.fa, .widget ul li, .entry-meta.jobtitle,.menu .current-menu-item a, body.post-type-archive-smartest_staff .menu li.staff a, body.post-type-archive-smartest_services .menu li.services a, body.post-type-archive-smartest_news .menu li.news a, body.tax-smartest_service_category .menu li.services a, body.single-smartest_services .menu .services a, body.single-smartest_staff .menu .staff a, body.single-smartest_news .menu .news a, body.about .menu li.about a, body.contact .menu li.contact a, body.reviews .menu li.reviews a, .menu > li:first-child:hover a, body.single-post .menu li.blog a, body.archive.author .menu li.blog a, body.archive.category .menu li.blog a, body.archive.tag .menu li.blog a, body.archive.date .menu li.blog a, body.home .menu > li.home > a" ).css('color', to);
 	
-			$( "input#stcf_contact, input#submit" ).css('background', to);	
+			$( "input#stcf_contact, input#submit, #smar_button_1, #smar_submit_btn" ).css('background', to);	
 
 
 	} );
@@ -150,8 +150,7 @@
 					$(this).css( 'color', maincolor );
 				}
 			);
-			
-			$('button, .button, input#stcf_contact, input#submit').hover(
+			$('button, .button, input#stcf_contact, input#submit, #smar_button_1, #smar_submit_btn').hover(
 				function () {
 					$(this).css( 'background', to );
 				}, 
