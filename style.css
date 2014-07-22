@@ -606,6 +606,18 @@ i.fa:hover {
 	display: none;
 }
 
+/* Calendar */
+.widget_calendar tr td:first-child, .widget_calendar thead th:first-child, .widget_calendar tr th:first-child, .widget_calendar table caption {
+	padding-left:0px;
+}
+.widget_calendar th, .widget_calendar td, .widget_calendar caption{text-align:center;}
+
+#today,
+.widget_calendar caption{
+    font-weight:bold;
+    background-color:#7fbf7f/* @new default color */
+}
+
 /* Announements widget */
 .widget_smartest_announcements p {margin-left: 10%;} .widget_smartest_announcements time {font-style:italic;font-size: 75%;color:#333333;padding-left:8px;}
 
