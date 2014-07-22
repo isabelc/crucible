@@ -57,23 +57,14 @@
 		} );
 	} );
 	
-	// Logo color.
+	// Logo color
+	// @new default color twice
 	wp.customize( 'smartestthemes_options[logo_color]', function( value ) {
 		value.bind( function( to ) {
-			if ( 'blank' === to ) {
-			
-				$( '.site-title a' ).css( {
-					'clip': 'rect(1px, 1px, 1px, 1px)',
-					'position': 'absolute'
-				} );
+			if ( '#008000' === to ) {
+				$( '.site-title a' ).css('color','#008000');
 			} else {
-				$( '.site-title a' ).css( {
-				'clip': 'auto',
-				'color': to,
-				'position': 'relative'
-				} );
-			
-			
+				$( '.site-title a' ).css('color', to);
 			}
 		} );
 	} );
@@ -117,16 +108,12 @@
 	} );
 */
 
-
-
-	
-	
 	// logo font-size
 	wp.customize( 'smartestthemes_options[logo_fontsize]', function( value ) {
 		value.bind( function( to ) {
 		
 			if ( '' == to ) {
-				$( '.site-title a' ).css( 'font-size', '36px' );// @new @todo default size
+				$( '.site-title a' ).css( 'font-size', '36px' );// @new default size
 			} else {
 				$( '.site-title a' ).css( 'font-size', to );
 			}
@@ -156,27 +143,46 @@
 	} );	
 	
 	// tagline color
+	// @new default color twice
 	wp.customize( 'smartestthemes_options[tagline_color]', function( value ) {
 		value.bind( function( to ) {
-			if ( 'blank' === to ) {
-				$( 'h2.site-description' ).css('color','#000');// @new @todo default tagline color
+			if ( '#404040' == to ) {
+				$( 'h2.site-description' ).css('color','#404040');
 			} else {
 				$( 'h2.site-description' ).css('color', to);
 			}
 		} );
 	} );
-
 	// tagline size
 	wp.customize( 'smartestthemes_options[tagline_size]', function( value ) {
 		value.bind( function( newval ) {
 		
 			if ( '' == newval ) {
-				$('h2.site-description').css('font-size', '24px' );// @new @todo default size
+				$('h2.site-description').css('font-size', '24px' );// @new default size
 			} else {
 				$('h2.site-description').css('font-size', newval );
 			}
 		
 		} );
-	} );	
+	} );
+	
+	// link color
+	// @new default color twice
+	wp.customize( 'smartestthemes_options[link_color]', function( value ) {
+		value.bind( function( to ) {
+		
+			if ( '#008000' === to ) {
+				$( "a, i.fa, .color-3, .widget ul a:hover, .fa-bullhorn, .widget ul li, .widget.widget_smartest_announcements ul li, .widget.widget_smartest_announcements ul a, .site-title a strong, .entry-meta.jobtitle,.menu .current-menu-item a, .menu li:hover a, .menu li:hover li a:hover, .menu li > ul li:hover li:hover a, body.post-type-archive-smartest_staff .menu li.staff a, body.post-type-archive-smartest_services .menu li.services a, body.post-type-archive-smartest_news .menu li.news a, body.tax-smartest_service_category .menu li.services a, body.single-smartest_services .menu .services a, body.single-smartest_staff .menu .staff a, body.single-smartest_news .menu .news a, body.about .menu li.about a, body.contact .menu li.contact a, body.reviews .menu li.reviews a, .menu > li:first-child:hover a, body.single-post .menu li.blog a, body.archive.author .menu li.blog a, body.archive.category .menu li.blog a, body.archive.tag .menu li.blog a, body.archive.date .menu li.blog a, body.home .menu > li.home > a" ).css('color', '#008000');
+			} else {
+			
+				$( "a, i.fa, .color-3, .widget ul a:hover, .fa-bullhorn, .widget ul li, .widget.widget_smartest_announcements ul li, .widget.widget_smartest_announcements ul a, .site-title a strong, .entry-meta.jobtitle,.menu .current-menu-item a, .menu li:hover a, .menu li:hover li a:hover, .menu li > ul li:hover li:hover a, body.post-type-archive-smartest_staff .menu li.staff a, body.post-type-archive-smartest_services .menu li.services a, body.post-type-archive-smartest_news .menu li.news a, body.tax-smartest_service_category .menu li.services a, body.single-smartest_services .menu .services a, body.single-smartest_staff .menu .staff a, body.single-smartest_news .menu .news a, body.about .menu li.about a, body.contact .menu li.contact a, body.reviews .menu li.reviews a, .menu > li:first-child:hover a, body.single-post .menu li.blog a, body.archive.author .menu li.blog a, body.archive.category .menu li.blog a, body.archive.tag .menu li.blog a, body.archive.date .menu li.blog a, body.home .menu > li.home > a" ).css('color', to);
+	
 
+			}
+	
+	
+		} );
+	} );	
+	
+	
 } )( jQuery );

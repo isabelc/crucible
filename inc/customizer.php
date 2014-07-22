@@ -91,7 +91,7 @@ function crucible_customize_register( $wp_customize ) {
     //  = Color Input
     //  =============================
 	$wp_customize->add_setting('smartestthemes_options[logo_color]', array(
-        'default'	=> '',
+        'default'	=> '#008000',// @new default
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -178,7 +178,7 @@ function crucible_customize_register( $wp_customize ) {
     //  = Color Input                =
     //  =============================
 	$wp_customize->add_setting('smartestthemes_options[tagline_color]', array(
-        'default'	=> '',
+        'default'	=> '#404040',// @new default
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -208,7 +208,27 @@ function crucible_customize_register( $wp_customize ) {
         'settings'   => 'smartestthemes_options[tagline_size]',
 		'priority'   => 68
     ));
+	
+	/* Link Color */
+	
+	$wp_customize->add_setting(
+		'smartestthemes_options[link_color]',
+		array(
+			'default'	=> '#008000', // @new default
+			'type'		=> 'option',
+			'transport'	=> 'postMessage'
+		)
+	);
 
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+			$wp_customize,
+			'st_link_color',
+			array(
+				'label'      => __( 'Link Color', 'crucible' ),
+				'section'    => 'colors',
+				'settings'   => 'smartestthemes_options[link_color]'
+			)
+	) );	
 
 }
 add_action( 'customize_register', 'crucible_customize_register' );

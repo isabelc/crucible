@@ -94,55 +94,13 @@ body.post-type-archive-smartest_staff .menu li.staff a,
 }
 
 <?php // ACCENT COLORS
-unset($accent_color, $hover_color);
 
-if ( $smartestthemes_options['st_override_accent_color'] == 'true' ) { // accent color override is checked...
-	$accent_color = $smartestthemes_options['st_custom_accent_color'];
-	$hover_color = '#1C1C1C'; // original black
-} else { // check if regular accent color is selected
-	// then begin my choices
-		if ( $smartestthemes_options['st_accent_color'] == 'red' ) {
-			$accent_color = '#D81919';
-			$hover_color = '#c21616';
-		}
-		if ( $smartestthemes_options['st_accent_color'] == 'orange' ) {
-			$accent_color = '#F3A600';
-			$hover_color = '#da9500';
-		}
-		if ( $smartestthemes_options['st_accent_color'] == 'lime' ) {
-			$accent_color = '#79BF00';
-			$hover_color = '#6cab00';
-		}
-		if ( $smartestthemes_options['st_accent_color'] == 'blue' ) {
-			$accent_color = '#0F4D92';
-			$hover_color = '#265e9c';
-		}
-		if ( $smartestthemes_options['st_accent_color'] == 'light blue' ) {
-			$accent_color = '#11B7E7';
-			$hover_color = '#0fa4cf';
-		}
-		if ( $smartestthemes_options['st_accent_color'] == 'violet' ) {
-			$accent_color = '#616FF3';
-			$hover_color = '#5763da';
-		}
-		if ( $smartestthemes_options['st_accent_color'] == 'bronze brown' ) {
-			$accent_color = '#804000';
-			$hover_color = '#996632';
-		}
-		if ( $smartestthemes_options['st_accent_color'] == 'sand' ) {
-			$accent_color = '#c0b870';
-			$hover_color = '#c6bf7e';
-		}
-		if ( $smartestthemes_options['st_accent_color'] == 'gray' ) {
-			$accent_color = '#949494';
-			$hover_color = '#6b6b6b';
-		}
-	// end my choices
-}
+$link_color = isset($smartestthemes_options['link_color']) ? $smartestthemes_options['link_color'] : 'green';// @new default
+$link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';// @new default
 
 // output CSS if needed.
-if ( isset($accent_color) && ! empty($accent_color) ) { ?>
-	a,  i.fa, .color-3, .widget ul a:hover, .fa-bullhorn, .widget ul li, .widget.widget_smartest_announcements ul li, .widget.widget_smartest_announcements ul a, .site-title a strong, .entry-meta.jobtitle,
+if ( $link_color ) { ?>
+	a, i.fa, .color-3, .widget ul a:hover, .fa-bullhorn, .widget ul li, .widget.widget_smartest_announcements ul li, .widget.widget_smartest_announcements ul a, .site-title a strong, .entry-meta.jobtitle,
 	.menu .current-menu-item a,
 	.menu li:hover a,
 	.menu li:hover li a:hover,
@@ -167,18 +125,18 @@ if ( isset($accent_color) && ! empty($accent_color) ) { ?>
 	body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, 
 	body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,
 	body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a {
-	     color:<?php echo $accent_color; ?>;
+	     color:<?php echo $link_color; ?>;
 	}
 	.site-title a:hover {
-		color:<?php echo $hover_color; ?>;
+		color:<?php echo $link_hover_color; ?>;
 	}
 	.button, button, html input[type="button"], #smar_pagination .smar_current, #smar_pagination a:hover,  .commentlist .reply a,  
 input[type="reset"],input[type="submit"], #contact-form input[type="reset"], #contact-form input[type="submit"] {
-	    background:<?php echo $accent_color; ?>;
+	    background:<?php echo $link_color; ?>;
 	}
 	.button:hover, button:hover, .fa-bullhorn:hover, .commentlist .reply a:hover, .commentlist .reply a:active, html input[type="button"]:hover,
 input[type="reset"]:hover,input[type="submit"]:hover, #contact-form input[type="reset"]:hover, #contact-form input[type="submit"]:hover, #contact-form input[type="reset"]:active, #contact-form input[type="submit"]:active {
-	    background:<?php echo $hover_color; ?>;
+	    background:<?php echo $link_hover_color; ?>;
 	}
 <?php }
 
@@ -252,5 +210,4 @@ if ( $smartestthemes_options['st_menu_hover_color'] ) { ?>
 .social-google{background-position: 0 -168px;}.social-google:hover{background-position:0 -112px}.social-facebook{background-position:0 -56px}.social-facebook:hover{background-position:0 0}.social-twitter{background-position:0 -392px}.social-twitter:hover{background-position:0 -336px}.social-linkedin{background-position:0 -280px}.social-linkedin:hover{background-position:0 -224px}.social-youtube{background-position:0 -504px}.social-youtube:hover{background-position:0 -448px}
 <?php }
 // custom css from theme options
-/* @test custom css */
 echo $smartestthemes_options['st_custom_css']; ?></style>
