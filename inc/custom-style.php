@@ -144,9 +144,6 @@ a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{
 
 <?php
 
-
-
-
 // LOGO
 if ( $smartestthemes_options['logo_color'] ) {
 	echo '.site-title a { color:'. $smartestthemes_options['logo_color'].'; }';
