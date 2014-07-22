@@ -124,14 +124,8 @@
 		value.bind( function( to ) {
 			
 			$( "a, i.fa, .widget ul li, .entry-meta.jobtitle,.menu .current-menu-item a, body.post-type-archive-smartest_staff .menu li.staff a, body.post-type-archive-smartest_services .menu li.services a, body.post-type-archive-smartest_news .menu li.news a, body.tax-smartest_service_category .menu li.services a, body.single-smartest_services .menu .services a, body.single-smartest_staff .menu .staff a, body.single-smartest_news .menu .news a, body.about .menu li.about a, body.contact .menu li.contact a, body.reviews .menu li.reviews a, .menu > li:first-child:hover a, body.single-post .menu li.blog a, body.archive.author .menu li.blog a, body.archive.category .menu li.blog a, body.archive.tag .menu li.blog a, body.archive.date .menu li.blog a, body.home .menu > li.home > a" ).css('color', to);
-	
-			$( "input#stcf_contact, input#submit, #smar_button_1, #smar_submit_btn" ).css('background', to);	
 
-
-	} );
-		
-		
-		
+		} );
 	} );
 	
 	
@@ -150,17 +144,50 @@
 					$(this).css( 'color', maincolor );
 				}
 			);
-			$('button, .button, input#stcf_contact, input#submit, #smar_button_1, #smar_submit_btn').hover(
+			
+		} );
+	} );
+
+	// Button color
+	wp.customize( 'smartestthemes_options[button_color]', function( value ) {
+		value.bind( function( to ) {
+			
+			$( "button, .button, input#stcf_contact, input#submit, a#smar_button_1, input#smar_submit_btn" ).css('background', to);	
+
+		} );
+	} );
+	
+
+	// Button hover color
+	wp.customize( 'smartestthemes_options[button_hover_color]', function( value ) {
+		value.bind( function( to ) {
+		
+			mainButtoncolor = wp.customize.value('smartestthemes_options[button_color]')(); 
+			
+			$('button, .button, input#stcf_contact, input#submit, a#smar_button_1, input#smar_submit_btn').hover(
 				function () {
 					$(this).css( 'background', to );
 				}, 
 				function () {
-					$(this).css( 'background', maincolor );
+					$(this).css( 'background', mainButtoncolor );
 				}
-			);
-			
+			);			
+
 		} );
 	} );
+
+	
+	// Button Text color
+	wp.customize( 'smartestthemes_options[button_text_color]', function( value ) {
+		value.bind( function( to ) {
+			
+			$( "button, .button, input#stcf_contact, input#submit, a#smar_button_1, input#smar_submit_btn" ).css('color', to);	
+
+		} );
+	} );
+		
+
+
 
 	
 } )( jQuery );

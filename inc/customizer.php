@@ -248,7 +248,72 @@ function crucible_customize_register( $wp_customize ) {
 				'section'    => 'colors',
 				'settings'   => 'smartestthemes_options[link_hover_color]'
 			)
+	) );
+	
+	
+	/* Button Color */
+	
+	$wp_customize->add_setting(
+		'smartestthemes_options[button_color]',
+		array(
+			'default'	=> '#e6e6e6', // @new default
+			'type'		=> 'option',
+			'transport'	=> 'postMessage'
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+			$wp_customize,
+			'st_button_color',
+			array(
+				'label'      => __( 'Button Color', 'crucible' ),
+				'section'    => 'colors',
+				'settings'   => 'smartestthemes_options[button_color]'
+			)
+	) );
+	
+	/* Button Hover Color */
+	
+	$wp_customize->add_setting(
+		'smartestthemes_options[button_hover_color]',
+		array(
+			'default'	=> '#e6e6e6', // @new default
+			'type'		=> 'option',
+			'transport'	=> 'postMessage'
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+			$wp_customize,
+			'st_button_hover_color',
+			array(
+				'label'      => __( 'Button Hover Color', 'crucible' ),
+				'section'    => 'colors',
+				'settings'   => 'smartestthemes_options[button_hover_color]'
+			)
+	) );
+	
+	/* Button Text Color */
+	$wp_customize->add_setting(
+		'smartestthemes_options[button_text_color]',
+		array(
+			'default'	=> 'rgba(0, 0, 0, .8)', // @new default @test if rgba works with default !!
+			'type'		=> 'option',
+			'transport'	=> 'postMessage'
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+			$wp_customize,
+			'st_button_text_color',
+			array(
+				'label'      => __( 'Button Text Color', 'crucible' ),
+				'section'    => 'colors',
+				'settings'   => 'smartestthemes_options[button_text_color]'
+			)
 	) );	
+	
+	
 
 	
 }

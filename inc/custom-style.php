@@ -97,6 +97,12 @@ body.post-type-archive-smartest_staff .menu li.staff a,
 
 $link_color = isset($smartestthemes_options['link_color']) ? $smartestthemes_options['link_color'] : 'green';// @new default
 $link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';// @new default
+$button_color = isset($smartestthemes_options['button_color']) ? $smartestthemes_options['button_color'] : '#e6e6e6';// @new default
+$button_hover_color = isset($smartestthemes_options['button_hover_color']) ? $smartestthemes_options['button_hover_color'] : '#e6e6e6';// @new default
+
+$button_text_color = isset($smartestthemes_options['button_text_color']) ? $smartestthemes_options['button_text_color'] : 'rgba(0, 0, 0, .8)';// @new default
+
+
 ?>
 a, i.fa, .widget ul li, .entry-meta.jobtitle,
 .menu .current-menu-item a,
@@ -122,22 +128,20 @@ body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li
      color:<?php echo $link_color; ?>;
 }
 	
-.button, button, html input[type="button"], #smar_pagination .smar_current, #smar_pagination a:hover, input[type="reset"],input[type="submit"],#smar_button_1,#smar_submit_btn{
-    background:<?php echo $link_color; ?>;
-}
-	
 a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{
 	color:<?php echo $link_hover_color; ?>;
 }
+
+.button, button, html input[type="button"], #smar_pagination .smar_current, #smar_pagination a:hover, input[type="reset"],input[type="submit"],#smar_button_1,#smar_submit_btn{
+
+    background:<?php echo $button_color; ?>;
+	color:<?php echo $button_text_color; ?>;
+}
 	
 .button:hover, button:hover, input[type="button"]:hover,input[type="reset"]:hover,input[type="submit"]:hover,#smar_button_1:hover,#smar_submit_btn:hover{
-    background:<?php echo $link_hover_color; ?>;
+    background:<?php echo $button_hover_color; ?>;
 }
 
-	
-	
-	
-	
 <?php
 
 
