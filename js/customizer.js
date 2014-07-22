@@ -44,14 +44,27 @@
 	} );
 	
 	
-	// logo height
+	// logo image height
+	
 	wp.customize( 'smartestthemes_options[increase_logo]', function( value ) {
 		value.bind( function( newval ) {
 		
 			if ( '' == newval ) {
+			
 				$('img#customlogo').css('max-height', '150px');
-			} else {		
+			
+			} else {
+				
+				// hide cut image
+				$( 'img#customlogo' ).hide();
+				
+				// prepend full size image
+				fullImage = wp.customize.value('smartestthemes_options[logo_setting]')();
+				$( '.site-branding' ).prepend( '<img id="customlogo" src="' + fullImage + '" />' );
+					
+				// add the css
 				$('img#customlogo').css({'max-height': newval + 'px'});
+				
 			}
 		
 		} );
@@ -93,9 +106,12 @@
 	wp.customize( 'smartestthemes_options[hide_tagline]', function( value ) {
 		value.bind( function( to ) {
 			if ( '1' == to ) {
+				// hide tagline
 				$( '.site-description' ).hide();
 			} else {
-				$( '.site-description' ).show();
+				// show tagline
+				tagline = wp.customize.value('blogdescription')();
+				$( '.site-branding' ).append( '<h2 class="site-description">' + tagline + '</h2>' );
 			}
 		} );
 	} );

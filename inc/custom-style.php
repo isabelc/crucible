@@ -143,7 +143,6 @@ a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{
 }
 
 <?php
-
 // LOGO
 if ( $smartestthemes_options['logo_color'] ) {
 	echo '.site-title a { color:'. $smartestthemes_options['logo_color'].'; }';
@@ -158,7 +157,7 @@ if ( $smartestthemes_options['logo_fontsize'] )
 	
 $increase_logo = $smartestthemes_options['increase_logo'] ;
 if ( $increase_logo ) {
-	echo 'a#logolink #customlogo {max-height:' . $increase_logo . 'px !important;}';
+	echo 'img#customlogo {max-height:' . $increase_logo . 'px;}';
 }
 
 // tagline
