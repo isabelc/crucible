@@ -297,7 +297,7 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'smartestthemes_options[button_text_color]',
 		array(
-			'default'	=> 'rgba(0, 0, 0, .8)', // @new default @test if rgba works with default !!
+			'default'	=> '#191919', // @new default
 			'type'		=> 'option',
 			'transport'	=> 'postMessage'
 		)
