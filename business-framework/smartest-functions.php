@@ -4,14 +4,19 @@
  * @package    Smartest Themes Business Framework
 */
 function smartestthemes_login_logo() {
-	$buslogo =  get_option('st_logo');
+
+	global $smartestthemes_options;
+	$buslogo =  isset($smartestthemes_options['logo_setting']) ? $smartestthemes_options['logo_setting'] : '';
+	
 	// if there is a logo, show it, else do text
 	if ($buslogo) {
 		$small_logo = vt_resize( '', $buslogo, 326, 67, false );
 	    echo '<style type="text/css">.login h1 a { background: url('.$small_logo['url'].') 50% 50% no-repeat !important;width: 326px;height: 70px;}</style>';
 	} else {
-		$col = get_option('st_logo_color'); if (empty($col)) {$col = '#000000';}
-		echo'<style type="text/css">.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. get_option('st_logo_font'). ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}</style>';
+		
+		$col = isset($smartestthemes_options['logo_color']) ? $smartestthemes_options['logo_color'] : '#000';
+		$font = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : 'inherit';
+		echo '<style type="text/css">.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. $font . ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}</style>';
 	}
 }
 add_action('login_head', 'smartestthemes_login_logo');
