@@ -11,7 +11,7 @@ function smartestthemes_login_logo() {
 	    echo '<style type="text/css">.login h1 a { background: url('.$small_logo['url'].') 50% 50% no-repeat !important;width: 326px;height: 70px;}</style>';
 	} else {
 		$col = get_option('st_logo_color'); if (empty($col)) {$col = '#000000';}
-		echo'<style type="text/css">.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. get_option('st_logo_font'). ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}.login h1 a:hover {color:'.get_option('st_logo_hover_color') . ';}</style>';
+		echo'<style type="text/css">.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. get_option('st_logo_font'). ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}</style>';
 	}
 }
 add_action('login_head', 'smartestthemes_login_logo');
