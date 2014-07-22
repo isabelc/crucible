@@ -16,18 +16,18 @@ function crucible_customize_register( $wp_customize ) {
 	
 	$wp_customize->add_section('crucible_site_logo_section', array(
         'title'			=> __('Site Logo', 'crucible'),
-		'description'	=> 'Upload a logo to replace the default site name in the header',
+		'description'	=> 'Upload a logo to replace the site title in the header',
         'priority'		=> 10,
     ));
 	
-//  =============================
+	//  =============================
     //  = Image Upload 
     //  =============================
    
  	$wp_customize->add_setting('smartestthemes_options[logo_setting]', array(
         'default'	=> '',
         'type'		=> 'option',
-		'transport'	=> 'postMessage'// @test works
+		'transport'	=> 'postMessage'
      ));
      
 	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'smartestthemes_options[logo_setting]', array(
@@ -42,11 +42,11 @@ function crucible_customize_register( $wp_customize ) {
     $wp_customize->add_setting('smartestthemes_options[increase_logo]', array(
         'default'	=> '',
         'type'		=> 'option',
-		'transport'	=> 'postMessage'// @test works
+		'transport'	=> 'postMessage'
      ));
 	
 	$wp_customize->add_control('crucible_increase_logo_height', array(
-        'label'      => __('Optional: Increase logo height pixels. Default is 150.', 'crucible'),
+        'label'      => __('Optional: Increase logo height. Default is 150.', 'crucible'),
         'section'    => 'crucible_site_logo_section',
         'settings'   => 'smartestthemes_options[increase_logo]',
 		'priority'   => 35
@@ -59,7 +59,7 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->add_setting('smartestthemes_options[logo_font]', array(
 		'default'	=> 'Copperplate Bold, Copperplate Gothic Bold, serif',// @new default logo font
 		'type'		=> 'option',
-		'transport'	=> 'postMessage'// @test works
+		'transport'	=> 'postMessage'
 	));
 	$wp_customize->add_control( 'logo_font_select', array(
 		'settings' => 'smartestthemes_options[logo_font]',
@@ -88,12 +88,12 @@ function crucible_customize_register( $wp_customize ) {
 
 
 	//  =============================
-    //  = Color Input                =
+    //  = Color Input
     //  =============================
 	$wp_customize->add_setting('smartestthemes_options[logo_color]', array(
         'default'	=> '',
         'type'		=> 'option',
-		'transport'	=> 'postMessage'// @test works
+		'transport'	=> 'postMessage'
      ));
 
 	$wp_customize->add_control( new WP_Customize_Color_Control( 
@@ -107,38 +107,17 @@ function crucible_customize_register( $wp_customize ) {
 			)
 	));
 
-
 	//  =============================
-    //  = Color Input                =
-    //  =============================
-	$wp_customize->add_setting('smartestthemes_options[logo_hover_color]', array(
-        'default'	=> '',
-        'type'		=> 'option',
-		'transport'	=> 'postMessage'// @test
-     ));
-
-	$wp_customize->add_control( new WP_Customize_Color_Control( 
-		$wp_customize, 
-			'st_logo_hover_color', 
-			array(
-				'label'      => __( 'Site Title Hover Color', 'crucible' ),
-				'section'    => 'title_tagline',
-				'settings'   => 'smartestthemes_options[logo_hover_color]',
-				'priority'   => 64
-			)
-	));
-
-	//  =============================
-    //  = Text Input                =
+    //  = Text Input
     //  =============================
     $wp_customize->add_setting('smartestthemes_options[logo_fontsize]', array(
         'default'	=> '',
         'type'		=> 'option',
-		'transport'	=> 'postMessage'// @test in progress
+		'transport'	=> 'postMessage'
      ));
 	
 	$wp_customize->add_control('crucible_logo_font_size', array(
-        'label'      => __('Optional: Logo Font Size. Default is 36px.', 'crucible'),// @new default size
+        'label'      => __('Optional: Title Size. Default is 36px.', 'crucible'),// @new default size
         'section'    => 'title_tagline',
         'settings'   => 'smartestthemes_options[logo_fontsize]',
 		'priority'   => 65
@@ -151,7 +130,7 @@ function crucible_customize_register( $wp_customize ) {
     $wp_customize->add_setting('smartestthemes_options[hide_tagline]', array(
         'default'	=> '',
         'type'		=> 'option',
-		'transport'	=> 'postMessage'// @test in progress
+		'transport'	=> 'postMessage'
      ));
  
      $wp_customize->add_control('crucible_display_tagline', array(
@@ -167,7 +146,7 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->add_setting('smartestthemes_options[tagline_font]', array(
 		'default'	=> 'Copperplate Bold, Copperplate Gothic Bold, serif',// @new default logo font
 		'type'		=> 'option',
-		'transport'	=> 'postMessage'// @test
+		'transport'	=> 'postMessage'
 	));
 	$wp_customize->add_control( 'tagline_font_select', array(
 		'settings' => 'smartestthemes_options[tagline_font]',
@@ -201,7 +180,7 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->add_setting('smartestthemes_options[tagline_color]', array(
         'default'	=> '',
         'type'		=> 'option',
-		'transport'	=> 'postMessage'// @test 
+		'transport'	=> 'postMessage'
      ));
 
 	$wp_customize->add_control( new WP_Customize_Color_Control( 
@@ -220,7 +199,7 @@ function crucible_customize_register( $wp_customize ) {
     $wp_customize->add_setting('smartestthemes_options[tagline_size]', array(
         'default'	=> '',
         'type'		=> 'option',
-		'transport'	=> 'postMessage'// @test 
+		'transport'	=> 'postMessage'
      ));
 	
 	$wp_customize->add_control('crucible_tagline_font_size', array(

@@ -142,7 +142,7 @@ if ( $smartestthemes_options['st_override_accent_color'] == 'true' ) { // accent
 
 // output CSS if needed.
 if ( isset($accent_color) && ! empty($accent_color) ) { ?>
-	a, .color-3, .widget ul a:hover, .fa-bullhorn, .widget ul li, .widget.widget_smartest_announcements ul li, .widget.widget_smartest_announcements ul a, .site-title a strong, .entry-meta.jobtitle,
+	a,  i.fa, .color-3, .widget ul a:hover, .fa-bullhorn, .widget ul li, .widget.widget_smartest_announcements ul li, .widget.widget_smartest_announcements ul a, .site-title a strong, .entry-meta.jobtitle,
 	.menu .current-menu-item a,
 	.menu li:hover a,
 	.menu li:hover li a:hover,
@@ -185,10 +185,6 @@ input[type="reset"]:hover,input[type="submit"]:hover, #contact-form input[type="
 // LOGO
 if ( $smartestthemes_options['logo_color'] ) {
 	echo '.site-title a { color:'. $smartestthemes_options['logo_color'].'; }';
-}
-
-if ( $smartestthemes_options['logo_hover_color'] ) {
-	echo '.site-title a:hover { color:'.$smartestthemes_options['logo_hover_color'].'; }';
 }
 
 $logo_font = $smartestthemes_options['logo_font'];
@@ -256,4 +252,5 @@ if ( $smartestthemes_options['st_menu_hover_color'] ) { ?>
 .social-google{background-position: 0 -168px;}.social-google:hover{background-position:0 -112px}.social-facebook{background-position:0 -56px}.social-facebook:hover{background-position:0 0}.social-twitter{background-position:0 -392px}.social-twitter:hover{background-position:0 -336px}.social-linkedin{background-position:0 -280px}.social-linkedin:hover{background-position:0 -224px}.social-youtube{background-position:0 -504px}.social-youtube:hover{background-position:0 -448px}
 <?php }
 // custom css from theme options
+/* @test custom css */
 echo $smartestthemes_options['st_custom_css']; ?></style>

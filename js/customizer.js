@@ -18,7 +18,7 @@
 	} );
 
 	
-	// logo image @test works
+	// logo image
 	wp.customize( 'smartestthemes_options[logo_setting]', function( value ) {
 		value.bind( function( newval ) {
 			
@@ -29,7 +29,7 @@
 			} else {
 			
 				$( '.site-title' ).hide();
-				$( '.site-branding' ).prepend( '<img id="customlogo" src="' + newval + '" />' );// @test
+				$( '.site-branding' ).prepend( '<img id="customlogo" src="' + newval + '" />' );
 				
 			}
 			
@@ -37,7 +37,7 @@
 	} );
 	
 	
-	// logo height @test works
+	// logo height
 	wp.customize( 'smartestthemes_options[increase_logo]', function( value ) {
 		value.bind( function( newval ) {
 		
@@ -50,16 +50,14 @@
 		} );
 	} );
 
-	
-	// logo font @test works
+	// logo font
 	wp.customize( 'smartestthemes_options[logo_font]', function( value ) {
 		value.bind( function( newval ) {
 			$('.site-title a').css('font-family', newval );
-		
 		} );
 	} );
 	
-	// Logo color. @test
+	// Logo color.
 	wp.customize( 'smartestthemes_options[logo_color]', function( value ) {
 		value.bind( function( to ) {
 			if ( 'blank' === to ) {
@@ -80,34 +78,36 @@
 		} );
 	} );
 	
-	// Logo hover-color. @test
+	
+/* -----------------------------------------------------------
+
+	@todo remove this at end, when I'm sure I won't need it anymore
+	
+	-------------------------------------------------------------------
+	
+	// Logo hover-color. @test also @test to see if hover color can be cleared!!
 	wp.customize( 'smartestthemes_options[logo_hover_color]', function( value ) {
 		value.bind( function( to ) {
 			
-			maincolor = wp.customize.value('smartestthemes_options[logo_color]')();// @test			
+			maincolor = wp.customize.value('smartestthemes_options[logo_color]')();
 			
 			if ( 'blank' === to ) {
 
-				$('.site-title a').hover(
-					function () {
-						$(this).css( 'color', 'pink' );// @new @todo default title :hover color
-					}, 
-					function () {
-						$(this).css( 'color', maincolor );
-					}
-				);			
-
+				$('.site-title a').css( 'color', maincolor );// @test
+				
 			} else {
 			
+				
 				$('.site-title a').hover(
 					function () {
-						$(this).css( 'color', to );
+						$('.site-title a').css( 'color', to );
 					}, 
 					function () {
-						$(this).css( 'color', maincolor );
+						$('.site-title a').css( 'color', maincolor );
 					}
 				);
-			
+				
+	
 	
 			}
 			
@@ -115,12 +115,13 @@
 			
 		} );
 	} );
+*/
+
+
+
 	
 	
-	
-	
-	
-	// logo font-size @test
+	// logo font-size
 	wp.customize( 'smartestthemes_options[logo_fontsize]', function( value ) {
 		value.bind( function( to ) {
 		
@@ -135,18 +136,18 @@
 		} );
 	} );	
 	
-	// hide tagline @test
+	// hide tagline
 	wp.customize( 'smartestthemes_options[hide_tagline]', function( value ) {
 		value.bind( function( to ) {
 			if ( '1' == to ) {
-				$( '.site-description' ).hide();// @test
+				$( '.site-description' ).hide();
 			} else {
-				$( '.site-description' ).show();// @test
+				$( '.site-description' ).show();
 			}
 		} );
 	} );
 
-	// tagline font @test works!
+	// tagline font
 	wp.customize( 'smartestthemes_options[tagline_font]', function( value ) {
 		value.bind( function( newval ) {
 			$('h2.site-description').css('font-family', newval );
@@ -154,7 +155,7 @@
 		} );
 	} );	
 	
-	// tagline color. @test
+	// tagline color
 	wp.customize( 'smartestthemes_options[tagline_color]', function( value ) {
 		value.bind( function( to ) {
 			if ( 'blank' === to ) {
@@ -165,7 +166,7 @@
 		} );
 	} );
 
-	// tagline size @test
+	// tagline size
 	wp.customize( 'smartestthemes_options[tagline_size]', function( value ) {
 		value.bind( function( newval ) {
 		
