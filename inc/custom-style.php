@@ -96,15 +96,12 @@ body.post-type-archive-smartest_staff .menu li.staff a,
 <?php // ACCENT COLORS
 
 $link_color = isset($smartestthemes_options['link_color']) ? $smartestthemes_options['link_color'] : 'green';// @new default
-$link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';// @new default
+$link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';// @new default also @todo the link_hover_color option in customizer
 
 // output CSS if needed.
 if ( $link_color ) { ?>
-	a, i.fa, .color-3, .widget ul a:hover, .fa-bullhorn, .widget ul li, .widget.widget_smartest_announcements ul li, .widget.widget_smartest_announcements ul a, .site-title a strong, .entry-meta.jobtitle,
+	a, i.fa, .fa-bullhorn, .widget ul li, .site-title a strong, .entry-meta.jobtitle,
 	.menu .current-menu-item a,
-	.menu li:hover a,
-	.menu li:hover li a:hover,
-	.menu li > ul li:hover li:hover a,
 	body.post-type-archive-smartest_staff .menu li.staff a,
 	body.post-type-archive-smartest_services .menu li.services a,
 	body.post-type-archive-smartest_news .menu li.news a,
@@ -115,7 +112,6 @@ if ( $link_color ) { ?>
 	body.about .menu li.about a, 
 	body.contact .menu li.contact a,
 	body.reviews .menu li.reviews a,
-	.menu > li:first-child:hover a,
 	body.single-post .menu li.blog a,
 	body.archive.author .menu li.blog a,
 	body.archive.category .menu li.blog a,
