@@ -23,12 +23,19 @@
 		value.bind( function( newval ) {
 			
 			if ( '' == newval ) {
-				$( '.site-title' ).show();
-				$( 'img#customlogo' ).hide();
 			
+				sitetitle = wp.customize.value('blogname')();
+				
+				$( 'img#customlogo' ).hide();
+				
+				// insert title
+				$( '.site-branding' ).prepend( '<h1 class="site-title"><a href="#">' + sitetitle + '</a></h1>' );
+
 			} else {
 			
 				$( '.site-title' ).hide();
+
+				// insert image
 				$( '.site-branding' ).prepend( '<img id="customlogo" src="' + newval + '" />' );
 				
 			}
@@ -134,7 +141,7 @@
 	wp.customize( 'smartestthemes_options[link_hover_color]', function( value ) {
 		value.bind( function( to ) {
 		
-			maincolor = wp.customize.value('smartestthemes_options[link_color]')(); 
+			maincolor = wp.customize.value('smartestthemes_options[link_color]')();
 			
 			$('a, i.fa').hover(
 				function () {
