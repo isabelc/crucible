@@ -230,6 +230,27 @@ function crucible_customize_register( $wp_customize ) {
 			)
 	) );	
 
+	
+	/* Link Hover Color */
+	$wp_customize->add_setting(
+		'smartestthemes_options[link_hover_color]',
+		array(
+			'default'	=> '#ffc0cb', // @new default hover
+			'type'		=> 'option',
+			'transport'	=> 'postMessage'
+		)
+	);
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+			$wp_customize,
+			'st_link_hover_color',
+			array(
+				'label'      => __( 'Link Hover Color', 'crucible' ),
+				'section'    => 'colors',
+				'settings'   => 'smartestthemes_options[link_hover_color]'
+			)
+	) );	
+
+	
 }
 add_action( 'customize_register', 'crucible_customize_register' );
 

@@ -96,11 +96,11 @@ body.post-type-archive-smartest_staff .menu li.staff a,
 <?php // ACCENT COLORS
 
 $link_color = isset($smartestthemes_options['link_color']) ? $smartestthemes_options['link_color'] : 'green';// @new default
-$link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';// @new default also @todo the link_hover_color option in customizer
+$link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';// @new default
 
 // output CSS if needed.
 if ( $link_color ) { ?>
-	a, i.fa, .fa-bullhorn, .widget ul li, .site-title a strong, .entry-meta.jobtitle,
+	a, i.fa, .widget ul li, .entry-meta.jobtitle,
 	.menu .current-menu-item a,
 	body.post-type-archive-smartest_staff .menu li.staff a,
 	body.post-type-archive-smartest_services .menu li.services a,
@@ -123,18 +123,23 @@ if ( $link_color ) { ?>
 	body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a {
 	     color:<?php echo $link_color; ?>;
 	}
-	.site-title a:hover {
-		color:<?php echo $link_hover_color; ?>;
-	}
-	.button, button, html input[type="button"], #smar_pagination .smar_current, #smar_pagination a:hover,  .commentlist .reply a,  
-input[type="reset"],input[type="submit"], #contact-form input[type="reset"], #contact-form input[type="submit"] {
+	
+	.button, button, html input[type="button"], #smar_pagination .smar_current, #smar_pagination a:hover, input[type="reset"],input[type="submit"] {
 	    background:<?php echo $link_color; ?>;
 	}
-	.button:hover, button:hover, .fa-bullhorn:hover, .commentlist .reply a:hover, .commentlist .reply a:active, html input[type="button"]:hover,
-input[type="reset"]:hover,input[type="submit"]:hover, #contact-form input[type="reset"]:hover, #contact-form input[type="submit"]:hover, #contact-form input[type="reset"]:active, #contact-form input[type="submit"]:active {
+	
+	a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{
+		color:<?php echo $link_hover_color; ?>;
+	}
+	
+	.button:hover, button:hover, input[type="button"]:hover,
+input[type="reset"]:hover,input[type="submit"]:hover{
 	    background:<?php echo $link_hover_color; ?>;
 	}
 <?php }
+
+
+
 
 // LOGO
 if ( $smartestthemes_options['logo_color'] ) {
