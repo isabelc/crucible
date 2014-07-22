@@ -190,8 +190,13 @@ small {
 big {
 	font-size: 125%;
 }
-.site-title a {/* @new @todo default font-family */
-	font-size:36px;
+.site-title a {
+	/* @new @todo default */
+	font:36px Copperplate Bold, Copperplate Gothic Bold, serif;
+}
+.site-description{
+	/* @new @todo default */
+	font:24px Copperplate Bold, Copperplate Gothic Bold, serif;
 }
 /*--------------------------------------------------------------
 3.0 Elements
