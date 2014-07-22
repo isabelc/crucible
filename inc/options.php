@@ -25,7 +25,6 @@ global $smartestthemes_options;
 $smartestthemes_options = array();
 $smartestthemes_options = get_option('smartestthemes_options');
 
-$sampleimg = '<br /><br /><img alt="logo text sample" src="'. get_bloginfo('template_directory') . '/images/text-logo-sample.png" /><br /><br />';
 
 /**
  * @new choose headfonts, 1st option blank
@@ -57,44 +56,6 @@ $headfonts = array(
 'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
 'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
 'Verdana,Geneva,sans-serif' => 'Verdana, Geneva',
-);
-// @new @todo create new font demos with theme name and colors
-$demoImgUrl = get_bloginfo('template_directory') . '/images/demo-';
-
-/*
-// @new choose logo fonts
-// @new list first the default logo font
-array[]=>
-	[0]=> visible option
-	[1]=> demo image url
-	[2]=> css output
-*/
-$logofonts = array(
-array( 'Forque', $demoImgUrl . 'forque.png', 'forqueregular,Arial,Helvetica,sans-serif' ),
-array( 'Bebas', $demoImgUrl . 'bebas.png', 'bebasregular,Arial,Helvetica,sans-serif' ),
-array( 'Bluechip', $demoImgUrl . 'bluechip.png', 'qumpellkano12regular,Arial,Helvetica,sans-serif' ),
-array( 'DayPoster Black', $demoImgUrl . 'dayposterblack.png', 'dayposterblackregular,Arial,Helvetica,sans-serif' ),
-array( 'Florante at Laura', $demoImgUrl . 'florante-at-laura.png', 'florante_at_lauraregular,Arial,Helvetica,sans-serif' ),
-array( 'FontLeroy Brown', $demoImgUrl . 'fontleroy-brown.png', 'fontleroybrownregular,Arial,Helvetica,sans-serif' ),
-array( 'Kingthings Exeter', $demoImgUrl . 'kingthings-exeter.png', 'kingthings_exeterregular,Arial,Helvetica,sans-serif' ),
-array( 'Roboto Slab Regular', $demoImgUrl . 'roboto-slab.png', 'roboto_slabregular,Arial,Helvetica,sans-serif' ),
-array( 'Roboto Slab Bold', $demoImgUrl . 'roboto-slab-bold.png', 'roboto_slabbold,Arial,Helvetica,sans-serif' ),
-array( 'Arial', $demoImgUrl . 'arial.png', 'Arial,Helvetica,sans-serif' ),
-array( 'Cambria', $demoImgUrl . 'cambria.png', 'Cambria, Georgia, Times, Times New Roman, serif' ),
-array( 'Copperplate Gothic Light', $demoImgUrl . 'copperplate-gothic-light.png', 'Copperplate Light, Copperplate Gothic Light, serif' ),
-array( 'Copperplate Gothic Bold', $demoImgUrl . 'copperplate-gothic-bold.png', 'Copperplate Bold, Copperplate Gothic Bold, serif' ),
-array( 'Futura, Century Gothic', $demoImgUrl . 'century-gothic.png', 'Futura, Century Gothic, AppleGothic, sans-serif' ),
-array( 'Garamond', $demoImgUrl . 'garamond.png', 'Garamond, Hoefler Text, Times New Roman, Times, serif' ),
-array( 'Georgia', $demoImgUrl . 'georgia.png', 'Georgia, Times, Times New Roman, serif' ),
-array( 'GillSans, Calibri', $demoImgUrl . 'gillsans.png', 'GillSans, Calibri, Trebuchet MS, sans-serif' ),
-array( 'Impact', $demoImgUrl . 'impact.png', 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' ),
-array( 'Monotype Corsiva', $demoImgUrl . 'monotype-corsiva.png', 'Monotype Corsiva, Arial, sans-serif' ),
-array( 'Palatino Linotype, Book Antiqua, serif', $demoImgUrl . 'palatino.png', 'Palatino Linotype,Book Antiqua,Palatino,serif' ),
-array( 'Lucida Sans', $demoImgUrl . 'lucida-sans.png', 'Lucida Sans Unicode,Lucida Grande,sans-serif' ),
-array( 'Tahoma, Geneva', $demoImgUrl . 'tahoma.png', 'Tahoma,Geneva,sans-serif' ),
-array( 'Trebuchet MS', $demoImgUrl . 'trebuchet-ms.png', 'Trebuchet MS,Arial,Helvetica,sans-serif' ),
-array( 'Verdana, Geneva', $demoImgUrl . 'verdana.png', 'Verdana,Geneva,sans-serif' ),
-array( 'Lucida Console, Monaco, monospace', $demoImgUrl . 'lucida-console.png', 'Lucida Console,Monaco,monospace' ),
 );
 
 $bodyfonts = array(
@@ -324,20 +285,7 @@ $options[] = array( 'name' => __('Change Slideshow Height','crucible'),
 /* Style */
 $options[] = array( 'name' => __('Style','crucible'),'class' => 'colors',
 					'type' => 'heading');
-$options[] = array( 'name' => __('Accent Color','crucible'),
-					'desc' => __('Select a color for buttons, links, list bullet-points, and such.','crucible'),
-					'id' => $shortname.'_accent_color',
-					'std' => 'green',// @new default here
-					'type' => 'select',
-					'options' => $colors);  
-$options[] = array(		'desc' => sprintf( __('Check here to override the Accent Color from above. Then choose a %scustom accent color%s below.','crucible'), '<strong>', '</strong>' ),
-					'id' => $shortname.'_override_accent_color',
-					'std' => 'false',
-					'type' => 'checkbox');
-$options[] = array(		'desc' => __('Choose a custom Accent Color. You must check the option above to make this work.','crucible'),
-					'id' => $shortname.'_custom_accent_color',
-					'std' => '',
-					'type' => 'color');
+					
 $options[] = array( 'name' => __('Site Background Color','crucible'),
 					'desc' => __('Customize your site\'s background color.','crucible'),
 					'id' => $shortname.'_bg_color',
@@ -387,12 +335,6 @@ $options[] = array( 'name' => __('Custom CSS','crucible'),
                     'id' => $shortname.'_custom_css',
                     'std' => '',
                     'type' => 'textarea');
-/* Logo */
-$options[] = array( 'name' => __('Logo','crucible'),'class' => 'image',
-					'type' => 'heading');
-
-/* @todo a better intro, referencing the fact that img logos are to be done in the customizer */
-				
 
 /* Fonts 
 @TODO PERHAPS  THESE ALSO IN CUSTOMIZER
