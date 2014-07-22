@@ -412,9 +412,6 @@ textarea {
 a, i.fa {
 	color: green;/* @new */
 }
-a:visited {
-	color: green;/* @new */
-}
 a:hover,
 a:focus,
 a:active,
