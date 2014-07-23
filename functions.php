@@ -59,7 +59,7 @@ function crucible_setup() {
 	) ); // @new always use location=primary since that's what i use as a condition in framework to insert cpt menu links
 
 	add_theme_support( 'post-formats', array( 'aside', 'gallery', 'image', 'link', 'status', 'video' ) );
-
+	add_theme_support( 'custom-background' );
 	// Enable support for HTML5 markup.
 	add_theme_support( 'html5', array(
 		'comment-list',
