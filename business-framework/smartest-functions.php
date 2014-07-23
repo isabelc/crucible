@@ -15,7 +15,8 @@ function smartestthemes_login_logo() {
 	} else {
 		
 		$col = isset($smartestthemes_options['logo_color']) ? $smartestthemes_options['logo_color'] : '#000';
-		$font = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : 'inherit';
+		$font = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : 'Copperplate Bold, Copperplate Gothic Bold, serif';// @new default logo font
+
 		echo '<style type="text/css">.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. $font . ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}</style>';
 	}
 }
