@@ -641,21 +641,16 @@ $options[] = array( 'name' => __('Disable Contact Page','crucible'),
 					'id' => $shortname.'_stop_contact',
 					'std' => 'false',
 					'type' => 'checkbox');
-$options[] = array( 'name' => sprintf( __('Disable Extra Items on wp_nav_menu','crucible'), '<code>wp_nav_menu</code>' ),
-					'desc' => sprintf( __('Check this to stop inserting extra menu items, such as "Staff", "Services", and "News", into %s.', 'crucible'), '<code>wp_nav_menu</code>' ),
-					'id' => $shortname.'_stop_menuitems',
-					'std' => 'false',
-					'type' => 'checkbox');
 $options[] = array( 'name' => __('Disable Social Share Buttons','crucible'),
-					'desc' => __('Check this to stop inserting Facebook Like, Tweet, and Google +1 buttons at the bottom of single posts.', 'crucible'),
-					'id' => $shortname.'_stop_smartshare',
-					'std' => 'false',
-					'type' => 'checkbox');
+	'desc' => __('Check this to stop inserting Facebook Like, Tweet, and Google +1 buttons at the bottom of single posts.', 'crucible'),
+	'id' => $shortname.'_stop_smartshare',
+	'std' => 'false',
+	'type' => 'checkbox');
 $options[] = array( 'name' => __('Disable Announcements Icon','crucible'),
-					'desc' => __('If an Announcement (News) post does not have a featured image, a cute icon will show up as its featured image in the News archives and in the Featured Announcements widget. Check this to get rid of that icon.', 'crucible'),
-					'id' => $shortname.'_stop_theme_icon',
-					'std' => 'false',
-					'type' => 'checkbox');
+	'desc' => __('If an Announcement (News) post does not have a featured image, a cute icon will show up as its featured image in the News archives and in the Featured Announcements widget. Check this to get rid of that icon.', 'crucible'),
+	'id' => $shortname.'_stop_theme_icon',
+	'std' => 'false',
+	'type' => 'checkbox');
 $options[] = array( 'name' => __('Disable SEO Meta Tags','crucible'),
 	'desc' => __('Check this to disable the description meta tag. This will also disable the robots meta tag that gets added to page 2 and up of your archives. Check this option if you prefer to use a separate plugin for SEO.', 'crucible'),
 	'id' => $shortname.'_disable_seo',

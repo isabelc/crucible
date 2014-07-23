@@ -56,7 +56,7 @@ function crucible_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
 		'primary' => __( 'Main Navigation', 'crucible' ),
-	) ); // @new always use location=primary since that's what i use as a condition in framework to insert cpt menu links
+	) );
 
 	add_theme_support( 'post-formats', array( 'aside', 'gallery', 'image', 'link', 'status', 'video' ) );
 	add_theme_support( 'custom-background' );

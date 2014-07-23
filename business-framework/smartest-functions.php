@@ -457,53 +457,13 @@ function smart_attach_external_image( $url = null, $post_id = null, $post_data =
 }
 
 /**
-* adds CPT archives menu items to wp_nav_menu, also choose which menu to add to. priority matters. 
-*/
-function smartestthemes_cpts_menu_links($items, $args) {
-		/**
-		 * @new themes must use theme_loc = 'primary'
-		 */
-		$newitems = $items;
-		
-		$options = get_option('smartestthemes_options');
-		
-		if(($args->theme_location == 'primary') && ( $options['st_show_staff'] == 'true' )) {
-		        $newitems .= '<li class="staff"><a title="' . __( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_staff' ) .'">' . __( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ) . '</a></li>';
-	    }
-		if(($args->theme_location == 'primary') && ( $options['st_show_services'] == 'true' )) {
-			$newitems .= '<li class="services"><a title="' . __( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_services' ) .'">' . __( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ) . '</a>';
-
-			// if service cat tax terms exist, do sub-menu
-			$service_cats = get_terms('smartest_service_category');
-			$count = count($service_cats);
-			if ( $count > 0 ){
-				$newitems .= '<ul class="sub-menu">';
-				foreach ( $service_cats as $service_cat ) {
-					$newitems .= '<li><a title="' . esc_attr( $service_cat->name ) . '" href="'. get_term_link( $service_cat ) .'">' . $service_cat->name . '</a></li>';	
-				}
-				$newitems .= '</ul>';
-			}
-
-			$newitems .= '</li>';
-	    }
-
-	    if( ($args->theme_location == 'primary') && ($options['st_show_news'] == 'true')) {
-	        $newitems .= '<li class="news"><a title="' . __( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ) . '" href="'. get_post_type_archive_link( 'smartest_news' ) .'">' . __( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ) . '</a></li>';
-		 }
-	    return $newitems;
-}
-if(get_option('st_stop_menuitems') == 'false') {
-		add_filter('wp_nav_menu_items', 'smartestthemes_cpts_menu_links', 30, 2);
-}
-
-/**
  * Apply custom title labels to menu
  */
 function custom_smartestthemes_services_menu_label() {
 	// if custom title entered
-	$options = get_option('smartestthemes_options');// @test
-	if ( $options['st_business_servicesmenulabel'] != '' ) {
-		$custom = stripslashes($options['st_business_servicesmenulabel']);
+	global $smartestthemes_options;// @test
+	if ( $smartestthemes_options['st_business_servicesmenulabel'] != '' ) {
+		$custom = stripslashes($smartestthemes_options['st_business_servicesmenulabel']);
 	} else { 
 		$custom = __( 'Services', 'crucible' );
 	}
@@ -511,9 +471,9 @@ function custom_smartestthemes_services_menu_label() {
 }
 function custom_smartestthemes_staff_menu_label() {
 	// if custom title entered
-	$options = get_option('smartestthemes_options');// @test
-	if ($options['st_business_staffmenulabel'] != '') {
-		$custom = stripslashes($options['st_business_staffmenulabel']);
+	global $smartestthemes_options;// @test
+	if ($smartestthemes_options['st_business_staffmenulabel'] != '') {
+		$custom = stripslashes($smartestthemes_options['st_business_staffmenulabel']);
 	} else { 
 		$custom = __('Staff', 'crucible');
 	}
@@ -521,15 +481,14 @@ function custom_smartestthemes_staff_menu_label() {
 }
 function custom_smartestthemes_news_menu_label() {
 	// if custom title entered
-	$options = get_option('smartestthemes_options');// @test
-	if ($options['st_business_newsmenulabel'] != '') {
-		$custom = stripslashes($options['st_business_newsmenulabel']);
+	global $smartestthemes_options;// @test
+	if ($smartestthemes_options['st_business_newsmenulabel'] != '') {
+		$custom = stripslashes($smartestthemes_options['st_business_newsmenulabel']);
 	} else { 
 		$custom = __('News', 'crucible');
 	}
 	return $custom;
 }
-
 add_filter( 'smartestthemes_services_menu_label', 'custom_smartestthemes_services_menu_label' );
 add_filter( 'smartestthemes_staff_menu_label', 'custom_smartestthemes_staff_menu_label' );
 add_filter( 'smartestthemes_news_menu_label', 'custom_smartestthemes_news_menu_label' );
@@ -756,7 +715,6 @@ add_action('wp_head','smartestthemes_add_customscripts', 12);
  * for staff, services, and news
  */
 
-add_filter('smartestthemes_staff_heading', 'custom_staff_heading');
 function custom_staff_heading() {
 
 	$options =  get_option('smartestthemes_options');
@@ -767,8 +725,7 @@ function custom_staff_heading() {
 		_e('Meet The Staff', 'crucible');
 	}
 }
-
-add_filter('smartestthemes_services_heading', 'custom_services_heading');
+add_filter('smartestthemes_staff_heading', 'custom_staff_heading');
 function custom_services_heading() {
 
 	$options =  get_option('smartestthemes_options');
@@ -778,8 +735,7 @@ function custom_services_heading() {
 		_e('Services', 'crucible');
 	}
 }
-
-add_filter('smartestthemes_news_heading', 'custom_news_heading');
+add_filter('smartestthemes_services_heading', 'custom_services_heading');
 function custom_news_heading() {
 
 	$options =  get_option('smartestthemes_options');
@@ -790,7 +746,7 @@ function custom_news_heading() {
 		_e('Announcements', 'crucible');
 	}
 }
-
+add_filter('smartestthemes_news_heading', 'custom_news_heading');
 /**
  * Include the Smartest_MCE_Table_Buttons class.
  */
@@ -798,7 +754,7 @@ include dirname( __FILE__ ) . '/lib/mce-table/mce_table_buttons.php';
 
 /**
  * Change WP tool bar
- * Add link to theme options, remove customize link
+ * Add link to theme options
  */
 function smartestthemes_tool_bar() {
 
@@ -806,7 +762,6 @@ function smartestthemes_tool_bar() {
 	$themename = $themeobject->Name;
 	$themeslug = $themeobject->Template;
 	global $wp_admin_bar;
-	$wp_admin_bar->remove_menu('customize'); // @todo don't think i need this anymore
 	$wp_admin_bar->add_menu( array(
 		'parent'	=> 'appearance',
 		'id'		=> 'smartestthemes-options',
@@ -1377,4 +1332,53 @@ add_shortcode( 'warning', 'smartestthemes_warning_shortcode' );
 function smartestthemes_error_shortcode( $atts, $content = null ) {
 	return '<div class="st-error"><i class="fa fa-times-circle"></i>' . $content . '</div>';
 }
-add_shortcode( 'error', 'smartestthemes_error_shortcode' ); ?>
+add_shortcode( 'error', 'smartestthemes_error_shortcode' ); 
+
+/**
+* Add CPT Archives to Menus screen
+* @todo remove these 2 functions when they get added to WP core
+*/
+function smartestthemes_archive_menu_meta_box() {
+	add_meta_box( 'add-cpt', __( 'Custom Archives', 'crucible' ), 'smartestthemes_archive_menu_meta_box_render', 'nav-menus', 'side', 'default' );
+}
+add_action( 'admin_head-nav-menus.php', 'smartestthemes_archive_menu_meta_box' );
+/* render custom post type archives meta box */
+function smartestthemes_archive_menu_meta_box_render() {
+	global $nav_menu_selected_id;
+	/* get custom post types with archive support */
+	$post_types = get_post_types( array( 'show_in_nav_menus' => true, 'has_archive' => true ), 'object' );
+	 
+	/* hydrate the necessary object properties for the walker */
+	foreach ( $post_types as &$post_type ) {
+		$post_type->classes = array();
+		$post_type->type = 'custom';// use custom to avoid PHP notices
+		$post_type->object_id = $post_type->name;
+		$post_type->title = $post_type->labels->name;
+		$post_type->object = 'cpt-archive';
+		$post_type->menu_item_parent = 0;
+		$post_type->url = get_post_type_archive_link($post_type->query_var);
+		$post_type->target = 0;
+		$post_type->attr_title = 0;
+		$post_type->xfn = 0;
+		$post_type->db_id = 0;
+	}
+	$walker = new Walker_Nav_Menu_Checklist( array() );
+	?>
+	<div id="archive" class="posttypediv">
+	<div id="tabs-panel-cpt-archive" class="tabs-panel tabs-panel-active">
+	<ul id="ctp-archive-checklist" class="categorychecklist form-no-clear">
+	<?php
+	echo walk_nav_menu_tree( array_map('wp_setup_nav_menu_item', $post_types), 0, (object) array( 'walker' => $walker) );
+	?>
+	</ul>
+	</div>
+	<p class="button-controls">
+	<span class="add-to-menu">
+	<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary right submit-add-to-menu" value="<?php esc_attr_e('Add to Menu', 'crucible'); ?>" name="add-ctp-archive-menu-item" id="submit-cpt-archive" />
+	<span class="spinner"></span>
+	</span>
+	</p>
+	</div>
+	<?php
+}
+?>
