@@ -1,7 +1,5 @@
 <style><?php global $smartestthemes_options;
 
-/* avoid PHP notices */
-
 $header_color = isset($smartestthemes_options['header_bg_color']) ? $smartestthemes_options['header_bg_color'] : '';
 $footer_color = isset($smartestthemes_options['footer_bg_color']) ? $smartestthemes_options['footer_bg_color'] : '';
 $texture = isset($smartestthemes_options['bg_texture']) ? $smartestthemes_options['bg_texture'] : '';
@@ -106,33 +104,10 @@ $link_color = isset($smartestthemes_options['link_color']) ? $smartestthemes_opt
 $link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';// @new default
 $button_color = isset($smartestthemes_options['button_color']) ? $smartestthemes_options['button_color'] : '#e6e6e6';// @new default
 $button_hover_color = isset($smartestthemes_options['button_hover_color']) ? $smartestthemes_options['button_hover_color'] : '#e6e6e6';// @new default
-
 $button_text_color = isset($smartestthemes_options['button_text_color']) ? $smartestthemes_options['button_text_color'] : 'rgba(0, 0, 0, .8)';// @new default
 
-
-?>
-a, i.fa, .widget ul li, .entry-meta.jobtitle,
-.menu .current-menu-item a,
-body.post-type-archive-smartest_staff .menu li.staff a,
-body.post-type-archive-smartest_services .menu li.services a,
-body.post-type-archive-smartest_news .menu li.news a,
-body.tax-smartest_service_category .menu li.services a,
-body.single-smartest_services .menu .services a,
-body.single-smartest_staff .menu .staff a,
-body.single-smartest_news .menu .news a,
-body.about .menu li.about a, 
-body.contact .menu li.contact a,
-body.reviews .menu li.reviews a,
-body.single-post .menu li.blog a,
-body.archive.author .menu li.blog a,
-body.archive.category .menu li.blog a,
-body.archive.tag .menu li.blog a,
-body.archive.date .menu li.blog a,
-body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, 
-body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, 
-body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,
-body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a {
-     color:<?php echo $link_color; ?>;
+	?>a, i.fa, .widget ul li, .entry-meta.jobtitle,.menu .current-menu-item a,body.post-type-archive-smartest_staff .menu li.staff a,body.post-type-archive-smartest_services .menu li.services a,body.post-type-archive-smartest_news .menu li.news a,body.tax-smartest_service_category .menu li.services a,body.single-smartest_services .menu .services a,body.single-smartest_staff .menu .staff a,body.single-smartest_news .menu .news a,body.about .menu li.about a, body.contact .menu li.contact a,body.reviews .menu li.reviews a,body.single-post .menu li.blog a,body.archive.author .menu li.blog a,body.archive.category .menu li.blog a,body.archive.tag .menu li.blog a,body.archive.date .menu li.blog a,body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a { 
+		color:<?php echo $link_color; ?>;
 }
 	
 a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{
@@ -151,33 +126,43 @@ a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{
 
 <?php
 // LOGO
-if ( $smartestthemes_options['logo_color'] ) {
-	echo '.site-title a { color:'. $smartestthemes_options['logo_color'].'; }';
+
+/* avoid PHP notices */
+$logo_color = isset($smartestthemes_options['logo_color']) ? $smartestthemes_options['logo_color'] : '';
+$logo_font = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : '';
+$logo_fontsize = isset($smartestthemes_options['logo_fontsize']) ? $smartestthemes_options['logo_fontsize'] : '';
+$increase_logo = isset($smartestthemes_options['increase_logo']) ? $smartestthemes_options['increase_logo'] : '';
+$hide_tagline = isset($smartestthemes_options['hide_tagline']) ? $smartestthemes_options['hide_tagline'] : '';
+$tagline_color = isset($smartestthemes_options['tagline_color']) ? $smartestthemes_options['tagline_color'] : '';
+$tagline_font = isset($smartestthemes_options['tagline_font']) ? $smartestthemes_options['tagline_font'] : '';
+$tagline_size = isset($smartestthemes_options['tagline_size']) ? $smartestthemes_options['tagline_size'] : '';
+
+if ( $logo_color ) {
+	?>.site-title a { color:<?php echo $logo_color; ?>; }<?php
+}
+if ( $logo_font ) {
+	?>.site-title a {font-family:<?php echo $logo_font; ?>}<?php
 }
 
-$logo_font = $smartestthemes_options['logo_font'];
-if ( $logo_font )
-	echo '.site-title a {font-family:'. $logo_font. ' }';
-
-if ( $smartestthemes_options['logo_fontsize'] )
-	echo '.site-title a {font-size:'.$smartestthemes_options['logo_fontsize'].'; }';
+if ( $logo_fontsize ) {
+	?>.site-title a {font-size:<?php echo $logo_fontsize; ?>}<?php
+}
 	
-$increase_logo = $smartestthemes_options['increase_logo'] ;
 if ( $increase_logo ) {
-	echo 'img#customlogo {max-height:' . $increase_logo . 'px;}';
+	?>img#customlogo {max-height:<?php echo $increase_logo; ?>px}<?php
 }
 
 // tagline
-if( empty($smartestthemes_options['hide_tagline']) ) {
-	if ( $smartestthemes_options['tagline_color'] ) {
-		echo 'h2.site-description { color:'. $smartestthemes_options['tagline_color'].'; }';
+if( empty($hide_tagline) ) {
+	if ( $tagline_color ) {
+		?>h2.site-description { color:<?php echo $tagline_color; ?>;}<?php
 	}
-	if ( $smartestthemes_options['tagline_font'] ) { ?>
-		h2.site-description{font-family:<?php echo $smartestthemes_options['tagline_font']; ?>;}
-	<?php } 
-	 if ( $smartestthemes_options['tagline_size'] ) { ?>
-		h2.site-description{font-size:<?php echo $smartestthemes_options['tagline_size']; ?>;}
-	<?php }
+	if ( $tagline_font ) {
+		?>h2.site-description{font-family:<?php echo $tagline_font; ?>;}<?php
+	} 
+	if ( $tagline_size ) {
+		?>h2.site-description{font-size:<?php echo $tagline_size; ?>;}<?php
+	}
 }
 
 // attention grabber
