@@ -97,27 +97,6 @@ $schema_itemtypes = array(
 'Notary' => 'Notary',
 'Plumber' => 'Plumber',
 'RoofingContractor' => 'Roofing Contractor');
-
-/* @new choices*/
-$textures = array(
-'none' => 'none',
-'argyle' => 'argyle',
-'dark_brick_wall' => 'brick wall - dark',
-'white_brick_wall' => 'brick wall - light',
-'carbon_fibre' => 'carbon fiber',
-'carpet' => 'carpet',
-'checkered_pattern' => 'checkered pattern',
-'circles' => 'circles',
-'crissXcross' => 'quilted',
-'diagonal_striped_brick' => 'diagonal striped brick',
-'double_lined' => 'double lined',
-'hexellence' => 'hexellence',
-'paven' => 'paven',
-'plaid' => 'plaid',
-'pinstripe' => 'pinstripe',
-'speckled' => 'speckled',
-'tiles' => 'tiles',
-'wood' => 'wood', );
 $options = array();
 $options[] = array( 'name' => __('Welcome','crucible'),
 					'type' => 'heading');
@@ -282,54 +261,20 @@ $options[] = array( 'name' => __('Change Slideshow Height','crucible'),
                     'id' => $shortname.'_slideshow_height',
                     'std' => '',
                     'type' => 'text');
-/* Style */
+					
+					
+					
+/* Style 
+
+@todo possibly remove this tab and move Custom CSS elsewhere 
+
+*/
 $options[] = array( 'name' => __('Style','crucible'),'class' => 'colors',
 					'type' => 'heading');
 					
-$options[] = array( 'name' => __('Site Background Color','crucible'),
-					'desc' => __('Customize your site\'s background color.','crucible'),
-					'id' => $shortname.'_bg_color',
-					'std' => '',
-					'class' => 'clearfix',
-					'type' => 'color');
-$options[] = array( 'name' => __('Header Background Color','crucible'),
-					'desc' => __('Customize your site\'s header background color.','crucible'),
-					'id' => $shortname.'_header_color',
-					'std' => '',
-					'type' => 'color');
-$options[] = array( 'name' => __('Footer Background Color','crucible'),
-					'desc' => __('Customize your site\'s footer background color.','crucible'),
-					'id' => $shortname.'_footer_color',
-					'std' => '',
-					'type' => 'color');
-$options[] = array( 'name' => __('Background Texture','crucible'),
-					'desc' => __('Select a texture for your site background. This will appear above the background color you set above.','crucible'),
-					'id' => $shortname.'_bg_texture',
-					'std' => 'none',
-					'type' => 'select2',
-					'class' => 'clearfix',
-					'options' => $textures );
-$options[] = array( 'name' => __('Custom Background Image','crucible'),
-					'desc' => __('Upload a background image, or specify the image address of your image. (http://yoursite.com/image.png). <strong>NOTE: You must select \'None\' for your texture above for this to take effect.</strong>','crucible'),
-					'id' => $shortname.'_bg_image',
-					'std' => '',
-					'type' => 'upload');
 
-$options[] = array(
-					'desc' => '<span class="black">' . __('Fix Background Image? ', 'crucible') . '</span>' . __('Check this if you want your background image to be fixed (no scrolling).','crucible'),
-					'id' => $shortname.'_bg_image_fixed',
-					'std' => 'false',
-					'type' => 'checkbox');
-$options[] = array(
-					'desc' => '<span class="black">' . __('Background Image Repeat: ', 'crucible') . '</span>' . __('Select how you want your background image to display.','crucible'),
-					'id' => $shortname.'_bg_image_repeat',
-					'type' => 'select',
-					'options' => array('no-repeat', 'repeat', 'repeat-x', 'repeat-y', 'inherit'));
-$options[] = array(
-					'desc' => '<span class="black">' . __('Background Image Position: ', 'crucible') . '</span>' . __('Select how you want your background image to be aligned.','crucible'),
-					'id' => $shortname.'_bg_image_position',
-					'type' => 'select',
-					'options' => array('left top','left center','left bottom','center top','center center','center bottom','right top','right center','right bottom'));
+					
+					
 $options[] = array( 'name' => __('Custom CSS','crucible'),
                     'desc' => __('Quickly add CSS to your theme by pasting it here. Paste only CSS, no HTML style tags.','crucible'),
                     'id' => $shortname.'_custom_css',
