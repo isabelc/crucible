@@ -7,28 +7,27 @@
 
 /**
  * Add postMessage support for site title and description for the Theme Customizer.
- *
- * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
 function crucible_customize_register( $wp_customize ) {
 	
 	// make changes to existing sections
 	
-	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
-	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
-	$wp_customize->get_section('colors')->title = __( 'Accent Colors', 'crucible' );
+	$wp_customize->get_setting( 'blogname' )->transport	= 'postMessage';
+	$wp_customize->get_setting( 'blogdescription' )->transport	= 'postMessage';
+	$wp_customize->get_section('colors')->title	= __( 'Accent Colors', 'crucible' );
+	$wp_customize->get_section( 'background_image'  )->title	= __( 'Background', 'crucible' );
 	$wp_customize->remove_section('static_front_page');
-	
-	
+	$wp_customize->get_control( 'background_color'  )->section	= 'background_image';
+	$wp_customize->get_control( 'background_color'  )->priority	= 1;
+
+
 	$wp_customize->add_section('crucible_site_logo_section', array(
         'title'			=> __('Site Logo', 'crucible'),
-		'description'	=> 'Upload a logo to replace the site title in the header',
+		'description'	=> __('Upload a logo to replace the site title in the header', 'crucible'),
         'priority'		=> 10,
     ));
 	
-	//  =============================
-    //  = Image Upload 
-    //  =============================
+	/* Logo Image */
    
  	$wp_customize->add_setting('smartestthemes_options[logo_setting]', array(
         'default'	=> '',
@@ -37,14 +36,14 @@ function crucible_customize_register( $wp_customize ) {
      ));
      
 	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'smartestthemes_options[logo_setting]', array(
-    'label'    => __( 'Logo', 'crucible' ),
-    'section'  => 'crucible_site_logo_section',
-    'settings' => 'smartestthemes_options[logo_setting]',
-) ) );
+    'label'		=> __( 'Logo', 'crucible' ),
+    'section'	=> 'crucible_site_logo_section',
+    'settings'	=> 'smartestthemes_options[logo_setting]'
+	) ) );
 	
-	//  =============================
-    //  = Text Input                =
-    //  =============================
+	
+	/* Increase Logo Image Height */
+    
     $wp_customize->add_setting('smartestthemes_options[increase_logo]', array(
         'default'	=> '',
         'type'		=> 'option',
@@ -52,16 +51,14 @@ function crucible_customize_register( $wp_customize ) {
      ));
 	
 	$wp_customize->add_control('crucible_increase_logo_height', array(
-        'label'      => __('Optional: Increase logo height. Default is 150.', 'crucible'),
-        'section'    => 'crucible_site_logo_section',
-        'settings'   => 'smartestthemes_options[increase_logo]',
-		'priority'   => 35
+        'label'		=> __('Optional: Increase logo height. Default is 150.', 'crucible'),
+        'section'	=> 'crucible_site_logo_section',
+        'settings'	=> 'smartestthemes_options[increase_logo]',
+		'priority'	=> 35
     ));
 	
+	/* Logo font */
 	
-	// =============================
-	// = Select Box =
-	// =============================
 	$wp_customize->add_setting('smartestthemes_options[logo_font]', array(
 		'default'	=> 'Copperplate Bold, Copperplate Gothic Bold, serif',// @new default logo font
 		'type'		=> 'option',
@@ -69,7 +66,7 @@ function crucible_customize_register( $wp_customize ) {
 	));
 	$wp_customize->add_control( 'logo_font_select', array(
 		'settings' => 'smartestthemes_options[logo_font]',
-		'label' => 'Site Title Font:',
+		'label' => __('Site Title Font', 'crucible'),
 		'section' => 'title_tagline',
 		'type' => 'select',
 		'choices' => array(
@@ -89,13 +86,10 @@ function crucible_customize_register( $wp_customize ) {
 			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
 			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
 		),
-		'priority'   => 62
+		'priority'	=> 62
 	));
 
-
-	//  =============================
-    //  = Color Input
-    //  =============================
+	/* logo font color */
 	$wp_customize->add_setting('smartestthemes_options[logo_color]', array(
         'default'	=> '#008000',// @new default
         'type'		=> 'option',
@@ -106,16 +100,14 @@ function crucible_customize_register( $wp_customize ) {
 		$wp_customize, 
 			'st_logo_color', 
 			array(
-				'label'      => __( 'Site Title Color', 'crucible' ),
-				'section'    => 'title_tagline',
-				'settings'   => 'smartestthemes_options[logo_color]',
-				'priority'   => 63
+				'label'		=> __( 'Site Title Color', 'crucible' ),
+				'section'	=> 'title_tagline',
+				'settings'	=> 'smartestthemes_options[logo_color]',
+				'priority'	=> 63
 			)
 	));
 
-	//  =============================
-    //  = Text Input
-    //  =============================
+	/* Logo font size */
     $wp_customize->add_setting('smartestthemes_options[logo_fontsize]', array(
         'default'	=> '',
         'type'		=> 'option',
@@ -123,16 +115,14 @@ function crucible_customize_register( $wp_customize ) {
      ));
 	
 	$wp_customize->add_control('crucible_logo_font_size', array(
-        'label'      => __('Optional: Title Size. Default is 36px.', 'crucible'),// @new default size
-        'section'    => 'title_tagline',
-        'settings'   => 'smartestthemes_options[logo_fontsize]',
-		'priority'   => 65
+        'label'		=> __('Optional: Title Size. Default is 36px.', 'crucible'),// @new default size
+        'section'	=> 'title_tagline',
+        'settings'	=> 'smartestthemes_options[logo_fontsize]',
+		'priority'	=> 65
     ));
 	
 	
-	//  =============================
-    //  = Checkbox      checkbox outputs '1' if checked, or nothing if not checked.
-    //  =============================
+	/* Hide tagline */
     $wp_customize->add_setting('smartestthemes_options[hide_tagline]', array(
         'default'	=> '',
         'type'		=> 'option',
@@ -140,15 +130,14 @@ function crucible_customize_register( $wp_customize ) {
      ));
  
      $wp_customize->add_control('crucible_display_tagline', array(
-        'settings' => 'smartestthemes_options[hide_tagline]',
-        'label'    => __('Hide The Tagline From Header?', 'crucible'),
-        'section'  => 'title_tagline',
-        'type'     => 'checkbox',
-		'priority'   => 15
+        'settings'	=> 'smartestthemes_options[hide_tagline]',
+        'label'		=> __('Hide The Tagline From Header?', 'crucible'),
+        'section'	=> 'title_tagline',
+        'type'		=> 'checkbox',
+		'priority'	=> 15
     ));
-	// =============================
-	// = Select Box =
-	// =============================
+	
+	/* Tagline font */
 	$wp_customize->add_setting('smartestthemes_options[tagline_font]', array(
 		'default'	=> 'Copperplate Bold, Copperplate Gothic Bold, serif',// @new default logo font
 		'type'		=> 'option',
@@ -156,7 +145,7 @@ function crucible_customize_register( $wp_customize ) {
 	));
 	$wp_customize->add_control( 'tagline_font_select', array(
 		'settings' => 'smartestthemes_options[tagline_font]',
-		'label' => 'Tagline Font:',
+		'label' => __('Tagline Font', 'crucible'),
 		'section' => 'title_tagline',
 		'type' => 'select',
 		'choices' => array(
@@ -179,10 +168,7 @@ function crucible_customize_register( $wp_customize ) {
 		'priority'   => 66
 	));
 
-
-	//  =============================
-    //  = Color Input                =
-    //  =============================
+	/* Tagline color */
 	$wp_customize->add_setting('smartestthemes_options[tagline_color]', array(
         'default'	=> '#404040',// @new default
         'type'		=> 'option',
@@ -193,15 +179,14 @@ function crucible_customize_register( $wp_customize ) {
 		$wp_customize, 
 			'st_tagline_color', 
 			array(
-				'label'      => __( 'Tagline Color', 'crucible' ),
-				'section'    => 'title_tagline',
-				'settings'   => 'smartestthemes_options[tagline_color]',
-				'priority'   => 67
+				'label'		=> __( 'Tagline Color', 'crucible' ),
+				'section'	=> 'title_tagline',
+				'settings'	=> 'smartestthemes_options[tagline_color]',
+				'priority'	=> 67
 			)
 	));
-	//  =============================
-    //  = Text Input                =
-    //  =============================
+	
+	/* tagline size */
     $wp_customize->add_setting('smartestthemes_options[tagline_size]', array(
         'default'	=> '',
         'type'		=> 'option',
@@ -209,10 +194,10 @@ function crucible_customize_register( $wp_customize ) {
      ));
 	
 	$wp_customize->add_control('crucible_tagline_font_size', array(
-        'label'      => __('Optional: Tagline Font Size. Default is 24px.', 'crucible'),// @new default size
-        'section'    => 'title_tagline',
-        'settings'   => 'smartestthemes_options[tagline_size]',
-		'priority'   => 68
+        'label'		=> __('Optional: Tagline Font Size. Default is 24px.', 'crucible'),// @new default size
+        'section'	=> 'title_tagline',
+        'settings'	=> 'smartestthemes_options[tagline_size]',
+		'priority'	=> 68
     ));
 	
 	/* Link Color */
@@ -230,9 +215,9 @@ function crucible_customize_register( $wp_customize ) {
 			$wp_customize,
 			'st_link_color',
 			array(
-				'label'      => __( 'Link Color', 'crucible' ),
-				'section'    => 'colors',
-				'settings'   => 'smartestthemes_options[link_color]'
+				'label'		=> __( 'Link Color', 'crucible' ),
+				'section'	=> 'colors',
+				'settings'	=> 'smartestthemes_options[link_color]'
 			)
 	) );	
 
@@ -250,9 +235,9 @@ function crucible_customize_register( $wp_customize ) {
 			$wp_customize,
 			'st_link_hover_color',
 			array(
-				'label'      => __( 'Link Hover Color', 'crucible' ),
-				'section'    => 'colors',
-				'settings'   => 'smartestthemes_options[link_hover_color]'
+				'label'		=> __( 'Link Hover Color', 'crucible' ),
+				'section'	=> 'colors',
+				'settings'	=> 'smartestthemes_options[link_hover_color]'
 			)
 	) );
 	
@@ -272,9 +257,9 @@ function crucible_customize_register( $wp_customize ) {
 			$wp_customize,
 			'st_button_color',
 			array(
-				'label'      => __( 'Button Color', 'crucible' ),
-				'section'    => 'colors',
-				'settings'   => 'smartestthemes_options[button_color]'
+				'label'		=> __( 'Button Color', 'crucible' ),
+				'section'	=> 'colors',
+				'settings'	=> 'smartestthemes_options[button_color]'
 			)
 	) );
 	
@@ -293,9 +278,9 @@ function crucible_customize_register( $wp_customize ) {
 			$wp_customize,
 			'st_button_hover_color',
 			array(
-				'label'      => __( 'Button Hover Color', 'crucible' ),
-				'section'    => 'colors',
-				'settings'   => 'smartestthemes_options[button_hover_color]'
+				'label'		=> __( 'Button Hover Color', 'crucible' ),
+				'section'	=> 'colors',
+				'settings'	=> 'smartestthemes_options[button_hover_color]'
 			)
 	) );
 	
@@ -313,15 +298,91 @@ function crucible_customize_register( $wp_customize ) {
 			$wp_customize,
 			'st_button_text_color',
 			array(
-				'label'      => __( 'Button Text Color', 'crucible' ),
-				'section'    => 'colors',
-				'settings'   => 'smartestthemes_options[button_text_color]'
+				'label'		=> __( 'Button Text Color', 'crucible' ),
+				'section'	=> 'colors',
+				'settings'	=> 'smartestthemes_options[button_text_color]'
 			)
-	) );	
+	) );
 	
+	/* Header Background Color */
 	
+	$wp_customize->add_setting(
+		'smartestthemes_options[header_bg_color]',
+		array(
+			'default'	=> '', // @test none in preview
+			'type'		=> 'option',
+			'transport'	=> 'postMessage'
+		)
+	);
 
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+			$wp_customize,
+			'st_header_bg_color',
+			array(
+				'label'		=> __( 'Header Background Color', 'crucible' ),
+				'section'	=> 'background_image',
+				'settings'	=> 'smartestthemes_options[header_bg_color]',
+				'priority'	=> 2
+			)
+	) );
 	
+	/* Footer Background Color */
+	
+	$wp_customize->add_setting(
+		'smartestthemes_options[footer_bg_color]',
+		array(
+			'default'	=> '', // @test none in preview
+			'type'		=> 'option',
+			'transport'	=> 'postMessage'
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+			$wp_customize,
+			'st_footer_bg_color',
+			array(
+				'label'		=> __( 'Footer Background Color', 'crucible' ),
+				'section'	=> 'background_image',
+				'settings'	=> 'smartestthemes_options[footer_bg_color]',
+				'priority'	=> 3
+			)
+	) );
+
+	/* Background Texture */
+ 	$wp_customize->add_setting('smartestthemes_options[bg_texture]', array(
+        'default'	=> '',// @test none in preview
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+     
+	// @new choices
+	$wp_customize->add_control( 'bg_texture_select', array(
+		'settings' => 'smartestthemes_options[bg_texture]',
+		'label' => __( 'Transparent Background Texture (Note: you must remove the Background Image above for this to work. This texture works with your background color choice.', 'crucible' ),
+		'section' => 'background_image',
+		'type' => 'select',
+		'choices' => array(
+			''	=> 'none',
+			'argyle' => 'argyle',
+			'dark_brick_wall' => 'brick wall - dark',
+			'white_brick_wall' => 'brick wall - light',
+			'carbon_fibre' => 'carbon fiber',
+			'carpet' => 'carpet',
+			'checkered_pattern' => 'checkered pattern',
+			'circles' => 'circles',
+			'crissXcross' => 'quilted',
+			'diagonal_striped_brick' => 'diagonal striped brick',
+			'double_lined' => 'double lined',
+			'hexellence' => 'hexellence',
+			'paven' => 'paven',
+			'plaid' => 'plaid',
+			'pinstripe' => 'pinstripe',
+			'speckled' => 'speckled',
+			'tiles' => 'tiles',
+			'wood' => 'wood'
+		),
+		'priority'   => 65
+	));
 }
 add_action( 'customize_register', 'crucible_customize_register' );
 
