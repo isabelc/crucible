@@ -11,8 +11,14 @@
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
 function crucible_customize_register( $wp_customize ) {
+	
+	// make changes to existing sections
+	
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
+	$wp_customize->get_section('colors')->title = __( 'Accent Colors', 'crucible' );
+	$wp_customize->remove_section('static_front_page');
+	
 	
 	$wp_customize->add_section('crucible_site_logo_section', array(
         'title'			=> __('Site Logo', 'crucible'),
