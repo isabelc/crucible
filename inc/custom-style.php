@@ -1,24 +1,31 @@
 <style><?php global $smartestthemes_options;
-if ( $smartestthemes_options['st_header_color'] ) { ?>
-	#navigation, #primary-navigation.toggled-on .menu{background:<?php echo $smartestthemes_options['st_header_color']; ?>; }
-<?php } if ( $smartestthemes_options['st_footer_color'] ) { ?>
-	footer#site-footer,#home-footer{background:<?php echo $smartestthemes_options['st_footer_color']; ?>; }
-<?php }
-if ( $smartestthemes_options['st_bg_color'] ) { ?>body {background-color:<?php echo $smartestthemes_options['st_bg_color']; ?>; }<?php }
-if ($smartestthemes_options['st_bg_texture'] == 'none' ) {
-	if ( $smartestthemes_options['st_bg_image'] ) { ?>
-			body {background-image:url('<?php echo $smartestthemes_options['st_bg_image']; ?>'); }
-			<?php if ( $smartestthemes_options['st_bg_image_repeat'] ) { ?>
-				body {background-repeat:<?php echo $smartestthemes_options['st_bg_image_repeat']; ?>; }
-			<?php } if ( $smartestthemes_options['st_bg_image_position'] ) { ?>
-				body {background-position:<?php echo $smartestthemes_options['st_bg_image_position']; ?>; }
-			<?php } if ( $smartestthemes_options['st_bg_image_fixed'] == 'true' ) { ?>
-				body {background-attachment:fixed; }
-			<?php }
+
+/* avoid PHP notices */
+
+$header_color = isset($smartestthemes_options['header_bg_color']) ? $smartestthemes_options['header_bg_color'] : '';
+$footer_color = isset($smartestthemes_options['footer_bg_color']) ? $smartestthemes_options['footer_bg_color'] : '';
+$texture = isset($smartestthemes_options['bg_texture']) ? $smartestthemes_options['bg_texture'] : '';
+
+if ( $header_color ) {
+	?>#masthead{background:<?php echo $header_color; ?>; }<?php
+}
+
+if ( $footer_color ) {
+	?>footer.site-footer{background:<?php echo $footer_color; ?>; }<?php
+}
+
+// only if there is no bg image do we check for texture
+
+$bg_image = get_theme_mod( 'background_image' );
+
+if ( ! $bg_image ) {
+
+	if ($texture) {
+		?>body {background-image:url('<?php echo get_template_directory_uri(); ?>/images/<?php echo $texture; ?>.png');background-repeat:repeat;}<?php
 	}
-} elseif ($smartestthemes_options['st_bg_texture']) { ?>
-		body {background-image:url('<?php echo get_template_directory_uri(); ?>/images/<?php echo $smartestthemes_options['st_bg_texture']; ?>.png');background-repeat:repeat;}
-<?php }
+}
+
+
 if ( $smartestthemes_options['st_body_font_color'] ) { ?>
 	body, blockquote, .entry-meta, time, .widget_smartest_announcements time, dl.main-address span, .widget ul a {color:<?php echo $smartestthemes_options['st_body_font_color']; ?>;}
 <?php } 
