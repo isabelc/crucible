@@ -216,8 +216,6 @@ if ( $smartestthemes_options['st_menu_hover_color'] ) { ?>
 	body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,
 	body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a
 	{color:<?php echo $smartestthemes_options['st_menu_hover_color']; ?>;}
-<?php } if ( $smartestthemes_options['st_colorful_social'] == 'true' ) { ?>
-.social-google{background-position: 0 -168px;}.social-google:hover{background-position:0 -112px}.social-facebook{background-position:0 -56px}.social-facebook:hover{background-position:0 0}.social-twitter{background-position:0 -392px}.social-twitter:hover{background-position:0 -336px}.social-linkedin{background-position:0 -280px}.social-linkedin:hover{background-position:0 -224px}.social-youtube{background-position:0 -504px}.social-youtube:hover{background-position:0 -448px}
 <?php }
 // custom css from theme options
 echo $smartestthemes_options['st_custom_css']; ?></style>

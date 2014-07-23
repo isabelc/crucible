@@ -262,24 +262,18 @@ $options[] = array( 'name' => __('Change Slideshow Height','crucible'),
                     'std' => '',
                     'type' => 'text');
 					
-					
-					
-/* Style 
-
-@todo possibly remove this tab and move Custom CSS elsewhere 
-
-*/
-$options[] = array( 'name' => __('Style','crucible'),'class' => 'colors',
-					'type' => 'heading');
-					
-
-					
-					
-$options[] = array( 'name' => __('Custom CSS','crucible'),
-                    'desc' => __('Quickly add CSS to your theme by pasting it here. Paste only CSS, no HTML style tags.','crucible'),
-                    'id' => $shortname.'_custom_css',
-                    'std' => '',
-                    'type' => 'textarea');
+/* Custom CSS */
+$options[] = array(
+	'name' => __('Custom CSS','crucible'),'class' => 'colors',
+	'type' => 'heading'
+);
+$options[] = array(
+	'name' => __('Custom CSS','crucible'),
+	'desc' => __('Quickly add CSS to your theme by pasting it here. Paste only CSS, no HTML style tags.','crucible'),
+	'id' => $shortname.'_custom_css',
+	'std' => '',
+	'type' => 'textarea'
+);
 
 /* Fonts 
 @TODO PERHAPS  THESE ALSO IN CUSTOMIZER
@@ -446,47 +440,62 @@ $options[] = array(
                     'id' => $shortname.'_business_sociallabel1',
                     'type' => 'text');
 
-$options[] = array( 'name' => __('Another Profile','crucible'),
-                    'desc' => __('Add another business profile URL. Example: http://YourName.tumblr.com/','crucible'),
-                    'id' => $shortname.'_business_socialurl2',
-                    'type' => 'text');
-$options[] = array( 'desc' => __('Give a title for the business profile you entered above. Example: Tumblr','crucible'),
-                    'id' => $shortname.'_business_sociallabel2',
-                    'type' => 'text');
-$options[] = array( 'name' => __('Use Colorful Social Media Buttons','crucible'),
-					'desc' => __('Optional. Check this to use colorful social media follow buttons instead of the pale, colorless buttons. Note: the pale buttons do become colorful upon hover, and the colorful buttons become pale upon hover.','crucible'),
-					'id' => $shortname.'_colorful_social',
-					'std' => 'false',
-					'type' => 'checkbox');// @todo remove
+$options[] = array(
+	'name' => __('Another Profile','crucible'),
+	'desc' => __('Add another business profile URL. Example: http://YourName.tumblr.com/','crucible'),
+	'id' => $shortname.'_business_socialurl2',
+	'type' => 'text'
+);
+$options[] = array(
+	'desc' => __('Give a title for the business profile you entered above. Example: Tumblr','crucible'),
+	'id' => $shortname.'_business_sociallabel2',
+	'type' => 'text'
+);
+
 /* SEO */
-$options[] = array( 'name' => __('SEO','crucible'),'class' => 'seo',
-					'type' => 'heading');
-
+$options[] = array(
+	'name' => __('SEO','crucible'),
+	'class' => 'seo',
+	'type' => 'heading'
+);
 $options[] = array( 
-						'type' => 'info',
-						'std' => __('<strong>Search Engine Optimization:</strong> &nbsp;&nbsp; Let\'s get your site found.','crucible'));
+	'type' => 'info',
+	'std' => __('<strong>Search Engine Optimization:</strong> &nbsp;&nbsp; Let\'s get your site found.','crucible')
+);
+$options[] = array(
+	'name' => __('Business Type','crucible'),
+	'desc' => __('Select the main category of your business. This is Microdata to maximize your search-engine ranking.','crucible'),
+	'id' => $shortname.'_business_itemtype',
+	'type' => 'select2',
+	'std' => 'LocalBusiness',
+	'options' => $schema_itemtypes
+);
+$options[] = array(
+	'name' => __('Home Page Meta Title','crucible'),
+	'desc' => __('Enter a title for your site for search engines to see.','crucible'),
+	'id' => $shortname.'_home_meta_title',
+	'type' => 'text'
+);
+$options[] = array(
+	'name' => __('Home Page Meta Description','crucible'),
+	'desc' => __('Enter a keyword-rich description of your site for search engines to see.','crucible'),
+	'id' => $shortname.'_home_meta_desc',
+	'type' => 'textarea'
+);
+$options[] = array(
+'name' => __('Home Page Meta Keywords','crucible'),
+	'desc' => __('Enter some keywords, seperated by commas, about your site for search engines to see.','crucible'),
+	'id' => $shortname.'_home_meta_key',
+	'type' => 'text'
+);
+$options[] = array(
+	'name' => __('Disable SEO Meta Tags','crucible'),
+	'desc' => __('Description meta tags will include the category description on category pages, tag description on tag pages, and post excerpts on single posts and pages. <strong>Check this to disable</strong> description and keyword meta tags. This will also disable the robots meta tag that gets added to page 2 and up of your archives. Check this option if you prefer to use a separate plugin for SEO.', 'crucible'),
+	'id' => $shortname.'_disable_seo',
+	'std' => 'false',
+	'type' => 'checkbox'
+);
 
-$options[] = array( 'name' => __('Business Type','crucible'),
-					'desc' => __('Select the main category of your business. This is Microdata to maximize your search-engine ranking.','crucible'),
-					'id' => $shortname.'_business_itemtype',
-					'type' => 'select2',
-					'std' => 'LocalBusiness',
-					'options' => $schema_itemtypes);
-					
-$options[] = array( 'name' => __('Home Page Meta Title','crucible'),
-                    'desc' => __('Enter a title for your site for search engines to see.','crucible'),
-                    'id' => $shortname.'_home_meta_title',
-                    'type' => 'text');
-
-$options[] = array( 'name' => __('Home Page Meta Description','crucible'),
-                    'desc' => __('Enter a keyword-rich description of your site for search engines to see.','crucible'),
-                    'id' => $shortname.'_home_meta_desc',
-                    'type' => 'textarea');
-
-$options[] = array( 'name' => __('Home Page Meta Keywords','crucible'),
-                    'desc' => __('Enter some keywords, seperated by commas, about your site for search engines to see.','crucible'),
-                    'id' => $shortname.'_home_meta_key',
-                    'type' => 'text');
 
 /* Footer */
 $options[] = array( 'name' => __('Footer','crucible'),'class' => 'footer',
@@ -601,24 +610,31 @@ $options[] = array( 'name' => __( 'Custom content after results', 'crucible' ),
 		'std' => '',
 		'type' => 'textarea');
 /* Scripts */
-$options[] = array( 'name' => __('Scripts','crucible'),'class' => 'scripts',
-					'type' => 'heading');
-					
-$options[] = array( 'name' => __('Add Analytics Code','crucible'),
-                    'desc' => __('Paste your analytics script here.','crucible'),
-                    'id' => $shortname.'_script_analytics',
-                    'std' => '',
-                    'type' => 'textarea');
-
-$options[] = array( 'name' => __('Additional Scripts To Load','crucible'),
-                    'desc' => __('Paste any scripts here to be loaded into wp_head. Remember your script tags.','crucible'),
-                    'id' => $shortname.'_scripts_head',
-                    'std' => '',
-                    'type' => 'textarea');
-
+$options[] = array(
+	'name' => __('Scripts','crucible'),
+	'class' => 'scripts',
+	'type' => 'heading'
+);
+$options[] = array(
+	'name' => __('Analytics Code','crucible'),
+	'desc' => __('Paste your analytics script here.','crucible'),
+	'id' => $shortname.'_script_analytics',
+	'std' => '',
+	'type' => 'textarea'
+);
+$options[] = array(
+	'name' => __('Additional Scripts To Load','crucible'),
+	'desc' => __('Paste any scripts here to be loaded into wp_head. Remember your script tags.','crucible'),
+	'id' => $shortname.'_scripts_head',
+	'std' => '',
+	'type' => 'textarea'
+);
 /* Advanced */
-$options[] = array( 'name' => __('Advanced','crucible'),'class' => 'settings',
-					'type' => 'heading');
+$options[] = array(
+	'name' => __('Advanced','crucible'),
+	'class' => 'settings',
+	'type' => 'heading'
+);
 $options[] = array( 'name' => __('Disable Automatic Smartest Theme Actions','crucible'),
 						'type' => 'info',
 						'std' => __('This Smartest Theme does things by default that regular themes don\'t do. You may decide that you don\'t need such performance.<br /><br />Here you can disable some of these actions.','crucible'));
@@ -649,11 +665,6 @@ $options[] = array( 'name' => __('Disable Social Share Buttons','crucible'),
 $options[] = array( 'name' => __('Disable Announcements Icon','crucible'),
 	'desc' => __('If an Announcement (News) post does not have a featured image, a cute icon will show up as its featured image in the News archives and in the Featured Announcements widget. Check this to get rid of that icon.', 'crucible'),
 	'id' => $shortname.'_stop_theme_icon',
-	'std' => 'false',
-	'type' => 'checkbox');
-$options[] = array( 'name' => __('Disable SEO Meta Tags','crucible'),
-	'desc' => __('Check this to disable the description meta tag. This will also disable the robots meta tag that gets added to page 2 and up of your archives. Check this option if you prefer to use a separate plugin for SEO.', 'crucible'),
-	'id' => $shortname.'_disable_seo',
 	'std' => 'false',
 	'type' => 'checkbox');
 			
