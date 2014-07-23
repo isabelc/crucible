@@ -365,19 +365,18 @@ function create_smartest_business_cpts() {
  */
 function smartestthemes_taxonomies() {
 	$category_labels = array(
-		'name' => __( 'Categories', 'crucible' ),
-		'singular_name' =>__( 'Category', 'crucible' ),
-		'search_items' => __( 'Search Categories', 'crucible' ),
-		'all_items' => __( 'All Categories', 'crucible' ),
-		'parent_item' => __( 'Parent Category', 'crucible' ),
-		'parent_item_colon' => __( 'Parent Category:', 'crucible' ),
-		'edit_item' => __( 'Edit Category', 'crucible' ),
-		'update_item' => __( 'Update Category', 'crucible' ),
-		'add_new_item' => __( 'Add New Category', 'crucible' ),
-		'new_item_name' => __( 'New Category Name', 'crucible' ),
-		'menu_name' => __( 'Categories', 'crucible' ),
+		'name' => __( 'Service Categories', 'crucible' ),
+		'singular_name' =>__( 'Service Category', 'crucible' ),
+		'search_items' => __( 'Search Service Categories', 'crucible' ),
+		'all_items' => __( 'All Service Categories', 'crucible' ),
+		'parent_item' => __( 'Service Parent Category', 'crucible' ),
+		'parent_item_colon' => __( 'Service Parent Category:', 'crucible' ),
+		'edit_item' => __( 'Edit Service Category', 'crucible' ),
+		'update_item' => __( 'Update Service Category', 'crucible' ),
+		'add_new_item' => __( 'Add New Service Category', 'crucible' ),
+		'new_item_name' => __( 'New Service Category Name', 'crucible' ),
+		'menu_name' => __( 'Service Categories', 'crucible' ),
 	);
-	
 	$category_args = apply_filters( 'smartestthemes_service_category_args', array(
 		'hierarchical'		=> true,
 		'labels'			=> apply_filters('smartestthemes_service_category_labels', $category_labels),
