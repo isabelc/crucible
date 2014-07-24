@@ -164,7 +164,7 @@ if ( ! function_exists( 'crucible_staff_social_buttons' ) ) :
 
 		// only print if at least 1 is entered
 		if( $tw || $goo || $fa || $li || $in ) {
-			$output = '<div id="social-staff"><ul>';
+			$output = '<div class="social-staff"><ul>';
 		} else {
 			// if no social, get out now 
 			return;
