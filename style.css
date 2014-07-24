@@ -246,11 +246,14 @@ th {
 
 tr td:first-child, thead th:first-child, tr th:first-child, table caption {padding-left:10px;}
 
-/* reset Reviews plugin table */
-#smar_table_2 tbody tr:nth-child(even), #smar_table_2 tbody tr:nth-child(2n) {background-color:inherit;}
+/* @test @todo add table selectors accent color inline styles. maybe. */
+
+/* @new table colors */
+thead {   background-color:#64991e;}
+tbody tr:nth-child(even) {background-color:#d0e0bb;}
 
 /*--------------------------------------------------------------
-3.1 Message Boxes
+3.1 Message Boxes @framework
 --------------------------------------------------------------*/
 
 .st-info, .st-success, .st-warning, .st-error {
@@ -279,7 +282,7 @@ tr td:first-child, thead th:first-child, tr th:first-child, table caption {paddi
     vertical-align:middle;
 }
 /*--------------------------------------------------------------
-3.2 Social Links
+3.2 Social Links @framework
 --------------------------------------------------------------*/
 
 #smartshare{
@@ -622,7 +625,7 @@ i.fa:hover {
     background-color:#7fbf7f/* @new default color */
 }
 
-/* Announements widget */
+/* Announements widget @framework */
 .widget_smartest_announcements p {margin-left: 10%;} .widget_smartest_announcements time {font-style:italic;font-size: 75%;color:#333333;padding-left:8px;}
 
 
@@ -674,7 +677,11 @@ i.fa:hover {
 
 
 /**
-begin Comments from frame.css  ******************************************************************************/
+begin Comments from frame.css  ******************************************************************************
+
+	@todo see if these are needed 
+	
+*/
 
 #comments,#reply{margin:1.6em}
 .comments-title{padding-bottom:1em;margin-bottom:.5em;border-bottom:4px double #ededed;font-size:24px}
@@ -712,7 +719,7 @@ end Comments from frame.css ****************************************************
 	width: 100%;
 }
 
-/* Layout: Columns */
+/* Layout: Columns @framework maybe */
 
 .one-fourth,.one-half,.one-third{margin:1.5em 0;padding-left:2%;padding-right:2%;float:left}.one-half{width:46%}.wrapper .one-half:nth-child(odd){padding-left:0;clear:left}.wrapper .one-half:nth-child(even){padding-right:0}.one-third{width:29.3%}.wrapper .one-third:nth-child(3n-2){padding-left:0;clear:left}.wrapper .one-third:nth-child(3n+3){padding-right:0}.one-fourth{width:21%}.wrapper .one-fourth:nth-child(4n-3){padding-left:0;clear:left}.wrapper .one-fourth:nth-child(4n+4){padding-right:0}.one-fourth+h2,.one-fourth+h3,.one-half+h2,.one-half+h3,.one-third+h2,.one-third+h3{clear:both;padding-top:1em}
 
@@ -787,11 +794,12 @@ img#customlogo{
 
 @media only screen and (max-device-width: 767px) {
 	
-	.overflow { overflow: auto; }/* wrap around tables to make responsive */
+	.overflow { overflow: auto; }/* wrap around tables to make responsive @framework */
 	
 }
 
 @media screen and (max-device-width: 568px){
 
-	article footer.entry-meta{padding:2em 0}#comments,#reply{margin:0}.commentlist{width:100%!important}.commentlist>li.comment{padding:0}.commentlist .children{padding-left:0}.commentlist .children li.comment{margin:1.625em 0 0;padding:2px}#commentform input[type=text],#commentform textarea{width:90%}#searchsubmit{display:block;margin-top:5px}.one-half,.one-third,.one-fourth{margin:1.5em auto;padding-left:2%;padding-right:2%;float:none;width:96%;display:block}
+	article footer.entry-meta{padding:2em 0}#comments,#reply{margin:0}.commentlist{width:100%!important}.commentlist>li.comment{padding:0}.commentlist .children{padding-left:0}.commentlist .children li.comment{margin:1.625em 0 0;padding:2px}#commentform input[type=text],#commentform textarea{width:90%}#searchsubmit{display:block;margin-top:5px}
+	.one-half,.one-third,.one-fourth{margin:1.5em auto;padding-left:2%;padding-right:2%;float:none;width:96%;display:block}/* @framework */
 }

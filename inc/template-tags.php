@@ -3,7 +3,6 @@
  * Custom template tags for this theme.
  * @package Crucible
  */
-
 if ( ! function_exists( 'crucible_paging_nav' ) ) :
 /**
  * Display navigation to next/previous set of posts when applicable.
