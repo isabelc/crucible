@@ -658,7 +658,7 @@ $options[] = array( 'name' => __('Disable Contact Page','crucible'),
 					'std' => 'false',
 					'type' => 'checkbox');
 $options[] = array( 'name' => __('Disable Social Share Buttons','crucible'),
-	'desc' => __('Check this to stop inserting Facebook Like, Tweet, and Google +1 buttons at the bottom of single posts.', 'crucible'),
+	'desc' => __('Check this to stop inserting  Google+ Share, Tweet, Facebook Share, and Pinterest Pin it buttons at the bottom of single posts.', 'crucible'),
 	'id' => $shortname.'_stop_smartshare',
 	'std' => 'false',
 	'type' => 'checkbox');
