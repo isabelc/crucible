@@ -16,6 +16,7 @@ Tags: @todo
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
 1.0 - Reset
+	1.1 - Background
 2.0 - Typography
 3.0 - Elements
 	3.1 - Message Boxes
@@ -115,6 +116,26 @@ a:active {
 a img {
 	border: 0;
 }
+/*--------------------------------------------------------------
+1.1 Background
+--------------------------------------------------------------*/
+body.texture_argyle {background-image:url('images/argyle.png');background-repeat:repeat;}
+body.texture_dark_brick_wall {background-image:url('images/dark_brick_wall.png');background-repeat:repeat;}
+body.texture_white_brick_wall {background-image:url('images/white_brick_wall.png');background-repeat:repeat;}
+body.texture_carbon_fibre {background-image:url('images/carbon_fibre.png');background-repeat:repeat;}
+body.texture_carpet {background-image:url('images/carpet.png');background-repeat:repeat;}
+body.texture_checkered_pattern {background-image:url('images/checkered_pattern.png');background-repeat:repeat;}
+body.texture_circles {background-image:url('images/circles.png');background-repeat:repeat;}
+body.texture_crissXcross {background-image:url('images/crissXcross.png');background-repeat:repeat;}
+body.texture_diagonal_striped_brick {background-image:url('images/diagonal_striped_brick.png');background-repeat:repeat;}
+body.texture_double_lined {background-image:url('images/double_lined.png');background-repeat:repeat;}
+body.texture_hexellence {background-image:url('images/hexellence.png');background-repeat:repeat;}
+body.texture_paven {background-image:url('images/paven.png');background-repeat:repeat;}
+body.texture_plaid {background-image:url('images/plaid.png');background-repeat:repeat;}
+body.texture_pinstripe {background-image:url('images/pinstripe.png');background-repeat:repeat;}
+body.texture_speckled {background-image:url('images/speckled.png');background-repeat:repeat;}
+body.texture_tiles {background-image:url('images/tiles.png');background-repeat:repeat;}
+body.texture_wood {background-image:url('images/wood.png');background-repeat:repeat;}
 
 /*--------------------------------------------------------------
 2.0 Typography

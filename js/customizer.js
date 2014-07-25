@@ -45,7 +45,6 @@
 	
 	
 	// logo image height
-	
 	wp.customize( 'smartestthemes_options[increase_logo]', function( value ) {
 		value.bind( function( newval ) {
 		
@@ -83,8 +82,6 @@
 			$( '.site-title a' ).css('color', to);
 		} );
 	} );
-	
-	
 
 
 	// logo font-size
@@ -151,9 +148,7 @@
 		} );
 	} );
 	
-	
 	// Link hover-color.
-		
 	wp.customize( 'smartestthemes_options[link_hover_color]', function( value ) {
 		value.bind( function( to ) {
 		
@@ -179,7 +174,6 @@
 
 		} );
 	} );
-	
 
 	// Button hover color
 	wp.customize( 'smartestthemes_options[button_hover_color]', function( value ) {
@@ -198,7 +192,6 @@
 
 		} );
 	} );
-
 	
 	// Button Text color
 	wp.customize( 'smartestthemes_options[button_text_color]', function( value ) {
@@ -208,5 +201,64 @@
 
 		} );
 	} );
+	
+	// Header background color
+	wp.customize( 'smartestthemes_options[header_bg_color]', function( value ) {
+		value.bind( function( to ) {
+			$( "#masthead" ).css('background', to);	
+		} );
+	} );
+	
+	// Footer background color
+	wp.customize( 'smartestthemes_options[footer_bg_color]', function( value ) {
+		value.bind( function( to ) {
+			$( "footer.site-footer" ).css('background', to);	
+		} );
+	} );	
+
+	// Background Texture
+	wp.customize( 'smartestthemes_options[bg_texture]', function( value ) {
+		value.bind( function( to ) {
+		
+		// @test both methods. 
+		// Currently testing the one pulling the var
+		// from wp_localize_script. see below.
+		// if that doesn't work, go on to
+		// test actual PHP in the script. such as using
+		// < ? p h p echo get_template_directory_uri() right in here. 
+		// if that doesn't work, go back to using the .addClass() and removeClass, but remove each prior one every time.
+		// @test @test @test !!!!
+		
+			// @test php in single quotes
+			// @test did not work 
+			imguri = customizer_vars.template_uri + "/images/" + to + ".png";
+
+/* @test 			
+			if ( '' == to ) {
+			
+				$("body").removeClass("texture_" + to);
+				
+			} else {
+				$("body").removeAttr(class);
+				$("body").addClass("texture_" + to);
+				
+			}
+	
+*/
+
+			if ( '' == to ) {
+				$("body").removeAttr("style");
+				
+			} else {
+				// @test $("body").css({"background-image":imguri,"background-repeat":"repeat"});
+				$("body").css({"background-repeat" : "repeat"});
+			}
+
+			
+		
+		} );
+	} );	
+	
+	
 
 } )( jQuery );
