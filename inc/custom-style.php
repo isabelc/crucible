@@ -1,15 +1,14 @@
 <style><?php global $smartestthemes_options;
+$header_bg_color = isset($smartestthemes_options['header_bg_color']) ? $smartestthemes_options['header_bg_color'] : '';
+$footer_bg_color = isset($smartestthemes_options['footer_bg_color']) ? $smartestthemes_options['footer_bg_color'] : '';
+$bg_texture = isset($smartestthemes_options['bg_texture']) ? $smartestthemes_options['bg_texture'] : '';
 
-$header_color = isset($smartestthemes_options['header_bg_color']) ? $smartestthemes_options['header_bg_color'] : '';
-$footer_color = isset($smartestthemes_options['footer_bg_color']) ? $smartestthemes_options['footer_bg_color'] : '';
-$texture = isset($smartestthemes_options['bg_texture']) ? $smartestthemes_options['bg_texture'] : '';
-
-if ( $header_color ) {
-	?>#masthead{background:<?php echo $header_color; ?>; }<?php
+if ( $header_bg_color ) {
+	?>#masthead{background:<?php echo $header_bg_color; ?>; }<?php
 }
 
-if ( $footer_color ) {
-	?>footer.site-footer{background:<?php echo $footer_color; ?>; }<?php
+if ( $footer_bg_color ) {
+	?>footer.site-footer{background:<?php echo $footer_bg_color; ?>; }<?php
 }
 
 // only if there is no bg image do we check for texture
@@ -18,34 +17,68 @@ $bg_image = get_theme_mod( 'background_image' );
 
 if ( ! $bg_image ) {
 
-	if ($texture) {
-		?>body {background-image:url('<?php echo get_template_directory_uri(); ?>/images/<?php echo $texture; ?>.png');background-repeat:repeat;}<?php
+	if ($bg_texture) {
+		?>body {background-image:url('<?php echo get_template_directory_uri(); ?>/images/<?php echo $bg_texture; ?>.png');background-repeat:repeat;}<?php
 	}
 }
 
 
-if ( $smartestthemes_options['st_body_font_color'] ) { ?>
-	body, blockquote, .entry-meta, time, .widget_smartest_announcements time, dl.main-address span, .widget ul a {color:<?php echo $smartestthemes_options['st_body_font_color']; ?>;}
-<?php } 
+/* FONTS */
 
-if ( $smartestthemes_options['st_menu_text_color'] ) { ?>
-	.menu li a, .menu-toggle:before{color:<?php echo $smartestthemes_options['st_menu_text_color']; ?>;}
-<?php } 
+$body_text_color = isset($smartestthemes_options['body_text_color']) ? $smartestthemes_options['body_text_color'] : '';
+$heading_text_color = isset($smartestthemes_options['heading_text_color']) ? $smartestthemes_options['heading_text_color'] : '';
+$footer_text_color = isset($smartestthemes_options['footer_text_color']) ? $smartestthemes_options['footer_text_color'] : '';
+$att_grabber_color = isset($smartestthemes_options['att_grabber_color']) ? $smartestthemes_options['att_grabber_color'] : '';
+$att_grabber_font = isset($smartestthemes_options['att_grabber_font']) ? $smartestthemes_options['att_grabber_font'] : 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif';// @new default
+$attgrabber_fontsize = isset($smartestthemes_options['attgrabber_fontsize']) ? $smartestthemes_options['attgrabber_fontsize'] : '';
 
-if ( $smartestthemes_options['st_footer_text_color'] ) { ?>
-	#site-footer,#home-footer{color:<?php echo $smartestthemes_options['st_footer_text_color']; ?>;}
-<?php } 
+$body_font = isset($smartestthemes_options['body_font']) ? $smartestthemes_options['body_font'] : '';
+$body_fontsize = isset($smartestthemes_options['body_fontsize']) ? $smartestthemes_options['body_fontsize'] : '';
 
-if ( $smartestthemes_options['st_body_font'] ) { ?>
-	#content {font-family:<?php echo $smartestthemes_options['st_body_font']; ?>;}
-	body a.button, body button.button, body input.button, body #review_form #submit {font-family:<?php echo $smartestthemes_options['st_body_font']; ?>!important;}
-<?php } 
-if ( $smartestthemes_options['st_body_font_size'] ) { ?>
-	#content .main, #home-footer, blockquote {font-size:<?php echo $smartestthemes_options['st_body_font_size']; ?>;}
+$heading_font = isset($smartestthemes_options['heading_font']) ? $smartestthemes_options['heading_font'] : '';
+
+$h1_fontsize =  isset($smartestthemes_options['h1_fontsize']) ? $smartestthemes_options['h1_fontsize'] : '';
+$h2_fontsize =  isset($smartestthemes_options['h2_fontsize']) ? $smartestthemes_options['h2_fontsize'] : '';
+$h3_fontsize =  isset($smartestthemes_options['h3_fontsize']) ? $smartestthemes_options['h3_fontsize'] : '';
+$h4_fontsize =  isset($smartestthemes_options['h4_fontsize']) ? $smartestthemes_options['h4_fontsize'] : '';
+
+
+
+if ( $body_text_color ) { 
+
+	// @test do i need all these selectors....
+	// blockquote, .entry-meta, time, .widget_smartest_announcements time, dl.main-address span, .widget ul a
+	
+	?>body {color:<?php echo $body_text_color; ?>;}<?php
+} 
+
+
+if ($footer_text_color) { 
+
+	// @test this selector to make sure it doesn't hijace social icons
+	// @test see how it works with links color
+
+	?>.site-info{color:<?php echo $footer_text_color; ?>;}<?php
+} 
+
+
+
+if ( $body_font ) {
+	
+	// @test which selectors to use? Do I need all these (also fix these in customizer.js ....
+	
+	?>#content {font-family:<?php echo $body_font; ?>;}
+	body a.button, body button.button, body input.button, body #review_form #submit {font-family:<?php echo $body_font; ?>!important;}<?php
+	
+}
+
+if ( $body_fontsize ) {
+	?>#content .main, #home-footer, blockquote {font-size:<?php echo $body_fontsize; ?>;}
 	body a.button, body button.button, body input.button, body #review_form #submit {
-		font-size:<?php echo $smartestthemes_options['st_body_font_size']; ?>!important;}
+		font-size:<?php echo $body_fontsize; ?>!important;}
 	<?php 
-	$font_size_pre = $smartestthemes_options['st_body_font_size'];
+	// fix line height, if needed @test see if i need
+	$font_size_pre = $body_fontsize;
 	$font_size = (int)str_replace('px', '', $font_size_pre);
 	if ( $font_size > 25 ) { ?>
 		blockquote {line-height:<?php echo $font_size_pre; ?>;}
@@ -53,24 +86,53 @@ if ( $smartestthemes_options['st_body_font_size'] ) { ?>
 	if ( $font_size > 24 ) { ?>
 		#content .main, #home-footer, #home-footer a {line-height:<?php echo $font_size_pre; ?>;}
 	<?php }
-} if($smartestthemes_options['st_heading_font_color']) { ?>
-		h3, .indent-left h3, .pad h3, .page-title, #entry-title, h4, h6, h2, article.status-draft h1,article.status-private h1,article.status-publish h1{
-		color:<?php echo $smartestthemes_options['st_heading_font_color']; ?>;
-		}
-<?php }
+	
+}
 
-// HEADING
-if ( $smartestthemes_options['st_heading_one_font_size'] ) { ?>
-	#content h1, #content h1 a {font-size:<?php echo $smartestthemes_options['st_heading_one_font_size']; ?>;}
-<?php } if ( $smartestthemes_options['st_heading_two_font_size'] ) { ?>
-	h2, h2 a {font-size:<?php echo $smartestthemes_options['st_heading_two_font_size']; ?>;}
-<?php } if ( $smartestthemes_options['st_heading_three_font_size'] ) { ?>
-	h3, h3 a {font-size:<?php echo $smartestthemes_options['st_heading_three_font_size']; ?>;}
-<?php } if ( $smartestthemes_options['st_heading_four_font_size'] ) { ?>
-	h4, h4 a {font-size:<?php echo $smartestthemes_options['st_heading_four_font_size']; ?>;}
-<?php } if ( $smartestthemes_options['st_heading_font'] ) { ?>
-	#content h1, #content h1 a, h2, h2 a, h3, h3 a, h4, h4 a {font-family:<?php echo $smartestthemes_options['st_heading_font']; ?>;}
-<?php } 
+
+
+if( $heading_text_color ) {
+
+	// @test do i need all these selectors for headings ....
+	//  .indent-left h3, .pad h3, .page-title, #entry-title
+	
+	?>article.status-draft h1,article.status-private h1,article.status-publish h1,h2,h3,h4,h5,h6{
+		color:<?php echo $heading_text_color; ?>;
+		}<?php
+}
+
+if ( $h1_fontsize ) {
+	?>#content h1, #content h1 a {font-size:<?php echo $h1_fontsize; ?>;}<?php
+}
+if ( $h2_fontsize ) {
+	?>h2, h2 a {font-size:<?php echo $h2_fontsize; ?>;}<?php
+}
+if ( $h3_fontsize ) { ?>
+	h3, h3 a {font-size:<?php echo $h3_fontsize; ?>;}<?php
+}
+if ( $h4_fontsize ) { ?>
+	h4, h4 a {font-size:<?php echo $h4_fontsize; ?>;}<?php
+}
+if ( $heading_font ) {
+	?>#content h1, #content h1 a, h2, h2 a, h3, h3 a, h4, h4 a, h5, h5 a {font-family:<?php echo $heading_font; ?>;}<?php
+}
+
+// attention grabber
+if ( is_front_page() ) { ?>
+	
+		.attention-grab{ font-family:<?php echo $att_grabber_font; ?>;
+		
+		<?php if ( $att_grabber_color ) { ?>
+		
+				color:<?php echo $att_grabber_color; ?>;
+		<?php }
+		
+		if ( $attgrabber_fontsize ) { ?>
+				font-size:<?php echo $attgrabber_fontsize; ?>;
+		<?php } ?>
+		}
+		
+<?php }
 
 // HIGHLIGHT MENU
 // @new active menu item style from css.
@@ -154,7 +216,6 @@ if ( $logo_color ) {
 if ( $logo_font ) {
 	?>.site-title a {font-family:<?php echo $logo_font; ?>}<?php
 }
-
 if ( $logo_fontsize ) {
 	?>.site-title a {font-size:<?php echo $logo_fontsize; ?>}<?php
 }
@@ -176,42 +237,5 @@ if( empty($hide_tagline) ) {
 	}
 }
 
-// attention grabber
-if ( $smartestthemes_options['st_attention_grabber_color'] ) { 
-		echo '.titles { color:'. $smartestthemes_options['st_attention_grabber_color'].'; }';
-}
-if ( $smartestthemes_options['st_attention_grabber_font'] ) { ?>
-	.titles {font-family:<?php echo $smartestthemes_options['st_attention_grabber_font']; ?>;}
-<?php } 
- if ( $smartestthemes_options['st_attention_grabber_font_size'] ) { ?>
-	.titles {font-size:<?php echo $smartestthemes_options['st_attention_grabber_font_size']; ?>;}
-<?php }
-if ( $smartestthemes_options['st_menu_hover_color'] ) { ?>
-	.menu .current-menu-item a,
-	.menu li:hover a,
-	.menu li:hover li a:hover,
-	.menu li > ul li:hover li:hover a,
-	body.post-type-archive-smartest_staff .menu li.staff a,
-	body.post-type-archive-smartest_services .menu li.services a,
-	body.post-type-archive-smartest_news .menu li.news a,
-	body.tax-smartest_service_category .menu li.services a,
-	body.single-smartest_services .menu .services a,
-	body.single-smartest_staff .menu .staff a,
-	body.single-smartest_news .menu .news a,
-	body.about .menu li.about a, 
-	body.contact .menu li.contact a,
-	body.reviews .menu li.reviews a,
-	.menu > li:first-child:hover a,
-	body.single-post .menu li.blog a,
-	body.archive.author .menu li.blog a,
-	body.archive.category .menu li.blog a,
-	body.archive.tag .menu li.blog a,
-	body.archive.date .menu li.blog a,
-	body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, 
-	body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, 
-	body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,
-	body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a
-	{color:<?php echo $smartestthemes_options['st_menu_hover_color']; ?>;}
-<?php }
 // custom css from theme options
 echo $smartestthemes_options['st_custom_css']; ?></style>

@@ -240,7 +240,82 @@
 			}
 		} );
 	} );	
-	
-	
 
+
+	// @test the 4 font colors to see what happens when clearing it in live preview.
+	
+	// Body text color @test
+	wp.customize( 'smartestthemes_options[body_text_color]', function( value ) {
+		value.bind( function( to ) {
+			$( 'body, button, input, select, textarea' ).css('color', to);
+		} );
+	} );
+	
+	// Heading text color @test
+	wp.customize( 'smartestthemes_options[heading_text_color]', function( value ) {
+		value.bind( function( to ) {
+			$( "article.status-draft h1,article.status-private h1,article.status-publish h1,h2,h3,h4,h5,h6" ).css('color', to);
+		} );
+	} );
+
+
+	// Footer text color @test
+	wp.customize( 'smartestthemes_options[footer_text_color]', function( value ) {
+		value.bind( function( to ) {
+			$( '.site-info' ).css('color', to);
+		} );
+	} );
+
+
+	// Attention Grabber text color @test
+	wp.customize( 'smartestthemes_options[att_grabber_color]', function( value ) {
+		value.bind( function( to ) {
+			$( '.attention-grab' ).css('color', to);
+		} );
+	} );
+	
+	
+	// Attention Grabber font @test
+	wp.customize( 'smartestthemes_options[att_grabber_font]', function( value ) {
+		value.bind( function( newval ) {
+			$('.attention-grab').css('font-family', newval );
+		} );
+	} );
+	// Attention Grabber size @test
+	wp.customize( 'smartestthemes_options[attgrabber_fontsize]', function( value ) {
+		value.bind( function( newval ) {
+		
+			if ( '' == newval ) {
+				$('.attention-grab').css('font-size', '64px' );// @new default size
+			} else {
+				$('.attention-grab').css('font-size', newval );
+			}
+		
+		} );
+	} );
+
+	// Body font @test
+	wp.customize( 'smartestthemes_options[body_font]', function( value ) {
+		value.bind( function( newval ) {
+		
+			// @test see if this simple method works when clearing. 
+			
+			$('#content').css('font-family', newval );
+			
+		} );
+	} );
+	// Body font size @test
+	wp.customize( 'smartestthemes_options[body_fontsize]', function( value ) {
+		value.bind( function( newval ) {
+		
+			if ( '' == newval ) {
+				// @test of the next line works to clear it properly
+				$('#content .main, #home-footer, blockquote').css('font-size', '' );// @new default size
+			} else {
+				$('#content .main, #home-footer, blockquote').css('font-size', newval );
+			}
+		
+		} );
+	} );	
+	
 } )( jQuery );

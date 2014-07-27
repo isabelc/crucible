@@ -219,6 +219,13 @@ big {
 	/* @new default */
 	font:24px Copperplate Bold, Copperplate Gothic Bold, serif;
 }
+
+.attention-grab{
+	/* @new default */
+	font:64px Copperplate Bold, Copperplate Gothic Bold, serif;
+	color:cyan;
+}
+
 /*--------------------------------------------------------------
 3.0 Elements
 --------------------------------------------------------------*/

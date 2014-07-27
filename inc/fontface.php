@@ -1,11 +1,14 @@
 <?php // Conditionally load fontface stylesheets
 function crucible_loadfonts() {
 	global $smartestthemes_options;
-	$needle1 = $smartestthemes_options['st_heading_font'];// @todo
+	
+	// @new default for next 5
+	// @test all of these
+	$needle1 = isset($smartestthemes_options['heading_font']) ? $smartestthemes_options['heading_font'] : '';
 	$needle2 = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : '';
-	$needle3 = $smartestthemes_options['st_body_font'];// @test
+	$needle3 = isset($smartestthemes_options['body_font']) ? $smartestthemes_options['body_font'] : '';
 	$needle4 = isset($smartestthemes_options['tagline_font']) ? $smartestthemes_options['tagline_font'] : '';
-	$needle5 = $smartestthemes_options['st_attention_grabber_font'];// @todo
+	$needle5 = isset($smartestthemes_options['att_grabber_font']) ? $smartestthemes_options['att_grabber_font'] : 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif';
 
 	// @new list font css output from theme options $logofonts array index [2]
 	$font1 = 'qumpellkano12regular,Arial,Helvetica,sans-serif';

@@ -22,6 +22,25 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->get_control( 'background_color'  )->section	= 'background_image';
 	$wp_customize->get_control( 'background_color'  )->priority	= 1;
 
+	// repeated variables
+	
+	$logo_fonts = array(
+			'Arial,Helvetica,sans-serif' => 'Arial',
+			'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
+			'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
+			'Copperplate Bold, Copperplate Gothic Bold, serif' => 'Copperplate Gothic Bold',
+			'Garamond, Hoefler Text, Times New Roman, Times, serif' => 'Garamond',
+			'Georgia, Times, Times New Roman, serif' => 'Georgia',
+			'GillSans, Calibri, Trebuchet MS, sans-serif' => 'GillSans, Calibri',
+			'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' => 'Impact',
+			'Monotype Corsiva, Arial, sans-serif' => 'Monotype Corsiva',
+			'Lucida Console,Monaco,monospace' => 'Lucida Console, Monaco, monospace',
+			'Lucida Sans Unicode,Lucida Grande,sans-serif' => 'Lucida Sans',
+			'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua, serif',
+			'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
+			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
+			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
+	);
 
 	$wp_customize->add_section('crucible_site_logo_section', array(
         'title'			=> __('Site Logo', 'crucible'),
@@ -71,23 +90,7 @@ function crucible_customize_register( $wp_customize ) {
 		'label' => __('Site Title Font', 'crucible'),
 		'section' => 'title_tagline',
 		'type' => 'select',
-		'choices' => array(
-			'Arial,Helvetica,sans-serif' => 'Arial',
-			'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
-			'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
-			'Copperplate Bold, Copperplate Gothic Bold, serif' => 'Copperplate Gothic Bold',
-			'Garamond, Hoefler Text, Times New Roman, Times, serif' => 'Garamond',
-			'Georgia, Times, Times New Roman, serif' => 'Georgia',
-			'GillSans, Calibri, Trebuchet MS, sans-serif' => 'GillSans, Calibri',
-			'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' => 'Impact',
-			'Monotype Corsiva, Arial, sans-serif' => 'Monotype Corsiva',
-			'Lucida Console,Monaco,monospace' => 'Lucida Console, Monaco, monospace',
-			'Lucida Sans Unicode,Lucida Grande,sans-serif' => 'Lucida Sans',
-			'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua, serif',
-			'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
-			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
-			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
-		),
+		'choices' => $logo_fonts,// @test
 		'priority'	=> 62
 	));
 
@@ -150,23 +153,7 @@ function crucible_customize_register( $wp_customize ) {
 		'label' => __('Tagline Font', 'crucible'),
 		'section' => 'title_tagline',
 		'type' => 'select',
-		'choices' => array(
-			'Arial,Helvetica,sans-serif' => 'Arial',
-			'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
-			'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
-			'Copperplate Bold, Copperplate Gothic Bold, serif' => 'Copperplate Gothic Bold',
-			'Garamond, Hoefler Text, Times New Roman, Times, serif' => 'Garamond',
-			'Georgia, Times, Times New Roman, serif' => 'Georgia',
-			'GillSans, Calibri, Trebuchet MS, sans-serif' => 'GillSans, Calibri',
-			'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' => 'Impact',
-			'Monotype Corsiva, Arial, sans-serif' => 'Monotype Corsiva',
-			'Lucida Console,Monaco,monospace' => 'Lucida Console, Monaco, monospace',
-			'Lucida Sans Unicode,Lucida Grande,sans-serif' => 'Lucida Sans',
-			'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua, serif',
-			'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
-			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
-			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
-		),
+		'choices' => $logo_fonts,// @test
 		'priority'   => 66
 	));
 
@@ -430,6 +417,238 @@ function crucible_customize_register( $wp_customize ) {
 		),
 		'priority'   => 65
 	));
+	
+	// @test ALL new FONTS SECTION
+	
+	$wp_customize->add_section('crucible_fonts_section', array(
+        'title'			=> __('Fonts', 'crucible'),
+        'priority'		=> 49,// @test
+    ));	
+	
+	// Body Text Color
+	
+	$wp_customize->add_setting('smartestthemes_options[body_text_color]', array(
+        'default'	=> '',// @test blank in preview and live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_body_text_color',
+			array(
+				'label'		=> __( 'Body Text Color', 'crucible' ),
+				'section'	=> 'crucible_fonts_section',
+				'settings'	=> 'smartestthemes_options[body_text_color]',
+				'priority'	=> 10
+			)
+	));
+
+	// Headings Text Color
+	$wp_customize->add_setting('smartestthemes_options[heading_text_color]', array(
+        'default'	=> '',// @test blank in preview and live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_heading_text_color',
+			array(
+				'label'		=> __( 'Headings Text Color', 'crucible' ),
+				'section'	=> 'crucible_fonts_section',
+				'settings'	=> 'smartestthemes_options[heading_text_color]',
+				'priority'	=> 20
+			)
+	));
+
+	// Footer Text Color
+	$wp_customize->add_setting('smartestthemes_options[footer_text_color]', array(
+        'default'	=> '',// @test blank in preview and live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_footer_text_color',
+			array(
+				'label'		=> __( 'Footer Text Color', 'crucible' ),
+				'section'	=> 'crucible_fonts_section',
+				'settings'	=> 'smartestthemes_options[footer_text_color]',
+				'priority'	=> 30
+			)
+	));
+	
+	// Attention Grabber Color
+	$wp_customize->add_setting('smartestthemes_options[att_grabber_color]', array(
+        'default'	=> '',// @test blank in preview and live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_att_grabber_color',
+			array(
+				'label'		=> __( 'Attention Grabber Color', 'crucible' ),
+				'section'	=> 'crucible_fonts_section',
+				'settings'	=> 'smartestthemes_options[att_grabber_color]',
+				'priority'	=> 40
+			)
+	));	
+	
+	// Attention Grabber Font
+	
+	$wp_customize->add_setting('smartestthemes_options[att_grabber_font]', array(
+		'default'	=> 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif',// @new default logo font
+		'type'		=> 'option',
+		'transport'	=> 'postMessage'
+	));
+	$wp_customize->add_control( 'att_grabber_font_select', array(
+		'settings' => 'smartestthemes_options[att_grabber_font]',
+		'label' => __('Attention Grabber Font', 'crucible'),
+		'section' => 'crucible_fonts_section',
+		'type' => 'select',
+		'choices' => $logo_fonts,// @test
+		'priority'	=> 50
+	));
+	
+	// Attention Grabber Font Size
+    $wp_customize->add_setting('smartestthemes_options[attgrabber_fontsize]', array(
+        'default'	=> '',// @test live preview clearing and also on live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+	
+	$wp_customize->add_control('crucible_attgrabber_fontsize', array(
+        'label'		=> __('Attention Grabber Font Size. Default is 64px.', 'crucible'),// @new default size
+        'section'	=> 'crucible_fonts_section',
+        'settings'	=> 'smartestthemes_options[attgrabber_fontsize]',
+		'priority'	=> 65
+    ));
+	
+	// Body font
+	
+	$wp_customize->add_setting('smartestthemes_options[body_font]', array(
+		'default'	=> '',// @test blank. does this work in live preveiw??
+		'type'		=> 'option',
+		'transport'	=> 'postMessage'
+	));
+	$wp_customize->add_control( 'body_font_select', array(
+		'settings' => 'smartestthemes_options[body_font]',
+		'label' => __('Body Font', 'crucible'),
+		'section' => 'crucible_fonts_section',
+		'type' => 'select',
+		'choices' => array(
+			'' => 'default',// @test
+			'Arial,Helvetica,sans-serif' => 'Arial',
+			'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
+			'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
+			'Copperplate Bold, Copperplate Gothic Bold, serif' => 'Copperplate Gothic Bold',
+			'Garamond, Hoefler Text, Times New Roman, Times, serif' => 'Garamond',
+			'Georgia, Times, Times New Roman, serif' => 'Georgia',
+			'GillSans, Calibri, Trebuchet MS, sans-serif' => 'GillSans, Calibri',
+			'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' => 'Impact',
+			'Monotype Corsiva, Arial, sans-serif' => 'Monotype Corsiva',
+			'Lucida Console,Monaco,monospace' => 'Lucida Console, Monaco, monospace',
+			'Lucida Sans Unicode,Lucida Grande,sans-serif' => 'Lucida Sans',
+			'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua, serif',
+			'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
+			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
+			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
+	),
+		'priority'	=> 70
+	));	
+	
+	// Body font size
+    $wp_customize->add_setting('smartestthemes_options[body_fontsize]', array(
+        'default'	=> '',// @test live preview clearing and also on live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+	
+	$wp_customize->add_control('crucible_body_fontsize', array(
+        'label'		=> __('Body Font Size. Leave blank for default', 'crucible'),
+        'section'	=> 'crucible_fonts_section',
+        'settings'	=> 'smartestthemes_options[body_fontsize]',
+		'priority'	=> 75
+    ));	
+	
+	// Heading font
+	$wp_customize->add_setting('smartestthemes_options[heading_font]', array(
+		'default'	=> '',// @test blank @test live preview clearing
+		'type'		=> 'option',
+		'transport'	=> 'postMessage'
+	));
+	$wp_customize->add_control( 'heading_font_select', array(
+		'settings' => 'smartestthemes_options[heading_font]',
+		'label' => __('Headings Font', 'crucible'),
+		'section' => 'crucible_fonts_section',
+		'type' => 'select',
+		'choices' => $logo_fonts,// @test
+		'priority'	=> 90
+	));	
+	
+	// H1 Heading Font Size
+    $wp_customize->add_setting('smartestthemes_options[h1_fontsize]', array(
+        'default'	=> '',// @test live preview clearing and also on live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+	
+	$wp_customize->add_control('crucible_h1_fontsize', array(
+        'label'		=> __('H1 Heading Font Size. Leave blank for default', 'crucible'),
+        'section'	=> 'crucible_fonts_section',
+        'settings'	=> 'smartestthemes_options[h1_fontsize]',
+		'priority'	=> 95
+    ));		
+	
+	// H2 Heading Font Size
+    $wp_customize->add_setting('smartestthemes_options[h2_fontsize]', array(
+        'default'	=> '',// @test live preview clearing and also on live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+	
+	$wp_customize->add_control('crucible_h2_fontsize', array(
+        'label'		=> __('H2 Heading Font Size. Leave blank for default', 'crucible'),
+        'section'	=> 'crucible_fonts_section',
+        'settings'	=> 'smartestthemes_options[h2_fontsize]',
+		'priority'	=> 100
+    ));			
+	
+	// H3 Heading Font Size
+    $wp_customize->add_setting('smartestthemes_options[h3_fontsize]', array(
+        'default'	=> '',// @test live preview clearing and also on live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+	
+	$wp_customize->add_control('crucible_h3_fontsize', array(
+        'label'		=> __('H3 Heading Font Size. Leave blank for default', 'crucible'),
+        'section'	=> 'crucible_fonts_section',
+        'settings'	=> 'smartestthemes_options[h3_fontsize]',
+		'priority'	=> 105
+    ));			
+		
+	
+	// H4 Heading Font Size
+    $wp_customize->add_setting('smartestthemes_options[h4_fontsize]', array(
+        'default'	=> '',// @test live preview clearing and also on live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+	
+	$wp_customize->add_control('crucible_h4_fontsize', array(
+        'label'		=> __('H4 Heading Font Size. Leave blank for default', 'crucible'),
+        'section'	=> 'crucible_fonts_section',
+        'settings'	=> 'smartestthemes_options[h4_fontsize]',
+		'priority'	=> 110
+    ));			
+		
+
+	
 }
 add_action( 'customize_register', 'crucible_customize_register' );
 
