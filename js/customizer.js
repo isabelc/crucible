@@ -219,43 +219,12 @@
 	// Background Texture
 	wp.customize( 'smartestthemes_options[bg_texture]', function( value ) {
 		value.bind( function( to ) {
-		
-		// @test both methods. 
-		// Currently testing the one pulling the var
-		// from wp_localize_script. see below.
-		// if that doesn't work, go on to
-		// test actual PHP in the script. such as using
-		// < ? p h p echo get_template_directory_uri() right in here. 
-		// if that doesn't work, go back to using the .addClass() and removeClass, but remove each prior one every time.
-		// @test @test @test !!!!
-		
-			// @test php in single quotes
-			// @test did not work 
-			imguri = customizer_vars.template_uri + "/images/" + to + ".png";
-
-/* @test 			
-			if ( '' == to ) {
 			
-				$("body").removeClass("texture_" + to);
-				
-			} else {
-				$("body").removeAttr(class);
+			$('body').removeClass('texture_argyle texture_dark_brick_wall texture_white_brick_wall texture_carbon_fibre texture_carpet texture_checkered_pattern texture_circles texture_crissXcross texture_diagonal_striped_brick texture_double_lined texture_hexellence texture_paven texture_plaid texture_pinstripe texture_speckled texture_tiles texture_wood');
+			
+			if ( '' != to ) {
 				$("body").addClass("texture_" + to);
-				
 			}
-	
-*/
-
-			if ( '' == to ) {
-				$("body").removeAttr("style");
-				
-			} else {
-				// @test $("body").css({"background-image":imguri,"background-repeat":"repeat"});
-				$("body").css({"background-repeat" : "repeat"});
-			}
-
-			
-		
 		} );
 	} );	
 	

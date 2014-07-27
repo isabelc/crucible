@@ -392,13 +392,6 @@ add_action( 'customize_register', 'crucible_customize_register' );
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function crucible_customize_preview_js() {
-
-	wp_register_script( 'crucible_customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), false, true );
-	
-	// @test send template uri to script. Remove if doesn't work. may need this for custom fontface to load in live preview.
-	wp_localize_script( 'crucible_customizer', 'customizer_vars', array( 'template_uri' => get_template_directory_uri() ) );
-	
-	wp_enqueue_script( 'crucible_customizer' );
-	
+	wp_enqueue_script( 'crucible_customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), false, true );
 }
 add_action( 'customize_preview_init', 'crucible_customize_preview_js' );
