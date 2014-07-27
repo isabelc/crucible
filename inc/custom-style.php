@@ -100,11 +100,16 @@ body.post-type-archive-smartest_staff .menu li.staff a,
 
 <?php // ACCENT COLORS
 
-$link_color = isset($smartestthemes_options['link_color']) ? $smartestthemes_options['link_color'] : 'green';// @new default
-$link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';// @new default
-$button_color = isset($smartestthemes_options['button_color']) ? $smartestthemes_options['button_color'] : '#e6e6e6';// @new default
-$button_hover_color = isset($smartestthemes_options['button_hover_color']) ? $smartestthemes_options['button_hover_color'] : '#e6e6e6';// @new default
-$button_text_color = isset($smartestthemes_options['button_text_color']) ? $smartestthemes_options['button_text_color'] : 'rgba(0, 0, 0, .8)';// @new default
+// @new default for next 7
+$link_color = isset($smartestthemes_options['link_color']) ? $smartestthemes_options['link_color'] : 'green';
+$link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';
+$button_color = isset($smartestthemes_options['button_color']) ? $smartestthemes_options['button_color'] : '#e6e6e6';
+$button_hover_color = isset($smartestthemes_options['button_hover_color']) ? $smartestthemes_options['button_hover_color'] : '#e6e6e6';
+$button_text_color = isset($smartestthemes_options['button_text_color']) ? $smartestthemes_options['button_text_color'] : 'rgba(0, 0, 0, .8)';
+$table_caption_color = isset($smartestthemes_options['table_caption_bg_color']) ? $smartestthemes_options['table_caption_bg_color'] : '#999';
+$table_alt_row_color = isset($smartestthemes_options['table_alt_row_color']) ? $smartestthemes_options['table_alt_row_color'] : '#e0e0e0';
+
+
 
 	?>a, i.fa-clock-o, i.fa-bullhorn, .widget ul li, .entry-meta.jobtitle,.menu .current-menu-item a,body.post-type-archive-smartest_staff .menu li.staff a,body.post-type-archive-smartest_services .menu li.services a,body.post-type-archive-smartest_news .menu li.news a,body.tax-smartest_service_category .menu li.services a,body.single-smartest_services .menu .services a,body.single-smartest_staff .menu .staff a,body.single-smartest_news .menu .news a,body.about .menu li.about a, body.contact .menu li.contact a,body.reviews .menu li.reviews a,body.single-post .menu li.blog a,body.archive.author .menu li.blog a,body.archive.category .menu li.blog a,body.archive.tag .menu li.blog a,body.archive.date .menu li.blog a,body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a { 
 		color:<?php echo $link_color; ?>;
@@ -124,7 +129,13 @@ a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{
     background:<?php echo $button_hover_color; ?>;
 }
 
+#today, table caption, thead {background:<?php echo $table_caption_color; ?> }
+tbody tr:nth-child(even) {background:<?php echo $table_alt_row_color; ?> }
+
+
+
 <?php
+
 // LOGO
 
 /* avoid PHP notices */

@@ -219,7 +219,8 @@ function crucible_customize_register( $wp_customize ) {
 			array(
 				'label'		=> __( 'Link Color', 'crucible' ),
 				'section'	=> 'colors',
-				'settings'	=> 'smartestthemes_options[link_color]'
+				'settings'	=> 'smartestthemes_options[link_color]',
+				'priority'	=> 10
 			)
 	) );	
 
@@ -239,7 +240,8 @@ function crucible_customize_register( $wp_customize ) {
 			array(
 				'label'		=> __( 'Link Hover Color', 'crucible' ),
 				'section'	=> 'colors',
-				'settings'	=> 'smartestthemes_options[link_hover_color]'
+				'settings'	=> 'smartestthemes_options[link_hover_color]',
+				'priority'	=> 20
 			)
 	) );
 	
@@ -261,7 +263,8 @@ function crucible_customize_register( $wp_customize ) {
 			array(
 				'label'		=> __( 'Button Color', 'crucible' ),
 				'section'	=> 'colors',
-				'settings'	=> 'smartestthemes_options[button_color]'
+				'settings'	=> 'smartestthemes_options[button_color]',
+				'priority'	=> 30
 			)
 	) );
 	
@@ -282,7 +285,8 @@ function crucible_customize_register( $wp_customize ) {
 			array(
 				'label'		=> __( 'Button Hover Color', 'crucible' ),
 				'section'	=> 'colors',
-				'settings'	=> 'smartestthemes_options[button_hover_color]'
+				'settings'	=> 'smartestthemes_options[button_hover_color]',
+				'priority'	=> 40
 			)
 	) );
 	
@@ -295,14 +299,55 @@ function crucible_customize_register( $wp_customize ) {
 			'transport'	=> 'postMessage'
 		)
 	);
-
 	$wp_customize->add_control( new WP_Customize_Color_Control(
 			$wp_customize,
 			'st_button_text_color',
 			array(
 				'label'		=> __( 'Button Text Color', 'crucible' ),
 				'section'	=> 'colors',
-				'settings'	=> 'smartestthemes_options[button_text_color]'
+				'settings'	=> 'smartestthemes_options[button_text_color]',
+				'priority'	=> 50
+			)
+	) );
+
+
+	/* Table Caption Background Color */
+	$wp_customize->add_setting(
+		'smartestthemes_options[table_caption_bg_color]',
+		array(
+			'default'	=> '#999', // @new default
+			'type'		=> 'option',
+			'transport'	=> 'postMessage'
+		)
+	);
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+			$wp_customize,
+			'st_table_caption_bg_color',
+			array(
+				'label'		=> __( 'Table Caption Background Color', 'crucible' ),
+				'section'	=> 'colors',
+				'settings'	=> 'smartestthemes_options[table_caption_bg_color]',
+				'priority'	=> 60
+			)
+	) );
+
+	/* Table Alternating Row Color */
+	$wp_customize->add_setting(
+		'smartestthemes_options[table_alt_row_color]',
+		array(
+			'default'	=> '#e0e0e0', // @new default
+			'type'		=> 'option',
+			'transport'	=> 'postMessage'
+		)
+	);
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+			$wp_customize,
+			'st_table_alt_row_color',
+			array(
+				'label'		=> __( 'Table Alternating Row Color', 'crucible' ),
+				'section'	=> 'colors',
+				'settings'	=> 'smartestthemes_options[table_alt_row_color]',
+				'priority'	=> 70
 			)
 	) );
 	
@@ -311,7 +356,7 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'smartestthemes_options[header_bg_color]',
 		array(
-			'default'	=> '', // @test none in preview
+			'default'	=> '',
 			'type'		=> 'option',
 			'transport'	=> 'postMessage'
 		)
@@ -333,7 +378,7 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'smartestthemes_options[footer_bg_color]',
 		array(
-			'default'	=> '', // @test none in preview
+			'default'	=> '',
 			'type'		=> 'option',
 			'transport'	=> 'postMessage'
 		)
@@ -352,7 +397,7 @@ function crucible_customize_register( $wp_customize ) {
 
 	/* Background Texture */
  	$wp_customize->add_setting('smartestthemes_options[bg_texture]', array(
-        'default'	=> '',// @test none in preview
+        'default'	=> '',
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));

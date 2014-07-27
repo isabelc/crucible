@@ -202,20 +202,33 @@
 		} );
 	} );
 	
+	//
+	// Table caption color
+	wp.customize( 'smartestthemes_options[table_caption_bg_color]', function( value ) {
+		value.bind( function( to ) {
+			
+			$( "#today, table caption, thead" ).css('background', to);
+
+		} );
+	} );	
+	// Table alternating row color
+	wp.customize( 'smartestthemes_options[table_alt_row_color]', function( value ) {
+		value.bind( function( to ) {
+			$("tbody tr:nth-child(even)").css({ "background": to });
+		} );
+	} );	
 	// Header background color
 	wp.customize( 'smartestthemes_options[header_bg_color]', function( value ) {
 		value.bind( function( to ) {
 			$( "#masthead" ).css('background', to);	
 		} );
 	} );
-	
 	// Footer background color
 	wp.customize( 'smartestthemes_options[footer_bg_color]', function( value ) {
 		value.bind( function( to ) {
 			$( "footer.site-footer" ).css('background', to);	
 		} );
 	} );	
-
 	// Background Texture
 	wp.customize( 'smartestthemes_options[bg_texture]', function( value ) {
 		value.bind( function( to ) {

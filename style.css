@@ -268,8 +268,8 @@ tr td:first-child, thead th:first-child, tr th:first-child, table caption {paddi
 /* @test @todo add table selectors accent color inline styles. maybe. */
 
 /* @new table colors */
-thead {   background-color:#64991e;}
-tbody tr:nth-child(even) {background-color:#d0e0bb;}
+thead, table caption {   background-color:#999;}
+tbody tr:nth-child(even) {background-color:#e0e0e0;}
 
 /*--------------------------------------------------------------
 3.1 Message Boxes @framework
@@ -678,10 +678,13 @@ i.fa:hover {
 }
 .widget_calendar th, .widget_calendar td, .widget_calendar caption{text-align:center;}
 
-#today,
-.widget_calendar caption{
+#today{
     font-weight:bold;
-    background-color:#7fbf7f/* @new default color */
+    background-color:#999/* @new default color */
+}
+/* override regular table alt row color */
+.widget_calendar tbody tr:nth-child(2n), .widget_calendar tbody tr:nth-child(2n) {
+    background-color: inherit !important;
 }
 
 /* Announements widget @framework */
