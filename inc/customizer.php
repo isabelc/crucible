@@ -423,12 +423,13 @@ function crucible_customize_register( $wp_customize ) {
 	
 	$wp_customize->add_section('crucible_fonts_section', array(
         'title'			=> __('Fonts', 'crucible'),
-        'priority'		=> 59,// @test is it after background section
+		'description'	=> __('Leave any FONTS setting blank for default.', 'crucible'),
+        'priority'		=> 69,// @test is it after background section
     ));	
 	
 	// Attention Grabber Color
 	$wp_customize->add_setting('smartestthemes_options[att_grabber_color]', array(
-        'default'	=> '',// @test blank in preview and live site
+		'default'	=> '',// @test blank in preview and live site
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -534,7 +535,7 @@ function crucible_customize_register( $wp_customize ) {
      ));
 	
 	$wp_customize->add_control('crucible_body_fontsize', array(
-        'label'		=> __('Body Font Size. Leave blank for default', 'crucible'),
+        'label'		=> __('Body Font Size.', 'crucible'),
         'section'	=> 'crucible_fonts_section',
         'settings'	=> 'smartestthemes_options[body_fontsize]',
 		'priority'	=> 60
@@ -601,7 +602,7 @@ function crucible_customize_register( $wp_customize ) {
      ));
 	
 	$wp_customize->add_control('crucible_h1_fontsize', array(
-        'label'		=> __('H1 Heading Font Size. Leave blank for default', 'crucible'),
+        'label'		=> __('H1 Heading Font Size.', 'crucible'),
         'section'	=> 'crucible_fonts_section',
         'settings'	=> 'smartestthemes_options[h1_fontsize]',
 		'priority'	=> 95
@@ -615,7 +616,7 @@ function crucible_customize_register( $wp_customize ) {
      ));
 	
 	$wp_customize->add_control('crucible_h2_fontsize', array(
-        'label'		=> __('H2 Heading Font Size. Leave blank for default', 'crucible'),
+        'label'		=> __('H2 Heading Font Size.', 'crucible'),
         'section'	=> 'crucible_fonts_section',
         'settings'	=> 'smartestthemes_options[h2_fontsize]',
 		'priority'	=> 100
@@ -629,7 +630,7 @@ function crucible_customize_register( $wp_customize ) {
      ));
 	
 	$wp_customize->add_control('crucible_h3_fontsize', array(
-        'label'		=> __('H3 Heading Font Size. Leave blank for default', 'crucible'),
+        'label'		=> __('H3 Heading Font Size.', 'crucible'),
         'section'	=> 'crucible_fonts_section',
         'settings'	=> 'smartestthemes_options[h3_fontsize]',
 		'priority'	=> 105
@@ -643,7 +644,7 @@ function crucible_customize_register( $wp_customize ) {
      ));
 	
 	$wp_customize->add_control('crucible_h4_fontsize', array(
-        'label'		=> __('H4 Heading Font Size. Leave blank for default', 'crucible'),
+        'label'		=> __('H4 Heading Font Size.', 'crucible'),
         'section'	=> 'crucible_fonts_section',
         'settings'	=> 'smartestthemes_options[h4_fontsize]',
 		'priority'	=> 110

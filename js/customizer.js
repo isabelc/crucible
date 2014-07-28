@@ -272,7 +272,7 @@
 		value.bind( function( newval ) {
 			// @test see if this simple method works when clearing.
 			if ( '' == newval ) {
-				$('.attention-grab').css('font-family', 'inherit' );// @test
+				$('.attention-grab').css('font-family', 'cyan' );// @new default, or 'inherit' if no default
 			} else {
 				$('.attention-grab').css('font-family', newval );
 			}
