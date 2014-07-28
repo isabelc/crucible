@@ -243,6 +243,8 @@
 	wp.customize( 'smartestthemes_options[bg_texture]', function( value ) {
 		value.bind( function( to ) {
 			
+			// @test clear not working if coming in with texture/
+			
 			$('body').removeClass('texture_argyle texture_dark_brick_wall texture_white_brick_wall texture_carbon_fibre texture_carpet texture_checkered_pattern texture_circles texture_crissXcross texture_diagonal_striped_brick texture_double_lined texture_hexellence texture_paven texture_plaid texture_pinstripe texture_speckled texture_tiles texture_wood');
 			
 			if ( '' != to ) {
@@ -428,7 +430,58 @@
 			}
 		
 		} );
+	} );
+	
+	// Footer text
+	
+	wp.customize( 'smartestthemes_options[footer_text]', function( value ) {
+		value.bind( function( to ) {
+			if ( '' == to ) {
+				
+				//  @test clearing
+				$( "#temp-footer" ).remove();
+				
+				
+			} else {
+
+				// @test
+				if($('.social').length > 0) {
+					 $( '.social' ).before( '<br /><span id="temp-footer">' + to + '</span>' );
+				} else {
+					$( '.site-info' ).append( '<br /><span id="temp-footer">' + to + '</span>' );
+				}
+				
+			}
+		
+		} );
+	} );
+		
+	
+	
+	// Override Footer
+	
+	wp.customize( 'smartestthemes_options[override_footer]', function( value ) {
+		value.bind( function( to ) {
+			if ( '1' == to ) {
+				// hide footer
+				$( "#footer-copyright, #footer-sitename" ).hide();
+				
+			} else {
+				// show default footer
+				
+				bn = wp.customize.value('blogname')();
+				
+				year = (new Date).getFullYear(); // @test
+				
+				$( '.site-info' ).prepend( '<span id="footer-copyright">Copyright &copy; ' + year + '</span> <a id="footer-sitename" href="#">' + bn + '</a>' );
+				
+			}
+		} );
 	} );	
+	
+	
+	
+	
 	
 	
 } )( jQuery );

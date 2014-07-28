@@ -391,8 +391,11 @@ add_action('crucible_social_buttons', 'crucible_social_buttons');
 function crucible_footer() {
 	global $smartestthemes_options;
 	$output = '';
-	if ($smartestthemes_options['st_override_footer'] == 'false') { // no override, so do default				
-		$output .= '<span>' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
+	$override_footer = isset($smartestthemes_options['override_footer']) ? $smartestthemes_options['override_footer'] : '';
+	$footer_text = isset($smartestthemes_options['footer_text']) ? $smartestthemes_options['footer_text'] : '';
+	
+	if ( empty( $override_footer ) ) { // no override, so do default
+		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
 
 		$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 		if($bn) {
@@ -401,12 +404,12 @@ function crucible_footer() {
 			$output .= get_bloginfo('name');
 		}
 		$output .= '</a>';
-		if ( $smartestthemes_options['st_footer_text']) {
+		if ( $footer_text ) {
 			$output .= '<br />';// if default plus custom, need <br />
 		}
 	}
-	if ($smartestthemes_options['st_footer_text']) {
-		$output .= stripslashes_deep($smartestthemes_options['st_footer_text']);
+	if ( $footer_text ) {
+		$output .= stripslashes_deep( $footer_text );
 	} 
 	echo $output;
 }

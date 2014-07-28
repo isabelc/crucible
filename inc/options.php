@@ -401,20 +401,6 @@ $options[] = array(
 	'type' => 'checkbox'
 );
 
-
-/* Footer */
-$options[] = array( 'name' => __('Footer','crucible'),'class' => 'footer',
-					'type' => 'heading');
-$options[] = array( 'name' => __('Footer Text','crucible'),
-                    'desc' => __('Add some text or basic html (strong, a, em, br, etc) to the footer area. By default, this will go <strong>under</strong> the current copyright notice on your footer.<br /><br />To override the default copyright notice, check below.','crucible'),
-                    'id' => $shortname.'_footer_text',
-                    'std' => '',
-                    'type' => 'textarea');
-$options[] = array( 'name' => __('Override the Default Footer Copyright Notice','crucible'),
-					'desc' => __('Check this to remove the default copyright text on the footer. This will allow your custom Footer text (that you entered above) to completely replace any default footer.', 'crucible'),
-					'id' => $shortname.'_override_footer',
-					'std' => 'false',
-					'type' => 'checkbox');
 /* Branding */
 $options[] = array( 'name' => __('Backend Branding','crucible'),'class' => 'branding',
 					'type' => 'heading');

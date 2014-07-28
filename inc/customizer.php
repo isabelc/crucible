@@ -42,6 +42,21 @@ function crucible_customize_register( $wp_customize ) {
 			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
 			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
 	);
+	
+	
+	/* add a textarea control */
+	class Crucible_Customize_Textarea_Control extends WP_Customize_Control {
+		public $type = 'textarea';
+	 
+		public function render_content() {
+			?>
+			<label>
+			<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+			<textarea rows="5" style="width:100%;" <?php $this->link(); ?>><?php echo esc_textarea( $this->value() ); ?></textarea>
+			</label>
+			<?php
+		}
+	}	
 
 	$wp_customize->add_section('crucible_site_logo_section', array(
         'title'			=> __('Site Logo', 'crucible'),
@@ -424,8 +439,8 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->add_section('crucible_fonts_section', array(
         'title'			=> __('Fonts', 'crucible'),
 		'description'	=> __('Leave any FONTS setting blank for default.', 'crucible'),
-        'priority'		=> 69,// @test is it after background section
-    ));	
+        'priority'		=> 96,// @test is it after background section
+    ));
 	
 	// Attention Grabber Color
 	$wp_customize->add_setting('smartestthemes_options[att_grabber_color]', array(
@@ -638,17 +653,53 @@ function crucible_customize_register( $wp_customize ) {
 		
 	// H4 Heading Font Size
     $wp_customize->add_setting('smartestthemes_options[h4_fontsize]', array(
-        'default'	=> '',// @test live preview clearing and also on live site
-        'type'		=> 'option',
+		'default'	=> '',// @test live preview clearing and also on live site
+		'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
 	
 	$wp_customize->add_control('crucible_h4_fontsize', array(
-        'label'		=> __('H4 Heading Font Size.', 'crucible'),
-        'section'	=> 'crucible_fonts_section',
-        'settings'	=> 'smartestthemes_options[h4_fontsize]',
+		'label'		=> __('H4 Heading Font Size.', 'crucible'),
+		'section'	=> 'crucible_fonts_section',
+		'settings'	=> 'smartestthemes_options[h4_fontsize]',
 		'priority'	=> 110
-    ));			
+    ));
+	
+	// Footer Section
+	
+	$wp_customize->add_section('crucible_footer_section', array(
+        'title'			=> __('Footer', 'crucible'),
+        'priority'		=> 99,// @test is it after background and Fonts sections
+    ));		
+
+	// Footer Text	@test
+	$wp_customize->add_setting( 'smartestthemes_options[footer_text]', array(
+		'default'	=> '',// @test clearing it
+		'type'		=> 'option',
+		'transport'	=> 'postMessage'
+	) );
+	 
+	$wp_customize->add_control( new Crucible_Customize_Textarea_Control( $wp_customize, 'textarea_setting', array(
+		'label'		=> __('Add some text or basic html (strong, a, em, br, etc) to the footer area. By default, this will go <strong>under</strong> the current copyright notice on your footer.<br /><br />To override the default copyright notice, check below.','crucible'),
+		'section'	=> 'crucible_footer_section',
+		'settings'	=> 'smartestthemes_options[footer_text]',
+		'priority'	=> 10
+	) ) );
+	
+	// Override the Default Footer
+    $wp_customize->add_setting('smartestthemes_options[override_footer]', array(
+        'default'	=> '',
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+ 
+     $wp_customize->add_control('crucible_override_footer', array(
+        'settings'	=> 'smartestthemes_options[override_footer]',
+        'label'		=> __('Check this to remove the default copyright text on the footer. This will allow your custom Footer text (that you entered above) to completely replace any default footer.', 'crucible'),
+        'section'	=> 'crucible_footer_section',
+        'type'		=> 'checkbox',
+		'priority'	=> 20
+    ));	
 	
 }
 add_action( 'customize_register', 'crucible_customize_register' );
