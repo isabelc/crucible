@@ -213,11 +213,13 @@ function smartestthemes_frame_load() {
 	wp_enqueue_script('jquery-ui-core');
 	wp_register_script('jquery-input-mask', $fr. 'js/jquery.maskedinput-1.3.1.min.js', array( 'jquery' ));
 	wp_enqueue_script('jquery-input-mask');
-	function smartestthemes_admin_head() { 
+	
+	function smartestthemes_admin_head() {
+	
+		// @todo do i still need jquery datepicker function below...
+		
 		$fr = get_template_directory_uri(). '/business-framework/'; ?>
 		<link rel="stylesheet" type="text/css" href="<?php echo $fr; ?>css/admin-style.css" media="screen" />
- 		<link rel="stylesheet" media="screen" type="text/css" href="<?php echo $fr; ?>css/colorpicker.css" />
-		<script type="text/javascript" src="<?php echo $fr; ?>js/colorpicker.js"></script>
 		<script>jQuery(document).ready(function(){
 			//JQUERY DATEPICKER
 			jQuery('.smartestthemes-input-calendar').each(function (){
@@ -227,32 +229,6 @@ function smartestthemes_frame_load() {
 			jQuery('.smartestthemes-input-time').each(function (){
 				jQuery('#' + jQuery(this).attr('id')).mask("99-9999999");
 			});
-			//Color Picker
-			<?php $options = get_option('smartestthemes_template');
-			foreach($options as $option){ 
-			if($option['type'] == 'color'){
-					$option_id = $option['id'];
-					$color = get_option($option_id); ?>
-				 jQuery('#<?php echo $option_id; ?>_picker').children('div').css('backgroundColor', '<?php echo $color; ?>');    
-				 jQuery('#<?php echo $option_id; ?>_picker').ColorPicker({
-					color: '<?php echo $color; ?>',
-					onShow: function (colpkr) {
-						jQuery(colpkr).fadeIn(500);
-						return false;
-					},
-					onHide: function (colpkr) {
-						jQuery(colpkr).fadeOut(500);
-						return false;
-					},
-					onChange: function (hsb, hex, rgb) {
-						//jQuery(this).css('border','1px solid red');
-						jQuery('#<?php echo $option_id; ?>_picker').children('div').css('backgroundColor', '#' + hex);
-						jQuery('#<?php echo $option_id; ?>_picker').next('input').attr('value','#' + hex);
-						
-					}
-				  });
-			  <?php } } ?>
-		 
 });
 		</script>
 		<?php //AJAX Upload
@@ -835,13 +811,6 @@ function smartestthemes_machine($options) {
 		case "upload_min":
 			$output .= smartestthemes_uploader_function($value['id'],$value['std'],'min');
 		break;
-		case "color":
-			$val = $value['std'];
-			$stored  = get_option( $value['id'] );
-			if ( $stored != "") { $val = $stored; }
-			$output .= '<div id="' . $value['id'] . '_picker" class="colorSelector"><div></div></div>';
-			$output .= '<input class="smartestthemes-color" name="'. $value['id'] .'" id="'. $value['id'] .'" type="text" value="'. $val .'" />';
-		break;   
 		case "images":
 			$i = 0;
 			$select_value = get_option( $value['id']);
