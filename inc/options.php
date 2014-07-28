@@ -9,7 +9,6 @@ $themeslug = $themeobject->Template;
 $manualurl = 'http://www.smartestthemes.com/docs/category/'.$themeslug.'/';
 $rlink = '<a href="'.admin_url('options-reading.php').'">'. __('Reading Settings', 'crucible').'</a>';
 $slink = '<a href="'.admin_url('options-general.php').'">'. __('Settings', 'crucible'). '</a>';
-$bnam = get_bloginfo('name');
 $user_info = get_userdata(1);
 if ($user_info == true) {
 	$admin_name = $user_info->user_login;
@@ -24,62 +23,6 @@ $shortname = 'st';// @test  @todo update all option names in theme
 global $smartestthemes_options;
 $smartestthemes_options = array();
 $smartestthemes_options = get_option('smartestthemes_options');
-
-
-/**
- * @new choose headfonts, 1st option blank
- */
-$headfonts = array(
-'' => '',
-'Arial,Helvetica,sans-serif' => 'Arial',
-'qumpellkano12regular,Arial,Helvetica,sans-serif' => 'Bluechip',
-'bebasregular,Arial,Helvetica,sans-serif' => 'Bebas',
-'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
-'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
-'Copperplate Bold, Copperplate Gothic Bold, serif' => 'Copperplate Gothic Bold',
-'dayposterblackregular,Arial,Helvetica,sans-serif' => 'DayPoster Black',
-'florante_at_lauraregular,Arial,Helvetica,sans-serif' => 'Florante at Laura',
-'fontleroybrownregular,Arial,Helvetica,sans-serif' => 'FontLeroy Brown',
-'forqueregular,Arial,Helvetica,sans-serif' => 'Forque',
-'Futura, Century Gothic, AppleGothic, sans-serif' => 'Futura, Century Gothic',
-'Garamond, Hoefler Text, Times New Roman, Times, serif' => 'Garamond',
-'Georgia, Times, Times New Roman, serif' => 'Georgia',
-'GillSans, Calibri, Trebuchet MS, sans-serif' => 'GillSans, Calibri',
-'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' => 'Impact',
-'Monotype Corsiva, Arial, sans-serif' => 'Monotype Corsiva',
-'kingthings_exeterregular,Arial,Helvetica,sans-serif' => 'Kingthings Exeter',
-'Lucida Console,Monaco,monospace' => 'Lucida Console, Monaco, monospace',
-'Lucida Sans Unicode,Lucida Grande,sans-serif' => 'Lucida Sans',
-'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua, serif',
-'roboto_slabbold,Arial,Helvetica,sans-serif' => 'Roboto Slab Bold',
-'roboto_slabregular,Arial,Helvetica,sans-serif' => 'Roboto Slab Regular',
-'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
-'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
-'Verdana,Geneva,sans-serif' => 'Verdana, Geneva',
-);
-
-$bodyfonts = array(
-'',
-'Arial, Helvetica, sans-serif' => 'Arial, Helvetica',
-'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria, Georgia, Times',
-'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Light',
-'Futura, Century Gothic, AppleGothic, sans-serif' => 'Futura, Century Gothic, AppleGothic',
-'Garamond, Hoefler Text, Times New Roman, Times, serif' => 'Garamond',
-'Georgia, Times, Times New Roman, serif' => 'Georgia, Times',
-'GillSans, Calibri, Trebuchet MS, sans-serif' => 'GillSans, Calibri',
-'Lucida Console, Monaco, monospace' => 'Lucida Console, Monaco',
-'Lucida Sans Unicode, Lucida Grande, sans-serif' => 'Lucida Sans Unicode',
-'Monotype Corsiva, Arial, sans-serif' => 'Monotype Corsiva',
-'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua',
-'roboto_slabbold,Arial,Helvetica,sans-serif' => 'Roboto Slab Bold',
-'roboto_slabregular,Arial,Helvetica,sans-serif' => 'Roboto Slab Regular',
-'Tahoma, Geneva, sans-serif' => 'Tahoma, Geneva',
-'Trebuchet MS, Helvetica, sans-serif' => 'Trebuchet MS, Helvetica',
-'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
-);
-$fontsizes = array('','11px','12px','13px','14px','16px','18px','20px','22px','24px','26px','28px','30px','32px','35px','36px','38px','40px','41px','44px','48px','52px','56px','60px');
-// @new custom color list, list default 1st
-$colors = array('green', 'red','orange','lime','blue','light blue','violet','bronze brown','sand','gray');
 
 /* @new choices */
 $schema_itemtypes = array(
@@ -102,10 +45,9 @@ $options[] = array( 'name' => __('Welcome','crucible'),
 					'type' => 'heading');
 $options[] = array( 'name' => sprintf( __('Welcome to %s by Smartest Themes!','crucible'), $themename ),
 				'type' => 'info',
-				'std' => __('Your business website is up and running. On the left are tabs to customize your site, but everything is optional.<br /><br />To make your website more complete, enter the <strong>Business Info</strong> tab on the left. <br /><br />Then, take a moment to browse all the tabs so you can see what options are available. You can upload your logo in Appearance -> Customize.<br /><br />To get started, first click the \'<strong>Save all Changes</strong>\' button to save the theme defaults.','crucible') );
+				'std' => __('Your business website is up and running. On the left are tabs to customize your site, but everything is optional.<br /><br />To make your website more complete, enter the <strong>Business Info</strong> tab on the left. <br /><br />Then, take a moment to browse all the tabs so you can see what options are available. You can upload your logo in <strong>Appearance -> Customize</strong>.<br /><br />To get started, first click the \'<strong>Save all Changes</strong>\' button to save the theme defaults.','crucible') );
 
 /* Business */
-
 $options[] = array( 'name' => __('Business Info','crucible'),'class' => 'money',
 					'type' => 'heading');
 					
