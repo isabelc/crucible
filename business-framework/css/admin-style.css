@@ -288,12 +288,6 @@ h4.support-section-title {
 #smartestthemes-nav ul li a.colors:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.colors span.smartestthemes-nav-icon {
 	background-position: -230px 0;
 }
-#smartestthemes-nav ul li a.typography span.smartestthemes-nav-icon {
-	background-position: -327px -23px;
-}
-#smartestthemes-nav ul li a.typography:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.typography span.smartestthemes-nav-icon {
-	background-position: -330px 0;
-}
 #smartestthemes-nav ul li a.image span.smartestthemes-nav-icon {
 	background-position: -183px -23px;
 }
@@ -360,7 +354,7 @@ h4.support-section-title {
 #smartestthemes-nav ul li a.mail:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.mail span.smartestthemes-nav-icon {
 	background-position: -162px 0;
 }
-#smartestthemes-container #content #smartestthemes-option-colors .section-color, #smartestthemes-container #content #smartestthemes-option-logo .section-color, #smartestthemes-container #content #smartestthemes-option-fonts .section-color, #smartestthemes-container #content #smartestthemes-option-style .section-color, .group .half {
+.group .half {
 	width: 250px;
 	max-width: 250px;
 	height: 140px;
@@ -370,10 +364,8 @@ h4.support-section-title {
 .group .half {
 	height: 90px;
 }
-#smartestthemes-container #content #smartestthemes-option-logo .section-color {
-	height: 160px;
-}
-#smartestthemes-container #content #smartestthemes-option-colors .explain, #smartestthemes-container #content #smartestthemes-option-logo .section-color .explain, #smartestthemes-container #content #smartestthemes-option-fonts .section-color .explain, #smartestthemes-container #content #smartestthemes-option-style .section-color .explain {
+/* @test do i need this one */
+#smartestthemes-container #content #smartestthemes-option-colors .explain {
 	width: auto;
 }
 #smartestthemes-container #smartestthemes-nav ul li.current a, #smartestthemes-nav ul li a:hover {
@@ -411,7 +403,7 @@ h4.support-section-title {
 	font-size: 11px;
 	color: #5b5b5b;
 }
-#smartestthemes-container #content #smartestthemes-option-backendbranding .section .explain, #smartestthemes-container #content #smartestthemes-option-advanced .section .explain, #smartestthemes-container #content #smartestthemes-option-footer .section .explain {
+#smartestthemes-container #content #smartestthemes-option-backendbranding .section .explain, #smartestthemes-container #content #smartestthemes-option-advanced .section .explain {
 	color: #777;
 }
 #smartestthemes-container #content .section-checkbox .controls {
@@ -420,12 +412,6 @@ h4.support-section-title {
 }
 #smartestthemes-container #content .section-checkbox .explain {
 	width: 530px;
-}
-#smartestthemes-container #content .section-color .controls {
-	width: 125px;
-}
-#smartestthemes-container #content .section-color .explain {
-	width: 440px;
 }
 #smartestthemes-container #content .section-info h3.heading {
 	font-size: 16px;
@@ -512,28 +498,6 @@ h4.support-section-title {
 	float: left;
 	width: 80px;
 	margin-left: 5px;
-}
-#smartestthemes-container #content .section-typography .controls {
-	width: 425px;
-}
-#smartestthemes-container #content .section-typography .explain {
-	width: 140px;
-}
-#smartestthemes-container .controls .smartestthemes-typography-size {
-	width: 80px;
-	float: left;
-}
-#smartestthemes-container .controls .smartestthemes-typography-unit {
-	width: 50px;
-	float: left;
-}
-#smartestthemes-container .controls .smartestthemes-typography-face {
-	width: 100px;
-	float: left;
-}
-#smartestthemes-container .controls .smartestthemes-typography-style {
-	width: 80px;
-	float: left;
 }
 #smartestthemes-container .controls .smartestthemes-radio-img-img {
 	border: 3px solid #fff;
