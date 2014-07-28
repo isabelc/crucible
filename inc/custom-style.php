@@ -47,7 +47,7 @@ $h4_fontsize =  isset($smartestthemes_options['h4_fontsize']) ? $smartestthemes_
 if ( $body_text_color ) { 
 
 	// @test do i need all these selectors....
-	// blockquote, .entry-meta, time, .widget_smartest_announcements time, dl.main-address span, .widget ul a
+	// blockquote, .entry-meta, time, dl.main-address span, .widget ul a
 	
 	?>body {color:<?php echo $body_text_color; ?>;}<?php
 } 
