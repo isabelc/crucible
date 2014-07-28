@@ -85,7 +85,7 @@ if( $heading_text_color ) {
 	// @test do i need all these selectors for headings ....
 	//  .indent-left h3, .pad h3, .page-title, #entry-title
 	
-	?>article.status-draft h1,article.status-private h1,article.status-publish h1,h2,h3,h4,h5,h6{
+	?>#content h1,#content h2,h3,h4,h5,h6{
 		color:<?php echo $heading_text_color; ?>;
 		}<?php
 }
@@ -107,11 +107,15 @@ if ( $heading_font ) {
 }
 
 // attention grabber
-if ( is_front_page() ) { ?>
-	
-		.attention-grab{ font-family:<?php echo $att_grabber_font; ?>;
+if ( is_front_page() ) {
 		
-		<?php if ( $att_grabber_color ) { ?>
+		if ( $att_grabber_font ) { ?>
+	
+			.attention-grab{ font-family:<?php echo $att_grabber_font; ?>;
+		
+		<?php }
+		
+		if ( $att_grabber_color ) { ?>
 		
 				color:<?php echo $att_grabber_color; ?>;
 		<?php }
@@ -160,9 +164,7 @@ $button_text_color = isset($smartestthemes_options['button_text_color']) ? $smar
 $table_caption_color = isset($smartestthemes_options['table_caption_bg_color']) ? $smartestthemes_options['table_caption_bg_color'] : '#999';
 $table_alt_row_color = isset($smartestthemes_options['table_alt_row_color']) ? $smartestthemes_options['table_alt_row_color'] : '#e0e0e0';
 
-
-
-	?>a, i.fa-clock-o, i.fa-bullhorn, .widget ul li, .entry-meta.jobtitle,.menu .current-menu-item a,body.post-type-archive-smartest_staff .menu li.staff a,body.post-type-archive-smartest_services .menu li.services a,body.post-type-archive-smartest_news .menu li.news a,body.tax-smartest_service_category .menu li.services a,body.single-smartest_services .menu .services a,body.single-smartest_staff .menu .staff a,body.single-smartest_news .menu .news a,body.about .menu li.about a, body.contact .menu li.contact a,body.reviews .menu li.reviews a,body.single-post .menu li.blog a,body.archive.author .menu li.blog a,body.archive.category .menu li.blog a,body.archive.tag .menu li.blog a,body.archive.date .menu li.blog a,body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a { 
+	?>a, i.fa-clock-o, i.fa-bullhorn, .entry-meta.jobtitle,.menu .current-menu-item a,body.post-type-archive-smartest_staff .menu li.staff a,body.post-type-archive-smartest_services .menu li.services a,body.post-type-archive-smartest_news .menu li.news a,body.tax-smartest_service_category .menu li.services a,body.single-smartest_services .menu .services a,body.single-smartest_staff .menu .staff a,body.single-smartest_news .menu .news a,body.about .menu li.about a, body.contact .menu li.contact a,body.reviews .menu li.reviews a,body.single-post .menu li.blog a,body.archive.author .menu li.blog a,body.archive.category .menu li.blog a,body.archive.tag .menu li.blog a,body.archive.date .menu li.blog a,body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a { 
 		color:<?php echo $link_color; ?>;
 }
 	

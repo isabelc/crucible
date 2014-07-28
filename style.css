@@ -236,7 +236,7 @@ big {
 	font-size: 125%;
 }
 .site-title a {
-	/* @new default */
+	/* @new default, load fontface if needed */
 	font:36px Copperplate Bold, Copperplate Gothic Bold, serif;
 }
 .site-description{
@@ -246,7 +246,7 @@ big {
 
 .attention-grab{
 	/* @new default */
-	font:64px Copperplate Bold, Copperplate Gothic Bold, serif;
+	font:64px Impact, Haettenschweiler, Arial Narrow Bold, sans-serif;
 	color:cyan;
 }
 

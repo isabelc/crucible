@@ -25,6 +25,7 @@ function crucible_customize_register( $wp_customize ) {
 	// repeated variables
 	
 	$logo_fonts = array(
+			'' => 'default',// @test
 			'Arial,Helvetica,sans-serif' => 'Arial',
 			'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
 			'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
@@ -81,7 +82,7 @@ function crucible_customize_register( $wp_customize ) {
 	/* Logo font */
 	
 	$wp_customize->add_setting('smartestthemes_options[logo_font]', array(
-		'default'	=> 'Copperplate Bold, Copperplate Gothic Bold, serif',// @new default logo font
+		'default'	=> '',// @test make sure doesn't add extra markup to custom-style.php if not needed
 		'type'		=> 'option',
 		'transport'	=> 'postMessage'
 	));
@@ -90,7 +91,7 @@ function crucible_customize_register( $wp_customize ) {
 		'label' => __('Site Title Font', 'crucible'),
 		'section' => 'title_tagline',
 		'type' => 'select',
-		'choices' => $logo_fonts,// @test
+		'choices' => $logo_fonts,
 		'priority'	=> 62
 	));
 
@@ -144,7 +145,7 @@ function crucible_customize_register( $wp_customize ) {
 	
 	/* Tagline font */
 	$wp_customize->add_setting('smartestthemes_options[tagline_font]', array(
-		'default'	=> 'Copperplate Bold, Copperplate Gothic Bold, serif',// @new default logo font
+		'default'	=> '',// @test
 		'type'		=> 'option',
 		'transport'	=> 'postMessage'
 	));
@@ -153,7 +154,7 @@ function crucible_customize_register( $wp_customize ) {
 		'label' => __('Tagline Font', 'crucible'),
 		'section' => 'title_tagline',
 		'type' => 'select',
-		'choices' => $logo_fonts,// @test
+		'choices' => $logo_fonts,
 		'priority'   => 66
 	));
 
@@ -425,6 +426,54 @@ function crucible_customize_register( $wp_customize ) {
         'priority'		=> 59,// @test is it after background section
     ));	
 	
+	// Attention Grabber Color
+	$wp_customize->add_setting('smartestthemes_options[att_grabber_color]', array(
+        'default'	=> '',// @test blank in preview and live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_att_grabber_color',
+			array(
+				'label'		=> __( 'Attention Grabber Color', 'crucible' ),
+				'section'	=> 'crucible_fonts_section',
+				'settings'	=> 'smartestthemes_options[att_grabber_color]',
+				'priority'	=> 10
+			)
+	));	
+	
+	// Attention Grabber Font
+	
+	$wp_customize->add_setting('smartestthemes_options[att_grabber_font]', array(
+		'default'	=> '',// @test
+		'type'		=> 'option',
+		'transport'	=> 'postMessage'
+	));
+	$wp_customize->add_control( 'att_grabber_font_select', array(
+		'settings' => 'smartestthemes_options[att_grabber_font]',
+		'label' => __('Attention Grabber Font', 'crucible'),
+		'section' => 'crucible_fonts_section',
+		'type' => 'select',
+		'choices' => $logo_fonts,
+		'priority'	=> 20
+	));
+	
+	// Attention Grabber Font Size
+    $wp_customize->add_setting('smartestthemes_options[attgrabber_fontsize]', array(
+        'default'	=> '',
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+	
+	$wp_customize->add_control('crucible_attgrabber_fontsize', array(
+        'label'		=> __('Attention Grabber Font Size. Default is 64px.', 'crucible'),// @new default size
+        'section'	=> 'crucible_fonts_section',
+        'settings'	=> 'smartestthemes_options[attgrabber_fontsize]',
+		'priority'	=> 30
+    ));
+	
 	// Body Text Color
 	
 	$wp_customize->add_setting('smartestthemes_options[body_text_color]', array(
@@ -440,94 +489,10 @@ function crucible_customize_register( $wp_customize ) {
 				'label'		=> __( 'Body Text Color', 'crucible' ),
 				'section'	=> 'crucible_fonts_section',
 				'settings'	=> 'smartestthemes_options[body_text_color]',
-				'priority'	=> 10
-			)
-	));
-
-	// Headings Text Color
-	$wp_customize->add_setting('smartestthemes_options[heading_text_color]', array(
-        'default'	=> '',// @test blank in preview and live site
-        'type'		=> 'option',
-		'transport'	=> 'postMessage'
-     ));
-
-	$wp_customize->add_control( new WP_Customize_Color_Control( 
-		$wp_customize, 
-			'st_heading_text_color',
-			array(
-				'label'		=> __( 'Headings Text Color', 'crucible' ),
-				'section'	=> 'crucible_fonts_section',
-				'settings'	=> 'smartestthemes_options[heading_text_color]',
-				'priority'	=> 20
-			)
-	));
-
-	// Footer Text Color
-	$wp_customize->add_setting('smartestthemes_options[footer_text_color]', array(
-        'default'	=> '',// @test blank in preview and live site
-        'type'		=> 'option',
-		'transport'	=> 'postMessage'
-     ));
-
-	$wp_customize->add_control( new WP_Customize_Color_Control( 
-		$wp_customize, 
-			'st_footer_text_color',
-			array(
-				'label'		=> __( 'Footer Text Color', 'crucible' ),
-				'section'	=> 'crucible_fonts_section',
-				'settings'	=> 'smartestthemes_options[footer_text_color]',
-				'priority'	=> 30
-			)
-	));
-	
-	// Attention Grabber Color
-	$wp_customize->add_setting('smartestthemes_options[att_grabber_color]', array(
-        'default'	=> '',// @test blank in preview and live site
-        'type'		=> 'option',
-		'transport'	=> 'postMessage'
-     ));
-
-	$wp_customize->add_control( new WP_Customize_Color_Control( 
-		$wp_customize, 
-			'st_att_grabber_color',
-			array(
-				'label'		=> __( 'Attention Grabber Color', 'crucible' ),
-				'section'	=> 'crucible_fonts_section',
-				'settings'	=> 'smartestthemes_options[att_grabber_color]',
 				'priority'	=> 40
 			)
-	));	
-	
-	// Attention Grabber Font
-	
-	$wp_customize->add_setting('smartestthemes_options[att_grabber_font]', array(
-		'default'	=> 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif',// @new default logo font
-		'type'		=> 'option',
-		'transport'	=> 'postMessage'
 	));
-	$wp_customize->add_control( 'att_grabber_font_select', array(
-		'settings' => 'smartestthemes_options[att_grabber_font]',
-		'label' => __('Attention Grabber Font', 'crucible'),
-		'section' => 'crucible_fonts_section',
-		'type' => 'select',
-		'choices' => $logo_fonts,
-		'priority'	=> 50
-	));
-	
-	// Attention Grabber Font Size
-    $wp_customize->add_setting('smartestthemes_options[attgrabber_fontsize]', array(
-        'default'	=> '',
-        'type'		=> 'option',
-		'transport'	=> 'postMessage'
-     ));
-	
-	$wp_customize->add_control('crucible_attgrabber_fontsize', array(
-        'label'		=> __('Attention Grabber Font Size. Default is 64px.', 'crucible'),// @new default size
-        'section'	=> 'crucible_fonts_section',
-        'settings'	=> 'smartestthemes_options[attgrabber_fontsize]',
-		'priority'	=> 65
-    ));
-	
+
 	// Body font
 	
 	$wp_customize->add_setting('smartestthemes_options[body_font]', array(
@@ -558,7 +523,7 @@ function crucible_customize_register( $wp_customize ) {
 			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
 			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
 	),
-		'priority'	=> 70
+		'priority'	=> 50
 	));	
 	
 	// Body font size
@@ -572,8 +537,46 @@ function crucible_customize_register( $wp_customize ) {
         'label'		=> __('Body Font Size. Leave blank for default', 'crucible'),
         'section'	=> 'crucible_fonts_section',
         'settings'	=> 'smartestthemes_options[body_fontsize]',
-		'priority'	=> 75
+		'priority'	=> 60
     ));	
+	
+	
+	// Footer Text Color
+	$wp_customize->add_setting('smartestthemes_options[footer_text_color]', array(
+        'default'	=> '',// @test blank in preview and live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_footer_text_color',
+			array(
+				'label'		=> __( 'Footer Text Color', 'crucible' ),
+				'section'	=> 'crucible_fonts_section',
+				'settings'	=> 'smartestthemes_options[footer_text_color]',
+				'priority'	=> 70
+			)
+	));
+		
+	
+	// Headings Text Color
+	$wp_customize->add_setting('smartestthemes_options[heading_text_color]', array(
+        'default'	=> '',// @test blank in preview and live site
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_heading_text_color',
+			array(
+				'label'		=> __( 'Headings Text Color', 'crucible' ),
+				'section'	=> 'crucible_fonts_section',
+				'settings'	=> 'smartestthemes_options[heading_text_color]',
+				'priority'	=> 80
+			)
+	));
 	
 	// Heading font
 	$wp_customize->add_setting('smartestthemes_options[heading_font]', array(
@@ -586,7 +589,7 @@ function crucible_customize_register( $wp_customize ) {
 		'label' => __('Headings Font', 'crucible'),
 		'section' => 'crucible_fonts_section',
 		'type' => 'select',
-		'choices' => $logo_fonts,// @test
+		'choices' => $logo_fonts,
 		'priority'	=> 90
 	));	
 	
@@ -632,7 +635,6 @@ function crucible_customize_register( $wp_customize ) {
 		'priority'	=> 105
     ));			
 		
-	
 	// H4 Heading Font Size
     $wp_customize->add_setting('smartestthemes_options[h4_fontsize]', array(
         'default'	=> '',// @test live preview clearing and also on live site
@@ -646,8 +648,6 @@ function crucible_customize_register( $wp_customize ) {
         'settings'	=> 'smartestthemes_options[h4_fontsize]',
 		'priority'	=> 110
     ));			
-		
-
 	
 }
 add_action( 'customize_register', 'crucible_customize_register' );

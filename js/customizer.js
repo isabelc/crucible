@@ -17,7 +17,6 @@
 		} );
 	} );
 
-	
 	// logo image
 	wp.customize( 'smartestthemes_options[logo_setting]', function( value ) {
 		value.bind( function( newval ) {
@@ -72,7 +71,13 @@
 	// logo font
 	wp.customize( 'smartestthemes_options[logo_font]', function( value ) {
 		value.bind( function( newval ) {
-			$('.site-title a').css('font-family', newval );
+		
+			// @test see if this simple method works when clearing.
+			if ( '' == newval ) {
+				$('.site-title a').css('font-family', 'inherit' );// @test
+			} else {
+				$('.site-title a').css('font-family', newval );
+			}
 		} );
 	} );
 	
@@ -116,7 +121,12 @@
 	// tagline font
 	wp.customize( 'smartestthemes_options[tagline_font]', function( value ) {
 		value.bind( function( newval ) {
-			$('h2.site-description').css('font-family', newval );
+			// @test see if this simple method works when clearing.
+			if ( '' == newval ) {
+				$('h2.site-description').css('font-family', 'inherit' );// @test
+			} else {
+				$('h2.site-description').css('font-family', newval );
+			}
 		
 		} );
 	} );	
@@ -143,7 +153,7 @@
 	wp.customize( 'smartestthemes_options[link_color]', function( value ) {
 		value.bind( function( to ) {
 			
-			$( "a, i.fa-clock-o, i.fa-bullhorn, .widget ul li, .entry-meta.jobtitle,.menu .current-menu-item a, body.post-type-archive-smartest_staff .menu li.staff a, body.post-type-archive-smartest_services .menu li.services a, body.post-type-archive-smartest_news .menu li.news a, body.tax-smartest_service_category .menu li.services a, body.single-smartest_services .menu .services a, body.single-smartest_staff .menu .staff a, body.single-smartest_news .menu .news a, body.about .menu li.about a, body.contact .menu li.contact a, body.reviews .menu li.reviews a, .menu > li:first-child:hover a, body.single-post .menu li.blog a, body.archive.author .menu li.blog a, body.archive.category .menu li.blog a, body.archive.tag .menu li.blog a, body.archive.date .menu li.blog a, body.home .menu > li.home > a" ).css('color', to);
+			$( "a, i.fa-clock-o, i.fa-bullhorn, .entry-meta.jobtitle,.menu .current-menu-item a, body.post-type-archive-smartest_staff .menu li.staff a, body.post-type-archive-smartest_services .menu li.services a, body.post-type-archive-smartest_news .menu li.news a, body.tax-smartest_service_category .menu li.services a, body.single-smartest_services .menu .services a, body.single-smartest_staff .menu .staff a, body.single-smartest_news .menu .news a, body.about .menu li.about a, body.contact .menu li.contact a, body.reviews .menu li.reviews a, .menu > li:first-child:hover a, body.single-post .menu li.blog a, body.archive.author .menu li.blog a, body.archive.category .menu li.blog a, body.archive.tag .menu li.blog a, body.archive.date .menu li.blog a, body.home .menu > li.home > a" ).css('color', to);
 
 		} );
 	} );
@@ -244,44 +254,7 @@
 
 	// @test the 4 font colors to see what happens when clearing it in live preview.
 	
-	// Body text color @test
-	wp.customize( 'smartestthemes_options[body_text_color]', function( value ) {
-		value.bind( function( to ) {
-		
-			if ( '' == to ) {
-				$( 'body, button, input, select, textarea' ).css('color', '#404040');// @new default @test does this remove the color?
-			} else {
-				$( 'body, button, input, select, textarea' ).css('color', to);
-			}
-		
-			
-		} );
-	} );
 	
-	// Heading text color @test
-	wp.customize( 'smartestthemes_options[heading_text_color]', function( value ) {
-		value.bind( function( to ) {
-		
-			if ( '' == to ) {
-				$( 'body, button, input, select, textarea' ).css('color', '#404040');// @new default @test does this remove the color?
-			} else {
-				$( "article.status-draft h1,article.status-private h1,article.status-publish h1,h2,h3,h4,h5,h6" ).css('color', to);
-			}
-			
-		} );
-	} );
-
-	// Footer text color @test
-	wp.customize( 'smartestthemes_options[footer_text_color]', function( value ) {
-		value.bind( function( to ) {
-			if ( '' == to ) {
-				$( '.site-info' ).css('color', '#404040');// @new default @test does this remove the color?
-			} else {
-				$( '.site-info' ).css('color', to);
-			}
-		} );
-	} );
-
 	// Attention Grabber text color @test
 	wp.customize( 'smartestthemes_options[att_grabber_color]', function( value ) {
 		value.bind( function( to ) {
@@ -297,7 +270,12 @@
 	// Attention Grabber font @test
 	wp.customize( 'smartestthemes_options[att_grabber_font]', function( value ) {
 		value.bind( function( newval ) {
-			$('.attention-grab').css('font-family', newval );
+			// @test see if this simple method works when clearing.
+			if ( '' == newval ) {
+				$('.attention-grab').css('font-family', 'inherit' );// @test
+			} else {
+				$('.attention-grab').css('font-family', newval );
+			}
 		} );
 	} );
 	// Attention Grabber size @test
@@ -312,7 +290,21 @@
 		
 		} );
 	} );
-
+	
+	// Body text color @test
+	wp.customize( 'smartestthemes_options[body_text_color]', function( value ) {
+		value.bind( function( to ) {
+		
+			if ( '' == to ) {
+				$( 'body, button, input, select, textarea' ).css('color', '#404040');// @new default @test does this remove the color?
+			} else {
+				$( 'body, button, input, select, textarea' ).css('color', to);
+			}
+		
+			
+		} );
+	} );
+	
 	// Body font @test
 	// @todo this, if going into the customizer with and already custom-set-font, it will not clear to default. test it now with 'inherit'
 	
@@ -342,6 +334,33 @@
 		
 		} );
 	} );
+	
+	
+	// Footer text color @test
+	wp.customize( 'smartestthemes_options[footer_text_color]', function( value ) {
+		value.bind( function( to ) {
+			if ( '' == to ) {
+				$( '.site-info' ).css('color', '#404040');// @new default @test does this remove the color?
+			} else {
+				$( '.site-info' ).css('color', to);
+			}
+		} );
+	} );
+
+	
+	// Heading text color @test
+	wp.customize( 'smartestthemes_options[heading_text_color]', function( value ) {
+		value.bind( function( to ) {
+		
+			if ( '' == to ) {
+				$( '#content h1,#content h2,h3,h4,h5,h6' ).css('color', '#404040');// @new default @test does this remove the color?
+			} else {
+				$( "#content h1,#content h2,h3,h4,h5,h6" ).css('color', to);
+			}
+			
+		} );
+	} );
+
 	
 	// Heading font @test
 	
