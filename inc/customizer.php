@@ -422,7 +422,7 @@ function crucible_customize_register( $wp_customize ) {
 	
 	$wp_customize->add_section('crucible_fonts_section', array(
         'title'			=> __('Fonts', 'crucible'),
-        'priority'		=> 49,// @test
+        'priority'		=> 59,// @test is it after background section
     ));	
 	
 	// Body Text Color
@@ -510,13 +510,13 @@ function crucible_customize_register( $wp_customize ) {
 		'label' => __('Attention Grabber Font', 'crucible'),
 		'section' => 'crucible_fonts_section',
 		'type' => 'select',
-		'choices' => $logo_fonts,// @test
+		'choices' => $logo_fonts,
 		'priority'	=> 50
 	));
 	
 	// Attention Grabber Font Size
     $wp_customize->add_setting('smartestthemes_options[attgrabber_fontsize]', array(
-        'default'	=> '',// @test live preview clearing and also on live site
+        'default'	=> '',
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));

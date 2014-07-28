@@ -77,22 +77,11 @@ if ( $body_fontsize ) {
 	body a.button, body button.button, body input.button, body #review_form #submit {
 		font-size:<?php echo $body_fontsize; ?>!important;}
 	<?php 
-	// fix line height, if needed @test see if i need
-	$font_size_pre = $body_fontsize;
-	$font_size = (int)str_replace('px', '', $font_size_pre);
-	if ( $font_size > 25 ) { ?>
-		blockquote {line-height:<?php echo $font_size_pre; ?>;}
-	<?php }
-	if ( $font_size > 24 ) { ?>
-		#content .main, #home-footer, #home-footer a {line-height:<?php echo $font_size_pre; ?>;}
-	<?php }
-	
 }
 
 
 
 if( $heading_text_color ) {
-
 	// @test do i need all these selectors for headings ....
 	//  .indent-left h3, .pad h3, .page-title, #entry-title
 	
@@ -105,7 +94,7 @@ if ( $h1_fontsize ) {
 	?>#content h1, #content h1 a {font-size:<?php echo $h1_fontsize; ?>;}<?php
 }
 if ( $h2_fontsize ) {
-	?>h2, h2 a {font-size:<?php echo $h2_fontsize; ?>;}<?php
+	?>#content h2, #content h2 a {font-size:<?php echo $h2_fontsize; ?>;}<?php
 }
 if ( $h3_fontsize ) { ?>
 	h3, h3 a {font-size:<?php echo $h3_fontsize; ?>;}<?php
@@ -114,7 +103,7 @@ if ( $h4_fontsize ) { ?>
 	h4, h4 a {font-size:<?php echo $h4_fontsize; ?>;}<?php
 }
 if ( $heading_font ) {
-	?>#content h1, #content h1 a, h2, h2 a, h3, h3 a, h4, h4 a, h5, h5 a {font-family:<?php echo $heading_font; ?>;}<?php
+	?>#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a {font-family:<?php echo $heading_font; ?>;}<?php
 }
 
 // attention grabber

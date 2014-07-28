@@ -247,33 +247,52 @@
 	// Body text color @test
 	wp.customize( 'smartestthemes_options[body_text_color]', function( value ) {
 		value.bind( function( to ) {
-			$( 'body, button, input, select, textarea' ).css('color', to);
+		
+			if ( '' == to ) {
+				$( 'body, button, input, select, textarea' ).css('color', '#404040');// @new default @test does this remove the color?
+			} else {
+				$( 'body, button, input, select, textarea' ).css('color', to);
+			}
+		
+			
 		} );
 	} );
 	
 	// Heading text color @test
 	wp.customize( 'smartestthemes_options[heading_text_color]', function( value ) {
 		value.bind( function( to ) {
-			$( "article.status-draft h1,article.status-private h1,article.status-publish h1,h2,h3,h4,h5,h6" ).css('color', to);
+		
+			if ( '' == to ) {
+				$( 'body, button, input, select, textarea' ).css('color', '#404040');// @new default @test does this remove the color?
+			} else {
+				$( "article.status-draft h1,article.status-private h1,article.status-publish h1,h2,h3,h4,h5,h6" ).css('color', to);
+			}
+			
 		} );
 	} );
-
 
 	// Footer text color @test
 	wp.customize( 'smartestthemes_options[footer_text_color]', function( value ) {
 		value.bind( function( to ) {
-			$( '.site-info' ).css('color', to);
+			if ( '' == to ) {
+				$( '.site-info' ).css('color', '#404040');// @new default @test does this remove the color?
+			} else {
+				$( '.site-info' ).css('color', to);
+			}
 		} );
 	} );
-
 
 	// Attention Grabber text color @test
 	wp.customize( 'smartestthemes_options[att_grabber_color]', function( value ) {
 		value.bind( function( to ) {
-			$( '.attention-grab' ).css('color', to);
+		
+			if ( '' == to ) {
+				$( '.attention-grab' ).css('color', '#404040');// @new default @test does this remove the color?
+			} else {		
+				$( '.attention-grab' ).css('color', to);
+			}
 		} );
 	} );
-	
 	
 	// Attention Grabber font @test
 	wp.customize( 'smartestthemes_options[att_grabber_font]', function( value ) {
@@ -295,12 +314,18 @@
 	} );
 
 	// Body font @test
+	// @todo this, if going into the customizer with and already custom-set-font, it will not clear to default. test it now with 'inherit'
+	
 	wp.customize( 'smartestthemes_options[body_font]', function( value ) {
 		value.bind( function( newval ) {
 		
-			// @test see if this simple method works when clearing. 
+			// @test see if this simple method works when clearing.
+			if ( '' == newval ) {
+				$('#content').css('font-family', 'inherit' );// @test
+			} else {
 			
-			$('#content').css('font-family', newval );
+				$('#content').css('font-family', newval );
+			}
 			
 		} );
 	} );
@@ -310,12 +335,81 @@
 		
 			if ( '' == newval ) {
 				// @test of the next line works to clear it properly
-				$('#content .main, #home-footer, blockquote').css('font-size', '' );// @new default size
+				$('#content .main, #home-footer, blockquote').css( 'font-size', '100%' );// @test!!!!
 			} else {
 				$('#content .main, #home-footer, blockquote').css('font-size', newval );
 			}
 		
 		} );
+	} );
+	
+	// Heading font @test
+	
+	wp.customize( 'smartestthemes_options[heading_font]', function( value ) {
+		value.bind( function( newval ) {
+		
+			// @test see if this simple method works when clearing.
+			if ( '' == newval ) {
+				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a').css('font-family', 'inherit' );// @test
+			} else {
+			
+				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a').css('font-family', newval );
+			}
+			
+		} );
+	} );
+	
+	// h1 Heading font size @test
+	wp.customize( 'smartestthemes_options[h1_fontsize]', function( value ) {
+		value.bind( function( to ) {
+			if ( '' == to ) {
+				// @test of the next line works to clear it properly
+				$('#content h1, #content h1 a').css({'font-size': '36px', 'font-size': '3.2rem'});// @new default @test
+			} else {
+				$('#content h1, #content h1 a').css('font-size', to );
+			}
+		
+		} );
+	} );
+	
+	// h2 Heading font size @test
+	wp.customize( 'smartestthemes_options[h2_fontsize]', function( value ) {
+		value.bind( function( to ) {
+			if ( '' == to ) {
+				// @test of the next line works to clear it properly
+				$('#content h2, #content h2 a').css({'font-size': '32px', 'font-size': '2.8rem'});// @new default @test
+			} else {
+				$('#content h2, #content h2 a').css('font-size', to );
+			}
+		
+		} );
+	} );
+	
+	// h3 Heading font size @test
+	wp.customize( 'smartestthemes_options[h3_fontsize]', function( value ) {
+		value.bind( function( to ) {
+			if ( '' == to ) {
+				// @test of the next line works to clear it properly
+				$('h3').css({'font-size': '28px', 'font-size': '2.6rem'});// @new default @test
+			} else {
+				$('h3').css('font-size', to );
+			}
+		
+		} );
+	} );
+	
+	// h4 Heading font size @test
+	wp.customize( 'smartestthemes_options[h4_fontsize]', function( value ) {
+		value.bind( function( to ) {
+			if ( '' == to ) {
+				// @test of the next line works to clear it properly
+				$('h4').css({'font-size': '24px', 'font-size': '2.4rem'});// @new default @test
+			} else {
+				$('h4').css('font-size', to );
+			}
+		
+		} );
 	} );	
+	
 	
 } )( jQuery );
