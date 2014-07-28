@@ -112,7 +112,7 @@ function crucible_customize_register( $wp_customize ) {
 
 	/* logo font color */
 	$wp_customize->add_setting('smartestthemes_options[logo_color]', array(
-        'default'	=> '#008000',// @new default
+        'default'	=> '#000',// @new default
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -438,13 +438,13 @@ function crucible_customize_register( $wp_customize ) {
 	
 	$wp_customize->add_section('crucible_fonts_section', array(
         'title'			=> __('Fonts', 'crucible'),
-		'description'	=> __('Leave any FONTS setting blank for default.', 'crucible'),
-        'priority'		=> 96,// @test is it after background section
+		'description'	=> __('Leave any of these blank for the default.', 'crucible'),
+        'priority'		=> 96,
     ));
 	
 	// Attention Grabber Color
 	$wp_customize->add_setting('smartestthemes_options[att_grabber_color]', array(
-		'default'	=> '',// @test blank in preview and live site
+		'default'	=> '',
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -493,7 +493,7 @@ function crucible_customize_register( $wp_customize ) {
 	// Body Text Color
 	
 	$wp_customize->add_setting('smartestthemes_options[body_text_color]', array(
-        'default'	=> '',// @test blank in preview and live site
+        'default'	=> '',
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -557,28 +557,9 @@ function crucible_customize_register( $wp_customize ) {
     ));	
 	
 	
-	// Footer Text Color
-	$wp_customize->add_setting('smartestthemes_options[footer_text_color]', array(
-        'default'	=> '',// @test blank in preview and live site
-        'type'		=> 'option',
-		'transport'	=> 'postMessage'
-     ));
-
-	$wp_customize->add_control( new WP_Customize_Color_Control( 
-		$wp_customize, 
-			'st_footer_text_color',
-			array(
-				'label'		=> __( 'Footer Text Color', 'crucible' ),
-				'section'	=> 'crucible_fonts_section',
-				'settings'	=> 'smartestthemes_options[footer_text_color]',
-				'priority'	=> 70
-			)
-	));
-		
-	
 	// Headings Text Color
 	$wp_customize->add_setting('smartestthemes_options[heading_text_color]', array(
-        'default'	=> '',// @test blank in preview and live site
+        'default'	=> '',
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -590,7 +571,7 @@ function crucible_customize_register( $wp_customize ) {
 				'label'		=> __( 'Headings Text Color', 'crucible' ),
 				'section'	=> 'crucible_fonts_section',
 				'settings'	=> 'smartestthemes_options[heading_text_color]',
-				'priority'	=> 80
+				'priority'	=> 70
 			)
 	));
 	
@@ -606,12 +587,12 @@ function crucible_customize_register( $wp_customize ) {
 		'section' => 'crucible_fonts_section',
 		'type' => 'select',
 		'choices' => $logo_fonts,
-		'priority'	=> 90
+		'priority'	=> 80
 	));	
 	
 	// H1 Heading Font Size
     $wp_customize->add_setting('smartestthemes_options[h1_fontsize]', array(
-        'default'	=> '',// @test live preview clearing and also on live site
+        'default'	=> '',
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -620,12 +601,12 @@ function crucible_customize_register( $wp_customize ) {
         'label'		=> __('H1 Heading Font Size.', 'crucible'),
         'section'	=> 'crucible_fonts_section',
         'settings'	=> 'smartestthemes_options[h1_fontsize]',
-		'priority'	=> 95
+		'priority'	=> 90
     ));		
 	
 	// H2 Heading Font Size
     $wp_customize->add_setting('smartestthemes_options[h2_fontsize]', array(
-        'default'	=> '',// @test live preview clearing and also on live site
+        'default'	=> '',
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -639,7 +620,7 @@ function crucible_customize_register( $wp_customize ) {
 	
 	// H3 Heading Font Size
     $wp_customize->add_setting('smartestthemes_options[h3_fontsize]', array(
-        'default'	=> '',// @test live preview clearing and also on live site
+        'default'	=> '',
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -648,12 +629,12 @@ function crucible_customize_register( $wp_customize ) {
         'label'		=> __('H3 Heading Font Size.', 'crucible'),
         'section'	=> 'crucible_fonts_section',
         'settings'	=> 'smartestthemes_options[h3_fontsize]',
-		'priority'	=> 105
+		'priority'	=> 110
     ));			
 		
 	// H4 Heading Font Size
     $wp_customize->add_setting('smartestthemes_options[h4_fontsize]', array(
-		'default'	=> '',// @test live preview clearing and also on live site
+		'default'	=> '',
 		'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -662,25 +643,42 @@ function crucible_customize_register( $wp_customize ) {
 		'label'		=> __('H4 Heading Font Size.', 'crucible'),
 		'section'	=> 'crucible_fonts_section',
 		'settings'	=> 'smartestthemes_options[h4_fontsize]',
-		'priority'	=> 110
+		'priority'	=> 120
     ));
 	
-	// Footer Section
+	// Footer Text Color
+	$wp_customize->add_setting('smartestthemes_options[footer_text_color]', array(
+        'default'	=> '',
+        'type'		=> 'option',
+		'transport'	=> 'postMessage'
+     ));
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+			'st_footer_text_color',
+			array(
+				'label'		=> __( 'Footer Text Color', 'crucible' ),
+				'section'	=> 'crucible_fonts_section',
+				'settings'	=> 'smartestthemes_options[footer_text_color]',
+				'priority'	=> 130
+			)
+	));
 	
+	// Footer Section
 	$wp_customize->add_section('crucible_footer_section', array(
         'title'			=> __('Footer', 'crucible'),
-        'priority'		=> 99,// @test is it after background and Fonts sections
+        'priority'		=> 99,
     ));		
 
-	// Footer Text	@test
+	// Footer Text
 	$wp_customize->add_setting( 'smartestthemes_options[footer_text]', array(
-		'default'	=> '',// @test clearing it
+		'default'	=> '',
 		'type'		=> 'option',
 		'transport'	=> 'postMessage'
 	) );
 	 
 	$wp_customize->add_control( new Crucible_Customize_Textarea_Control( $wp_customize, 'textarea_setting', array(
-		'label'		=> __('Add some text or basic html (strong, a, em, br, etc) to the footer area. By default, this will go <strong>under</strong> the current copyright notice on your footer.<br /><br />To override the default copyright notice, check below.','crucible'),
+		'label'		=> __('Add some text or basic html (strong, a, em, br, etc) to the footer area. By default, this will go under the current copyright notice on your footer. To override the default copyright notice, check below.','crucible'),
 		'section'	=> 'crucible_footer_section',
 		'settings'	=> 'smartestthemes_options[footer_text]',
 		'priority'	=> 10

@@ -238,16 +238,16 @@ big {
 .site-title a {
 	/* @new default, load fontface if needed */
 	font:36px Copperplate Bold, Copperplate Gothic Bold, serif;
+	color:#000;
 }
 .site-description{
 	/* @new default */
 	font:24px Copperplate Bold, Copperplate Gothic Bold, serif;
 }
-
 .attention-grab{
 	/* @new default */
 	font:64px Impact, Haettenschweiler, Arial Narrow Bold, sans-serif;
-	color:cyan;
+	color:#404040;
 }
 
 /*--------------------------------------------------------------

@@ -74,10 +74,11 @@
 		
 			// @test see if this simple method works when clearing.
 			if ( '' == newval ) {
-				$('.site-title a').css('font-family', 'Copperplate Bold, Copperplate Gothic Bold, serif;' );// @new default @test
+				$( '.site-title a' ).css( 'font-family', 'Copperplate Bold, Copperplate Gothic Bold, serif;' );// @new default @test
 			} else {
 				$('.site-title a').css('font-family', newval );
 			}
+			
 		} );
 	} );
 	
@@ -122,10 +123,12 @@
 	wp.customize( 'smartestthemes_options[tagline_font]', function( value ) {
 		value.bind( function( newval ) {
 			// @test see if this simple method works when clearing.
-			if ( '' == newval ) {
-				$('h2.site-description').css('font-family', 'Copperplate Bold, Copperplate Gothic Bold, serif;' );// @new default @test
+			
+			
+			if ( newval ) {// @test default
+				$('h2.site-description').css('font-family', newval );				
 			} else {
-				$('h2.site-description').css('font-family', newval );
+				$('h2.site-description').css('font-family', 'Copperplate Bold, Copperplate Gothic Bold, serif;' );// @new default @test
 			}
 		
 		} );
@@ -230,12 +233,9 @@
 	// Header background color
 	wp.customize( 'smartestthemes_options[header_bg_color]', function( value ) {
 		value.bind( function( to ) {
-		
-			// @test clear
 			if ( '' == to ) {
-				$( "#masthead" ).css('background-color', 'transparent');// @test clear
+				$( "#masthead" ).css('background-color', 'transparent');
 			} else {
-		
 				$( "#masthead" ).css('background', to);	
 			}
 		} );
@@ -243,40 +243,29 @@
 	// Footer background color
 	wp.customize( 'smartestthemes_options[footer_bg_color]', function( value ) {
 		value.bind( function( to ) {
-		
 			if ( '' == to ) {
-				$( "footer.site-footer" ).css('background-color', 'transparent');// @test clear
+				$( "footer.site-footer" ).css('background-color', 'transparent');
 			} else {
 				$( "footer.site-footer" ).css('background', to);
 			}
-			
-			
 		} );
 	} );	
 	// Background Texture
 	wp.customize( 'smartestthemes_options[bg_texture]', function( value ) {
 		value.bind( function( to ) {
-			
-			// @test clear not working if coming in with texture/
-			
 			$('body').removeClass('texture_argyle texture_dark_brick_wall texture_white_brick_wall texture_carbon_fibre texture_carpet texture_checkered_pattern texture_circles texture_crissXcross texture_diagonal_striped_brick texture_double_lined texture_hexellence texture_paven texture_plaid texture_pinstripe texture_speckled texture_tiles texture_wood');
-			
+
 			if ( '' != to ) {
 				$("body").addClass("texture_" + to);
 			}
 		} );
 	} );	
 
-
-	// @test the 4 font colors to see what happens when clearing it in live preview.
-	
-	
-	// Attention Grabber text color @test
+	// Attention Grabber text color
 	wp.customize( 'smartestthemes_options[att_grabber_color]', function( value ) {
 		value.bind( function( to ) {
-		
 			if ( '' == to ) {
-				$( '.attention-grab' ).css('color', '#404040');// @new default @test does this remove the color?
+				$( '.attention-grab' ).css('color', '#404040');// @new default
 			} else {		
 				$( '.attention-grab' ).css('color', to);
 			}
@@ -307,17 +296,14 @@
 		} );
 	} );
 	
-	// Body text color @test
+	// Body text color
 	wp.customize( 'smartestthemes_options[body_text_color]', function( value ) {
 		value.bind( function( to ) {
-		
 			if ( '' == to ) {
-				$( 'body, button, input, select, textarea' ).css('color', '#404040');// @new default @test does this remove the color?
+				$( 'body, button, input, select, textarea' ).css('color', '#404040');// @new default
 			} else {
 				$( 'body, button, input, select, textarea' ).css('color', to);
 			}
-		
-			
 		} );
 	} );
 	
@@ -341,161 +327,119 @@
 	wp.customize( 'smartestthemes_options[body_fontsize]', function( value ) {
 		value.bind( function( newval ) {
 		
-			if ( '' == newval ) {
-				// @test of the next line works to clear it properly
-				$('#content .main, #home-footer, blockquote').css( 'font-size', '100%' );// @test!!!!
+			if ( newval ) {
+				$('#content, #home-footer, blockquote').css('font-size', newval );
 			} else {
-				$('#content .main, #home-footer, blockquote').css('font-size', newval );
+			
+				// @test of the next line works to clear it properly
+				$('#content, #home-footer, blockquote').css( 'font-size', '100%' );// @test!!!!
+				
 			}
 		
 		} );
 	} );
 	
-	
-	// Footer text color @test
-	wp.customize( 'smartestthemes_options[footer_text_color]', function( value ) {
-		value.bind( function( to ) {
-			if ( '' == to ) {
-				$( '.site-info' ).css('color', '#404040');// @new default @test does this remove the color?
-			} else {
-				$( '.site-info' ).css('color', to);
-			}
-		} );
-	} );
-
-	
-	// Heading text color @test
+	// Heading text color
 	wp.customize( 'smartestthemes_options[heading_text_color]', function( value ) {
 		value.bind( function( to ) {
-		
 			if ( '' == to ) {
-				$( '#content h1,#content h2,h3,h4,h5,h6' ).css('color', '#404040');// @new default @test does this remove the color?
+				$( '#content h1,#content h2,h3,h4,h5,h6' ).css('color', '#404040');// @new default
 			} else {
 				$( "#content h1,#content h2,h3,h4,h5,h6" ).css('color', to);
 			}
-			
 		} );
 	} );
 
-	
-	// Heading font @test
+	// Heading font
 	
 	wp.customize( 'smartestthemes_options[heading_font]', function( value ) {
 		value.bind( function( newval ) {
 		
-			// @test see if this simple method works when clearing.
 			if ( '' == newval ) {
-				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a').css('font-family', 'inherit' );// @test
+				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').css('font-family', 'inherit' );
 			} else {
 			
-				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a').css('font-family', newval );
+				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').css('font-family', newval );
 			}
 			
 		} );
 	} );
 	
-	// h1 Heading font size @test
+	// h1 Heading font size
 	wp.customize( 'smartestthemes_options[h1_fontsize]', function( value ) {
 		value.bind( function( to ) {
 			if ( '' == to ) {
-				// @test of the next line works to clear it properly
-				$('#content h1, #content h1 a').css({'font-size': '36px', 'font-size': '3.2rem'});// @new default @test
+				$('#content h1, #content h1 a').css({'font-size': '36px', 'font-size': '3.2rem'});// @new default
 			} else {
 				$('#content h1, #content h1 a').css('font-size', to );
 			}
-		
 		} );
 	} );
 	
-	// h2 Heading font size @test
+	// h2 Heading font size
 	wp.customize( 'smartestthemes_options[h2_fontsize]', function( value ) {
 		value.bind( function( to ) {
 			if ( '' == to ) {
-				// @test of the next line works to clear it properly
-				$('#content h2, #content h2 a').css({'font-size': '32px', 'font-size': '2.8rem'});// @new default @test
+				$('#content h2, #content h2 a').css({'font-size': '32px', 'font-size': '2.8rem'});// @new default
 			} else {
 				$('#content h2, #content h2 a').css('font-size', to );
 			}
-		
 		} );
 	} );
 	
-	// h3 Heading font size @test
+	// h3 Heading font size
 	wp.customize( 'smartestthemes_options[h3_fontsize]', function( value ) {
 		value.bind( function( to ) {
 			if ( '' == to ) {
-				// @test of the next line works to clear it properly
-				$('h3').css({'font-size': '28px', 'font-size': '2.6rem'});// @new default @test
+				$('h3').css({'font-size': '28px', 'font-size': '2.6rem'});// @new default
 			} else {
 				$('h3').css('font-size', to );
 			}
-		
 		} );
 	} );
 	
-	// h4 Heading font size @test
+	// h4 Heading font size
 	wp.customize( 'smartestthemes_options[h4_fontsize]', function( value ) {
 		value.bind( function( to ) {
 			if ( '' == to ) {
-				// @test of the next line works to clear it properly
-				$('h4').css({'font-size': '24px', 'font-size': '2.4rem'});// @new default @test
+				$('h4').css({'font-size': '24px', 'font-size': '2.4rem'});// @new default
 			} else {
 				$('h4').css('font-size', to );
 			}
-		
 		} );
 	} );
 	
-	// Footer text
-	
-	wp.customize( 'smartestthemes_options[footer_text]', function( value ) {
+	// Footer text color
+	wp.customize( 'smartestthemes_options[footer_text_color]', function( value ) {
 		value.bind( function( to ) {
 			if ( '' == to ) {
-				
-				//  @test clearing
-				$( "#temp-footer" ).remove();
-				
-				
+				$( '.site-info' ).css('color', '#404040');// @new default
 			} else {
-
-				// @test
-				if($('.social').length > 0) {
-					 $( '.social' ).before( '<br /><span id="temp-footer">' + to + '</span>' );
-				} else {
-					$( '.site-info' ).append( '<br /><span id="temp-footer">' + to + '</span>' );
-				}
-				
+				$( '.site-info' ).css('color', to);
 			}
-		
+		} );
+	} );	
+	
+	// Footer text
+	wp.customize( 'smartestthemes_options[footer_text]', function( value ) {
+		value.bind( function( to ) {
+			$( '#custom-footer' ).html( '<br />' + to );
 		} );
 	} );
 		
-	
-	
 	// Override Footer
-	
 	wp.customize( 'smartestthemes_options[override_footer]', function( value ) {
 		value.bind( function( to ) {
 			if ( '1' == to ) {
 				// hide footer
 				$( "#footer-copyright, #footer-sitename" ).hide();
-				
 			} else {
 				// show default footer
-				
 				bn = wp.customize.value('blogname')();
-				
-				year = (new Date).getFullYear(); // @test
-				
+				year = (new Date).getFullYear();
 				$( '.site-info' ).prepend( '<span id="footer-copyright">Copyright &copy; ' + year + '</span> <a id="footer-sitename" href="#">' + bn + '</a>' );
-				
 			}
 		} );
 	} );	
-	
-	
-	
-	
-	
 	
 } )( jQuery );

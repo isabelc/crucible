@@ -403,14 +403,15 @@ function crucible_footer() {
 		} else {
 			$output .= get_bloginfo('name');
 		}
-		$output .= '</a>';
+		$output .= '</a><span id="custom-footer">';
 		if ( $footer_text ) {
 			$output .= '<br />';// if default plus custom, need <br />
 		}
 	}
 	if ( $footer_text ) {
 		$output .= stripslashes_deep( $footer_text );
-	} 
+	}
+	$output .= '</span>';// @test
 	echo $output;
 }
 add_action( 'crucible_footer', 'crucible_footer' );

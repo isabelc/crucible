@@ -60,10 +60,7 @@ if ( $body_font ) {
 }
 
 if ( $body_fontsize ) {
-	?>#content .main, #home-footer, blockquote {font-size:<?php echo $body_fontsize; ?>;}
-	body a.button, body button.button, body input.button, body #review_form #submit {
-		font-size:<?php echo $body_fontsize; ?>!important;}
-	<?php 
+	?>#content, #home-footer, blockquote {font-size:<?php echo $body_fontsize; ?>;}<?php 
 }
 
 
@@ -90,27 +87,26 @@ if ( $h4_fontsize ) { ?>
 	h4, h4 a {font-size:<?php echo $h4_fontsize; ?>;}<?php
 }
 if ( $heading_font ) {
-	?>#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a {font-family:<?php echo $heading_font; ?>;}<?php
+	?>#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a {font-family:<?php echo $heading_font; ?>;}<?php
 }
 
 // attention grabber
-if ( is_front_page() ) {
-		
-		if ( $att_grabber_font ) { ?>
-	
-			.attention-grab{ font-family:<?php echo $att_grabber_font; ?>;
-		
-		<?php }
-		
-		if ( $att_grabber_color ) { ?>
-		
-				color:<?php echo $att_grabber_color; ?>;
-		<?php }
-		
-		if ( $attgrabber_fontsize ) { ?>
-				font-size:<?php echo $attgrabber_fontsize; ?>;
-		<?php } ?>
-		}
+
+if ( $att_grabber_font || $att_grabber_color || $attgrabber_fontsize ) { ?>
+
+	.attention-grab{ 
+	<?php if ( $att_grabber_font ) { ?>
+			font-family:<?php echo $att_grabber_font; ?>;
+	<?php }
+			
+	if ( $att_grabber_color ) { ?>
+			color:<?php echo $att_grabber_color; ?>;
+	<?php }
+			
+	if ( $attgrabber_fontsize ) { ?>
+			font-size:<?php echo $attgrabber_fontsize; ?>;
+	<?php } ?>
+	}
 		
 <?php }
 
