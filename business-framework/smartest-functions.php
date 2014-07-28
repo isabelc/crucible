@@ -906,7 +906,7 @@ if(get_option('st_show_slider') == 'true') {
  * Options Page Branding
  * use custom logo on theme options page header
  */
-function custom_options_page_logo() {
+function st_custom_options_page_logo() {
 
 	$logo = get_option('st_backend_logo');
 
@@ -916,23 +916,23 @@ function custom_options_page_logo() {
 		return '<img alt="Smartest Themes" src="'. get_template_directory_uri().'/business-framework/images/st_logo_admin.png" />';
 	}
 }
-add_filter('smartestthemes_backend_branding', 'custom_options_page_logo');
+add_filter('smartestthemes_backend_branding', 'st_custom_options_page_logo');
 
 // Replace WP admin footer with custom text
-function smb_remove_footer_admin () {
+function st_remove_footer_admin () {
 
-	$remove = get_option('st_remove_adminfooter');
 	$admin_footer = get_option('st_admin_footer');
+	$remove_it = get_option('st_remove_adminfooter');
 
-	if ( ( $admin_footer != '') &&  ($admin_footer == 'false')) {
+	if ( ( $admin_footer != '' ) &&  ( 'false' == $remove_it ) ) {
 		echo $admin_footer;
-	} elseif ( $remove == 'true' ) {
+	} elseif ( 'true' == $remove_it ) {
 		echo '';
 	} else {
 		echo 'Thank you for creating with <a href="http://wordpress.org/">WordPress</a>.';
 	}
 }
-add_filter('admin_footer_text', 'smb_remove_footer_admin'); 
+add_filter('admin_footer_text', 'st_remove_footer_admin'); 
 
 function smartestthemes_admin_bar() {
     global $wp_admin_bar;
