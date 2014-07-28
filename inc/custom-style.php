@@ -1,7 +1,6 @@
 <style><?php global $smartestthemes_options;
 $header_bg_color = isset($smartestthemes_options['header_bg_color']) ? $smartestthemes_options['header_bg_color'] : '';
 $footer_bg_color = isset($smartestthemes_options['footer_bg_color']) ? $smartestthemes_options['footer_bg_color'] : '';
-$bg_texture = isset($smartestthemes_options['bg_texture']) ? $smartestthemes_options['bg_texture'] : '';
 
 if ( $header_bg_color ) {
 	?>#masthead{background:<?php echo $header_bg_color; ?>; }<?php
@@ -10,18 +9,6 @@ if ( $header_bg_color ) {
 if ( $footer_bg_color ) {
 	?>footer.site-footer{background:<?php echo $footer_bg_color; ?>; }<?php
 }
-
-// only if there is no bg image do we check for texture
-
-$bg_image = get_theme_mod( 'background_image' );
-
-if ( ! $bg_image ) {
-
-	if ($bg_texture) {
-		?>body {background-image:url('<?php echo get_template_directory_uri(); ?>/images/<?php echo $bg_texture; ?>.png');background-repeat:repeat;}<?php
-	}
-}
-
 
 /* FONTS */
 

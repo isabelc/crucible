@@ -242,3 +242,20 @@ function crucible_numberposts( $query ) {
 }
 // @new @todo if needed add_action( 'pre_get_posts', 'crucible_numberposts' );
 add_filter('widget_text', 'do_shortcode');
+
+/**
+* Add custom texture CSS class to body element
+*/
+function crucible_texture_class( $classes ) {
+	// only if there is no bg image do we check for texture
+	if ( ! get_theme_mod( 'background_image' ) ) {
+		global $smartestthemes_options;
+		$bg_texture = isset($smartestthemes_options['bg_texture']) ? $smartestthemes_options['bg_texture'] : '';
+		if ($bg_texture) {
+			// add 'texture_' to the $classes array
+			$classes[] = 'texture_' . $bg_texture;
+		}
+	}
+	return $classes;
+}
+add_filter('body_class','crucible_texture_class');
