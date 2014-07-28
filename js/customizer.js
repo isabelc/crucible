@@ -74,7 +74,7 @@
 		
 			// @test see if this simple method works when clearing.
 			if ( '' == newval ) {
-				$('.site-title a').css('font-family', 'inherit' );// @test
+				$('.site-title a').css('font-family', 'Copperplate Bold, Copperplate Gothic Bold, serif;' );// @new default @test
 			} else {
 				$('.site-title a').css('font-family', newval );
 			}
@@ -123,7 +123,7 @@
 		value.bind( function( newval ) {
 			// @test see if this simple method works when clearing.
 			if ( '' == newval ) {
-				$('h2.site-description').css('font-family', 'inherit' );// @test
+				$('h2.site-description').css('font-family', 'Copperplate Bold, Copperplate Gothic Bold, serif;' );// @new default @test
 			} else {
 				$('h2.site-description').css('font-family', newval );
 			}
@@ -230,13 +230,27 @@
 	// Header background color
 	wp.customize( 'smartestthemes_options[header_bg_color]', function( value ) {
 		value.bind( function( to ) {
-			$( "#masthead" ).css('background', to);	
+		
+			// @test clear
+			if ( '' == to ) {
+				$( "#masthead" ).css('background-color', 'transparent');// @test clear
+			} else {
+		
+				$( "#masthead" ).css('background', to);	
+			}
 		} );
 	} );
 	// Footer background color
 	wp.customize( 'smartestthemes_options[footer_bg_color]', function( value ) {
 		value.bind( function( to ) {
-			$( "footer.site-footer" ).css('background', to);	
+		
+			if ( '' == to ) {
+				$( "footer.site-footer" ).css('background-color', 'transparent');// @test clear
+			} else {
+				$( "footer.site-footer" ).css('background', to);
+			}
+			
+			
 		} );
 	} );	
 	// Background Texture
