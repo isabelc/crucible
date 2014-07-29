@@ -12,24 +12,19 @@ if ( $footer_bg_color ) {
 
 /* FONTS */
 
-$body_text_color = isset($smartestthemes_options['body_text_color']) ? $smartestthemes_options['body_text_color'] : '';
-$heading_text_color = isset($smartestthemes_options['heading_text_color']) ? $smartestthemes_options['heading_text_color'] : '';
-$footer_text_color = isset($smartestthemes_options['footer_text_color']) ? $smartestthemes_options['footer_text_color'] : '';
 $att_grabber_color = isset($smartestthemes_options['att_grabber_color']) ? $smartestthemes_options['att_grabber_color'] : '';
 $att_grabber_font = isset($smartestthemes_options['att_grabber_font']) ? $smartestthemes_options['att_grabber_font'] : 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif';// @new default
 $attgrabber_fontsize = isset($smartestthemes_options['attgrabber_fontsize']) ? $smartestthemes_options['attgrabber_fontsize'] : '';
-
+$body_text_color = isset($smartestthemes_options['body_text_color']) ? $smartestthemes_options['body_text_color'] : '';
 $body_font = isset($smartestthemes_options['body_font']) ? $smartestthemes_options['body_font'] : '';
 $body_fontsize = isset($smartestthemes_options['body_fontsize']) ? $smartestthemes_options['body_fontsize'] : '';
-
+$heading_text_color = isset($smartestthemes_options['heading_text_color']) ? $smartestthemes_options['heading_text_color'] : '';
 $heading_font = isset($smartestthemes_options['heading_font']) ? $smartestthemes_options['heading_font'] : '';
-
 $h1_fontsize =  isset($smartestthemes_options['h1_fontsize']) ? $smartestthemes_options['h1_fontsize'] : '';
 $h2_fontsize =  isset($smartestthemes_options['h2_fontsize']) ? $smartestthemes_options['h2_fontsize'] : '';
 $h3_fontsize =  isset($smartestthemes_options['h3_fontsize']) ? $smartestthemes_options['h3_fontsize'] : '';
 $h4_fontsize =  isset($smartestthemes_options['h4_fontsize']) ? $smartestthemes_options['h4_fontsize'] : '';
-
-
+$footer_text_color = isset($smartestthemes_options['footer_text_color']) ? $smartestthemes_options['footer_text_color'] : '';
 
 if ( $body_text_color ) { 
 
@@ -112,7 +107,9 @@ if ( $att_grabber_font || $att_grabber_color || $attgrabber_fontsize ) { ?>
 
 // HIGHLIGHT MENU
 // @new active menu item style from css.
-?>
+// @todo why again do i need this...
+
+/*
 body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, 
 body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, 
 body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,
@@ -135,10 +132,13 @@ body.post-type-archive-smartest_staff .menu li.staff a,
 		color: #37C878;
 		text-decoration: none;
 }
+*/
 
-<?php // ACCENT COLORS
 
-// @new default for next 7
+
+// ACCENT COLORS
+
+// @new default for next 7 	--> @todo make these only output markup if a custom selection is made.
 $link_color = isset($smartestthemes_options['link_color']) ? $smartestthemes_options['link_color'] : 'green';
 $link_hover_color = isset($smartestthemes_options['link_hover_color']) ? $smartestthemes_options['link_hover_color'] : 'pink';
 $button_color = isset($smartestthemes_options['button_color']) ? $smartestthemes_options['button_color'] : '#e6e6e6';

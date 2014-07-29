@@ -72,12 +72,14 @@
 	wp.customize( 'smartestthemes_options[logo_font]', function( value ) {
 		value.bind( function( newval ) {
 		
-			// @test see if this simple method works when clearing.
-			if ( '' == newval ) {
-				$( '.site-title a' ).css( 'font-family', 'Copperplate Bold, Copperplate Gothic Bold, serif;' );// @new default @test
-			} else {
-				$('.site-title a').css('font-family', newval );
-			}
+			// always remove previous class during preview
+			
+			$('.site-title a').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');
+
+			$('.site-title a').addClass( to ? 'font_' + to : 'font_copperplate_bold' );// @new default
+			
+			
+			// @test clearing !!
 			
 		} );
 	} );
@@ -121,18 +123,17 @@
 
 	// tagline font
 	wp.customize( 'smartestthemes_options[tagline_font]', function( value ) {
-		value.bind( function( newval ) {
-			// @test see if this simple method works when clearing.
+		value.bind( function( to ) {
+			// @test clearing
 			
+			$('h2.site-description').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');
+
+			$('h2.site-description').addClass( to ? 'font_' + to : 'font_copperplate_bold' );// @new default
 			
-			if ( newval ) {// @test default
-				$('h2.site-description').css('font-family', newval );				
-			} else {
-				$('h2.site-description').css('font-family', 'Copperplate Bold, Copperplate Gothic Bold, serif;' );// @new default @test
-			}
-		
+	
 		} );
-	} );	
+	} );
+	
 	// tagline color
 	wp.customize( 'smartestthemes_options[tagline_color]', function( value ) {
 		value.bind( function( to ) {
@@ -272,18 +273,33 @@
 		} );
 	} );
 	
-	// Attention Grabber font @test
+	// Attention Grabber font
 	wp.customize( 'smartestthemes_options[att_grabber_font]', function( value ) {
 		value.bind( function( newval ) {
-			// @test see if this simple method works when clearing.
+		
+		
+		/* @todo this DID work, but we are trying now a new method that should also work with site-title and tagline...
+		...
+		...
+		
 			if ( '' == newval ) {
-				$('.attention-grab').css('font-family', 'cyan' );// @new default, or 'inherit' if no default
+				$('.attention-grab').css('font-family', 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' );// @new default, or 'inherit' if no default
 			} else {
 				$('.attention-grab').css('font-family', newval );
 			}
+		*/
+
+
+
+			// @test clearing
+			
+			$('.attention-grab').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');
+
+			$('.attention-grab').addClass( to ? 'font_' + to : 'font_impact' );// @new default
+			
 		} );
 	} );
-	// Attention Grabber size @test
+	// Attention Grabber size
 	wp.customize( 'smartestthemes_options[attgrabber_fontsize]', function( value ) {
 		value.bind( function( newval ) {
 		
@@ -307,15 +323,13 @@
 		} );
 	} );
 	
-	// Body font @test
-	// @todo this, if going into the customizer with and already custom-set-font, it will not clear to default. test it now with 'inherit'
+	// Body font
 	
 	wp.customize( 'smartestthemes_options[body_font]', function( value ) {
 		value.bind( function( newval ) {
 		
-			// @test see if this simple method works when clearing.
 			if ( '' == newval ) {
-				$('#content').css('font-family', 'inherit' );// @test
+				$('#content').css('font-family', 'inherit' );
 			} else {
 			
 				$('#content').css('font-family', newval );
@@ -323,7 +337,7 @@
 			
 		} );
 	} );
-	// Body font size @test
+	// Body font size
 	wp.customize( 'smartestthemes_options[body_fontsize]', function( value ) {
 		value.bind( function( newval ) {
 		
@@ -332,6 +346,7 @@
 			} else {
 			
 				// @test of the next line works to clear it properly
+				 // @test SEEMS TO BE WORKING YAY
 				$('#content, #home-footer, blockquote').css( 'font-size', '100%' );// @test!!!!
 				
 			}
@@ -355,12 +370,29 @@
 	wp.customize( 'smartestthemes_options[heading_font]', function( value ) {
 		value.bind( function( newval ) {
 		
+		
+		/* @todo this did work, but trying new method that should also work with site title and tagline 
+		...
+		
 			if ( '' == newval ) {
 				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').css('font-family', 'inherit' );
 			} else {
 			
 				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').css('font-family', newval );
 			}
+		*/
+
+		
+			
+			// @test clearing
+			// @test this one has a different default than the other logo fonts !! @test
+			
+			$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');
+
+			if ( '' != to ) {
+				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').addClass( 'font_' + to );// @new default
+			}
+
 			
 		} );
 	} );
