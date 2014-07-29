@@ -176,20 +176,25 @@ tbody tr:nth-child(even) {background:<?php echo $table_alt_row_color; ?> }
 
 /* avoid PHP notices */
 $logo_color = isset($smartestthemes_options['logo_color']) ? $smartestthemes_options['logo_color'] : '';
-$logo_font = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : '';
+// @test remove $logo_font = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : '';
 $logo_fontsize = isset($smartestthemes_options['logo_fontsize']) ? $smartestthemes_options['logo_fontsize'] : '';
 $increase_logo = isset($smartestthemes_options['increase_logo']) ? $smartestthemes_options['increase_logo'] : '';
 $hide_tagline = isset($smartestthemes_options['hide_tagline']) ? $smartestthemes_options['hide_tagline'] : '';
 $tagline_color = isset($smartestthemes_options['tagline_color']) ? $smartestthemes_options['tagline_color'] : '';
-$tagline_font = isset($smartestthemes_options['tagline_font']) ? $smartestthemes_options['tagline_font'] : '';
+// @test remove	$tagline_font = isset($smartestthemes_options['tagline_font']) ? $smartestthemes_options['tagline_font'] : '';
 $tagline_size = isset($smartestthemes_options['tagline_size']) ? $smartestthemes_options['tagline_size'] : '';
 
 if ( $logo_color ) {
 	?>.site-title a { color:<?php echo $logo_color; ?>; }<?php
 }
+
+/* 
+// @test remove 
 if ( $logo_font ) {
 	?>.site-title a {font-family:<?php echo $logo_font; ?>}<?php
 }
+*/
+
 if ( $logo_fontsize ) {
 	?>.site-title a {font-size:<?php echo $logo_fontsize; ?>}<?php
 }
@@ -203,9 +208,14 @@ if( empty($hide_tagline) ) {
 	if ( $tagline_color ) {
 		?>h2.site-description { color:<?php echo $tagline_color; ?>;}<?php
 	}
+	
+	/*
+	// @test remove
 	if ( $tagline_font ) {
 		?>h2.site-description{font-family:<?php echo $tagline_font; ?>;}<?php
 	} 
+	*/
+	
 	if ( $tagline_size ) {
 		?>h2.site-description{font-size:<?php echo $tagline_size; ?>;}<?php
 	}
