@@ -81,7 +81,7 @@ add_action( 'after_setup_theme', 'crucible_setup' );
  * Register 4 sidebar widget areas and 3 footer widget areas
  */
 function crucible_widgets_init() {
-	$options = get_option('smartestthemes_options');
+	global $smartestthemes_options;
 	register_sidebar(array(
 		'id' => 'regularsidebar',
 		'name' => __('Regular Sidebar', 'crucible'),
@@ -92,8 +92,8 @@ function crucible_widgets_init() {
 		'after_title' => '</h3>'
 	));
  
-	if( isset($options['st_show_services']) ) {
-		if ( $options['st_show_services'] == 'true' ) { 
+	if( isset($smartestthemes_options['st_show_services']) ) {
+		if ( $smartestthemes_options['st_show_services'] == 'true' ) { 
 			register_sidebar(array(
 				'id' => 'servicesidebar',
 				'name' => __('Services Sidebar', 'crucible'),
@@ -105,9 +105,9 @@ function crucible_widgets_init() {
 			));
 		}
 	}
-	if( isset($options['st_show_staff']) ) {
+	if( isset($smartestthemes_options['st_show_staff']) ) {
 	
-		if ( $options['st_show_staff'] == 'true' ) {
+		if ( $smartestthemes_options['st_show_staff'] == 'true' ) {
 			register_sidebar(array(
 				'id' => 'staffsidebar',
 				'name' => __('Staff Sidebar', 'crucible'),
@@ -119,8 +119,8 @@ function crucible_widgets_init() {
 			));
 		}
 	}
-	if( isset($options['st_show_news']) ) {
-		if ( $options['st_show_news'] == 'true' ) {
+	if( isset($smartestthemes_options['st_show_news']) ) {
+		if ( $smartestthemes_options['st_show_news'] == 'true' ) {
 			register_sidebar(array(
 				'id' => 'announcementsidebar',
 				'name' => __('Announcement Sidebar', 'crucible'),
@@ -177,14 +177,24 @@ require get_template_directory() . '/inc/customizer.php';
  * Nav Menu Fallback
  */
 function crucible_nav_fallback() {
-	$options = get_option('smartestthemes_options');
-	$sbn = esc_attr(stripslashes_deep($options['st_business_name']));
+	global $smartestthemes_options;
+	$bname = isset($smartestthemes_options['st_business_name']) ? $smartestthemes_options['st_business_name'] : '';
+	$sbn = esc_attr(stripslashes_deep($bname));
+	$about_page = isset($smartestthemes_options['st_about_page']) ? $smartestthemes_options['st_about_page'] : '';
+	$about_picture = isset($smartestthemes_options['st_about_picture']) ? $smartestthemes_options['st_about_picture'] : '';
+	$stop_about = isset($smartestthemes_options['st_stop_about']) ? $smartestthemes_options['st_stop_about'] : '';
+	$stop_contact = isset($smartestthemes_options['st_stop_contact']) ? $smartestthemes_options['st_stop_contact'] : '';
+	$svcs = isset($smartestthemes_options['st_show_services']) ? $smartestthemes_options['st_show_services'] : '';
+	$staff = isset($smartestthemes_options['st_show_staff']) ? $smartestthemes_options['st_show_staff'] : '';
+	$news = isset($smartestthemes_options['st_show_news']) ? $smartestthemes_options['st_show_news'] : '';
+	$reviews = isset($smartestthemes_options['st_add_reviews']) ? $smartestthemes_options['st_add_reviews'] : '';
+
 	echo '<ul class="menu">'; ?>
 	<li class="home"><a title="<?php echo $sbn; ?>" href="<?php echo site_url('/'); ?>"><?php _e('Home', 'crucible'); ?></a></li>
-	<?php if(($options['st_about_page'] || $options['st_about_picture']) && ($options['st_stop_about'] == 'false')) { ?>
+	<?php if(($about_page || $about_picture) && ($stop_about == 'false')) { ?>
 		<li class="about"><a title="<?php _e('About', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_about_page_id')); ?>">
 		<?php _e('About', 'crucible'); ?></a></li>
-	<?php } if($options['st_show_services'] == 'true') { ?>
+	<?php } if($svcs == 'true') { ?>
 		<li class="services"><a title="<?php _e( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_services' ); ?>">
 		<?php _e( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ); ?>
 		</a>
@@ -200,19 +210,19 @@ function crucible_nav_fallback() {
 			echo $sub;
 		} ?>
 		</li>
-	<?php } if($options['st_show_staff'] == 'true') { ?>
+	<?php } if($staff == 'true') { ?>
 		<li class="staff"><a title="<?php _e( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_staff' ); ?>">
 		<?php _e( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ); ?>
 		</a></li>
-	<?php } if($options['st_show_news'] == 'true') { ?>
+	<?php } if($news == 'true') { ?>
 		<li class="news"><a title="<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_news' ); ?>">
 		<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>
 		</a></li>
-	<?php } if($options['st_stop_contact'] == 'false') { ?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_contact_page_id')); ?>">
+	<?php } if($stop_contact == 'false') { ?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_contact_page_id')); ?>">
 		<?php _e('Contact', 'crucible'); ?>
 		</a></li>
 	<?php }
-	if ($options['st_add_reviews'] == 'true') {
+	if ($reviews == 'true') {
 		$smartest_reviewspage_uri = get_page_link(get_option('smartestthemes_reviews_page_id'));
 		echo '<li class="reviews"><a title="' . __('Reviews', 'crucible') . '" href="'. $smartest_reviewspage_uri .'">'. __('Reviews', 'crucible'). '</a></li>';
 	}

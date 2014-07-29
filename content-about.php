@@ -13,9 +13,9 @@
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
-		<?php 
-		$options = get_option('smartestthemes_options');
-		$aboutcontent = stripslashes_deep($options['st_about_page']);
+		<?php
+		global $smartestthemes_options;
+		$aboutcontent = isset( $smartestthemes_options['st_about_page'] ) ? stripslashes_deep($smartestthemes_options['st_about_page']) : '';
 		echo wpautop($aboutcontent); 
 		the_content();
 		smartestthemes_about_bottom_image();
@@ -26,7 +26,9 @@
 		?>
 	</div><!-- .entry-content -->
 	<?php edit_post_link( __( 'Edit', 'crucible' ), '<footer class="entry-footer"><span class="edit-link">', '</span></footer>' );
-if($options['st_stop_smartshare'] == 'false') {
-	echo smartestthemes_share();
-} ?>
+	if ( isset( $smartestthemes_options['st_stop_smartshare'] ) ) {
+		if($smartestthemes_options['st_stop_smartshare'] == 'false') {
+			echo smartestthemes_share();
+		}
+	} ?>
 </article><!-- #post-## -->

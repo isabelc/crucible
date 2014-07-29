@@ -76,14 +76,14 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 
 		}
 					
-						echo '<div id="sfacontent">';
-							echo '<h4><a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_title().'</a></h4>';
-							echo '<p>'. get_the_excerpt(). '</p>';
-							echo '<a class="button" href="'.get_permalink().'" title="'.get_the_title().'">Read More</a>';
-						echo '</div>';
-				echo '</div>';	
+		echo '<div id="sfacontent">';
+			echo '<h4><a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_title().'</a></h4>';
+				echo '<p>'. get_the_excerpt(). '</p>';
+					echo '<a class="button" href="'.get_permalink().'" title="'.get_the_title().'">Read More</a>';
+		echo '</div>';
+		echo '</div>';	
 		 
-				} // endwhile;
+			} // endwhile;
 					
 			} // end if have posts
 

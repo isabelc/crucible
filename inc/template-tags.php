@@ -243,27 +243,27 @@ endif;
  */
 function crucible_contact_info() {
 
-	$options = get_option('smartestthemes_options');
+	global $smartestthemes_options;
 
-	$output = '<div itemscope itemtype="http://schema.org/'.$options['st_business_itemtype']. '"><p><strong itemprop="name">';
-	$bn = stripslashes_deep(esc_attr($options['st_business_name']));
+	$output = '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['st_business_itemtype']. '"><p><strong itemprop="name">';
+	$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 	if($bn) {
 		$output .= $bn;
 	} else {
 		$output .= get_bloginfo('name');
 	}
-	$output .= '</strong></p><p class="main-address"><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . $options['st_address_street'] . '</span>&nbsp; ' . $options['st_address_suite'] . '<br /><span itemprop="addressLocality"> ' . $options['st_address_city'] . '</span>';
-	if ( $options['st_address_city'] && $options['st_address_state'] ) {
+	$output .= '</strong></p><p class="main-address"><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . $smartestthemes_options['st_address_street'] . '</span>&nbsp; ' . $smartestthemes_options['st_address_suite'] . '<br /><span itemprop="addressLocality"> ' . $smartestthemes_options['st_address_city'] . '</span>';
+	if ( $smartestthemes_options['st_address_city'] && $smartestthemes_options['st_address_state'] ) {
 		$output .= ', ';
 	}
-	$output .= '<span itemprop="addressRegion">' . $options['st_address_state'] . '</span>&nbsp;<span temprop="postalCode">' . $options['st_address_zip'] . '</span>&nbsp; ' . $options['st_address_country'] . '</span>	&nbsp;<br />';
-	if ( $options['st_phone_number'] ) {
-		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. $options['st_phone_number']. '</span> &nbsp;';
+	$output .= '<span itemprop="addressRegion">' . $smartestthemes_options['st_address_state'] . '</span>&nbsp;<span temprop="postalCode">' . $smartestthemes_options['st_address_zip'] . '</span>&nbsp; ' . $smartestthemes_options['st_address_country'] . '</span>	&nbsp;<br />';
+	if ( $smartestthemes_options['st_phone_number'] ) {
+		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. $smartestthemes_options['st_phone_number']. '</span> &nbsp;';
 	}
-	if ( $options['st_fax_numb'] ) {
-	$output .= '<br /><span class="strong">' . __('FAX:', 'crucible') . '</span>&nbsp;  <span itemprop="faxNumber">' . $options['st_fax_numb'] . '</span>&nbsp;';
+	if ( $smartestthemes_options['st_fax_numb'] ) {
+	$output .= '<br /><span class="strong">' . __('FAX:', 'crucible') . '</span>&nbsp;  <span itemprop="faxNumber">' . $smartestthemes_options['st_fax_numb'] . '</span>&nbsp;';
 	} 
-	if ( $options['st_show_contactemail'] == 'true' ) {
+	if ( $smartestthemes_options['st_show_contactemail'] == 'true' ) {
 	$output .= '<br /><span class="strong">' . __('Email:', 'crucible') . '</span>&nbsp;<a href="mailto:' . get_bloginfo('admin_email') . '"><span itemprop="email">' . get_bloginfo('admin_email') . '</span></a>';
 	}
 	$output .= '</p></div>';

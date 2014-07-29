@@ -22,11 +22,11 @@
 		<?php endif;
 
 	} else { // no active dynamic footer sidebars, so hard code widgets
-		
-		$options = get_option('smartestthemes_options');
-		$ne = $options['st_show_news'];
-		$se = $options['st_show_services'];
-		$re = $options['st_add_reviews'];
+
+		global $smartestthemes_options;
+		$ne = isset($smartestthemes_options['st_show_news']) ? $smartestthemes_options['st_show_news'] : '';
+		$se = isset($smartestthemes_options['st_show_services']) ? $smartestthemes_options['st_show_services'] : '';
+		$re = isset($smartestthemes_options['st_add_reviews']) ? $smartestthemes_options['st_add_reviews'] : '';
 		$mo = get_bloginfo('description');
 			
 		/**

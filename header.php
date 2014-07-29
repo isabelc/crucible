@@ -12,8 +12,11 @@
 <title><?php wp_title( '|', true, 'right' ); ?></title>
 <?php wp_head(); ?>
 </head>
-<?php $options = get_option('smartestthemes_options'); ?>
-<body <?php body_class(); if ( is_front_page() ) { echo ' itemscope itemtype="http://schema.org/'.$options['st_business_itemtype'].'"';} ?>>
+<?php
+global $smartestthemes_options;
+$schema = isset( $smartestthemes_options['st_business_itemtype'] ) ? $smartestthemes_options['st_business_itemtype'] : 'LocalBusiness';
+?>
+<body <?php body_class(); if ( is_front_page() ) { echo ' itemscope itemtype="http://schema.org/'.$schema.'"';} ?>>
 
 <div id="page" class="hfeed site">
 <?php
@@ -25,8 +28,8 @@
 		<?php do_action( 'crucible_logo' ); ?>	
 		</div>
 	
-		<?php if ( $options['st_phone_number'] ) {
-			echo $options['st_phone_number'];
+		<?php if ( isset($smartestthemes_options['st_phone_number']) ) {
+			echo $smartestthemes_options['st_phone_number'];
 		} ?>
 
 		<nav id="site-navigation" class="main-navigation" role="navigation">

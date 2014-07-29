@@ -30,18 +30,20 @@ class SmartestServices extends WP_Widget {
 		
 		$service_category_term_id = isset( $instance['service_category'] ) ? $instance['service_category'] : '';
 		$service_category = !empty($service_category_term_id) ? $service_category_term_id : '';
-		$options = get_option('smartestthemes_options');
+		
+		global $smartestthemes_options;
+		$sort = isset($smartestthemes_options['st_enable_service_sort']) ? $smartestthemes_options['st_enable_service_sort'] : '';
 
 		echo $before_widget;
 		if ( ! empty( $title ) )
 			echo '<h3 class="widget-title">'. $title . '</h3>';
-		
+
 		/* loop through announcements */
 
 		// if cat is selected, do tax query
 		if ( ! empty ($service_category) ) {
-
-			if( $options['st_enable_service_sort'] == 'true'  ) {
+		
+			if ( 'true' == $sort ) {
 
 				// custom sort order is enabled
 
@@ -82,7 +84,7 @@ class SmartestServices extends WP_Widget {
 
 			// no tax query
 
-			if( $options['st_enable_service_sort'] == 'true'  ) {
+			if ( 'true' == $sort ) {
 
 				// custom sort order is enabled
 

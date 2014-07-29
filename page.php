@@ -11,7 +11,6 @@
  */
 
 get_header();
-$options = get_option('smartestthemes_options');
 /*
 // @new decide. may need something like this
 
