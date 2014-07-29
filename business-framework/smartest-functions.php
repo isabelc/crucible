@@ -65,6 +65,9 @@ function smartestthemes_insert_post($potype, $slug, $option, $page_title = '', $
  */
 function smartestthemes_after_setup() {
 
+	// @todo see why about page is not being created. see if i should not check for 'false' anymore.
+	// @todo do the above for all entire theme.
+
 	global $smartestthemes_options;
 	$stop_about = isset($smartestthemes_options['st_stop_about']) ? $smartestthemes_options['st_stop_about'] : '';
 	$bname = isset($smartestthemes_options['st_business_name']) ? $smartestthemes_options['st_business_name'] : '';
@@ -77,9 +80,9 @@ function smartestthemes_after_setup() {
 	}
 	$atitle = sprintf(__('About %s','crucible'), $bn);
 	// if not disabled in options 
-	if($stop_about == 'false')
+	if($stop_about != 'true')
 		smartestthemes_insert_post( 'page', esc_sql( _x('about', 'page_slug', 'crucible') ), 'smartestthemes_about_page_id', $atitle, '' );
-	if($stop_home == 'false')
+	if($stop_home != 'true')
 		smartestthemes_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'crucible') ), 'smartestthemes_home_page_id', __('Home', 'crucible'), '' );
 	// Activate Reviews
 	if (!class_exists('SMARTESTReviewsBusiness') && ($reviews == 'true'))
@@ -89,19 +92,26 @@ function smartestthemes_after_setup() {
 add_action('after_setup_theme','smartestthemes_after_setup');
 
 //	@todo @test can i use global $smartestthemes_options for the next several instead of get_option...
-/**
+// @todo consider moving these to inside 'init' action...becuase about page doesn't delete!!!
+
+global $smartestthemes_options;// @test
+/** @test converted to global method
  * if about page is disabled, delete it
  */
-if(get_option('st_stop_about') == 'true') {
-	wp_delete_post(get_option('smartestthemes_about_page_id'), true);
+ 
+if ( isset($smartestthemes_options['st_stop_about']) ) {
+	if($smartestthemes_options['st_stop_about'] == 'true') {
+		wp_delete_post(get_option('smartestthemes_about_page_id'), true);
+	}
 }
+
 /**
  * if auto Home page is disabled, delete it
  */
 if(get_option('st_stop_home') == 'true') {
 	wp_delete_post(get_option('smartestthemes_home_page_id'), true);
 }
-	update_post_meta(get_option('smartestthemes_home_page_id'), '_wp_page_template', 'smar-home.php');
+update_post_meta(get_option('smartestthemes_home_page_id'), '_wp_page_template', 'smar-home.php');
 
 /**
  * set static front page, unless disabled
@@ -732,7 +742,7 @@ add_action('wp_head','smartestthemes_add_customscripts', 12);
  */
 function custom_staff_heading() {
 	global $smartestthemes_options;
-	$staffpagetitle = isset($smartestthemes_options['st_business_staffpagetitle'] ? $smartestthemes_options['st_business_staffpagetitle'] : '';
+	$staffpagetitle = isset($smartestthemes_options['st_business_staffpagetitle']) ? $smartestthemes_options['st_business_staffpagetitle'] : '';
 	
 	if ( $staffpagetitle != '' ) {
 		echo stripslashes($staffpagetitle);// @test
@@ -1282,7 +1292,7 @@ function smartestthemes_about_page_images() {
 	}
 	
 	// if there is an about page option picture, do it at top
-	global = $smartestthemes_options;
+	global $smartestthemes_options;
 	$about_pic = isset($smartestthemes_options['st_about_picture']) ? $smartestthemes_options['st_about_picture'] : '';
 	
 	if ( $about_pic ) {

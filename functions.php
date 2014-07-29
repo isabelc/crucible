@@ -191,7 +191,7 @@ function crucible_nav_fallback() {
 
 	echo '<ul class="menu">'; ?>
 	<li class="home"><a title="<?php echo $sbn; ?>" href="<?php echo site_url('/'); ?>"><?php _e('Home', 'crucible'); ?></a></li>
-	<?php if(($about_page || $about_picture) && ($stop_about == 'false')) { ?>
+	<?php if(($about_page || $about_picture) && ( $stop_about != 'true' ) ) { ?>
 		<li class="about"><a title="<?php _e('About', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_about_page_id')); ?>">
 		<?php _e('About', 'crucible'); ?></a></li>
 	<?php } if($svcs == 'true') { ?>
@@ -218,7 +218,8 @@ function crucible_nav_fallback() {
 		<li class="news"><a title="<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_news' ); ?>">
 		<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>
 		</a></li>
-	<?php } if($stop_contact == 'false') { ?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_contact_page_id')); ?>">
+	<?php } if($stop_contact != 'true') {	// @test logic
+	?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_contact_page_id')); ?>">
 		<?php _e('Contact', 'crucible'); ?>
 		</a></li>
 	<?php }
