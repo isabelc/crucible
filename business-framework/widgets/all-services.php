@@ -135,7 +135,7 @@ class SmartestServices extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] ? __( 'Services', 'crucible' );
+		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] : __( 'Services', 'crucible' );
 		$instance_service_category = isset( $instance[ 'service_category' ] ) ? $instance[ 'service_category' ] : '';
 		?>
 		<p>
