@@ -54,23 +54,15 @@ class SmartestStaff extends WP_Widget {
 		$sbfstaff = new WP_Query( $args );
 		if ( $sbfstaff->have_posts() ) {
 			while ( $sbfstaff->have_posts() ) {
-				$sbfstaff->the_post();
-				echo '<div class="sstwrap">';
-
-				if ( has_post_thumbnail() ) {
-					$thumb = get_post_thumbnail_id(); 
-					$smallimage = vt_resize( $thumb, '', 48, 72, false); ?>
-					<figure class="ssfig">
-					<?php echo '<a href="'.get_permalink().'" title="'.the_title_attribute( 'echo=0' ).'">'; ?>
-					<img src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" alt="<?php the_title_attribute(); ?>" title="<?php the_title_attribute(); ?>" />
-					</a>
-					</figure>
+				$sbfstaff->the_post(); ?>
+				<div class="sstwrap">
+				<?php if ( has_post_thumbnail() ) { ?>
+					<figure class="ssfig"><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>"><?php the_post_thumbnail( 'staffwidget' ); ?></a></figure>
 				<?php } ?>
-
-			<div class="sstcontent">
-			<?php echo '<h5><a href="'.get_permalink().'" title="'. the_title_attribute( 'echo=0' ) .'">'.get_the_title().'</a></h5></div></div>';
-				} // endwhile;
-		}// endif
+				<div class="sstcontent">
+				<h5><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>"><?php echo get_the_title(); ?></a></h5></div></div>
+			<?php }
+		}
 		wp_reset_postdata();
 
 		echo $after_widget;

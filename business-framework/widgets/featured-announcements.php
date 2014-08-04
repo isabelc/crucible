@@ -56,33 +56,29 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 		$sbffa = new WP_Query( $args );
 		if ( $sbffa->have_posts() ) {
 			while ( $sbffa->have_posts() ) {
-				$sbffa->the_post();
-				echo '<div class="sfawrap">';
-				if ( has_post_thumbnail() ) {
-					$thumb = get_post_thumbnail_id();
-					$smallimage = vt_resize( $thumb, '', 40, 65, true);
-					echo '<figure class="sfafig"><a href="'.get_permalink().'" title="'.the_title_attribute( 'echo=0' ).'">';
-					?>
-					<img src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" alt="<?php the_title_attribute(); ?>" title="<?php the_title_attribute(); ?>" />
-					<?php echo '</a></figure>';
-				} else {
+				$sbffa->the_post(); ?>
+				<div class="sfawrap">
+				<?php if ( has_post_thumbnail() ) { ?>
+					<figure class="sfafig"><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>">
+					<?php the_post_thumbnail( 'newswidget' ); ?>
+					</a></figure>
+				<?php } else {
 					// if not stopped with option
 
-					if(get_option('st_stop_theme_icon') != 'true') {
+					if(get_option('st_stop_theme_icon') != 'true') { ?>
 
-						echo '<a href="'.get_permalink().'" title="'. the_title_attribute( 'echo=0' ) .'" class="sfafig"><div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div></a>';
-					}
-
-				}
+						<a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>" class="sfafig"><div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div></a>
+					<?php }
+				} ?>
 					
-		echo '<div class="sfacontent">';
-			echo '<h4><a href="'.get_permalink().'" title="'. the_title_attribute( 'echo=0' ) .'">'.get_the_title().'</a></h4>';
-				echo '<p>'. get_the_excerpt(). '</p>';
-					echo '<a class="button" href="'.get_permalink().'" title="'. the_title_attribute( 'echo=0' ) .'">' . __( 'Read More', 'crucible' ) . '</a>';
-		echo '</div>';
-		echo '</div>';	
+			<div class="sfacontent">
+				<h4><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>"><?php echo get_the_title(); ?></a></h4>
+				<p><?php echo get_the_excerpt(); ?></p>
+				<a class="button" href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>">
+				<?php _e( 'Read More', 'crucible' ); ?></a>
+			</div></div>
 		 
-			} // endwhile;
+			<?php } // endwhile;
 					
 			} // end if have posts
 

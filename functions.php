@@ -52,6 +52,9 @@ function crucible_setup() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 	add_image_size( 'crucible-logo', 9999, 150 );// @new @todo prefix. @new @todo max-height.
+	add_image_size( 'newswidget', 40, 65, true );// @new size
+	add_image_size( 'featservices', 152, 96, true );// @new size
+	add_image_size( 'staffwidget', 48, 72 );// @new size
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(

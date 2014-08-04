@@ -81,23 +81,20 @@ class SmartestFeaturedServices extends WP_Widget {
 		$sbffs = new WP_Query( $args );
 		if ( $sbffs->have_posts() ) {
 			while ( $sbffs->have_posts() ) {
-				$sbffs->the_post();
-				echo '<div class="sfswrap">';
-				if ( has_post_thumbnail() ) {
-					echo '<figure class="sfsfig"><a href="'.get_permalink().'" title="'.the_title_attribute( 'echo=0' ).'">';
-					$thumb = get_post_thumbnail_id(); 
-					$smallimage = vt_resize( $thumb, '', 152, 96, true); ?>
-					<img src="<?php echo $smallimage['url']; ?>" alt="<?php the_title_attribute(); ?>" title="<?php the_title_attribute(); ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" />
-<?php
-				echo '</a></figure>';
-				}
+				$sbffs->the_post(); ?>
+				<div class="sfswrap">
+				<?php if ( has_post_thumbnail() ) { ?>
+					<figure class="sfsfig"><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>">
+					<?php the_post_thumbnail( 'featservices' ); ?>
+					</a></figure>
+				<?php } ?>
 				
-				echo '<div class="sfscontent">';
-					echo '<h4><a href="'.get_permalink().'" title="'.the_title_attribute( 'echo=0' ).'">'.get_the_title().'</a></h4>';
-					echo get_the_excerpt();
-				echo '</div>';
-			echo '</div>';	
-			} // endwhile
+				<div class="sfscontent">
+					<h4><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>"><?php echo get_the_title(); ?></a></h4>
+					<?php echo get_the_excerpt(); ?>
+				</div>
+				</div>
+			<?php } // endwhile
 		} else {
 				$li = '<a href="'.get_post_type_archive_link( 'smartest_services' ).'">'. __('Services', 'crucible'). '</a>';
 				?>
