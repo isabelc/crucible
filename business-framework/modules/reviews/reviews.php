@@ -32,7 +32,7 @@ class SMARTESTReviewsBusiness {
 		$this->dbtable = $wpdb->prefix . $this->dbtable;
 		$themeobject = wp_get_theme();
 		$this->version = $themeobject->Version;
-		add_action('the_content', array(&$this, 'do_the_content'), 10); /* prio 10 prevents a conflict with some odd themes */
+		add_action('the_content', array($this, 'do_the_content'), 10); /* prio 10 prevents a conflict with some odd themes */
 		add_action('init', array($this, 'init'));
 		add_action('admin_init', array($this, 'admin_init'));
 		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));
@@ -283,7 +283,6 @@ class SMARTESTReviewsBusiness {
 	*/
 	function aggregate_footer_business_prefix() {
 		global $smartestthemes_options;
-		
 		$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['st_business_itemtype'] . '"';
 		$aggregate_rating_prefix = '<div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
 		$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
@@ -332,7 +331,6 @@ class SMARTESTReviewsBusiness {
 	* Returns the html string for the aggregate rating
 	*/
 	function aggregate_footer_output($is_shortcode=NULL) {
-		// @test remove global $smartestthemes_options;
 		// gather agg data
 		$arr_Reviews = $this->get_reviews('', $this->options['reviews_per_page'], 1);
 		
@@ -632,14 +630,17 @@ function create_reviews_page() {
 	}
 }
 function do_the_content($original_content) {
-        global $post;
+	global $post;
         
-        $using_shortcode_insert = false;
-        if ($original_content == 'shortcode_insert') {
-            $original_content = '';
-            $using_shortcode_insert = true;
-        }
-        $the_content = '';
+	$using_shortcode_insert = false;
+	if ($original_content == 'shortcode_insert') {
+		$original_content = '';
+		$using_shortcode_insert = true;
+	}
+	$the_content = '';
+		
+	/* @todo this section differently so we are not calling function '$this->aggregate_footer()' 4 times !! */
+		
         $is_active_page = $this->is_active_page();
         /* return normal content if this is not an enabled page, or if this is a post not on single post view */
         if (!$is_active_page) {
@@ -996,7 +997,7 @@ function do_the_content($original_content) {
         if ( !isset($this->p->smarp) ) { $this->p->smarp = 1; }
         $this->page = intval($this->p->smarp);
         if ($this->page < 1) { $this->page = 1; }
-        add_shortcode( 'SMAR_INSERT', array(&$this, 'shortcode_smar_insert') );
+        add_shortcode( 'SMAR_INSERT', array($this, 'shortcode_smar_insert') );// @todo change shortcode name across theme
     }
     function shortcode_smar_insert() {
         $this->force_active_page = 1;

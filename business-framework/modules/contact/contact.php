@@ -88,7 +88,6 @@ function stcf_input_filter() {
 
 	global $smartestthemes_options, $stcf_strings;
 	$pass  = true;
-
 	if(empty($_POST['smartestthemes_contactform_name'])) {
 		$pass = FALSE;
 		$fail = 'empty';
@@ -199,7 +198,6 @@ add_action('wp_enqueue_scripts', 'stcf_enqueue_scripts');
 */
 function stcf_process_contact_form($content='') {
 	global $smartestthemes_options, $stcf_strings;
-
 	$topic     = $smartestthemes_options['st_contactform_subject'];
 	$recipient = $smartestthemes_options['st_contactform_email'];
 	$recipname = $smartestthemes_options['st_contactform_name'];
@@ -288,7 +286,6 @@ $local_agent  $agent
  */
 function stcf_display_contact_form() {
 	global $smartestthemes_options, $stcf_strings;
-
 	$captcha  = isset($smartestthemes_options['st_contactform_captcha']) ? $smartestthemes_options['st_contactform_captcha'] : '';
 	$offset   = isset($smartestthemes_options['st_contactform_offset']) ? $smartestthemes_options['st_contactform_offset'] : '';
 	$include_phone   = isset($smartestthemes_options['st_contactform_include_phone']) ? $smartestthemes_options['st_contactform_include_phone'] : '';

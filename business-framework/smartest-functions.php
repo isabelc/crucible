@@ -3,9 +3,10 @@
  * Smartest Themes Framework Functions
  * @package    Smartest Themes Business Framework
 */
+
 function smartestthemes_login_logo() {
 
-	global $smartestthemes_options;
+	global $smartestthemes_options; // @test yes it works
 	$buslogo =  isset($smartestthemes_options['logo_setting']) ? $smartestthemes_options['logo_setting'] : '';
 	
 	// if there is a logo, show it, else do text
@@ -68,11 +69,12 @@ function smartestthemes_after_setup() {
 	// @todo see why about page is not being created. see if i should not check for 'false' anymore.
 	// @todo do the above for all entire theme.
 
-	global $smartestthemes_options;
-	$stop_about = isset($smartestthemes_options['st_stop_about']) ? $smartestthemes_options['st_stop_about'] : '';
-	$bname = isset($smartestthemes_options['st_business_name']) ? $smartestthemes_options['st_business_name'] : '';
-	$reviews = isset($smartestthemes_options['st_add_reviews']) ? $smartestthemes_options['st_add_reviews'] : '';
-	$stop_home = isset($smartestthemes_options['st_stop_home']) ? $smartestthemes_options['st_stop_home'] : '';
+	$options = get_option('smartestthemes_options');
+	
+	$stop_about = isset($options['st_stop_about']) ? $options['st_stop_about'] : '';
+	$bname = isset($options['st_business_name']) ? $options['st_business_name'] : '';
+	$reviews = isset($options['st_add_reviews']) ? $options['st_add_reviews'] : '';
+	$stop_home = isset($options['st_stop_home']) ? $options['st_stop_home'] : '';
 	
 	$bn = stripslashes_deep(esc_attr($bname));
 	if(!$bn) {
@@ -94,13 +96,15 @@ add_action('after_setup_theme','smartestthemes_after_setup');
 //	@todo @test can i use global $smartestthemes_options for the next several instead of get_option...
 // @todo consider moving these to inside 'init' action...becuase about page doesn't delete!!!
 
-global $smartestthemes_options;// @test
-/** @test converted to global method
+
+$options = get_option( 'smartestthemes_options' ); // @test this works here
+ 
+/** @test
  * if about page is disabled, delete it
  */
  
-if ( isset($smartestthemes_options['st_stop_about']) ) {
-	if($smartestthemes_options['st_stop_about'] == 'true') {
+if ( isset($options['st_stop_about']) ) {
+	if($options['st_stop_about'] == 'true') {
 		wp_delete_post(get_option('smartestthemes_about_page_id'), true);
 	}
 }
@@ -108,27 +112,36 @@ if ( isset($smartestthemes_options['st_stop_about']) ) {
 /**
  * if auto Home page is disabled, delete it
  */
-if(get_option('st_stop_home') == 'true') {
-	wp_delete_post(get_option('smartestthemes_home_page_id'), true);
+$home_page_id = get_option('smartestthemes_home_page_id');
+
+if ( isset($options['st_stop_home']) ) {
+	if( $options['st_stop_home'] == 'true') {
+		wp_delete_post($home_page_id, true);
+	}
 }
-update_post_meta(get_option('smartestthemes_home_page_id'), '_wp_page_template', 'smar-home.php');
+update_post_meta($home_page_id, '_wp_page_template', 'smar-home.php');
 
 /**
  * set static front page, unless disabled
  */
-
-if( get_option('st_stop_static') == 'false') {
-	update_option( 'show_on_front', 'page' );
-	update_option( 'page_on_front', get_option('smartestthemes_home_page_id') );
+if ( isset($options['st_stop_static']) ) {
+	if( $options['st_stop_static'] != 'true' ) {
+		update_option( 'show_on_front', 'page' );
+		update_option( 'page_on_front', $home_page_id );
+	}
 }
 
 // Set the blog page, unless disabled
-if( get_option('st_stop_blog') == 'false') {
-	$blog   = get_page_by_title(__('Blog', 'crucible') );
-	if($blog) {
-		update_option( 'page_for_posts', $blog->ID );
+if ( isset($options['st_stop_blog']) ) {
+
+	if( $options['st_stop_blog'] != 'true') {
+		$blog   = get_page_by_title(__('Blog', 'crucible') );
+		if($blog) {
+			update_option( 'page_for_posts', $blog->ID );
+		}
 	}
 }
+
 /*
  * Resize images dynamically using wp built in functions
  * Victor Teixeira
@@ -227,160 +240,155 @@ function vt_resize( $attach_id = null, $img_url = null, $width, $height, $crop =
  * add CPTs conditionally, if enabled
  * adds smartest_staff, smartest_staff, smartest_staff, 
  */
-add_action('init', 'create_smartest_business_cpts');
 function create_smartest_business_cpts() {
-	global $smartestthemes_options;
-	$staff = isset($smartestthemes_options['st_show_staff']) ? $smartestthemes_options['st_show_staff'] : '';
-	$news = isset($smartestthemes_options['st_show_news']) ? $smartestthemes_options['st_show_news'] : '';
-	$services = isset($smartestthemes_options['st_show_services']) ? $smartestthemes_options['st_show_services'] : '';
-			if( $staff == 'true'  ) { 
-		    	$args = array(
-		        	'label' => __('Staff','crucible'),
-		        	'singular_label' => __('Staff','crucible'),
-		        	'public' => true,
-		        	'show_ui' => true,
-		        	'capability_type' => 'post',
-		        	'hierarchical' => false,
-		        	'rewrite' => array(
-							'slug' => __('staff', 'crucible'),
-							'with_front' => false,
+	$options = get_option('smartestthemes_options');
+	$staff = isset($options['st_show_staff']) ? $options['st_show_staff'] : '';
+	$news = isset($options['st_show_news']) ? $options['st_show_news'] : '';
+	$services = isset($options['st_show_services']) ? $options['st_show_services'] : '';
+	$slideshow =  isset($options['st_show_slider']) ? $options['st_show_slider'] : '';
+	
+	if( $staff == 'true'  ) {
+    	$args = array(
+        	'label' => __('Staff','crucible'),
+        	'singular_label' => __('Staff','crucible'),
+        	'public' => true,
+        	'show_ui' => true,
+        	'capability_type' => 'post',
+        	'hierarchical' => false,
+        	'rewrite' => array(
+					'slug' => __('staff', 'crucible'),
+					'with_front' => false,
+			),
+        	'exclude_from_search' => false,
+       		'labels' => array(
+				'name' => __( 'Staff','crucible' ),
+				'singular_name' => __( 'Staff','crucible' ),
+				'add_new' => __( 'Add New','crucible' ),
+				'add_new_item' => __( 'Add New Staff','crucible' ),
+				'all_items' => __( 'All Staff','crucible' ),
+				'edit' => __( 'Edit','crucible' ),
+				'edit_item' => __( 'Edit Staff','crucible' ),
+				'new_item' => __( 'New Staff','crucible' ),
+				'view' => __( 'View Staff','crucible' ),
+				'view_item' => __( 'View Staff','crucible' ),
+				'search_items' => __( 'Search Staff','crucible' ),
+				'not_found' => __( 'No staff found','crucible' ),
+				'not_found_in_trash' => __( 'No staff found in Trash','crucible' ),
+				'parent' => __( 'Parent Staff','crucible' ),
+			),
+        	'supports' => array('title','editor','thumbnail'),
+			'has_archive' => true,
+			'menu_icon' => 'dashicons-groups',
+        );
+		register_post_type( 'smartest_staff' , $args );
+	}// end if show staff enabled
+	
+	if($news == 'true') {
+    	$args = array(
+        	'label' => __('Announcements','crucible'),
+        	'singular_label' => __('Announcement','crucible'),
+        	'public' => true,
+        	'show_ui' => true,
+        	'capability_type' => 'post',
+        	'hierarchical' => false,
+        	'rewrite' => array(
+					'slug' => __('news','crucible'),
+					'with_front' => false,
+			),
+        	'exclude_from_search' => false,
+       		'labels' => array(
+				'name' => __( 'Announcements','crucible' ),
+				'singular_name' => __( 'Announcement','crucible' ),
+				'add_new' => __( 'Add New','crucible' ),
+				'add_new_item' => __( 'Add New Announcement','crucible' ),
+				'all_items' => __( 'All Announcements','crucible' ),
+				'edit' => __( 'Edit','crucible' ),
+				'edit_item' => __( 'Edit Announcement','crucible' ),
+				'new_item' => __( 'New Announcement','crucible' ),
+				'view' => __( 'View Announcement','crucible' ),
+				'view_item' => __( 'View Announcement','crucible' ),
+				'search_items' => __( 'Search Announcements','crucible' ),
+				'not_found' => __( 'No announcement found','crucible' ),
+				'not_found_in_trash' => __( 'No announcements found in Trash','crucible' ),
+				'parent' => __( 'Parent Announcement','crucible' ),
+			),
+			'supports' => array('title','editor','thumbnail'),
+			'has_archive' => true,
+			'menu_icon' => 'dashicons-exerpt-view'
+		);
+		register_post_type( 'smartest_news' , $args );
+	}// end if show news enabled
+	
+	if($services == 'true') {
+    	$args = array(
+        	'label' => __('Services','crucible'),
+        	'singular_label' => __('Service','crucible'),
+        	'public' => true,
+        	'show_ui' => true,
+        	'capability_type' => 'post',
+        	'hierarchical' => false,
+        	'rewrite' => array(
+					'slug' => __('services','crucible'),
+					'with_front' => false,
+			),
+        	'exclude_from_search' => false,
+       		'labels' => array(
+				'name' => __( 'Services','crucible' ),
+				'singular_name' => __( 'Service','crucible' ),
+				'add_new' => __( 'Add New','crucible' ),
+				'all_items' => __( 'All Services','crucible' ),
+				'add_new_item' => __( 'Add New Service','crucible' ),
+				'edit' => __( 'Edit','crucible' ),
+				'edit_item' => __( 'Edit Service','crucible' ),
+				'new_item' => __( 'New Service','crucible' ),
+				'view' => __( 'View Services','crucible' ),
+				'view_item' => __( 'View Service','crucible' ),
+				'search_items' => __( 'Search Services','crucible' ),
+				'not_found' => __( 'No services found','crucible' ),
+				'not_found_in_trash' => __( 'No services found in Trash','crucible' ),
+				'parent' => __( 'Parent Service','crucible' ),
+				),
+			'supports' => array('title','editor','thumbnail'),
+			'has_archive' => true,
+			'menu_icon' => 'dashicons-portfolio'
+		);
+	   	register_post_type( 'smartest_services' , $args );
+	}// end if show services enabled
 
-					),
-		        	'exclude_from_search' => false,
-	        		'labels' => array(
-						'name' => __( 'Staff','crucible' ),
-						'singular_name' => __( 'Staff','crucible' ),
-						'add_new' => __( 'Add New','crucible' ),
-						'add_new_item' => __( 'Add New Staff','crucible' ),
-						'all_items' => __( 'All Staff','crucible' ),
-						'edit' => __( 'Edit','crucible' ),
-						'edit_item' => __( 'Edit Staff','crucible' ),
-						'new_item' => __( 'New Staff','crucible' ),
-						'view' => __( 'View Staff','crucible' ),
-						'view_item' => __( 'View Staff','crucible' ),
-						'search_items' => __( 'Search Staff','crucible' ),
-						'not_found' => __( 'No staff found','crucible' ),
-						'not_found_in_trash' => __( 'No staff found in Trash','crucible' ),
-						'parent' => __( 'Parent Staff','crucible' ),
-					),
-		        	'supports' => array('title','editor','thumbnail'),
-				'has_archive' => true,
-				'menu_icon' => 'dashicons-groups',
-
-		        );
-
-	    	register_post_type( 'smartest_staff' , $args );
-
-			}// end if show staff enabled
-			if($news == 'true') { 
-		    	$args = array(
-		        	'label' => __('Announcements','crucible'),
-		        	'singular_label' => __('Announcement','crucible'),
-		        	'public' => true,
-		        	'show_ui' => true,
-		        	'capability_type' => 'post',
-		        	'hierarchical' => false,
-		        	'rewrite' => array(
-							'slug' => __('news','crucible'),
-							'with_front' => false,
-					),
-		        	'exclude_from_search' => false,
-	        		'labels' => array(
-						'name' => __( 'Announcements','crucible' ),
-						'singular_name' => __( 'Announcement','crucible' ),
-						'add_new' => __( 'Add New','crucible' ),
-						'add_new_item' => __( 'Add New Announcement','crucible' ),
-						'all_items' => __( 'All Announcements','crucible' ),
-						'edit' => __( 'Edit','crucible' ),
-						'edit_item' => __( 'Edit Announcement','crucible' ),
-						'new_item' => __( 'New Announcement','crucible' ),
-						'view' => __( 'View Announcement','crucible' ),
-						'view_item' => __( 'View Announcement','crucible' ),
-						'search_items' => __( 'Search Announcements','crucible' ),
-						'not_found' => __( 'No announcement found','crucible' ),
-						'not_found_in_trash' => __( 'No announcements found in Trash','crucible' ),
-						'parent' => __( 'Parent Announcement','crucible' ),
-					),
-		        	'supports' => array('title','editor','thumbnail'),
-				'has_archive' => true,
-				'menu_icon' => 'dashicons-exerpt-view'
-		        );
-
-	    	register_post_type( 'smartest_news' , $args );
-
-			}// end if show news enabled
-			if($services == 'true') { 
-		    	$args = array(
-		        	'label' => __('Services','crucible'),
-		        	'singular_label' => __('Service','crucible'),
-		        	'public' => true,
-		        	'show_ui' => true,
-		        	'capability_type' => 'post',
-		        	'hierarchical' => false,
-		        	'rewrite' => array(
-							'slug' => __('services','crucible'),
-							'with_front' => false,
-					),
-		        	'exclude_from_search' => false,
-	        		'labels' => array(
-						'name' => __( 'Services','crucible' ),
-						'singular_name' => __( 'Service','crucible' ),
-						'add_new' => __( 'Add New','crucible' ),
-						'all_items' => __( 'All Services','crucible' ),
-						'add_new_item' => __( 'Add New Service','crucible' ),
-						'edit' => __( 'Edit','crucible' ),
-						'edit_item' => __( 'Edit Service','crucible' ),
-						'new_item' => __( 'New Service','crucible' ),
-						'view' => __( 'View Services','crucible' ),
-						'view_item' => __( 'View Service','crucible' ),
-						'search_items' => __( 'Search Services','crucible' ),
-						'not_found' => __( 'No services found','crucible' ),
-						'not_found_in_trash' => __( 'No services found in Trash','crucible' ),
-						'parent' => __( 'Parent Service','crucible' ),
-					),
-		        	'supports' => array('title','editor','thumbnail'),
-				'has_archive' => true,
-				'menu_icon' => 'dashicons-portfolio'
-		        );
-	    	register_post_type( 'smartest_services' , $args );
-			}// end if show services enabled
-
-			// if show homepage slideshow is enabled, do cpt @todo consider remove
-			if ( isset($smartestthemes_options['st_show_slider']) ) {
-				if ( $smartestthemes_options['st_show_slider'] == 'true' ) {
-					$args = array(
-						'label' => __('Slideshow','storefront'),
-						'singular_label' => __('Slide','storefront'),
-						'public' => true,
-						'show_ui' => true,
-						'capability_type' => 'post',
-						'hierarchical' => false,
-						'rewrite' => true,
-						'exclude_from_search' => true,
-						'labels' => array(
-							'name' => __( 'Slideshow','storefront' ),
-							'singular_name' => __( 'Slide','storefront' ),
-							'add_new' => __( 'Add New Slide','storefront' ),
-							'all_items' => __( 'All Slides','crucible' ),
-							'add_new_item' => __( 'Add New Slide','storefront' ),
-							'edit' => __( 'Edit','storefront' ),
-							'edit_item' => __( 'Edit Slide','storefront' ),
-							'new_item' => __( 'New Slide','storefront' ),
-							'view' => __( 'View Slide','storefront' ),
-							'view_item' => __( 'View Slide','storefront' ),
-							'search_items' => __( 'Search Slides','storefront' ),
-							'not_found' => __( 'No slides found','storefront' ),
-							'not_found_in_trash' => __( 'No slides found in Trash','storefront' ),
-							'parent' => __( 'Parent Slide','storefront' ),
-						),
-						'menu_icon' => 'dashicons-format-image',
-						'supports' => array('title', 'thumbnail')
-					);
-					register_post_type( 'smartest_slide' , $args );
-				}
-			}	// end slideshow
+	// if show homepage slideshow is enabled, do cpt @todo consider remove
+	if( $slideshow == 'true'  ) {
+		$args = array(
+			'label' => __('Slideshow','storefront'),
+			'singular_label' => __('Slide','storefront'),
+			'public' => true,
+			'show_ui' => true,
+			'capability_type' => 'post',
+			'hierarchical' => false,
+			'rewrite' => true,
+			'exclude_from_search' => true,
+			'labels' => array(
+				'name' => __( 'Slideshow','storefront' ),
+				'singular_name' => __( 'Slide','storefront' ),
+				'add_new' => __( 'Add New Slide','storefront' ),
+				'all_items' => __( 'All Slides','crucible' ),
+				'add_new_item' => __( 'Add New Slide','storefront' ),
+				'edit' => __( 'Edit','storefront' ),
+				'edit_item' => __( 'Edit Slide','storefront' ),
+				'new_item' => __( 'New Slide','storefront' ),
+				'view' => __( 'View Slide','storefront' ),
+				'view_item' => __( 'View Slide','storefront' ),
+				'search_items' => __( 'Search Slides','storefront' ),
+				'not_found' => __( 'No slides found','storefront' ),
+				'not_found_in_trash' => __( 'No slides found in Trash','storefront' ),
+				'parent' => __( 'Parent Slide','storefront' ),
+			),
+			'menu_icon' => 'dashicons-format-image',
+			'supports' => array('title', 'thumbnail')
+		);
+		register_post_type( 'smartest_slide' , $args );
+	}	// end slideshow
 }
-
+add_action('init', 'create_smartest_business_cpts');
 /**
  * Registers custom taxonomy for services
  * @return void
@@ -482,7 +490,7 @@ function smart_attach_external_image( $url = null, $post_id = null, $post_data =
  */
 function custom_smartestthemes_services_menu_label() {
 	// if custom title entered
-	global $smartestthemes_options;// @test
+	global $smartestthemes_options;// @test yes it works
 	if ( $smartestthemes_options['st_business_servicesmenulabel'] != '' ) {
 		$custom = stripslashes($smartestthemes_options['st_business_servicesmenulabel']);
 	} else { 
@@ -492,7 +500,7 @@ function custom_smartestthemes_services_menu_label() {
 }
 function custom_smartestthemes_staff_menu_label() {
 	// if custom title entered
-	global $smartestthemes_options;// @test
+	global $smartestthemes_options;// @test yes it works
 	if ($smartestthemes_options['st_business_staffmenulabel'] != '') {
 		$custom = stripslashes($smartestthemes_options['st_business_staffmenulabel']);
 	} else { 
@@ -502,7 +510,7 @@ function custom_smartestthemes_staff_menu_label() {
 }
 function custom_smartestthemes_news_menu_label() {
 	// if custom title entered
-	global $smartestthemes_options;// @test
+	global $smartestthemes_options;// @test yes it works
 	if ($smartestthemes_options['st_business_newsmenulabel'] != '') {
 		$custom = stripslashes($smartestthemes_options['st_business_newsmenulabel']);
 	} else { 
@@ -526,10 +534,8 @@ add_filter( 'cmb_meta_boxes', 'smartestthemes_metaboxes' );
  * @return array
  */
 function smartestthemes_metaboxes( array $meta_boxes ) {
-
 	$prefix = '_smab_';
-	global $smartestthemes_options;
-
+	global $smartestthemes_options;// @test yes works
 	$meta_boxes[] = array(
 		'id'         => 'staff_details',
 		'title'      => __('Details', 'crucible'),
@@ -684,26 +690,23 @@ add_filter( 'enter_title_here', 'smartest_change_enter_title' );
 
 /* Flush rewrite rules for custom post types but only once upon theme activation 
 */
-
-add_action('after_switch_theme', 'smartest_flush_rewrite_rules', 10, 2);
 function smartest_flush_rewrite_rules() {
 	global $wp_rewrite;
 	$wp_rewrite->flush_rules();
 	update_option('st_stop_home', 'false');
 }
+add_action('after_switch_theme', 'smartest_flush_rewrite_rules', 10, 2);
 /**
  * call widgets
  */
-add_action( 'widgets_init', 'smartestthemes_register_widgets' );
-
 /**
  * register widgets
  */
 function smartestthemes_register_widgets() {
-	global $smartestthemes_options;
-	$svcs = isset($smartestthemes_options['st_show_services']) ? $smartestthemes_options['st_show_services'] : '';
-	$staff = isset($smartestthemes_options['st_show_staff']) ? $smartestthemes_options['st_show_staff'] : '';
-	$news = isset($smartestthemes_options['st_show_news']) ? $smartestthemes_options['st_show_news'] : '';
+	$options = get_option('smartestthemes_options');
+	$svcs = isset($options['st_show_services']) ? $options['st_show_services'] : '';
+	$staff = isset($options['st_show_staff']) ? $options['st_show_staff'] : '';
+	$news = isset($options['st_show_news']) ? $options['st_show_news'] : '';
 	if( $news == 'true'  ) { 
 		register_widget('SmartestAnnouncements');
 		register_widget('SmartestFeaturedAnnounce');
@@ -715,13 +718,12 @@ function smartestthemes_register_widgets() {
 		register_widget('SmartestStaff');
 	}
 }
-
+add_action( 'widgets_init', 'smartestthemes_register_widgets' );
 /**
  * insert custom scripts from theme options
  */
 function smartestthemes_add_customscripts() {
-	global $smartestthemes_options;
-	
+	global $smartestthemes_options;// @test yes works
 	// get analytics script
 	$gascript = isset($smartestthemes_options['st_script_analytics']) ? $smartestthemes_options['st_script_analytics'] : '';
 	// get other scripts
@@ -741,7 +743,7 @@ add_action('wp_head','smartestthemes_add_customscripts', 12);
  * for staff, services, and news
  */
 function custom_staff_heading() {
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test yes works
 	$staffpagetitle = isset($smartestthemes_options['st_business_staffpagetitle']) ? $smartestthemes_options['st_business_staffpagetitle'] : '';
 	
 	if ( $staffpagetitle != '' ) {
@@ -752,7 +754,7 @@ function custom_staff_heading() {
 }
 add_filter('smartestthemes_staff_heading', 'custom_staff_heading');
 function custom_services_heading() {
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test  yes works
 	$servicepagetitle = isset( $smartestthemes_options['st_business_servicespagetitle'] ) ? $smartestthemes_options['st_business_servicespagetitle'] : '' ;
 	
 	if ( $servicepagetitle != '' ) {
@@ -764,7 +766,7 @@ function custom_services_heading() {
 add_filter('smartestthemes_services_heading', 'custom_services_heading');
 
 function custom_news_heading() {
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test yes works
 	$newspagetitle = isset( $smartestthemes_options['st_business_newspagetitle'] ) ? $smartestthemes_options['st_business_newspagetitle'] : '' ;
 	if ( $newspagetitle != '' ) {
 		echo stripslashes( $newspagetitle );
@@ -800,7 +802,7 @@ add_action( 'wp_before_admin_bar_render', 'smartestthemes_tool_bar' );
 /** 
  * Add job title column to staff admin
  */
-add_filter( 'manage_edit-smartest_staff_columns', 'smar_manage_edit_staff_columns' ) ;
+add_filter( 'manage_edit-smartest_staff_columns', 'smar_manage_edit_staff_columns' );
 function smar_manage_edit_staff_columns( $columns ) {
 	$columns = array(
 		'cb' => '<input type="checkbox" />',
@@ -891,7 +893,7 @@ function smar_manage_news_columns( $column, $post_id ) {
 			break;
 	}
 }
-/** 
+/**
  * Add thumbnail column to smartest_slide backend
  */
 function smar_manage_edit_slide_columns( $columns ) {
@@ -904,7 +906,7 @@ function smar_manage_edit_slide_columns( $columns ) {
 	return $columns;
 }
 
-/** 
+/**
  * Add data to thumbnail column in smartest_slide
  */
 
@@ -922,10 +924,13 @@ function smar_manage_slide_columns( $column, $post_id ) {
 			break;
 	}
 }
-// @todo can use the global $smartestthemes_options here
-if(get_option('st_show_slider') == 'true') {
-	add_filter( 'manage_edit-smartest_slide_columns', 'smar_manage_edit_slide_columns' ) ;
-	add_action( 'manage_smartest_slide_posts_custom_column', 'smar_manage_slide_columns', 10, 2 );
+
+// @new only need for slides
+if ( isset($options['st_show_slider']) ) {
+	if ( $options['st_show_slider'] == 'true') {// @test options var
+		add_filter( 'manage_edit-smartest_slide_columns', 'smar_manage_edit_slide_columns' ) ;
+		add_action( 'manage_smartest_slide_posts_custom_column', 'smar_manage_slide_columns', 10, 2 );
+	}
 }
 
 /**
@@ -933,7 +938,7 @@ if(get_option('st_show_slider') == 'true') {
  * use custom logo on theme options page header
  */
 function st_custom_options_page_logo() {
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test works yes
 	$logo = isset($smartestthemes_options['st_backend_logo']) ? $smartestthemes_options['st_backend_logo'] : '';
 	if($logo) {
 		return '<img alt="logo" src="'.$logo.'" class="custom-bb-logo"/>';
@@ -945,9 +950,7 @@ add_filter('smartestthemes_backend_branding', 'st_custom_options_page_logo');
 
 // Replace WP admin footer with custom text
 function st_remove_footer_admin () {
-
-	global $smartestthemes_options;
-
+	global $smartestthemes_options;// @test works yes
 	$admin_footer = isset($smartestthemes_options['st_admin_footer']) ? $smartestthemes_options['st_admin_footer'] : '';
 	$remove_it = isset($smartestthemes_options['st_remove_adminfooter']) ? $smartestthemes_options['st_remove_adminfooter'] : '';
 
@@ -963,7 +966,7 @@ function st_remove_footer_admin () {
 }
 add_filter('admin_footer_text', 'st_remove_footer_admin'); 
 
-function smartestthemes_admin_bar() {// @test again since globalizing var
+function smartestthemes_admin_bar() {
     global $wp_admin_bar, $smartestthemes_options;
 	if ( isset($smartestthemes_options['st_remove_wplinks']) ) {
 		if ( $smartestthemes_options['st_remove_wplinks'] == 'true' ) {
@@ -1100,8 +1103,7 @@ add_filter( 'wp_title', 'smartestthemes_wp_title', 10, 2 );
 */
 
 function smartestthemes_head_meta() {
-
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test yes works
 	if (isset($smartestthemes_options['st_disable_seo']) ) {
 		if( $smartestthemes_options['st_disable_seo'] == 'true' ) {// @test
 			return;
@@ -1189,9 +1191,14 @@ function smartestthemes_sort_services($query) {
 	}
 	return $query;
 }
-// @todo can i use global $smartestthemes_options here...
-if( get_option('st_enable_service_sort') == 'true'  ) 
-	add_filter( 'parse_query', 'smartestthemes_sort_services' );
+
+
+// @test
+if ( isset($options['st_enable_service_sort']) ) {
+	if( $options['st_enable_service_sort'] == 'true'  ) {
+		add_filter( 'parse_query', 'smartestthemes_sort_services' );
+	}
+}
 
 /**
  * Check if the uploaded file is an image. If it is, then it processes it using the retina_support_create_images()
@@ -1292,9 +1299,9 @@ function smartestthemes_about_page_images() {
 	}
 	
 	// if there is an about page option picture, do it at top
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test yes works
 	$about_pic = isset($smartestthemes_options['st_about_picture']) ? $smartestthemes_options['st_about_picture'] : '';
-	
+
 	if ( $about_pic ) {
 		$img_url = $about_pic;
 		$topImg = $img_url;

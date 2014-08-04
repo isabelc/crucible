@@ -106,8 +106,8 @@ function crucible_post_thumbnail() {
 		return;
 	}
 	
-	global $smartestthemes_options;
-	$stop = isset($smartestthemes_options['st_stop_theme_icon']) ? $smartestthemes_options['st_stop_theme_icon'] : ''; // @test this method of global, or do i use get_option
+	global $smartestthemes_options;// @test this one works
+	$stop = isset($smartestthemes_options['st_stop_theme_icon']) ? $smartestthemes_options['st_stop_theme_icon'] : ''; // @test output of this var, even though i know global here works. this method of global, or do i use get_option
 	
 	if ( ! has_post_thumbnail() ) {
 		if ( is_post_type_archive( 'smartest_news' ) && ( $stop == 'false' ) ) {
@@ -242,9 +242,7 @@ endif;
  * Display Contact info with microdata from Schema.org
  */
 function crucible_contact_info() {
-
-	global $smartestthemes_options;
-
+	global $smartestthemes_options;// @test yes, it works
 	$output = '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['st_business_itemtype']. '"><p><strong itemprop="name">';
 	$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 	if($bn) {
@@ -286,7 +284,7 @@ function crucible_google_map() {
  * Display the logo
  */
 function crucible_logo() {
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test this one works
 	$name = get_bloginfo('name');
 	$description = get_bloginfo('description');
 	$bn = stripslashes(esc_attr($smartestthemes_options['st_business_name']));
@@ -339,7 +337,7 @@ add_action('crucible_logo', 'crucible_logo');
  * Display the social buttons for the business
  */
 function crucible_social_buttons() {
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test this one works
 	$tw = $smartestthemes_options['st_business_twitter'];
 	$goo = $smartestthemes_options['st_business_gplus'];
 	$fa = $smartestthemes_options['st_business_facebook'];
@@ -389,7 +387,7 @@ add_action('crucible_social_buttons', 'crucible_social_buttons');
  * Display the site footer
  */
 function crucible_footer() {
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test this one works
 	$output = '';
 	$override_footer = isset($smartestthemes_options['override_footer']) ? $smartestthemes_options['override_footer'] : '';
 	$footer_text = isset($smartestthemes_options['footer_text']) ? $smartestthemes_options['footer_text'] : '';
@@ -420,9 +418,8 @@ add_action( 'crucible_footer', 'crucible_footer' );
  * Display the clock icon with the Our Hours heading
  */
 function crucible_clock_hours() {
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test yes, it works
 	$hours = isset($smartestthemes_options['st_hours']) ? $smartestthemes_options['st_hours'] : '';// @test 
-	
 	$output = '';
 	
 	if ($hours) {

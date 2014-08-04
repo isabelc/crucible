@@ -1,4 +1,4 @@
-<style><?php global $smartestthemes_options;
+<style><?php global $smartestthemes_options;// @TEST WORKS
 $header_bg_color = isset($smartestthemes_options['header_bg_color']) ? $smartestthemes_options['header_bg_color'] : '';
 $footer_bg_color = isset($smartestthemes_options['footer_bg_color']) ? $smartestthemes_options['footer_bg_color'] : '';
 

@@ -13,7 +13,7 @@
 <?php wp_head(); ?>
 </head>
 <?php
-global $smartestthemes_options;
+global $smartestthemes_options;// @test this one works
 $schema = isset( $smartestthemes_options['st_business_itemtype'] ) ? $smartestthemes_options['st_business_itemtype'] : 'LocalBusiness';
 ?>
 <body <?php body_class(); if ( is_front_page() ) { echo ' itemscope itemtype="http://schema.org/'.$schema.'"';} ?>>

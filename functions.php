@@ -81,7 +81,7 @@ add_action( 'after_setup_theme', 'crucible_setup' );
  * Register 4 sidebar widget areas and 3 footer widget areas
  */
 function crucible_widgets_init() {
-	global $smartestthemes_options;
+	$options = get_option('smartestthemes_options');
 	register_sidebar(array(
 		'id' => 'regularsidebar',
 		'name' => __('Regular Sidebar', 'crucible'),
@@ -92,8 +92,8 @@ function crucible_widgets_init() {
 		'after_title' => '</h3>'
 	));
  
-	if( isset($smartestthemes_options['st_show_services']) ) {
-		if ( $smartestthemes_options['st_show_services'] == 'true' ) { 
+	if( isset($options['st_show_services']) ) {
+		if ( $options['st_show_services'] == 'true' ) { 
 			register_sidebar(array(
 				'id' => 'servicesidebar',
 				'name' => __('Services Sidebar', 'crucible'),
@@ -105,9 +105,9 @@ function crucible_widgets_init() {
 			));
 		}
 	}
-	if( isset($smartestthemes_options['st_show_staff']) ) {
+	if( isset($options['st_show_staff']) ) {
 	
-		if ( $smartestthemes_options['st_show_staff'] == 'true' ) {
+		if ( $options['st_show_staff'] == 'true' ) {
 			register_sidebar(array(
 				'id' => 'staffsidebar',
 				'name' => __('Staff Sidebar', 'crucible'),
@@ -119,8 +119,8 @@ function crucible_widgets_init() {
 			));
 		}
 	}
-	if( isset($smartestthemes_options['st_show_news']) ) {
-		if ( $smartestthemes_options['st_show_news'] == 'true' ) {
+	if( isset($options['st_show_news']) ) {
+		if ( $options['st_show_news'] == 'true' ) {
 			register_sidebar(array(
 				'id' => 'announcementsidebar',
 				'name' => __('Announcement Sidebar', 'crucible'),
@@ -177,7 +177,7 @@ require get_template_directory() . '/inc/customizer.php';
  * Nav Menu Fallback
  */
 function crucible_nav_fallback() {
-	global $smartestthemes_options;
+	global $smartestthemes_options;// @test this works
 	$bname = isset($smartestthemes_options['st_business_name']) ? $smartestthemes_options['st_business_name'] : '';
 	$sbn = esc_attr(stripslashes_deep($bname));
 	$about_page = isset($smartestthemes_options['st_about_page']) ? $smartestthemes_options['st_about_page'] : '';
@@ -194,9 +194,13 @@ function crucible_nav_fallback() {
 	<?php if(($about_page || $about_picture) && ( $stop_about != 'true' ) ) { ?>
 		<li class="about"><a title="<?php _e('About', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_about_page_id')); ?>">
 		<?php _e('About', 'crucible'); ?></a></li>
-	<?php } if($svcs == 'true') { ?>
-		<li class="services"><a title="<?php _e( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_services' ); ?>">
-		<?php _e( apply_filters( 'smartestthemes_services_menu_label', 'Services' ), 'crucible' ); ?>
+	<?php } if($svcs == 'true') { 
+	
+				// @test apply_filters only once
+				$service_label = apply_filters( 'smartestthemes_services_menu_label', __( 'Services', 'crucible' ) );
+	?>
+		<li class="services"><a title="<?php echo esc_attr( $service_label ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_services' ); ?>">
+		<?php echo $service_label; ?>
 		</a>
 		<?php // if service cat tax terms exist, do sub-menu
 		$service_cats = get_terms('smartest_service_category');
@@ -210,13 +214,21 @@ function crucible_nav_fallback() {
 			echo $sub;
 		} ?>
 		</li>
-	<?php } if($staff == 'true') { ?>
-		<li class="staff"><a title="<?php _e( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_staff' ); ?>">
-		<?php _e( apply_filters( 'smartestthemes_staff_menu_label', 'Staff' ), 'crucible' ); ?>
+	<?php } if($staff == 'true') { 
+	
+				// @test apply_filters only once
+				$staff_label = apply_filters( 'smartestthemes_staff_menu_label', __( 'Staff', 'crucible' ) );
+				?>
+		<li class="staff"><a title="<?php echo esc_attr( $staff_label ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_staff' ); ?>">
+		<?php echo $staff_label; ?>
 		</a></li>
-	<?php } if($news == 'true') { ?>
-		<li class="news"><a title="<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_news' ); ?>">
-		<?php _e( apply_filters( 'smartestthemes_news_menu_label', 'News' ), 'crucible' ); ?>
+	<?php } if($news == 'true') { 
+	
+				// @test apply_filters only once
+				$news_label = apply_filters( 'smartestthemes_news_menu_label', __( 'News', 'crucible' ) );
+				?>
+		<li class="news"><a title="<?php echo esc_attr( $news_label ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_news' ); ?>">
+		<?php echo $news_label; ?>
 		</a></li>
 	<?php } if($stop_contact != 'true') {	// @test logic
 	?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_contact_page_id')); ?>">
@@ -260,7 +272,7 @@ add_filter('widget_text', 'do_shortcode');
 function crucible_texture_class( $classes ) {
 	// only if there is no bg image do we check for texture
 	if ( ! get_theme_mod( 'background_image' ) ) {
-		global $smartestthemes_options;
+		global $smartestthemes_options;// @test this one works
 		$bg_texture = isset($smartestthemes_options['bg_texture']) ? $smartestthemes_options['bg_texture'] : '';
 		if ($bg_texture) {
 			// add 'texture_' to the $classes array
@@ -270,3 +282,16 @@ function crucible_texture_class( $classes ) {
 	return $classes;
 }
 add_filter('body_class','crucible_texture_class');
+
+/** @test remove this function
+ * Log my own debug messages
+ */
+function isa_log_my_messages( $message ) {
+    if (WP_DEBUG === true) {
+        if ( is_array( $message) || is_object( $message ) ) {
+            error_log( print_r( $message, true ) );
+        } else {
+            error_log( $message );
+        }
+    }
+}

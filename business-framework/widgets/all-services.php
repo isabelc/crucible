@@ -31,7 +31,7 @@ class SmartestServices extends WP_Widget {
 		$service_category_term_id = isset( $instance['service_category'] ) ? $instance['service_category'] : '';
 		$service_category = !empty($service_category_term_id) ? $service_category_term_id : '';
 		
-		global $smartestthemes_options;
+		global $smartestthemes_options;// @test yes works
 		$sort = isset($smartestthemes_options['st_enable_service_sort']) ? $smartestthemes_options['st_enable_service_sort'] : '';
 
 		echo $before_widget;

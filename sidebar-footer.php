@@ -22,8 +22,7 @@
 		<?php endif;
 
 	} else { // no active dynamic footer sidebars, so hard code widgets
-
-		global $smartestthemes_options;
+		global $smartestthemes_options;// @test this one works
 		$ne = isset($smartestthemes_options['st_show_news']) ? $smartestthemes_options['st_show_news'] : '';
 		$se = isset($smartestthemes_options['st_show_services']) ? $smartestthemes_options['st_show_services'] : '';
 		$re = isset($smartestthemes_options['st_add_reviews']) ? $smartestthemes_options['st_add_reviews'] : '';
