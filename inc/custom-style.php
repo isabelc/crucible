@@ -221,5 +221,13 @@ if( empty($hide_tagline) ) {
 	}
 }
 
+echo get_option('smartestthemes_inline_font_css');// @test consider using this for brining in inline styles from enqueue.php, or else remove this line @todo
+
+// widget styles
+echo apply_filters( 'smartestthemes_widget_styles', NULL );
+
 // custom css from theme options
-echo $smartestthemes_options['st_custom_css']; ?></style>
+if ( isset($smartestthemes_options['st_custom_css']) ) {
+	echo $smartestthemes_options['st_custom_css'];
+} 
+?></style>

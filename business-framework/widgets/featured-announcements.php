@@ -18,12 +18,19 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 			__('Smartest Featured Announcements', 'crucible'),
 			array( 'description' => __( 'Display selected featured announcements.', 'crucible' ), )
 		);
-		add_action('wp_enqueue_scripts', array( $this, 'featnews_css' ) );
+		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css'), 40 );// @test
 	}
-	/* add css */
-	function featnews_css() {
-		wp_register_style('sfa', get_template_directory_uri().'/business-framework/widgets/sfa.css');
-	} 
+	
+	/** @test if loads
+	* Add CSS to custom-style.php
+	*/
+	public function add_css( $css ) {
+		$new_css = $css;
+		if ( get_option('st_show_news') == 'true' ) {
+			$new_css .= '.sfawrap{width:100%;overflow:hidden;position:relative;margin-bottom:3em}.sfafig{float:left;margin:0 20px 0 0}.sfafig img{border:0 none}.sfacontent{overflow:hidden;padding-right:15px}.sfacontent p{margin-bottom:15px;margin-left:0}';
+		}
+		return $new_css;
+	}
 
 	/**
 	 * Front-end display of widget.
@@ -37,7 +44,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 		$title = apply_filters('widget_title', $instance['title']);
 
 		echo $before_widget;
-		wp_enqueue_style('sfa');
+
 		if ( ! empty( $title ) )
 			echo '<h3 class="widget-title">'. $title . '</h3>';
 		

@@ -17,17 +17,20 @@ class SmartestStaff extends WP_Widget {
 			__('Smartest Staff List', 'crucible'),
 			array( 'description' => __( 'Display the full list of Staff members.', 'crucible' ), )
 		);
-		add_action('wp_enqueue_scripts', array( $this, 'staff_css' ) );
+		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css') );// @test
 	}
-
-	/**
-	 * Register stylesheet
-	 */
-	function staff_css() {
-		wp_register_style('sst',
-		get_template_directory_uri().'/business-framework/widgets/sst.css');
-	} 
-
+	
+	/** @test if loads
+	* Add CSS to custom-style.php
+	*/
+	public function add_css( $css ) {
+		$new_css = $css;
+		if ( get_option('st_show_staff') == 'true' ) {
+			$new_css .= '.widget_smartest_staff_list, .sstwrap {width: 100%;}.sstwrap {overflow: hidden;position: relative;margin-bottom: 1em;display: block;}.ssfig {float: left;margin: 0px 20px 0px 0px;}.sstcontent {padding-top: 20px;	display: inline;}';
+		}
+		return $new_css;
+	}
+	
 	/**
 	 * Front-end display of widget.
 	 * @param array $args     Widget arguments.
@@ -39,7 +42,7 @@ class SmartestStaff extends WP_Widget {
 		// these are our widget options
 		$title = apply_filters('widget_title', $instance['title']);
 		echo $before_widget;
-		wp_enqueue_style('sst');
+
 		if ( ! empty( $title ) )
 			echo '<h3 class="widget-title">'. $title . '</h3>';
 		/** 
