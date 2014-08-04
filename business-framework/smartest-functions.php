@@ -984,13 +984,13 @@ add_action('wp_enqueue_scripts', 'smartest_framework_enq');
  * Social Share Buttons
  */
 function smartestthemes_share() { ?>
-    <div id="smartshare"><a target="_blank" href="https://plus.google.com/share?url=<?php echo urlencode(get_permalink()); ?>" class="simple-share ss-gplus" title="Share on G+">G+ Share</a>
+    <div id="smartshare"><a target="_blank" href="https://plus.google.com/share?url=<?php echo urlencode(get_permalink()); ?>" class="simple-share ss-gplus" title="<?php _e( 'Share on G+', 'crucible' ); ?>"><?php _e( 'G+ Share', 'crucible' ); ?></a>
  
-<a target="_blank" href="https://twitter.com/share?text=<?php the_title_attribute(); ?>" class="simple-share ss-twitter" title="Tweet">Tweet</a>
+<a target="_blank" href="https://twitter.com/share?text=<?php the_title_attribute(); ?>" class="simple-share ss-twitter" title="<?php _e( 'Tweet', 'crucible' ); ?>"><?php _e( 'Tweet', 'crucible' ); ?></a>
  
-<a target="_blank" href="http://www.facebook.com/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" class="simple-share ss-facebook" title="Share on Facebook">Share</a>
+<a target="_blank" href="http://www.facebook.com/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" class="simple-share ss-facebook" title="<?php _e( 'Share on Facebook', 'crucible' ); ?>"><?php _e( 'Share', 'crucible' ); ?></a>
  
-<a href="http://www.pinterest.com/pin/create/button/?url=<?php echo urlencode(get_permalink()); ?>&media=<?php if(has_post_thumbnail()) echo wp_get_attachment_url(get_post_thumbnail_id()); ?>&description=<?php echo the_title_attribute('echo=0') . ' - ' . get_permalink(); ?>" class="simple-share ss-pinterest" target="_blank">Pin It</a>
+<a href="http://www.pinterest.com/pin/create/button/?url=<?php echo urlencode(get_permalink()); ?>&media=<?php if(has_post_thumbnail()) echo wp_get_attachment_url(get_post_thumbnail_id()); ?>&description=<?php echo the_title_attribute('echo=0') . ' - ' . get_permalink(); ?>" class="simple-share ss-pinterest" target="_blank"><?php _e( 'Pin it', 'crucible' ); ?></a>
      </div>
 <?php
  
