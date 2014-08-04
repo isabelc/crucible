@@ -383,7 +383,7 @@ $options[] = array( 'name' => __( 'Your Email', 'crucible' ),
 		'std' => '',
 		'type' => 'text');
 $options[] = array( 'name' => __( 'Show "From:" Your Visitor', 'crucible' ),
-		'desc' => sprintf(__( 'Check this box if you want the %1$s"From:"%2$s in the email header to be the name and email of the visitor. Please note that some web hosts, such as DreamHost and BlueHost, will not send these messages. (GoDaddy hosting is okay with this option.) Test this option after you enable it. If left unchecked, the default is "From" your email setting from above.','smartestb' ), '<strong>', '</strong>'),
+		'desc' => sprintf(__( 'Check this box if you want the %1$s"From:"%2$s in the email header to be the name and email of the visitor. Please note that some web hosts, such as DreamHost and BlueHost, will not send these messages. (GoDaddy hosting is okay with this option.) Test this option after you enable it. If left unchecked, the default is "From" your email setting from above.','crucible' ), '<strong>', '</strong>'),
 		'id' => $shortname.'_contactform_header_from',
 		'std' => 'false',
 		'type' => 'checkbox');

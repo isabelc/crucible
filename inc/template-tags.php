@@ -174,20 +174,20 @@ if ( ! function_exists( 'crucible_staff_social_buttons' ) ) :
 			return;
 		}
 		if ($tw) {
-			$output .= '<li><a class="social-staff-twitter" target="_blank" href="https://twitter.com/' . $tw . '" title="' . __('Twitter', 'smartestb' ) . '"><i class="fa fa-twitter-square fa-2x"></i></a></li>';
+			$output .= '<li><a class="social-staff-twitter" target="_blank" href="https://twitter.com/' . $tw . '" title="' . __('Twitter', 'crucible' ) . '"><i class="fa fa-twitter-square fa-2x"></i></a></li>';
 		} 
 		if ($goo) {
-			$output .= '<li><a class="social-staff-gplus" target="_blank" href="https://plus.google.com/' . $goo . '" rel="publisher" title="' . __('Google Plus', 'smartestb' ) . '"><i class="fa fa-google-plus-square fa-2x"></i></a></li>';
+			$output .= '<li><a class="social-staff-gplus" target="_blank" href="https://plus.google.com/' . $goo . '" rel="publisher" title="' . __('Google Plus', 'crucible' ) . '"><i class="fa fa-google-plus-square fa-2x"></i></a></li>';
 		} 
 		if ($fa) {
-			$output .= '<li><a class="social-staff-facebook" target="_blank" href="https://facebook.com/' . $fa . '" title="' . __('Facebook', 'smartestb' ) . '"><i class="fa fa-facebook-square fa-2x"></i></a></li>';
+			$output .= '<li><a class="social-staff-facebook" target="_blank" href="https://facebook.com/' . $fa . '" title="' . __('Facebook', 'crucible' ) . '"><i class="fa fa-facebook-square fa-2x"></i></a></li>';
 		} 
 		if ($li) {
-			$output .= '<li><a class="social-staff-linkedin" target="_blank" href="https://linkedin.com/' . $li . '" title="' . __('Linkedin', 'smartestb' ) . '"><i class="fa fa-linkedin-square fa-2x"></i></a></li>';
+			$output .= '<li><a class="social-staff-linkedin" target="_blank" href="https://linkedin.com/' . $li . '" title="' . __('Linkedin', 'crucible' ) . '"><i class="fa fa-linkedin-square fa-2x"></i></a></li>';
 		}
 		
 		if ($in) {
-			$output .= '<li><a class="social-staff-instagram" target="_blank" href="http://instagram.com/' . $in . '" title="' . __('Instagram', 'smartestb' ) . '"><i class="fa fa-instagram fa-2x"></i></a></li>';
+			$output .= '<li><a class="social-staff-instagram" target="_blank" href="http://instagram.com/' . $in . '" title="' . __('Instagram', 'crucible' ) . '"><i class="fa fa-instagram fa-2x"></i></a></li>';
 		}
 
 		$output .= '</ul></div>';
