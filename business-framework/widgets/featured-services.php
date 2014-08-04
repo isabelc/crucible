@@ -21,7 +21,7 @@ class SmartestFeaturedServices extends WP_Widget {
 		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css'), 25 );
 	}
 	
-	/** @test if loads
+	/**
 	* Add CSS to custom-style.php
 	*/
 	public function add_css( $css ) {
@@ -122,7 +122,7 @@ class SmartestFeaturedServices extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] ? __( 'Featured Services', 'crucible' );
+		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] : __( 'Featured Services', 'crucible' );
     	?>
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'crucible' ); ?></label> 

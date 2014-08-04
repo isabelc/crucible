@@ -82,7 +82,7 @@ class SmartestReviewsTestimonial extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] ? __( 'Testimonials', 'crucible' );
+		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] : __( 'Testimonials', 'crucible' );
 		$number = isset( $instance[ 'number' ] ) ? $instance[ 'number' ] : 1;
 		?>
 		<p>
