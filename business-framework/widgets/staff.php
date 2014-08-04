@@ -57,10 +57,10 @@ class SmartestStaff extends WP_Widget {
 				$sbfstaff->the_post(); ?>
 				<div class="sstwrap">
 				<?php if ( has_post_thumbnail() ) { ?>
-					<figure class="ssfig"><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>"><?php the_post_thumbnail( 'staffwidget' ); ?></a></figure>
+					<figure class="ssfig"><a href="<?php echo get_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail( 'staffwidget' ); ?></a></figure>
 				<?php } ?>
 				<div class="sstcontent">
-				<h5><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>"><?php echo get_the_title(); ?></a></h5></div></div>
+				<h5><a href="<?php echo get_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php echo get_the_title(); ?></a></h5></div></div>
 			<?php }
 		}
 		wp_reset_postdata();

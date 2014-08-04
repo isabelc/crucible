@@ -77,20 +77,19 @@ class SmartestFeaturedServices extends WP_Widget {
 				);
 
 		}
-
 		$sbffs = new WP_Query( $args );
 		if ( $sbffs->have_posts() ) {
 			while ( $sbffs->have_posts() ) {
 				$sbffs->the_post(); ?>
 				<div class="sfswrap">
 				<?php if ( has_post_thumbnail() ) { ?>
-					<figure class="sfsfig"><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>">
+					<figure class="sfsfig"><a href="<?php echo get_permalink(); ?>" title="<?php the_title_attribute(); ?>">
 					<?php the_post_thumbnail( 'featservices' ); ?>
 					</a></figure>
 				<?php } ?>
 				
 				<div class="sfscontent">
-					<h4><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>"><?php echo get_the_title(); ?></a></h4>
+					<h4><a href="<?php echo get_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php echo get_the_title(); ?></a></h4>
 					<?php echo get_the_excerpt(); ?>
 				</div>
 				</div>

@@ -41,18 +41,18 @@ class SmartestAnnouncements extends WP_Widget {
 			'post_type' => 'smartest_news',
 			'order' => 'DESC' );
 		$sbfnews = new WP_Query( $args );
-		if ( $sbfnews->have_posts() ) {
-			echo '<ul>';
-			while ( $sbfnews->have_posts() ) {
-				$sbfnews->the_post();
-				echo '<li><a href="'.get_permalink().'" title="'.get_the_title().'">'.the_title_attribute( 'echo=0' ).'</a><br />';
-				$datetime = get_the_date('Y-m-d');
-				printf ( '<time datetime="%s">%s</time>', $datetime, get_the_date() );
-				echo '</li>';	
+		if ( $sbfnews->have_posts() ) { ?>
+			<ul>
+			<?php while ( $sbfnews->have_posts() ) {
+				$sbfnews->the_post(); ?>
+				<li><a href="<?php echo get_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php echo get_the_title(); ?></a><br />
+				<?php $datetime = get_the_date('Y-m-d');
+				printf ( '<time datetime="%s">%s</time>', $datetime, get_the_date() ); ?>
+				</li>
 		 
-			} // endwhile
-			echo '</ul>';
-			$li = '<a href="'.get_post_type_archive_link( 'smartest_news' ).'">'. __('All Announcements', 'crucible'). '</a>';
+			<?php } ?>
+			</ul>
+			<?php $li = '<a href="'.get_post_type_archive_link( 'smartest_news' ).'">'. __('All Announcements', 'crucible'). '</a>';
 			?> <p><?php printf(__( '%s', 'crucible'), $li); ?></p>
 
 	<?php } else {

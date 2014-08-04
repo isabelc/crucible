@@ -59,7 +59,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 				$sbffa->the_post(); ?>
 				<div class="sfawrap">
 				<?php if ( has_post_thumbnail() ) { ?>
-					<figure class="sfafig"><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>">
+					<figure class="sfafig"><a href="<?php echo get_permalink(); ?>" title="<?php the_title_attribute(); ?>">
 					<?php the_post_thumbnail( 'newswidget' ); ?>
 					</a></figure>
 				<?php } else {
@@ -67,14 +67,14 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 
 					if(get_option('st_stop_theme_icon') != 'true') { ?>
 
-						<a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>" class="sfafig"><div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div></a>
+						<a href="<?php echo get_permalink(); ?>" title="<?php the_title_attribute(); ?>" class="sfafig"><div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div></a>
 					<?php }
 				} ?>
 					
 			<div class="sfacontent">
-				<h4><a href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>"><?php echo get_the_title(); ?></a></h4>
+				<h4><a href="<?php echo get_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php echo get_the_title(); ?></a></h4>
 				<p><?php echo get_the_excerpt(); ?></p>
-				<a class="button" href="<?php echo get_permalink(); ?>" title="<?php echo the_title_attribute(); ?>">
+				<a class="button" href="<?php echo get_permalink(); ?>" title="<?php the_title_attribute(); ?>">
 				<?php _e( 'Read More', 'crucible' ); ?></a>
 			</div></div>
 		 

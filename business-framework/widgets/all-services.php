@@ -111,14 +111,14 @@ class SmartestServices extends WP_Widget {
 
 		$sbfservices = new WP_Query( $args );
 
-		if ( $sbfservices->have_posts() ) {
-			echo '<ul class="serviceslist">';
-			while ( $sbfservices->have_posts() ) {
-				$sbfservices->the_post();
-				echo '<li><a href="'.get_permalink().'" title="'.the_title_attribute( 'echo=0' ).'">'.get_the_title().'</a></li>';
-			} // endwhile
-			echo '</ul>';
-		} // endif
+		if ( $sbfservices->have_posts() ) { ?>
+			<ul class="serviceslist">
+			<?php while ( $sbfservices->have_posts() ) {
+				$sbfservices->the_post(); ?>
+				<li><a href="<?php echo get_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php echo get_the_title(); ?></a></li>
+			<?php } ?>
+			</ul>
+		<?php }
 		wp_reset_postdata();
 		echo $after_widget;
 	}// end widget
