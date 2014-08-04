@@ -30,7 +30,6 @@ class SmartestStaff extends WP_Widget {
 
 	/**
 	 * Front-end display of widget.
-	 *
 	 * @param array $args     Widget arguments.
 	 * @param array $instance Saved values from database.
 	 */
@@ -56,20 +55,20 @@ class SmartestStaff extends WP_Widget {
 		if ( $sbfstaff->have_posts() ) {
 			while ( $sbfstaff->have_posts() ) {
 				$sbfstaff->the_post();
-				echo '<div id="sstwrap">';
+				echo '<div class="sstwrap">';
 
 				if ( has_post_thumbnail() ) {
 
 				$thumb = get_post_thumbnail_id(); 
 				$smallimage = vt_resize( $thumb, '', 48, 72, false); ?>
-				<figure id="ssfig">
+				<figure class="ssfig">
 				<?php echo '<a href="'.get_permalink().'" title="'.get_the_title().'">'; ?>
 				<img src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" />
 </a>
 </figure>
 <?php } ?>
 
-	<div id="sstcontent">
+	<div class="sstcontent">
 <?php echo '<h5><a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_title().'</a></h5></div></div>';
 				} // endwhile;
 		}// endif
@@ -81,12 +80,8 @@ class SmartestStaff extends WP_Widget {
 
 	/**
 	 * Sanitize widget form values as they are saved.
-	 *
-	 * @see WP_Widget::update()
-	 *
 	 * @param array $new_instance Values just sent to be saved.
 	 * @param array $old_instance Previously saved values from database.
-	 *
 	 * @return array Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
@@ -97,7 +92,6 @@ class SmartestStaff extends WP_Widget {
 
 	/**
 	 * Back-end widget form.
-	 * @see WP_Widget::form()
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {

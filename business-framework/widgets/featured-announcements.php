@@ -27,7 +27,6 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 
 	/**
 	 * Front-end display of widget.
-	 *
 	 * @param array $args     Widget arguments.
 	 * @param array $instance Saved values from database.
 	 */
@@ -58,11 +57,11 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 		if ( $sbffa->have_posts() ) {
 			while ( $sbffa->have_posts() ) {
 				$sbffa->the_post();
-				echo '<div id="sfawrap">';
+				echo '<div class="sfawrap">';
 			if ( has_post_thumbnail() ) {
 			$thumb = get_post_thumbnail_id();
 			$smallimage = vt_resize( $thumb, '', 40, 65, true);
-			echo '<figure id="sfafig"><a href="'.get_permalink().'" title="'.get_the_title().'">';
+			echo '<figure class="sfafig"><a href="'.get_permalink().'" title="'.get_the_title().'">';
 			?>
 			<img class="thumb" src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" />
 		<?php echo '</a></figure>';
@@ -76,7 +75,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 
 		}
 					
-		echo '<div id="sfacontent">';
+		echo '<div class="sfacontent">';
 			echo '<h4><a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_title().'</a></h4>';
 				echo '<p>'. get_the_excerpt(). '</p>';
 					echo '<a class="button" href="'.get_permalink().'" title="'.get_the_title().'">Read More</a>';
@@ -102,12 +101,8 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 
 	/**
 	 * Sanitize widget form values as they are saved.
-	 *
-	 * @see WP_Widget::update()
-	 *
 	 * @param array $new_instance Values just sent to be saved.
 	 * @param array $old_instance Previously saved values from database.
-	 *
 	 * @return array Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
@@ -118,9 +113,6 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 
 	/**
 	 * Back-end widget form.
-	 *
-	 * @see WP_Widget::form()
-	 *
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
