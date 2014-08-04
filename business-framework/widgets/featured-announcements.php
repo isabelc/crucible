@@ -61,24 +61,24 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 				if ( has_post_thumbnail() ) {
 					$thumb = get_post_thumbnail_id();
 					$smallimage = vt_resize( $thumb, '', 40, 65, true);
-					echo '<figure class="sfafig"><a href="'.get_permalink().'" title="'.get_the_title().'">';
+					echo '<figure class="sfafig"><a href="'.get_permalink().'" title="'.the_title_attribute( 'echo=0' ).'">';
 					?>
-					<img class="thumb" src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" />
+					<img src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" />
 					<?php echo '</a></figure>';
 				} else {
 					// if not stopped with option
 
 					if(get_option('st_stop_theme_icon') != 'true') {
 
-						echo '<a href="'.get_permalink().'" title="'.get_the_title().'" class="sfafig"><div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div></a>';
+						echo '<a href="'.get_permalink().'" title="'. the_title_attribute( 'echo=0' ) .'" class="sfafig"><div class="newsicon"><i class="fa fa-bullhorn fa-3x"></i></div></a>';
 					}
 
 				}
 					
 		echo '<div class="sfacontent">';
-			echo '<h4><a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_title().'</a></h4>';
+			echo '<h4><a href="'.get_permalink().'" title="'. the_title_attribute( 'echo=0' ) .'">'.get_the_title().'</a></h4>';
 				echo '<p>'. get_the_excerpt(). '</p>';
-					echo '<a class="button" href="'.get_permalink().'" title="'.get_the_title().'">Read More</a>';
+					echo '<a class="button" href="'.get_permalink().'" title="'. the_title_attribute( 'echo=0' ) .'">Read More</a>';
 		echo '</div>';
 		echo '</div>';	
 		 

@@ -58,18 +58,17 @@ class SmartestStaff extends WP_Widget {
 				echo '<div class="sstwrap">';
 
 				if ( has_post_thumbnail() ) {
+					$thumb = get_post_thumbnail_id(); 
+					$smallimage = vt_resize( $thumb, '', 48, 72, false); ?>
+					<figure class="ssfig">
+					<?php echo '<a href="'.get_permalink().'" title="'.the_title_attribute( 'echo=0' ).'">'; ?>
+					<img src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" />
+					</a>
+					</figure>
+				<?php } ?>
 
-				$thumb = get_post_thumbnail_id(); 
-				$smallimage = vt_resize( $thumb, '', 48, 72, false); ?>
-				<figure class="ssfig">
-				<?php echo '<a href="'.get_permalink().'" title="'.get_the_title().'">'; ?>
-				<img src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" />
-</a>
-</figure>
-<?php } ?>
-
-	<div class="sstcontent">
-<?php echo '<h5><a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_title().'</a></h5></div></div>';
+			<div class="sstcontent">
+			<?php echo '<h5><a href="'.get_permalink().'" title="'. the_title_attribute( 'echo=0' ) .'">'.get_the_title().'</a></h5></div></div>';
 				} // endwhile;
 		}// endif
 		wp_reset_postdata();
