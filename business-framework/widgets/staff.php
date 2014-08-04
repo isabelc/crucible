@@ -62,7 +62,7 @@ class SmartestStaff extends WP_Widget {
 					$smallimage = vt_resize( $thumb, '', 48, 72, false); ?>
 					<figure class="ssfig">
 					<?php echo '<a href="'.get_permalink().'" title="'.the_title_attribute( 'echo=0' ).'">'; ?>
-					<img src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" />
+					<img src="<?php echo $smallimage['url']; ?>" width="<?php echo $smallimage['width']; ?>" height="<?php echo $smallimage['height']; ?>" alt="<?php the_title_attribute(); ?>" title="<?php the_title_attribute(); ?>" />
 					</a>
 					</figure>
 				<?php } ?>
