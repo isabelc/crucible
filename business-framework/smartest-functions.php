@@ -484,38 +484,25 @@ function smart_attach_external_image( $url = null, $post_id = null, $post_data =
 	
 	    return $att_id;
 }
-
 /**
- * Apply custom title labels to menu
- */
+* Filter the custom menu labels to apply custom text for fallback menu items.
+*/
+// filter the Services menu label to apply custom text
 function custom_smartestthemes_services_menu_label() {
-	// if custom title entered
-	global $smartestthemes_options;// @test yes it works
-	if ( $smartestthemes_options['st_business_servicesmenulabel'] != '' ) {
-		$custom = stripslashes($smartestthemes_options['st_business_servicesmenulabel']);
-	} else { 
-		$custom = __( 'Services', 'crucible' );
-	}
+	global $smartestthemes_options;
+	$custom = empty($smartestthemes_options['st_business_servicesmenulabel']) ? __('Services', 'crucible') : stripslashes($smartestthemes_options['st_business_servicesmenulabel']);
 	return $custom;
 }
+// filter the Staff menu label to apply custom text
 function custom_smartestthemes_staff_menu_label() {
-	// if custom title entered
-	global $smartestthemes_options;// @test yes it works
-	if ($smartestthemes_options['st_business_staffmenulabel'] != '') {
-		$custom = stripslashes($smartestthemes_options['st_business_staffmenulabel']);
-	} else { 
-		$custom = __('Staff', 'crucible');
-	}
+	global $smartestthemes_options;
+	$custom = empty($smartestthemes_options['st_business_staffmenulabel']) ? __('Staff', 'crucible') : stripslashes($smartestthemes_options['st_business_staffmenulabel']);
 	return $custom;
 }
+// filter the News menu label to apply custom text
 function custom_smartestthemes_news_menu_label() {
-	// if custom title entered
-	global $smartestthemes_options;// @test yes it works
-	if ($smartestthemes_options['st_business_newsmenulabel'] != '') {
-		$custom = stripslashes($smartestthemes_options['st_business_newsmenulabel']);
-	} else { 
-		$custom = __('News', 'crucible');
-	}
+	global $smartestthemes_options;
+	$custom = empty($smartestthemes_options['st_business_newsmenulabel']) ? __('News', 'crucible') : stripslashes($smartestthemes_options['st_business_newsmenulabel']);
 	return $custom;
 }
 add_filter( 'smartestthemes_services_menu_label', 'custom_smartestthemes_services_menu_label' );
@@ -529,7 +516,6 @@ add_filter( 'smartestthemes_news_menu_label', 'custom_smartestthemes_news_menu_l
 add_filter( 'cmb_meta_boxes', 'smartestthemes_metaboxes' );
 /**
  * Define the metabox and field configurations.
- *
  * @param  array $meta_boxes
  * @return array
  */
@@ -1103,7 +1089,7 @@ add_filter( 'wp_title', 'smartestthemes_wp_title', 10, 2 );
 */
 
 function smartestthemes_head_meta() {
-	global $smartestthemes_options;// @test yes works
+	global $smartestthemes_options;
 	if (isset($smartestthemes_options['st_disable_seo']) ) {
 		if( $smartestthemes_options['st_disable_seo'] == 'true' ) {// @test
 			return;

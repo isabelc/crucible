@@ -247,25 +247,31 @@ endif;
  */
 function crucible_contact_info() {
 	global $smartestthemes_options;// @test yes, it works
-	$output = '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['st_business_itemtype']. '"><p><strong itemprop="name">';
-	$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
-	if($bn) {
-		$output .= $bn;
-	} else {
-		$output .= get_bloginfo('name');
-	}
-	$output .= '</strong></p><p class="main-address"><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . $smartestthemes_options['st_address_street'] . '</span>&nbsp; ' . $smartestthemes_options['st_address_suite'] . '<br /><span itemprop="addressLocality"> ' . $smartestthemes_options['st_address_city'] . '</span>';
-	if ( $smartestthemes_options['st_address_city'] && $smartestthemes_options['st_address_state'] ) {
+	
+	$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
+	$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
+	$street = empty($smartestthemes_options['st_address_street']) ? '' : $smartestthemes_options['st_address_street'];
+	$city = empty($smartestthemes_options['st_address_city']) ? '' : $smartestthemes_options['st_address_city'];
+	$state = empty($smartestthemes_options['st_address_state']) ? '' : $smartestthemes_options['st_address_state'];
+	$zip = empty($smartestthemes_options['st_address_zip']) ? '' : $smartestthemes_options['st_address_zip'];
+	$country = empty($smartestthemes_options['st_address_country']) ? '' : $smartestthemes_options['st_address_country'];
+	$suite = empty($smartestthemes_options['st_address_suite']) ? '' : $smartestthemes_options['st_address_suite'];
+	$phone = empty($smartestthemes_options['st_phone_number']) ? '' : $smartestthemes_options['st_phone_number'];
+	$fax = empty($smartestthemes_options['st_fax_numb']) ? '' : $smartestthemes_options['st_fax_numb'];
+	$show_email = empty($smartestthemes_options['st_show_contactemail']) ? '' : $smartestthemes_options['st_show_contactemail'];
+	
+	$output = '<div itemscope itemtype="http://schema.org/'.$schema. '"><p><strong itemprop="name">' . $bn . '</strong></p><p class="main-address"><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . $street . '</span>&nbsp; ' . $suite . '<br /><span itemprop="addressLocality"> ' . $city . '</span>';
+	if ( $city && $state ) {
 		$output .= ', ';
 	}
-	$output .= '<span itemprop="addressRegion">' . $smartestthemes_options['st_address_state'] . '</span>&nbsp;<span temprop="postalCode">' . $smartestthemes_options['st_address_zip'] . '</span>&nbsp; ' . $smartestthemes_options['st_address_country'] . '</span>	&nbsp;<br />';
-	if ( $smartestthemes_options['st_phone_number'] ) {
-		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. $smartestthemes_options['st_phone_number']. '</span> &nbsp;';
+	$output .= '<span itemprop="addressRegion">' . $state . '</span>&nbsp;<span temprop="postalCode">' . $zip . '</span>&nbsp; ' . $country . '</span>	&nbsp;<br />';
+	if ( $phone ) {
+		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. $phone . '</span> &nbsp;';
 	}
-	if ( $smartestthemes_options['st_fax_numb'] ) {
-	$output .= '<br /><span class="strong">' . __('FAX:', 'crucible') . '</span>&nbsp;  <span itemprop="faxNumber">' . $smartestthemes_options['st_fax_numb'] . '</span>&nbsp;';
+	if ( $fax ) {
+	$output .= '<br /><span class="strong">' . __('FAX:', 'crucible') . '</span>&nbsp;  <span itemprop="faxNumber">' . $fax . '</span>&nbsp;';
 	} 
-	if ( $smartestthemes_options['st_show_contactemail'] == 'true' ) {
+	if ( $show_email == 'true' ) {
 	$output .= '<br /><span class="strong">' . __('Email:', 'crucible') . '</span>&nbsp;<a href="mailto:' . get_bloginfo('admin_email') . '"><span itemprop="email">' . get_bloginfo('admin_email') . '</span></a>';
 	}
 	$output .= '</p></div>';
@@ -291,6 +297,7 @@ function crucible_logo() {
 	global $smartestthemes_options;// @test this one works
 	$name = get_bloginfo('name');
 	$description = get_bloginfo('description');
+	$increase_logo = empty($smartestthemes_options['increase_logo']) ? '' : $smartestthemes_options['increase_logo'];
 	$bn = stripslashes(esc_attr($smartestthemes_options['st_business_name']));
 	if(!$bn) { 
 		$bn = $name;
@@ -307,7 +314,7 @@ function crucible_logo() {
 	
 	if ( $custom_logo ) {
 		// there is a logo
-		if ( $smartestthemes_options['increase_logo'] ) {
+		if ( $increase_logo ) {
 			// custom height is set, use full size image which is resized with CSS
 			$src = $custom_logo;
 		} else {
@@ -342,14 +349,18 @@ add_action('crucible_logo', 'crucible_logo');
  */
 function crucible_social_buttons() {
 	global $smartestthemes_options;// @test this one works
-	$tw = $smartestthemes_options['st_business_twitter'];
-	$goo = $smartestthemes_options['st_business_gplus'];
-	$fa = $smartestthemes_options['st_business_facebook'];
-	$yo = $smartestthemes_options['st_business_youtube'];
-	$li = $smartestthemes_options['st_business_linkedin'];
-	$in = $smartestthemes_options['st_business_instagram'];
-	$pi = $smartestthemes_options['st_business_pinterest'];
-
+	$tw = empty( $smartestthemes_options['st_business_twitter'] ) ? '' : $smartestthemes_options['st_business_twitter'] );
+	$goo = empty( $smartestthemes_options['st_business_gplus'] ) ? '' : $smartestthemes_options['st_business_gplus'] );
+	$fa = empty( $smartestthemes_options['st_business_facebook'] ) ? '' : $smartestthemes_options['st_business_facebook'] );
+	$yo = empty( $smartestthemes_options['st_business_youtube'] ) ? '' : $smartestthemes_options['st_business_youtube'] );
+	$li = empty( $smartestthemes_options['st_business_linkedin'] ) ? '' : $smartestthemes_options['st_business_linkedin'] );
+	$in = empty( $smartestthemes_options['st_business_instagram'] ) ? '' : $smartestthemes_options['st_business_instagram'] );
+	$pi = empty( $smartestthemes_options['st_business_pinterest'] ) ? '' : $smartestthemes_options['st_business_pinterest'] );
+	$social_url_1 = empty($smartestthemes_options['st_business_socialurl1']) ? '' : $smartestthemes_options['st_business_socialurl1'];
+	$social_url_2 = empty($smartestthemes_options['st_business_socialurl2']) ? '' : $smartestthemes_options['st_business_socialurl2'];
+	$label1 = empty($smartestthemes_options['st_business_sociallabel1']) ? '' : $smartestthemes_options['st_business_sociallabel1'];
+	$label2 = emtpy($smartestthemes_options['st_business_sociallabel2']) ? '' : $smartestthemes_options['st_business_sociallabel2'];
+	
 	// don't do unless at least one is entered
 	if( $tw || $goo || $fa || $yo || $li || $in || $pi ) {
 		$output = '<div class="social">';
@@ -377,11 +388,11 @@ function crucible_social_buttons() {
 	$output .= '</ul></div><!-- .social -->';
 
 	// extra social links
-	if ( $smartestthemes_options['st_business_socialurl1'] ) {
-		$output .= '<br /><a href="' . $smartestthemes_options['st_business_socialurl1'] . '" target="_blank" rel="nofollow" title="' . __( 'Connect', 'crucible' ) . '">' . $smartestthemes_options['st_business_sociallabel1'] . '</a>';
+	if ( $social_url_1 ) {
+		$output .= '<br /><a href="' . $social_url_1 . '" target="_blank" rel="nofollow" title="' . __( 'Connect', 'crucible' ) . '">' . $label1 . '</a>';
 	} 
-	if ( $smartestthemes_options['st_business_socialurl2'] ) {
-		$output .= '&nbsp;  <a href="' . $smartestthemes_options['st_business_socialurl2'] . '" title="' . __('Connect', 'crucible' ) . '" target="_blank" rel="nofollow">' . $smartestthemes_options['st_business_sociallabel2'] . '</a>';
+	if ( $social_url_2 ) {
+		$output .= '&nbsp;  <a href="' . $social_url_2 . '" title="' . __('Connect', 'crucible' ) . '" target="_blank" rel="nofollow">' . $label2 . '</a>';
 	}
 	echo $output;
 }

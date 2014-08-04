@@ -27,7 +27,7 @@
 	</div><!-- .entry-content -->
 	<?php edit_post_link( __( 'Edit', 'crucible' ), '<footer class="entry-footer"><span class="edit-link">', '</span></footer>' );
 	if ( isset( $smartestthemes_options['st_stop_smartshare'] ) ) {
-		if($smartestthemes_options['st_stop_smartshare'] == 'false') {
+		if ( $smartestthemes_options['st_stop_smartshare'] != 'true') {
 			echo smartestthemes_share();
 		}
 	} ?>

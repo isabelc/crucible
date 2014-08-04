@@ -283,47 +283,46 @@ class SMARTESTReviewsBusiness {
 	*/
 	function aggregate_footer_business_prefix() {
 		global $smartestthemes_options;
-		$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $smartestthemes_options['st_business_itemtype'] . '"';
+		$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
+		$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
+		$street = empty($smartestthemes_options['st_address_street']) ? '' : $smartestthemes_options['st_address_street'];
+		$city = empty($smartestthemes_options['st_address_city']) ? '' : $smartestthemes_options['st_address_city'];
+		$state = empty($smartestthemes_options['st_address_state']) ? '' : $smartestthemes_options['st_address_state'];
+		$zip = empty($smartestthemes_options['st_address_zip']) ? '' : $smartestthemes_options['st_address_zip'];
+		$country = empty($smartestthemes_options['st_address_country']) ? '' : $smartestthemes_options['st_address_country'];
+		$suite = empty($smartestthemes_options['st_address_suite']) ? '' : $smartestthemes_options['st_address_suite'];
+		$phone = empty($smartestthemes_options['st_phone_number']) ? '' : $smartestthemes_options['st_phone_number'];
+		$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $schema . '"';
 		$aggregate_rating_prefix = '<div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
-		$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
-		if(!$bn) {
-			$bn = get_bloginfo('name');
-		}
 		$aggregate_rating_prefix .= '<a href="' . site_url('/')
  . '"><span itemprop="name" id="agg-rating-bn">' . $bn . '</span></a><br />';
-		if ( $smartestthemes_options['st_address_street'] != '' || 
-							$smartestthemes_options['st_address_city'] != '' ||
-							$smartestthemes_options['st_address_state'] != '' ||
-							$smartestthemes_options['st_address_zip'] != '' ||
-							$smartestthemes_options['st_address_country'] != ''
-			) {
-					$aggregate_rating_prefix .= '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" id="agg-rating-postal">';
-					if ($smartestthemes_options['st_address_street'] != '') {
-						$aggregate_rating_prefix .= '<span itemprop="streetAddress" id="agg-rating-street">' . $smartestthemes_options['st_address_street'] . '</span>&nbsp;';
-					}
+ 
+		if ( $street || $city || $state || $zip || $country ) {
+			$aggregate_rating_prefix .= '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" id="agg-rating-postal">';
+			if ($street) {
+						$aggregate_rating_prefix .= '<span itemprop="streetAddress" id="agg-rating-street">' . $street . '</span>&nbsp;';
+			}
 
-					if ($smartestthemes_options['st_address_suite'] != '') {
-						$aggregate_rating_prefix .= ' ' . $smartestthemes_options['st_address_suite'] . '&nbsp;';
-					}
-                    if ($smartestthemes_options['st_address_city'] != '') {
-	                        $aggregate_rating_prefix .='<span itemprop="addressLocality" id="agg-rating-city">' . $smartestthemes_options['st_address_city'] . '</span>,&nbsp;';
-                    }
-                    if ($smartestthemes_options['st_address_state'] != '') {
-			                        $aggregate_rating_prefix .='<span itemprop="addressRegion" id="agg-rating-state">' . $smartestthemes_options['st_address_state'] . '</span>,&nbsp;';
-			                    }
-			                    if ($smartestthemes_options['st_address_zip'] != '') {
-			                        $aggregate_rating_prefix .='<span class="postal-code" itemprop="postalCode">' . $smartestthemes_options['st_address_zip'] . '</span>&nbsp;';
-			                    }
-			                    if ($smartestthemes_options['st_address_country'] != '') {
-			                        $aggregate_rating_prefix .='<span itemprop="addressCountry" id="agg-rating-country">' . $smartestthemes_options['st_address_country'] . '</span>&nbsp;';
-			                    }
-			
-			                    $aggregate_rating_prefix .= '</span>';
-			                }
-			
-			                if ( $smartestthemes_options['st_phone_number'] != '') {
-			                    $aggregate_rating_prefix .= '<br /><span itemprop="telephone" id="agg-rating-telephone">' . $smartestthemes_options['st_phone_number'] . '</span>';
-			                }
+			if ($suite) {
+				$aggregate_rating_prefix .= ' ' . $suite . '&nbsp;';
+			}
+			if ($city) {
+				$aggregate_rating_prefix .='<span itemprop="addressLocality" id="agg-rating-city">' . $city . '</span>,&nbsp;';
+			}
+			if ($state) {
+				$aggregate_rating_prefix .='<span itemprop="addressRegion" id="agg-rating-state">' . $state . '</span>,&nbsp;';
+			}
+			if ($zip) {
+				$aggregate_rating_prefix .='<span class="postal-code" itemprop="postalCode">' . $zip . '</span>&nbsp;';
+			}
+			if ($country) {
+				$aggregate_rating_prefix .='<span itemprop="addressCountry" id="agg-rating-country">' . $country . '</span>&nbsp;';
+			}
+			$aggregate_rating_prefix .= '</span>';
+		}
+		if ( $phone) {
+			$aggregate_rating_prefix .= '<br /><span itemprop="telephone" id="agg-rating-telephone">' . $phone . '</span>';
+		}
 		return $aggregate_rating_prefix;
 	}
 	
@@ -474,6 +473,10 @@ class SMARTESTReviewsBusiness {
         }
     }
     function output_reviews_show($inside_div, $perpage, $max, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
+	
+	/* @todo do the isset() to prevent E notice warnings here for all smartestthemes_options below !!!!! */
+	
+	
         if ($max != -1) {
             $thispage = 1;
         } else {

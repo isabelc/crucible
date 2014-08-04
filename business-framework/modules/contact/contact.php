@@ -88,6 +88,7 @@ function stcf_input_filter() {
 
 	global $smartestthemes_options, $stcf_strings;
 	$pass  = true;
+	
 	if(empty($_POST['smartestthemes_contactform_name'])) {
 		$pass = FALSE;
 		$fail = 'empty';
@@ -98,7 +99,10 @@ function stcf_input_filter() {
 		$fail = 'empty';
 		$stcf_strings['email'] = '<input class="smartestthemes_contactform_error" name="smartestthemes_contactform_email" id="smartestthemes_contactform_email" type="text" size="33" maxlength="99" value="'. htmlentities($_POST['smartestthemes_contactform_email']) .'" placeholder="Your email" />';
 	}
-	if ($smartestthemes_options['st_contactform_captcha'] == 'true') {
+	
+	$captcha = empty($smartestthemes_options['st_contactform_captcha']) ? '' : $smartestthemes_options['st_contactform_captcha'];
+		
+	if ( $captcha == 'true') {
 		if (empty($_POST['stcf_response'])) {
 			$pass = FALSE; 
 			$fail = 'empty';
@@ -115,7 +119,10 @@ function stcf_input_filter() {
 		$fail = 'empty';
 		$stcf_strings['message'] = '<textarea class="smartestthemes_contactform_error" name="stcf_message" id="stcf_message" cols="33" rows="7" placeholder="Your message">'. $_POST['stcf_message'] .'</textarea>';
 	}
-	if ($smartestthemes_options['st_contactform_required_phone'] == 'true') {
+	
+	$require_phone	= empty($smartestthemes_options['st_contactform_required_phone']) ? '' : $smartestthemes_options['st_contactform_required_phone'];
+		
+	if ($require_phone == 'true') {
 		if (empty($_POST['stcf_phone'])) {
 			$pass = FALSE; 
 			$fail = 'empty';
@@ -132,10 +139,8 @@ function stcf_input_filter() {
 		if($fail == 'malicious') {
 			$stcf_strings['error'] = '<p class="st-error">' . __( 'Please do not include any of the following in the Name or Email fields: linebreaks, or the phrases "mime-version", "content-type", "cc:" or "to:"', 'crucible' ) . '</p>';
 		} elseif($fail == 'empty') {
-
-			$posted_msg = stripslashes($smartestthemes_options['st_contactform_error']);
-			// in case they erase the default in admin
-			$msg = ($posted_msg) ? $posted_msg : __( 'Please complete the required fields.', 'crucible' );
+			$msg = empty($smartestthemes_options['st_contactform_error']) ? __( 'Please complete the required fields.', 'crucible' ) : stripslashes($smartestthemes_options['st_contactform_error']);
+			
 			$stcf_strings['error'] = '<p class="st-error">' . $msg . '</p>';
 		} elseif($fail == 'wrong') {
 			$stcf_strings['error'] = '<p class="st-error">' . __( 'Oops. Incorrect answer for the security question. Please try again.', 'crucible' ) . '<br />' . __( 'Hint: 1 + 1 = 2', 'crucible' ) . '</p>';
@@ -198,33 +203,26 @@ add_action('wp_enqueue_scripts', 'stcf_enqueue_scripts');
 */
 function stcf_process_contact_form($content='') {
 	global $smartestthemes_options, $stcf_strings;
-	$topic     = $smartestthemes_options['st_contactform_subject'];
-	$recipient = $smartestthemes_options['st_contactform_email'];
-	$recipname = $smartestthemes_options['st_contactform_name'];
-	$success   = $smartestthemes_options['st_contactform_success'];
-
-	$topic     = ! empty($topic) ? stripslashes($topic) : __( 'Message sent from your contact form', 'crucible' );
-	$recipient = ! empty($recipient) ? stripslashes($recipient) : get_bloginfo('admin_email');
-	$recipname = ! empty($recipname) ? stripslashes($recipname) : __( 'Site Administrator', 'crucible' );
-	$success   = ! empty($success) ? stripslashes($success) : '<strong>' . __( 'Success! ', 'crucible' ) . '</strong> ' . __( 'Your message has been sent.', 'crucible');
-
+	$topic     = empty($smartestthemes_options['st_contactform_subject']) ? __( 'Message sent from your contact form', 'crucible' ) : stripslashes($smartestthemes_options['st_contactform_subject']);
+	$recipient = empty($smartestthemes_options['st_contactform_email']) ? get_bloginfo('admin_email') : stripslashes($smartestthemes_options['st_contactform_email']);
+	$recipname = empty($smartestthemes_options['st_contactform_name']) ? __( 'Site Administrator', 'crucible' ) : stripslashes($smartestthemes_options['st_contactform_name']);
+	$success   = empty($smartestthemes_options['st_contactform_success']) ? '<strong>' . __( 'Success! ', 'crucible' ) . '</strong> ' . __( 'Your message has been sent.', 'crucible') : stripslashes($smartestthemes_options['st_contactform_success']);
 	$name      = $_POST['smartestthemes_contactform_name'];
 	$email     = $_POST['smartestthemes_contactform_email'];
 	$recipsite = get_bloginfo('url');
 	$senderip  = stcf_get_ip_address();
-	$offset    = $smartestthemes_options['st_contactform_offset'];
+	$offset    = empty($smartestthemes_options['st_contactform_offset']) ? '' : $smartestthemes_options['st_contactform_offset'];
 	$agent     = $_SERVER['HTTP_USER_AGENT'];
 	$form      = getenv("HTTP_REFERER");
 	$host      = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 	$date      = date("l, F jS, Y @ g:i a", time() + $offset * 60 * 60);
-
-	$prepend = stripslashes($smartestthemes_options['st_contactform_prepend']);
-	$append  = stripslashes($smartestthemes_options['st_contactform_append']);
-
+	$prepend = empty($smartestthemes_options['st_contactform_prepend']) ? '' : stripslashes($smartestthemes_options['st_contactform_prepend']);
+	$append  = empty($smartestthemes_options['st_contactform_append']) ? '' : stripslashes($smartestthemes_options['st_contactform_append']);
+	$header_from = isset($smartestthemes_options['st_contactform_header_from']) ? $smartestthemes_options['st_contactform_header_from'] ? '';
+	
 	$headers   = "MIME-Version: 1.0\n";
 	
-	
-	if ($smartestthemes_options['st_contactform_header_from'] == 'true') {
+	if ($header_from == 'true') {
 		$headers .= "From: $name <$email>\n";
 	} else {
 		$headers .= "From: " . get_bloginfo('name') . " <$recipient>\n";
@@ -289,15 +287,9 @@ function stcf_display_contact_form() {
 	$captcha  = isset($smartestthemes_options['st_contactform_captcha']) ? $smartestthemes_options['st_contactform_captcha'] : '';
 	$offset   = isset($smartestthemes_options['st_contactform_offset']) ? $smartestthemes_options['st_contactform_offset'] : '';
 	$include_phone   = isset($smartestthemes_options['st_contactform_include_phone']) ? $smartestthemes_options['st_contactform_include_phone'] : '';
-		
-	if ($smartestthemes_options['st_contactform_preform'] !== '') {
-		$smartestthemes_contact_preform = $smartestthemes_options['st_contactform_preform'];
-	} else { $smartestthemes_contact_preform = ''; }
-
-	if ($smartestthemes_options['st_contactform_appform'] !== '') {
-		$smartestthemesc_contact_appform = $smartestthemes_options['st_contactform_appform'];
-	} else { $smartestthemesc_contact_appform = ''; }
-
+	$smartestthemes_contact_preform = empty($smartestthemes_options['st_contactform_preform']) ? '' : $smartestthemes_options['st_contactform_preform'];
+	$smartestthemesc_contact_appform = empty($smartestthemes_options['st_contactform_appform']) ? '' : $smartestthemes_options['st_contactform_appform'];
+	
 	if ($captcha == 'true') {
 		$captcha_box = '
 				<fieldset class="stcf-response">
