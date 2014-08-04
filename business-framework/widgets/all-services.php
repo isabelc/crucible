@@ -24,13 +24,11 @@ class SmartestServices extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'smartestb' ) : $instance['title'], $instance, $this->id_base );		
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Services', 'crucible' ) : $instance['title'], $instance, $this->id_base );		
 		$service_category_term_id = isset( $instance['service_category'] ) ? $instance['service_category'] : '';
 		$service_category = !empty($service_category_term_id) ? $service_category_term_id : '';
-		
-		global $smartestthemes_options;// @test yes works
+		global $smartestthemes_options;
 		$sort = isset($smartestthemes_options['st_enable_service_sort']) ? $smartestthemes_options['st_enable_service_sort'] : '';
-
 		echo $args['before_widget'];
 		echo '<h3 class="widget-title">'. $title . '</h3>';
 
@@ -137,19 +135,9 @@ class SmartestServices extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		
-		if ( isset( $instance[ 'title' ] ) ) {
-			$title = $instance[ 'title' ];
-		}
-		else {
-			$title = __( 'Services', 'crucible' );
-		}
-		if ( isset( $instance[ 'service_category' ] ) ) {
-			$instance_service_category = $instance[ 'service_category' ];
-		}
-		else {
-			$instance_service_category = '';
-		} ?>
+		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] ? __( 'Services', 'crucible' );
+		$instance_service_category = isset( $instance[ 'service_category' ] ) ? $instance[ 'service_category' ] : '';
+		?>
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'crucible' ); ?></label> 
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />

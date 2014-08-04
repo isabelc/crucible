@@ -18,7 +18,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 			__('Smartest Featured Announcements', 'crucible'),
 			array( 'description' => __( 'Display selected featured announcements.', 'crucible' ), )
 		);
-		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css'), 40 );// @test
+		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css'), 40 );
 	}
 	
 	/** @test if loads
@@ -38,7 +38,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'smartestb' ) : $instance['title'], $instance, $this->id_base );
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured News', 'crucible' ) : $instance['title'], $instance, $this->id_base );
 
 		echo $args['before_widget'];
 		echo '<h3 class="widget-title">'. $title . '</h3>';
@@ -114,14 +114,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		
-		if ( isset( $instance[ 'title' ] ) ) {
-			$title = $instance[ 'title' ];
-		}
-		else {
-			$title = __( 'Featured News', 'crucible' );
-		}
-		
+		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] ? __( 'Featured News', 'crucible' );		
     	?>
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'crucible' ); ?></label> 
@@ -129,6 +122,5 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 		</p>
 		<?php 
 	}
-
 }
 ?>

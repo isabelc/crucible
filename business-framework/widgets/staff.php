@@ -17,7 +17,7 @@ class SmartestStaff extends WP_Widget {
 			__('Smartest Staff List', 'crucible'),
 			array( 'description' => __( 'Display the full list of Staff members.', 'crucible' ), )
 		);
-		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css') );// @test
+		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css') );
 	}
 	
 	/** @test if loads
@@ -37,7 +37,7 @@ class SmartestStaff extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'smartestb' ) : $instance['title'], $instance, $this->id_base );
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Staff', 'crucible' ) : $instance['title'], $instance, $this->id_base );
 		echo $args['before_widget'];
 
 		echo '<h3 class="widget-title">'. $title . '</h3>';
@@ -85,22 +85,13 @@ class SmartestStaff extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		
-		if ( isset( $instance[ 'title' ] ) ) {
-			$title = $instance[ 'title' ];
-		}
-		else {
-			$title = __( 'Staff', 'crucible' );
-		}
-	
+		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] ? __( 'Staff', 'crucible' );
     	?>
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'crucible' ); ?></label> 
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
-
 		<?php 
 	}
-
 }
 ?>

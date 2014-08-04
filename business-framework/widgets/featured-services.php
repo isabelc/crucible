@@ -18,7 +18,7 @@ class SmartestFeaturedServices extends WP_Widget {
 			__('Smartest Featured Services', 'crucible'),
 			array( 'description' => __( 'Display selected featured services.', 'crucible' ), )
 		);
-		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css'), 25 );// @test priority
+		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css'), 25 );
 	}
 	
 	/** @test if loads
@@ -39,7 +39,7 @@ class SmartestFeaturedServices extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'smartestb' ) : $instance['title'], $instance, $this->id_base );
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'crucible' ) : $instance['title'], $instance, $this->id_base );
 		echo $args['before_widget'];
 
 		echo '<h3 class="widget-title">'. $title . '</h3>';
@@ -122,14 +122,7 @@ class SmartestFeaturedServices extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		
-		if ( isset( $instance[ 'title' ] ) ) {
-			$title = $instance[ 'title' ];
-		}
-		else {
-			$title = __( 'Featured Services', 'crucible' );
-		}
-		
+		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] ? __( 'Featured Services', 'crucible' );
     	?>
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'crucible' ); ?></label> 
@@ -137,6 +130,5 @@ class SmartestFeaturedServices extends WP_Widget {
 		</p>
 		<?php 
 	}
-
 }
 ?>

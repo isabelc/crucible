@@ -24,7 +24,7 @@ class SmartestAnnouncements extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'crucible' ) : $instance['title'], $instance, $this->id_base );
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Latest News', 'crucible' ) : $instance['title'], $instance, $this->id_base );
 		$number = isset( $instance['number'] ) ? $instance['number'] : 3;
 		$see_all_label = ( ! empty( $instance['see_all_label'] ) ) ? $instance['see_all_label'] : __('All Announcements', 'crucible');
 

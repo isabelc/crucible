@@ -25,7 +25,7 @@ class SmartestReviewsTestimonial extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Testimonials', 'smartestb' ) : $instance['title'], $instance, $this->id_base );
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Testimonials', 'crucible' ) : $instance['title'], $instance, $this->id_base );
 		$number = isset( $instance['number'] ) ? $instance['number'] : '';
 
 		echo $args['before_widget'];
@@ -90,20 +90,8 @@ class SmartestReviewsTestimonial extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		if ( isset( $instance[ 'title' ] ) ) {
-			$title = $instance[ 'title' ];
-		}
-		else {
-			$title = __( 'Testimonials', 'crucible' );
-		}
-
-		if ( isset( $instance[ 'number' ] ) ) {
-			$number = $instance[ 'number' ];
-		}
-		else {
-			$number = 1;
-		}
-
+		$title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] ? __( 'Testimonials', 'crucible' );
+		$number = isset( $instance[ 'number' ] ) ? $instance[ 'number' ] : 1;
 		?>
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'crucible' ); ?></label> 
@@ -113,7 +101,6 @@ class SmartestReviewsTestimonial extends WP_Widget {
 		<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'How many testimonials to show:', 'crucible' ); ?></label> 
 		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" value="<?php echo esc_attr( $number ); ?>" />
 	</p>
-
 		<?php 
 	}
 
