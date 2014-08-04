@@ -38,20 +38,15 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'smartestb' ) : $instance['title'], $instance, $this->id_base );
 
-		extract( $args );
-	
-		$title = apply_filters('widget_title', $instance['title']);
-
-		echo $before_widget;
-
-		if ( ! empty( $title ) )
-			echo '<h3 class="widget-title">'. $title . '</h3>';
+		echo $args['before_widget'];
+		echo '<h3 class="widget-title">'. $title . '</h3>';
 		
 		/** 
 		* loop through announcements 
 		*/
-		$args = array(
+		$query_args = array(
 			'post_type' => 'smartest_news',
 			'meta_query' => array(
 								array  (
@@ -60,7 +55,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 									)
 							)			
 			);
-		$sbffa = new WP_Query( $args );
+		$sbffa = new WP_Query( $query_args );
 		if ( $sbffa->have_posts() ) {
 			while ( $sbffa->have_posts() ) {
 				$sbffa->the_post(); ?>
@@ -98,7 +93,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 				wp_reset_postdata();
 
 
-		echo $after_widget;
+		echo $args['after_widget'];
 
 	}// end widget
 

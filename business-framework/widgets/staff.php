@@ -37,24 +37,20 @@ class SmartestStaff extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		extract( $args );
-		
-		// these are our widget options
-		$title = apply_filters('widget_title', $instance['title']);
-		echo $before_widget;
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'smartestb' ) : $instance['title'], $instance, $this->id_base );
+		echo $args['before_widget'];
 
-		if ( ! empty( $title ) )
-			echo '<h3 class="widget-title">'. $title . '</h3>';
+		echo '<h3 class="widget-title">'. $title . '</h3>';
 		/** 
 		* loop through staff
 		*/
-		$args = array( 
+		$query_args = array( 
 			'posts_per_page' => -1, 
 			'post_type' => 'smartest_staff',
 			'orderby' => 'meta_value_num',
 			'meta_key' => '_smab_staff-order-number',
 			'order' => 'ASC' );
-		$sbfstaff = new WP_Query( $args );
+		$sbfstaff = new WP_Query( $query_args );
 		if ( $sbfstaff->have_posts() ) {
 			while ( $sbfstaff->have_posts() ) {
 				$sbfstaff->the_post(); ?>
@@ -68,7 +64,7 @@ class SmartestStaff extends WP_Widget {
 		}
 		wp_reset_postdata();
 
-		echo $after_widget;
+		echo $args['after_widget'];
 
 	}// end widget
 

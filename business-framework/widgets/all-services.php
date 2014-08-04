@@ -24,19 +24,15 @@ class SmartestServices extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		extract( $args );
-
-		$title = apply_filters('widget_title', $instance['title']);
-		
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'smartestb' ) : $instance['title'], $instance, $this->id_base );		
 		$service_category_term_id = isset( $instance['service_category'] ) ? $instance['service_category'] : '';
 		$service_category = !empty($service_category_term_id) ? $service_category_term_id : '';
 		
 		global $smartestthemes_options;// @test yes works
 		$sort = isset($smartestthemes_options['st_enable_service_sort']) ? $smartestthemes_options['st_enable_service_sort'] : '';
 
-		echo $before_widget;
-		if ( ! empty( $title ) )
-			echo '<h3 class="widget-title">'. $title . '</h3>';
+		echo $args['before_widget'];
+		echo '<h3 class="widget-title">'. $title . '</h3>';
 
 		/* loop through announcements */
 
@@ -47,7 +43,7 @@ class SmartestServices extends WP_Widget {
 
 				// custom sort order is enabled
 
-				$args = array( 
+				$query_args = array( 
 					'posts_per_page' => -1, 
 					'post_type' => 'smartest_services',
 					'tax_query' => array(
@@ -65,7 +61,7 @@ class SmartestServices extends WP_Widget {
 
 				// default sort order
 			
-				$args = array( 
+				$query_args = array( 
 					'posts_per_page' => -1, 
 					'post_type' => 'smartest_services',
 					'tax_query' => array(
@@ -88,7 +84,7 @@ class SmartestServices extends WP_Widget {
 
 				// custom sort order is enabled
 
-				$args = array( 
+				$query_args = array( 
 					'posts_per_page' => -1, 
 					'post_type' => 'smartest_services',
 					'orderby' => 'meta_value_num',
@@ -100,7 +96,7 @@ class SmartestServices extends WP_Widget {
 
 				// default sort order
 
-				$args = array( 
+				$query_args = array( 
 					'posts_per_page' => -1, 
 					'post_type' => 'smartest_services',
 					'orderby' => 'title',
@@ -109,7 +105,7 @@ class SmartestServices extends WP_Widget {
 
 		}
 
-		$sbfservices = new WP_Query( $args );
+		$sbfservices = new WP_Query( $query_args );
 
 		if ( $sbfservices->have_posts() ) { ?>
 			<ul class="serviceslist">
@@ -120,7 +116,7 @@ class SmartestServices extends WP_Widget {
 			</ul>
 		<?php }
 		wp_reset_postdata();
-		echo $after_widget;
+		echo $args['after_widget'];
 	}// end widget
 
 	/**

@@ -20,18 +20,16 @@ class SmartestReviewsTestimonial extends WP_Widget {
 	}
 	/**
 	 * Front-end display of widget.
-	 *
 	 * @param array $args     Widget arguments.
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		extract( $args );
-		$title = apply_filters('widget_title', $instance['title']);
+		
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Testimonials', 'smartestb' ) : $instance['title'], $instance, $this->id_base );
 		$number = isset( $instance['number'] ) ? $instance['number'] : '';
 
-		echo $before_widget;
-		if ( ! empty( $title ) )
-			echo '<h3 class="widget-title">'. $title . '</h3>';
+		echo $args['before_widget'];
+		echo '<h3 class="widget-title">'. $title . '</h3>';
 		/** 
 		* pull reviews from smartest reviews table 
 		*/
@@ -71,17 +69,13 @@ class SmartestReviewsTestimonial extends WP_Widget {
 				}
 				echo '<a href="'.$reviews_pageurl.'">'.__('More...', 'crucible').'</a>';
 		}
-		echo $after_widget;
+		echo $args['after_widget'];
 	}// end widget
 
 	/**
 	 * Sanitize widget form values as they are saved.
-	 *
-	 * @see WP_Widget::update()
-	 *
 	 * @param array $new_instance Values just sent to be saved.
 	 * @param array $old_instance Previously saved values from database.
-	 *
 	 * @return array Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
@@ -93,9 +87,6 @@ class SmartestReviewsTestimonial extends WP_Widget {
 
 	/**
 	 * Back-end widget form.
-	 *
-	 * @see WP_Widget::form()
-	 *
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {

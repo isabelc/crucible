@@ -39,12 +39,10 @@ class SmartestFeaturedServices extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 
-		extract( $args );
-		$title = apply_filters('widget_title', $instance['title']);
-		echo $before_widget;
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'smartestb' ) : $instance['title'], $instance, $this->id_base );
+		echo $args['before_widget'];
 
-		if ( ! empty( $title ) )
-			echo '<h3 class="widget-title">'. $title . '</h3>';
+		echo '<h3 class="widget-title">'. $title . '</h3>';
 		
 		/* loop through announcements */
 
@@ -52,7 +50,7 @@ class SmartestFeaturedServices extends WP_Widget {
 
 			// custom sort order is enabled
 
-			$args = array( 
+			$query_args = array( 
 				'post_type' => 'smartest_services',
 				'meta_query' => array(
 							array  (
@@ -69,7 +67,7 @@ class SmartestFeaturedServices extends WP_Widget {
 
 			// default sort order
 
-			$args = array( 
+			$query_args = array( 
 				'post_type' => 'smartest_services',
 				'meta_query' => array(
 							array  (
@@ -80,7 +78,7 @@ class SmartestFeaturedServices extends WP_Widget {
 				);
 
 		}
-		$sbffs = new WP_Query( $args );
+		$sbffs = new WP_Query( $query_args );
 		if ( $sbffs->have_posts() ) {
 			while ( $sbffs->have_posts() ) {
 				$sbffs->the_post(); ?>
@@ -103,7 +101,7 @@ class SmartestFeaturedServices extends WP_Widget {
 				<p><?php printf(__( 'Coming soon. See all %s.', 'crucible'), $li); ?></p>		
 <?php	} // endif
 		wp_reset_postdata();
-		echo $after_widget;
+		echo $args['after_widget'];
 
 	}// end widget
 

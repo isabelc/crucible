@@ -24,23 +24,21 @@ class SmartestAnnouncements extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		extract( $args );
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'smartestb' ) : $instance['title'], $instance, $this->id_base );
 		
-		$title = apply_filters('widget_title', $instance['title']);
-		$number = $instance['number'];
+		$number = isset( $instance['number'] ) ? $instance['number'] : 3;
 
-		echo $before_widget;
-		if ( ! empty( $title ) )
-			echo '<h3 class="widget-title">'. $title . '</h3>';
+		echo $args['before_widget'];
+		echo '<h3 class="widget-title">'. $title . '</h3>';
 		
 		/** 
 		* loop through announcements 
 		*/
-		$args = array( 
+		$query_args = array( 
 			'posts_per_page' => $number, 
 			'post_type' => 'smartest_news',
 			'order' => 'DESC' );
-		$sbfnews = new WP_Query( $args );
+		$sbfnews = new WP_Query( $query_args );
 		if ( $sbfnews->have_posts() ) { ?>
 			<ul>
 			<?php while ( $sbfnews->have_posts() ) {
@@ -60,7 +58,7 @@ class SmartestAnnouncements extends WP_Widget {
 				<p><?php _e('Coming soon.', 'crucible'); ?></p>		
 	<?php }
 		wp_reset_postdata();
-		echo $after_widget;
+		echo $args['after_widget'];
 	}// end widget
 
 	/**
