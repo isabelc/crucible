@@ -157,7 +157,7 @@ function smartestthemes_options_page(){
 	        <div id="smartestthemes-nav">
 				<ul>
 					<?php echo $return[1] ?>
-					<li><a class="theme-support" title="Theme Support" href="#smartestthemes-option-themesupport"><span class="smartestthemes-nav-icon"></span><?php _e('Theme Support', 'crucible'); ?></a></li>
+					<li><a class="theme-support" title="<?php _e( 'Theme Support', 'crucible' ); ?>" href="#smartestthemes-option-themesupport"><span class="smartestthemes-nav-icon"></span><?php _e('Theme Support', 'crucible'); ?></a></li>
 					
 				</ul>		
 			</div>
@@ -176,7 +176,7 @@ function smartestthemes_options_page(){
 	         <div class="support-section-icon info_75"></div>
 	         <h4 class="support-section-title"><?php _e('Instruction Guides', 'crucible'); ?></h4>
 	         <p class="support-content"><?php _e('The Instruction Guides help you set up your theme.', 'crucible'); ?></p><div class="section support-section">
-	         <a class="support-button" target="_blank" title="Instruction Guides" href="<?php echo $manualurl; ?>"><?php _e('Go To Instruction Guides', 'crucible'); echo ' &raquo;'; ?></a>
+	         <a class="support-button" target="_blank" title="<?php _e( 'Instruction Guides', 'crucible' ); ?>" href="<?php echo $manualurl; ?>"><?php _e('Go To Instruction Guides', 'crucible'); echo ' &raquo;'; ?></a>
 	         </div><div class="clear"></div></div>
 	         <div class="support-divider"></div>
 	         <div class="section support-section">
@@ -184,7 +184,7 @@ function smartestthemes_options_page(){
 	         <h4 class="support-section-title"><?php _e('Support Forums', 'crucible'); ?></h4>
 	         <p class="support-content"><?php _e('Get help or report a bug at the forums. Post your question as a new topic, and we will focus on answering your questions and helping you to use the default functionality of your theme.', 'crucible'); ?></p>
 <div class="section support-section">
-	         <a class="support-button" target="_blank" title="Support Forums" href="http://smartestthemes.com/support/"><?php _e('Go To Support Forums', 'crucible'); echo ' &raquo;'; ?> </a>
+	         <a class="support-button" target="_blank" title="<?php _e( 'Support Forums', 'crucible' ); ?>" href="http://smartestthemes.com/support/"><?php _e('Go To Support Forums', 'crucible'); echo ' &raquo;'; ?> </a>
 	         </div>
 	         <div class="clear"></div>
 	         </div>

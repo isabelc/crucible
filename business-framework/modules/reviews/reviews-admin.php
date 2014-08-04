@@ -730,16 +730,16 @@ class SMARTESTReviewsBusinessAdmin {
                                     data-type='textarea'><?php echo $review_response; ?></div>
                           </p>
                           <div class="row-actions">
-                            <span class="approve <?php if ($review->status == 0 || $review->status == 2) { echo 'smar_show'; } else { echo 'smar_hide'; }?>"><a title="Mark as Approved"
+                            <span class="approve <?php if ($review->status == 0 || $review->status == 2) { echo 'smar_show'; } else { echo 'smar_hide'; }?>"><a title="<?php _e( 'Mark as Approved', 'crucible' ); ?>"
                             href="?page=smar_view_reviews&amp;action=approvereview&amp;r=<?php echo $rid;?>&amp;review_status=<?php echo $this->p->review_status;?>">
                             <?php _e('Mark as Approved', 'crucible'); ?></a>&nbsp;|&nbsp;</span>
-                            <span class="unapprove <?php if ($review->status == 1 || $review->status == 2) { echo 'smar_show'; } else { echo 'smar_hide'; }?>"><a title="Mark as Unapproved"
+                            <span class="unapprove <?php if ($review->status == 1 || $review->status == 2) { echo 'smar_show'; } else { echo 'smar_hide'; }?>"><a title="<?php _e( 'Mark as Unapproved', 'crucible' ); ?>"
                             href="?page=smar_view_reviews&amp;action=unapprovereview&amp;r=<?php echo $rid;?>&amp;review_status=<?php echo $this->p->review_status;?>">
                             <?php _e('Mark as Unapproved', 'crucible'); ?></a><?php if ($review->status != 2): ?>&nbsp;|&nbsp;<?php endif; ?></span>
-                            <span class="trash <?php if ($review->status == 2) { echo 'smar_hide'; } else { echo 'smar_show'; }?>"><a title="Move to Trash" 
+                            <span class="trash <?php if ($review->status == 2) { echo 'smar_hide'; } else { echo 'smar_show'; }?>"><a title="<?php _e( 'Move to Trash', 'crucible' ); ?>" 
                             href= "?page=smar_view_reviews&amp;action=trashreview&amp;r=<?php echo $rid;?>&amp;review_status=<?php echo $this->p->review_status;?>">
                             <?php _e('Move to Trash', 'crucible'); ?></a><?php if ($review->status != 2): ?>&nbsp;|&nbsp;<?php endif; ?></span>
-                            <span class="trash <?php if ($review->status == 2) { echo 'smar_hide'; } else { echo 'smar_show'; }?>"><a title="Delete Forever" 
+                            <span class="trash <?php if ($review->status == 2) { echo 'smar_hide'; } else { echo 'smar_show'; }?>"><a title="<?php _e( 'Delete Forever', 'crucible' ); ?>" 
                             href= "?page=smar_view_reviews&amp;action=deletereview&amp;r=<?php echo $rid;?>&amp;review_status=<?php echo $this->p->review_status;?>">
                             <?php _e('Delete Forever', 'crucible'); ?></a></span>
                           </div>
