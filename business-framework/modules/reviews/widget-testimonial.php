@@ -24,51 +24,43 @@ class SmartestReviewsTestimonial extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Testimonials', 'crucible' ) : $instance['title'], $instance, $this->id_base );
 		$number = isset( $instance['number'] ) ? $instance['number'] : '';
-
-		echo $args['before_widget'];
-		echo '<h3 class="widget-title">'. $title . '</h3>';
+		echo $args['before_widget']; ?>
+		<h3 class="widget-title"><?php echo $title; ?></h3>
+		<?php
 		/** 
 		* pull reviews from smartest reviews table 
 		*/
 
 		global $wpdb;
-		// get the permalink by page id.
-		$reviews_pageurl = get_permalink(get_option('smartestthemes_reviews_page_id'));
 
+		$reviews_pageurl = get_permalink(get_option('smartestthemes_reviews_page_id'));
 		$pre = $wpdb->base_prefix;
 
 		if ( is_multisite() ) { 
-			
 			global $blog_id;
 			$bi = get_current_blog_id();
 			
 			$pre2 = $pre . $bi . '_smareviewsb';
-
 		} else {
-
 			// not Multisite
 			$pre2 = $pre . 'smareviewsb';
 		}
 
-		if ( ! empty( $number ) )
-			$number_testimonials = $number;
-		else
-			$number_testimonials = 1;
-		
+		$number_testimonials = ! empty( $number ) ? $number : 1;
 		$getreviews = $wpdb->get_results("SELECT review_text FROM $pre2 WHERE status = 1 LIMIT 0,$number_testimonials");
-		
+	
 		if ( empty( $getreviews ) ) {
 				//no review yet, lure them to leave one
-				echo '<p>'. __( 'Be the first to', 'crucible' ) . ' <a href="' . $reviews_pageurl . '">' . __( 'leave a review...', 'crucible' ) . '</a></p>';
-		} else {
-				foreach ( $getreviews as $getreview ) {
-					echo '<blockquote>' . wp_trim_words( $getreview->review_text, 20) . '</blockquote><br />';
-				}
-				echo '<a href="'.$reviews_pageurl.'">'.__('More...', 'crucible').'</a>';
-		}
+				?>
+				<p><?php _e( 'Be the first to', 'crucible' ); echo ' '; ?> <a href="<?php echo $reviews_pageurl; ?>"><?php _e( 'leave a review...', 'crucible' ); ?></a></p>
+		<?php } else {
+				foreach ( $getreviews as $getreview ) { ?>
+					<blockquote><?php echo wp_trim_words( $getreview->review_text, 20); ?></blockquote><br />
+				<?php } ?>
+				<a href="<?php echo $reviews_pageurl; ?>"><?php _e('More...', 'crucible'); ?></a>
+		<?php }
 		echo $args['after_widget'];
 	}// end widget
 
