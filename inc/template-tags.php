@@ -177,7 +177,7 @@ if ( ! function_exists( 'crucible_staff_social_buttons' ) ) :
 			$output .= '<li><a class="social-staff-twitter" target="_blank" href="https://twitter.com/' . $tw . '" title="' . __('Twitter', 'crucible' ) . '"><i class="fa fa-twitter-square fa-2x"></i></a></li>';
 		} 
 		if ($goo) {
-			$output .= '<li><a class="social-staff-gplus" target="_blank" href="https://plus.google.com/' . $goo . '" rel="publisher" title="' . __('Google Plus', 'crucible' ) . '"><i class="fa fa-google-plus-square fa-2x"></i></a></li>';
+			$output .= '<li><a class="social-staff-gplus" target="_blank" href="https://plus.google.com/' . $goo . '" rel="author" title="' . __('Google Plus', 'crucible' ) . '"><i class="fa fa-google-plus-square fa-2x"></i></a></li>';
 		} 
 		if ($fa) {
 			$output .= '<li><a class="social-staff-facebook" target="_blank" href="https://facebook.com/' . $fa . '" title="' . __('Facebook', 'crucible' ) . '"><i class="fa fa-facebook-square fa-2x"></i></a></li>';
@@ -362,7 +362,7 @@ function crucible_social_buttons() {
 	if ( $tw ) {
 		$output .= '<li><a class="social-twitter" target="_blank" href="https://twitter.com/' . $tw . '" title="' . __( 'Twitter', 'crucible' ) . '"><i class="fa fa-2x fa-twitter-square"></i></a></li>';
 	} if ( $goo ) {
-		$output .= '<li><a class="social-google" target="_blank" href="https://plus.google.com/' . $goo . '" rel="publisher" title="' . __( 'Google Plus', 'crucible' ) . '"><i class="fa fa-2x fa-google-plus-square"></i></a></li>';
+		$output .= '<li><a class="social-google" target="_blank" href="https://plus.google.com/' . $goo . '" rel="' . apply_filters( 'smartestthemes_google_authorship', 'publisher' ) . '" title="' . __( 'Google Plus', 'crucible' ) . '"><i class="fa fa-2x fa-google-plus-square"></i></a></li>';
 	} if ( $fa ) {
 		$output .= '<li><a class="social-facebook" target="_blank" href="https://facebook.com/' . $fa . '" title="' . __( 'Facebook', 'crucible' ) . '"><i class="fa fa-2x fa-facebook-square"></i></a></li>';
 	} if ( $yo ) {
