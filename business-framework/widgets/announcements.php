@@ -24,9 +24,9 @@ class SmartestAnnouncements extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'smartestb' ) : $instance['title'], $instance, $this->id_base );
-		
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Featured Services', 'crucible' ) : $instance['title'], $instance, $this->id_base );
 		$number = isset( $instance['number'] ) ? $instance['number'] : 3;
+		$see_all_label = ( ! empty( $instance['see_all_label'] ) ) ? $instance['see_all_label'] : __('All Announcements', 'crucible');
 
 		echo $args['before_widget'];
 		echo '<h3 class="widget-title">'. $title . '</h3>';
@@ -50,7 +50,7 @@ class SmartestAnnouncements extends WP_Widget {
 		 
 			<?php } ?>
 			</ul>
-			<?php $li = '<a href="'.get_post_type_archive_link( 'smartest_news' ).'">'. __('All Announcements', 'crucible'). '</a>';
+			<?php $li = '<a href="'.get_post_type_archive_link( 'smartest_news' ).'">'. $see_all_label . '</a>';
 			?> <p><?php printf(__( '%s', 'crucible'), $li); ?></p>
 
 	<?php } else {
@@ -71,6 +71,7 @@ class SmartestAnnouncements extends WP_Widget {
 		$instance = array();
 		$instance['title'] = strip_tags($new_instance['title'] );
 		$instance['number'] = strip_tags( $new_instance['number'] );
+		$instance['see_all_label'] = strip_tags($new_instance['see_all_label']);
 		return $instance;
 	}
 
@@ -79,20 +80,9 @@ class SmartestAnnouncements extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		
-		if ( isset( $instance[ 'title' ] ) ) {
-			$title = $instance[ 'title' ];
-		}
-		else {
-			$title = __( 'Latest News', 'crucible' );
-		}
-
-		if ( isset( $instance[ 'number' ] ) ) {
-			$number = $instance[ 'number' ];
-		}
-		else {
-			$number = 3;
-		}
+		$title = isset( $instance[ 'title' ] ) ? $title = $instance[ 'title' ] : __( 'Latest News', 'crucible' );
+		$number = isset( $instance[ 'number' ] ) ? $instance[ 'number' ] : 3;
+		$see_all_label = isset( $instance['see_all_label'] ) ? esc_attr( $instance['see_all_label'] ) : '';
 
 /* Default Widget Settings */
     	?>
@@ -105,6 +95,8 @@ class SmartestAnnouncements extends WP_Widget {
 		<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'How many recent announcements to show:', 'crucible' ); ?></label> 
 		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" value="<?php echo esc_attr( $number ); ?>" />
 	</p>
+		<p><label for="<?php echo $this->get_field_id( 'see_all_label' ); ?>"><?php _e( 'Replace the link label, "All Announcements", with your own text:', 'crucible' ); ?></label>
+		<input class="widefat" id="<?php echo $this->get_field_id( 'see_all_label' ); ?>" name="<?php echo $this->get_field_name( 'see_all_label' ); ?>" type="text" value="<?php echo $see_all_label; ?>" /></p>
 
 		<?php 
 	}
