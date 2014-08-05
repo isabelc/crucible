@@ -472,11 +472,8 @@ class SMARTESTReviewsBusiness {
             return $out;
         }
     }
-    function output_reviews_show($inside_div, $perpage, $max, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
 	
-	/* @todo do the isset() to prevent E notice warnings here for all smartestthemes_options below !!!!! */
-	
-	
+	function output_reviews_show($inside_div, $perpage, $max, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
         if ($max != -1) {
             $thispage = 1;
         } else {
@@ -488,45 +485,64 @@ class SMARTESTReviewsBusiness {
         $reviews_content = '';
         $hidesummary = '';
         $title_tag = $this->options['title_tag'];
-		$smartestthemes_options = get_option('smartestthemes_options');
-		$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));if(!$bn) {$bn = get_bloginfo('name'); }
-/* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
-         trying to access a page that does not exist -- send to main page 
-        if ( isset($this->p->smarp) && $this->p->smarp != 1 && count($reviews) == 0 ) {
-            $url = get_permalink(get_option('smartestthemes_reviews_page_id'));
-            $this->smar_redirect($url);
-        }
-*/        
+		
+		// @test replace with global 	$smartestthemes_options = get_option('smartestthemes_options');
+		global $smartestthemes_options;
+	
+		$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
+		$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
+		$phone = empty($smartestthemes_options['st_phone_number']) ? '' : $smartestthemes_options['st_phone_number'];
+		$street = empty($smartestthemes_options['st_address_street']) ? '' : $smartestthemes_options['st_address_street'];
+		$suite = empty($smartestthemes_options['st_address_suite']) ? '' : $smartestthemes_options['st_address_suite'];
+		$city = empty($smartestthemes_options['st_address_city']) ? '' : $smartestthemes_options['st_address_city'];
+		$state = empty($smartestthemes_options['st_address_state']) ? '' : $smartestthemes_options['st_address_state'];
+		$zip = empty($smartestthemes_options['st_address_zip']) ? '' : $smartestthemes_options['st_address_zip'];
+		$country = empty($smartestthemes_options['st_address_country']) ? '' : $smartestthemes_options['st_address_country'];
+		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' $smartestthemes_options['st_add_reviews'];
+		
+		/* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
+				 trying to access a page that does not exist -- send to main page 
+				if ( isset($this->p->smarp) && $this->p->smarp != 1 && count($reviews) == 0 ) {
+					$url = get_permalink(get_option('smartestthemes_reviews_page_id'));
+					$this->smar_redirect($url);
+				}
+		*/        
 		if (!$inside_div) {
+		
+			// @todo see a diffnow of these two string with address info to see if I can just use one for both!!!!!
+		
             $reviews_content .= '<!-- no inside div --><div id="smar_respond_1"';
-				$reviews_content .= ' itemscope itemtype="http://schema.org/'.$smartestthemes_options['st_business_itemtype'].'">
+				$reviews_content .= ' itemscope itemtype="http://schema.org/'. $schema .'">
 							<span class="isa_vcard" id="hreview-smar-hcard-for-' . $review->id . '">
                                 <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a>
-                                <span itemprop="telephone">' . $smartestthemes_options['st_phone_number'] . '</span>
+                                <span itemprop="telephone">' . $phone_number . '</span>
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                    <span itemprop="streetAddress">' . $smartestthemes_options['st_address_street'] . ' ' .$smartestthemes_options['st_address_suite'] . '</span>
-                                    <span itemprop="addressLocality">' . $smartestthemes_options['st_address_city'] . '</span>
-                                    <span itemprop="addressRegion">' . $smartestthemes_options['st_address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['st_address_zip'] . '</span>
-                                    <span itemprop="addressCountry">' . $smartestthemes_options['st_address_country'] . '</span></span></span><hr />';
+                    <span itemprop="streetAddress">' . $street . ' ' . $suite . '</span>
+                                    <span itemprop="addressLocality">' . $city . '</span>
+                                    <span itemprop="addressRegion">' . $state . '</span> <span itemprop="postalCode">' . $zip . '</span>
+                                    <span itemprop="addressCountry">' . $country . '</span></span></span><hr />';
         }
 		if (count($reviews) == 0) {
 			$reviews_content .= '<p>'. __('There are no reviews yet. Be the first to leave yours!', 'crucible').'</p>';
-		} elseif ($smartestthemes_options['st_add_reviews'] == 'false') {
+		} elseif ($add_reviews != 'true') {
+			// @todo @test is this case even needed?
 			$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
-		} else {	   		
+		} else {
+
+				// @test when is this, CASE 3, output? as opposed to the first case above? 
 			$this->get_aggregate_reviews();
 			$summary = $this->got_aggregate["text"];
 			$best_score = 5;
 			$average_score = number_format($this->got_aggregate["aggregate"], 1);
-			$reviews_content .= '<div itemscope itemtype="http://schema.org/'.$smartestthemes_options['st_business_itemtype'].'"><br />
+			$reviews_content .= '<div itemscope itemtype="http://schema.org/'. $schema .'"><!-- @test out CASE 3 --><br />
 							<span class="isa_vcard">
                                 <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a><br />
-                                <span itemprop="telephone">' . $smartestthemes_options['st_phone_number'] . '</span><br />
+                                <span itemprop="telephone">' . $number . '</span><br />
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                    <span itemprop="streetAddress">' . $smartestthemes_options['st_address_street'] . ' ' .$smartestthemes_options['st_address_suite'] . '</span><br />
-                                    <span itemprop="addressLocality">' . $smartestthemes_options['st_address_city'] . '</span>
-                                    <span itemprop="addressRegion">' . $smartestthemes_options['st_address_state'] . '</span> <span itemprop="postalCode">' . $smartestthemes_options['st_address_zip'] . '</span>
-                                    <span itemprop="addressCountry">' . $smartestthemes_options['st_address_country'] . '</span>
+                                    <span itemprop="streetAddress">' . $street . ' ' .$suite . '</span><br />
+                                    <span itemprop="addressLocality">' . $city . '</span>
+                                    <span itemprop="addressRegion">' . $state . '</span> <span itemprop="postalCode">' . $zip . '</span>
+                                    <span itemprop="addressCountry">' . $country . '</span>
                                 </span>
                             </span><hr />';
 
@@ -613,6 +629,7 @@ class SMARTESTReviewsBusiness {
         }
         return array($reviews_content, $total_reviews);
     }
+	
     /* trims text, but does not break up a word */
     function trim_text_to_word($text,$len) {
         if(strlen($text) > $len) {
