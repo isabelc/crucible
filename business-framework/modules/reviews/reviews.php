@@ -6,18 +6,36 @@
  */
 class SMARTESTReviewsBusiness {
 
+
+	private static $instance = null;
+	public static function get_instance() {
+		if ( null == self::$instance ) {
+			self::$instance = new self;
+		}
+		return self::$instance;
+	}
+	
 	var $dbtable = 'smareviewsb';
-	var $force_active_page = false;
+// @test remove for shortcode	var $force_active_page = false;
 	var $got_aggregate = false;
 	var $options = array();
 	var $p = '';
-	var $page = 1;
+// @test remove for shortcode	var $page = 1;
 	var $version = '0.0.0';
 	var $shown_form = false;
 	var $shown_hcard = false;
 	var $status_msg = '';
 
-	function SMARTESTReviewsBusiness() {
+	
+	
+	
+	
+	private function __construct() {
+	
+	
+	// @test replace with contructor function SMARTESTReviewsBusiness() {
+	
+	
 		global $wpdb;
 		define('IN_SMAR', 1);
         
@@ -32,41 +50,66 @@ class SMARTESTReviewsBusiness {
 		$this->dbtable = $wpdb->prefix . $this->dbtable;
 		$themeobject = wp_get_theme();
 		$this->version = $themeobject->Version;
-		add_action('the_content', array($this, 'do_the_content'), 10); /* prio 10 prevents a conflict with some odd themes */
+
+		// @test replace with better shortcode		add_action('the_content', array($this, 'do_the_content'), 10); /* prio 10 prevents a conflict with some odd themes */
+
+
 		add_action('init', array($this, 'init'));
 		add_action('admin_init', array($this, 'admin_init'));
+
 		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));
 		add_action('template_redirect',array($this, 'template_redirect')); /* handle redirects and form posts, and add style/script if needed */
 		add_action('admin_menu', array($this, 'addmenu'));
 		add_action('wp_ajax_update_field', array($this, 'admin_view_reviews'));
+		// @test move to child
 		add_action('save_post', array($this, 'admin_save_post'), 10, 2);
 		add_action( 'admin_init', array($this, 'create_reviews_page'));//@note, but for stand-alone plugin hook to after_setup_theme
 		add_action('wp_enqueue_scripts', array($this, 'smartestreviews_scripts'));
 		add_action('admin_enqueue_scripts', array($this, 'smartestreviews_scripts'));
-		add_action('admin_enqueue_scripts', array($this, 'admin_scripts'));
+
+		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_stuff'));
+
+
+		
+		
     }
 
+
 	function addmenu() {
-		add_options_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'manage_options', 'smar_options', array(&$this, 'admin_options'));
+		add_options_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'manage_options', 'smar_options', array( $this, 'admin_options'));
 		if(get_option('st_add_reviews') == 'true') {       
-			add_menu_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array(&$this, 'admin_view_reviews'), 'dashicons-star-filled', 62);
+			add_menu_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array($this, 'admin_view_reviews'), 'dashicons-star-filled', 62);
 		}
 	}
+
+	
+/*
     function admin_options() {
         global $SMARTESTReviewsBusinessAdmin;
-        $this->include_admin(); /* include admin functions */
+        $this->include_admin();
         $SMARTESTReviewsBusinessAdmin->real_admin_options();
     }
+*/
+
+	
+	/* @test
    function admin_save_post($post_id, $post) {
        global $SMARTESTReviewsBusinessAdmin;
-        $this->include_admin(); /* include admin functions */
+        $this->include_admin(); // include admin functions
        $SMARTESTReviewsBusinessAdmin->real_admin_save_post($post_id);
     }
+	*/
+	/* @test 
     function admin_view_reviews() {
         global $SMARTESTReviewsBusinessAdmin;
-        $this->include_admin(); /* include admin functions */
+        $this->include_admin();
         $SMARTESTReviewsBusinessAdmin->real_admin_view_reviews();
     }
+	*/
+	
+	/* @test this should be maybe fixed to show individual reviews link, if such a thing exists 
+	* also @test does jumplink from admin work if the reveiw is on a page 2+ 
+	*/
     function get_jumplink_for_review($review,$page) {
 
        $link = get_permalink( get_option('smartestthemes_reviews_page_id') );
@@ -81,11 +124,11 @@ class SMARTESTReviewsBusiness {
         $home_domain = @parse_url(get_home_url());
         $home_domain = $home_domain['scheme'] . "://" . $home_domain['host'] . '/';
         $default_options = array(
-            'act_email' => '',// @test see if i can delete if not used elsewhere
-            'act_uniq' => '',// @test see if i can delete if not used elsewhere
-            'activate' => 0,
+            // 'act_email' => '',// @test see if i can delete if not used elsewhere
+            // 'act_uniq' => '',// @test see if i can delete if not used elsewhere
+            // @test remove 'activate' => 0,
             'ask_custom' => array(),
-            'ask_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0, 'fage' => 0, 'fgender' => 0),
+            'ask_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0),
             'dbversion' => 0,
             'field_custom' => array(),
             'form_location' => 0,
@@ -93,10 +136,10 @@ class SMARTESTReviewsBusiness {
             'goto_show_button' => 1,
             'leave_text' => __('Submit your review', 'crucible'),
             'require_custom' => array(),
-            'require_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0, 'fage' => 0, 'fgender' => 0),
+            'require_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0),
             'reviews_per_page' => 10,
             'show_custom' => array(),
-            'show_fields' => array('fname' => 1, 'femail' => 0, 'fwebsite' => 0, 'ftitle' => 1, 'fage' => 0, 'fgender' => 0),
+            'show_fields' => array('fname' => 1, 'femail' => 0, 'fwebsite' => 0, 'ftitle' => 1),
             'show_hcard_on' => 1,
             'biz_declare' => 0,
 			'biz_declare_shortcode' => 0,
@@ -151,9 +194,14 @@ class SMARTESTReviewsBusiness {
         if ($current_dbversion == $plugin_db_version) {
             return false;
         }
-        global $SMARTESTReviewsBusinessAdmin;
-        $this->include_admin(); /* include admin functions */
-        $SMARTESTReviewsBusinessAdmin->createUpdateReviewtable(); /* creates table */
+		
+		
+        // @test global $SMARTESTReviewsBusinessAdmin;
+        // @test $this->include_admin(); /* include admin functions */
+        // @test replace $SMARTESTReviewsBusinessAdmin->createUpdateReviewtable(); /* creates table */
+		$this->createUpdateReviewtable(); /* creates table */
+		
+		
         /* initial installation */
         if ($current_dbversion == 0) {
            $this->options['dbversion'] = $plugin_db_version;
@@ -167,14 +215,21 @@ class SMARTESTReviewsBusiness {
             $this->options['dbversion'] = $plugin_db_version;
             $current_dbversion = $plugin_db_version;
             update_option('smar_options', $this->options);
-            global $SMARTESTReviewsBusinessAdmin;
-            $this->include_admin(); /* include admin functions */
-            $SMARTESTReviewsBusinessAdmin->force_update_cache(); /* update any caches */
+			
+            /* @test
+			global $SMARTESTReviewsBusinessAdmin;
+            $this->include_admin();
+            $SMARTESTReviewsBusinessAdmin->force_update_cache(); // update any caches
+			*/
+			$this->force_update_cache(); // update any caches
+			
+			
             return true;
         }
         return false;
     }
 
+/* @test don't need this since we use only shortcode	
     function is_active_page() {
         global $post;
         $has_shortcode = $this->force_active_page;
@@ -182,13 +237,16 @@ class SMARTESTReviewsBusiness {
             return 'shortcode';
         }
         if ( !isset($post) || !isset($post->ID) || intval($post->ID) == 0 ) {
-            return false; /* we can only use if we have a valid post ID */
+            return false; // we can only use if we have a valid post ID 
         }
         if (!is_singular()) {
-            return false; /* not on a single post/page view */
+            return false; // not on a single post/page view 
         }
         return false;
     }
+*/
+	
+	
 	function template_redirect() {
 		/* do this in template_redirect so we can try to redirect cleanly */
         global $post;
@@ -244,11 +302,21 @@ class SMARTESTReviewsBusiness {
         $this->got_aggregate = array("aggregate" => $aggregate_rating, "max" => $max_rating, "total" => $total_reviews, "text" => $sample_text);
         return true;
     }
+	
+	/*
+	// @test $startpage is 1 from reviews, but '' from agg footer. probably make startpage=Null so that it is not required. then add conditional around $startpage below @todo
+	
+	// @test if paging is ok when more than 10 reviews exist.
+	// @test what is $status param used for?
+	*/
     function get_reviews($startpage, $perpage, $status) {
         global $wpdb;
-        $startpage = $startpage - 1; /* mysql starts at 0 instead of 1, so reduce them all by 1 */
+		
+		
+        $startpage = $startpage - 1; // mysql starts at 0 instead of 1, so reduce them all by 1
         if ($startpage < 0) { $startpage = 0; }
-        $limit = 'LIMIT ' . $startpage * $perpage . ',' . $perpage;
+		$limit = 'LIMIT ' . $startpage * $perpage . ',' . $perpage;
+		
         if ($status == -1) {
             $qry_status = '1=1';
         } else {
@@ -328,6 +396,7 @@ class SMARTESTReviewsBusiness {
 	
 	/**
 	* Returns the html string for the aggregate rating
+	* @todo @test do i need the param here?
 	*/
 	function aggregate_footer_output($is_shortcode=NULL) {
 		// gather agg data
@@ -407,10 +476,12 @@ class SMARTESTReviewsBusiness {
         $range = 2;
         $showitems = ($range * 2) + 1;
 
-        $paged = $this->page;
+        $paged = $this->page;// @test i think i deleted page, but i think this gets the the url parameter for smarp
         if ($paged == 0) { $paged = 1; }
         
-        if (!isset($this->p->review_status)) { $this->p->review_status = 0; }
+        if (!isset($this->p->review_status)) {
+			$this->p->review_status = 0;
+		}
 
         $pages = ceil($total_results / $reviews_per_page);
 
@@ -473,13 +544,23 @@ class SMARTESTReviewsBusiness {
         }
     }
 	
-	function output_reviews_show($inside_div, $perpage, $max, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
+	/*
+	*
+	@test removed 3rd param $max and 1st param $inside_div
+	*/
+	function output_reviews_show($perpage, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {	 // @test function ends on lin 674
+	
+	/* @test is $thispage needed, since we always call $max = -1, so $thispage will always be 1 as set at top of class.
+	
         if ($max != -1) {
             $thispage = 1;
         } else {
-            $thispage = $this->page;
+            $thispage = $this->page;// @test seems like this is always 1 anyway.
         }
-        $arr_Reviews = $this->get_reviews($thispage, $perpage, 1);
+		*/
+		
+        $arr_Reviews = $this->get_reviews($this->page, $perpage, 1);
+		
         $reviews = $arr_Reviews[0];
         $total_reviews = intval($arr_Reviews[1]);
         $reviews_content = '';
@@ -507,36 +588,27 @@ class SMARTESTReviewsBusiness {
 					$this->smar_redirect($url);
 				}
 		*/        
-		if (!$inside_div) {
+
 		
 			// @todo see a diffnow of these two string with address info to see if I can just use one for both!!!!!
 		
-            $reviews_content .= '<!-- no inside div --><div id="smar_respond_1"';
-				$reviews_content .= ' itemscope itemtype="http://schema.org/'. $schema .'">
-							<span class="isa_vcard" id="hreview-smar-hcard-for-' . $review->id . '">
-							<!-- @test out CASE no insdie div -->
-                                <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a>
-                                <span itemprop="telephone">' . $phone_number . '</span>
-                                <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                    <span itemprop="streetAddress">' . $street . ' ' . $suite . '</span>
-                                    <span itemprop="addressLocality">' . $city . '</span>
-                                    <span itemprop="addressRegion">' . $state . '</span> <span itemprop="postalCode">' . $zip . '</span>
-                                    <span itemprop="addressCountry">' . $country . '</span></span></span><hr />';
-        }
+        
 		if (count($reviews) == 0) {
 			$reviews_content .= '<p>'. __('There are no reviews yet. Be the first to leave yours!', 'crucible').'</p>';
 		} elseif ($add_reviews != 'true') {
 			$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
 		} else {
 
-				// @test when is this, CASE 3, output? as opposed to the first case above? 
 			$this->get_aggregate_reviews();
 			$summary = $this->got_aggregate["text"];
 			$best_score = 5;
 			$average_score = number_format($this->got_aggregate["aggregate"], 1);
-			$reviews_content .= '<div itemscope itemtype="http://schema.org/'. $schema .'"><!-- @test out CASE 3 --><br />
-							<span class="isa_vcard"><!-- @test out CASE 3 -->
-                                <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a><br />
+			
+
+			// @test this section is for top of Reviews page...
+			$reviews_content .= '<div itemscope itemtype="http://schema.org/'. $schema .'"><br />
+							<span class="isa_vcard">
+								<a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a><br />
                                 <span itemprop="telephone">' . $phone . '</span><br />
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
                                     <span itemprop="streetAddress">' . $street . ' ' .$suite . '</span><br />
@@ -544,7 +616,7 @@ class SMARTESTReviewsBusiness {
                                     <span itemprop="addressRegion">' . $state . '</span> <span itemprop="postalCode">' . $zip . '</span>
                                     <span itemprop="addressCountry">' . $country . '</span>
                                 </span>
-                            </span><hr />';
+							</span><hr />';
 
 
 			
@@ -552,7 +624,7 @@ class SMARTESTReviewsBusiness {
                 
                 if ($snippet_length > 0)
                 {
-                    $review->review_text = $this->trim_text_to_word($review->review_text,$snippet_length);
+                    $review->review_text = wp_trim_words( $review->review_text, $snippet_length, '<a href="'. $this->get_jumplink_for_review($review,1) .'"> ...Read More</a>' ); // @test link
                 }
                 
                 $hide_name = '';
@@ -577,14 +649,14 @@ class SMARTESTReviewsBusiness {
                     $hidesummary = 'smar_hide';
                 }
                 
-                if ($show_morelink != '') {
+                if ($show_morelink != '') {// @test what this links to??? prob need to use in conjunction with the trim text parameter. 
                     $review->review_text .= " <a href='".$this->get_jumplink_for_review($review,1)."'>$show_morelink</a>";
                 }
                 
                 $review->review_text = nl2br($review->review_text);
                 $review_response = '';
                 
-                if ($hide_response == 0)
+                if ($hide_response == 0)// @todo this is good, document this!
                 {
                     if (strlen($review->review_response) > 0) {
                         $review_response = '<p class="response"><strong>'.__('Response:', 'crucible').'</strong> ' . nl2br($review->review_response) . '</p>';
@@ -624,31 +696,25 @@ class SMARTESTReviewsBusiness {
  // add closing wrapper div for business microdata type
 			$reviews_content .= '</div><!-- for business microdata type, only if there are rev -->';
 			}//if else if (count($reviews
-        if (!$inside_div) {
-            $reviews_content .= '</div><!-- smar_respond_1 -->';
-        }
+
+		
+
         return array($reviews_content, $total_reviews);
     }
 	
-    /* trims text, but does not break up a word */
-    function trim_text_to_word($text,$len) {
-        if(strlen($text) > $len) {
-          $matches = array();
-          preg_match("/^(.{1,$len})[\s]/i", $text, $matches);
-          $text = $matches[0];
-        }
-        return $text.'... ';
-    }
-
 /**
  * Create the Reviews page
  * @uses smartestthemes_insert_post()
  */
 function create_reviews_page() {
 	if(get_option('st_add_reviews') == 'true') {
-		smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[SMAR_INSERT]' );// @todo change to lowercase, better name
+		smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[smartest_reviews]' );
 	}
 }
+
+/* @test remove ********************
+
+// @todo instead of filtering the content, just output into the shortcode!!!!
 function do_the_content($original_content) {
 	global $post;
         
@@ -659,12 +725,14 @@ function do_the_content($original_content) {
 	}
 	$the_content = '';
 		
-	/* @todo this section differently so we are not calling function '$this->aggregate_footer()' 4 times !! */
+	// @todo this section differently so we are not calling function '$this->aggregate_footer()' 4 times !! 
 		
-        $is_active_page = $this->is_active_page();
-        /* return normal content if this is not an enabled page, or if this is a post not on single post view */
+        $is_active_page = $this->is_active_page();// @test what does this tell?
+		
+		
+        // return normal content if this is not an enabled page, or if this is a post not on single post view
         if (!$is_active_page) {
-           $the_content .= $this->aggregate_footer(); /* check if we need to show something in the footer then */
+           $the_content .= $this->aggregate_footer(); // check if we need to show something in the footer then
             return $original_content . $the_content;
         }
         
@@ -675,6 +743,7 @@ function do_the_content($original_content) {
 			$the_content .= $this->show_reviews_form();
 		}
 
+		// @test what is inside div here?
 		$ret_Arr = $this->output_reviews_show( $inside_div, $this->options['reviews_per_page'], -1 );
         $the_content .= $ret_Arr[0];
         $total_reviews = $ret_Arr[1];
@@ -685,10 +754,13 @@ function do_the_content($original_content) {
             $the_content .= $this->show_reviews_form();
         }
         $the_content .= '</div>';
-        $the_content = preg_replace('/\n\r|\r\n|\n|\r|\t/', '', $the_content); /* minify to prevent automatic line breaks, not removing double spaces */
+        $the_content = preg_replace('/\n\r|\r\n|\n|\r|\t/', '', $the_content); // minify to prevent automatic line breaks, not removing double spaces
 
         return $original_content . $the_content;
 }
+
+*/
+
 
     function output_rating($rating, $enable_hover) {
         $out = '';
@@ -1010,19 +1082,73 @@ function do_the_content($original_content) {
         exit();
     }
 
-    function init() { /* used for admin_init also */
+    public function init() { /* used for admin_init also */
         $this->make_p_obj(); /* make P variables object */
         $this->get_options();
         $this->check_migrate(); /* call on every instance to see if we have upgraded in any way */
-        if ( !isset($this->p->smarp) ) { $this->p->smarp = 1; }
+		
+		
+        if ( !isset($this->p->smarp) ) {
+			$this->p->smarp = 1;
+		}
         $this->page = intval($this->p->smarp);
-        if ($this->page < 1) { $this->page = 1; }
-        add_shortcode( 'SMAR_INSERT', array($this, 'shortcode_smar_insert') );// @todo change shortcode name across theme
+        if ($this->page < 1) {
+			$this->page = 1;
+		}
+		
+        // @test replace below add_shortcode( 'SMAR_INSERT', array($this, 'shortcode_smar_insert') );// @todo change shortcode name across theme
     }
+	
+	/* this shortcode only adds a flag
+	* @todo regular shortcode instead of this!
+	
     function shortcode_smar_insert() {
         $this->force_active_page = 1;
         return $this->do_the_content('shortcode_insert');        
     }
+	*/
+	
+	
+	/**
+	* The output for the reviews shortcode
+	*/
+	public function reviews_shortcode( $atts ) {
+	
+		global $post;// @test do i need this
+        
+	/* @todo this section differently so we are not calling function '$this->aggregate_footer()' 4 times !! */
+		
+			// @test see how we are going to call this for home page footer:
+			// $this->aggregate_footer();
+        
+		$reviews_content = '<div id="smar_respond_1">';
+		
+
+
+       
+		if ($this->options['form_location'] == 0) {
+			$reviews_content .= $this->show_reviews_form();
+		}
+
+		
+		$ret_Arr = $this->output_reviews_show( $this->options['reviews_per_page'] );// @test removed 3rd param of -1 which the function calls '$max', and removed 1st param, $inside_div
+        $reviews_content .= $ret_Arr[0];
+        $total_reviews = $ret_Arr[1];
+        
+		$reviews_content .= $this->pagination($total_reviews, $this->options['reviews_per_page']);
+
+        if ($this->options['form_location'] == 1) {
+            $reviews_content .= $this->show_reviews_form();
+        }
+        $reviews_content .= '</div>';
+        
+		// @test may not need this?? 	$reviews_content = preg_replace('/\n\r|\r\n|\n|\r|\t/', '', $reviews_content); /* minify to prevent automatic line breaks, not removing double spaces */
+
+        return $reviews_content;
+	
+	
+	}// end reviews_shortcode
+	
 	function smartestreviews_scripts() {
 		if( get_option('st_add_reviews') == 'true'  ) {
 			wp_register_style('smartest-reviews', $this->getpluginurl() . 'reviews.css', array(), $this->version);
@@ -1053,29 +1179,856 @@ function do_the_content($original_content) {
 			register_widget('SmartestReviewsTestimonial');
 		}
 	}
-    function include_admin() {
-        global $SMARTESTReviewsBusinessAdmin;
-        require_once get_template_directory().'/business-framework/modules/reviews/reviews-admin.php';
-
-    }
-    function admin_init() {
-        global $SMARTESTReviewsBusinessAdmin;
-        $this->include_admin();
-        $SMARTESTReviewsBusinessAdmin->real_admin_init();
-    }
+	
+	/* @test
+	function include_admin() {
+		global $SMARTESTReviewsBusinessAdmin;
+		require_once get_template_directory().'/business-framework/modules/reviews/reviews-admin.php';
+	}
+	*/
+	
+	
+	/* @test
+	function admin_init() {
+		global $SMARTESTReviewsBusinessAdmin;
+		$this->include_admin();
+		$SMARTESTReviewsBusinessAdmin->real_admin_init();
+	}
 	function admin_scripts() {
 		global $SMARTESTReviewsBusinessAdmin;
-        $SMARTESTReviewsBusinessAdmin->enqueue_admin_stuff();
+		$SMARTESTReviewsBusinessAdmin->enqueue_admin_stuff();
 	}
-	function getpluginurl() {
-        return get_template_directory_uri().'/business-framework/modules/reviews/';
+	*/
+	public function getpluginurl() {
+		return get_template_directory_uri().'/business-framework/modules/reviews/';
+	}
+	
+	/************ @test begin functions migraing from reviews-admin.php *******************/
+	
+	function admin_init() {
+		
+		// $this->parentClass->init();// @test class where is this called
+		
+		$this->init();// @test
+		
+		
+		register_setting( 'smar_options', 'smar_options' );
+	}
+	
+	function admin_save_post($post_id, $post) {
+		global $meta_box,$wpdb;
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+			return $post_id;
+		}
+
+		// check permissions
+		if ( isset($this->p->post_type) && $this->p->post_type == 'page' ) {
+                if (!current_user_can('edit_page', $post_id)) {
+                    return $post_id;
+                }
+            } elseif (!current_user_can('edit_post', $post_id)) {
+                return $post_id;
+            }
+
+			if ( isset($meta_box) && isset($meta_box['fields']) && is_array($meta_box['fields']) )
+			{
+				foreach ($meta_box['fields'] as $field) {
+					
+					if ( isset($this->p->post_title) ) {
+						$old = get_post_meta($post_id, $field['id'], true);
+						
+						if (isset($this->p->$field['id'])) {
+							$new = $this->p->$field['id'];
+							if ($new && $new != $old) {
+								update_post_meta($post_id, $field['id'], $new);
+							} elseif ($new == '' && $old) {
+								delete_post_meta($post_id, $field['id'], $old);
+							}
+						} else {
+							delete_post_meta($post_id, $field['id'], $old);
+						}
+					}
+					
+				}
+			}
+
+            return $post_id;
+	}
+	
+	
+	function createUpdateReviewTable() {
+            require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
+            
+            $sql = "CREATE TABLE $this->dbtable (
+                      id int(11) NOT NULL AUTO_INCREMENT,
+                      date_time datetime NOT NULL,
+                      reviewer_name varchar(150) DEFAULT NULL,
+                      reviewer_email varchar(150) DEFAULT NULL,
+                      reviewer_ip varchar(15) DEFAULT NULL,
+                      review_title varchar(150) DEFAULT NULL,
+                      review_text text,
+                      review_response text,
+                      status tinyint(1) DEFAULT '0',
+                      review_rating tinyint(2) DEFAULT '0',
+                      reviewer_url varchar(255) NOT NULL,
+                      page_id int(11) NOT NULL DEFAULT '0',
+                      custom_fields text,
+                      PRIMARY KEY  (id),
+                      KEY status (status),
+                      KEY page_id (page_id)
+                      )";
+            
+            dbDelta($sql);
+        }	
+	
+	
+	
+	function force_update_cache() {
+			return; /* @todo maybe remove testing to increase performance */
+			global $wpdb;
+				
+			/* update all pages */
+			$pages = $wpdb->get_results( "SELECT `ID` FROM $wpdb->posts AS `p`" );
+			foreach ($pages as $page) {
+                $post = get_post($page->ID);
+				if ($post) {
+					clean_post_cache($page->ID);
+					wp_update_post($post);
+                }
+            }
     }
+
+	function enqueue_admin_stuff() {
+	
+	
+			// @test replace $pluginurl = $this->parentClass->getpluginurl();
+			
+			$pluginurl = $this->getpluginurl();// @test
+			
+			
+			
+            if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' || $this->p->page == 'smar_options' ) ) {
+				wp_enqueue_script('smartest-reviews-admin',$pluginurl.'reviews-admin.js',array('jquery'));
+				wp_enqueue_style('smartest-reviews-admin',$pluginurl.'reviews-admin.css');
+            }
+	}	
+	
+	
+	
+	
+    function update_options() {
+        /* we still process and validate this internally, instead of using the Settings API */
+        global $wpdb;
+        $this->security();
+           check_admin_referer('smar_options-options'); /* nonce check */
+            $updated_options = $this->options;
+            /* reset these to 0 so we can grab the settings below */
+            $updated_options['ask_fields']['fname'] = 0;
+            $updated_options['ask_fields']['femail'] = 0;
+            $updated_options['ask_fields']['fwebsite'] = 0;
+            $updated_options['ask_fields']['ftitle'] = 0;
+            $updated_options['require_fields']['fname'] = 0;
+            $updated_options['require_fields']['femail'] = 0;
+            $updated_options['require_fields']['fwebsite'] = 0;
+            $updated_options['require_fields']['ftitle'] = 0;
+            $updated_options['show_fields']['fname'] = 0;
+            $updated_options['show_fields']['femail'] = 0;
+            $updated_options['show_fields']['fwebsite'] = 0;
+            $updated_options['show_fields']['ftitle'] = 0;
+            $updated_options['ask_custom'] = array();
+            $updated_options['field_custom'] = array();
+            $updated_options['require_custom'] = array();
+            $updated_options['show_custom'] = array();
+		
+            /* quick update of all options needed */
+            foreach ($this->p as $col => $val)
+            {
+                if (isset($this->options[$col]))
+                {
+                    switch($col)
+                    {
+                        case 'field_custom': /* we should always hit field_custom before ask_custom, etc */
+                            foreach ($val as $i => $name) { $updated_options[$col][$i] = ucwords( strtolower( $name ) ); } /* we are so special */
+                            break;
+                        case 'ask_custom':
+                        case 'require_custom':
+                        case 'show_custom':
+                            foreach ($val as $i => $v) { $updated_options[$col][$i] = 1; } /* checkbox array with ints */
+                            break;
+                        case 'ask_fields':
+                        case 'require_fields':
+                        case 'show_fields':
+                            foreach ($val as $v) { $updated_options[$col]["$v"] = 1; } /* checkbox array with names */
+                            break;
+                        default:
+                            $updated_options[$col] = $val; /* a non-array normal field */
+                            break;
+                    }
+                }
+            }
+            
+            /* prevent E_NOTICE warnings */
+			if (!isset($this->p->goto_show_button)) { $this->p->goto_show_button = 0; }
+			if (!isset($this->p->show_hcard_on)) { $this->p->show_hcard_on = 0; }
+			if (!isset($this->p->biz_declare)) { $this->p->biz_declare = 0; }
+			if (!isset($this->p->biz_declare_shortcode)) { $this->p->biz_declare_shortcode = 0; }
+
+			$updated_options['form_location'] = intval($this->p->form_location);
+			$updated_options['goto_show_button'] = intval($this->p->goto_show_button);
+			$updated_options['reviews_per_page'] = intval($this->p->reviews_per_page);
+			$updated_options['show_hcard_on'] = intval($this->p->show_hcard_on);
+			$updated_options['biz_declare'] = intval($this->p->biz_declare);
+			$updated_options['biz_declare_shortcode'] = intval($this->p->biz_declare_shortcode);
+            if ($updated_options['reviews_per_page'] < 1) { $updated_options['reviews_per_page'] = 10; }
+            update_option('smar_options', $updated_options);
+            $this->force_update_cache(); /* update any caches */
+        
+       return __('Your settings have been saved.', 'crucible');
+    }
+    function show_options() {
+        $su_checked = '';
+        if ($this->options['show_hcard_on']) {
+            $su_checked = 'checked';
+        }
+		$bizdeclare_checked = '';
+		if ($this->options['biz_declare']) {
+			$bizdeclare_checked = 'checked';
+		}
+		$biz_declare_shortcode_checked = '';
+		if ($this->options['biz_declare_shortcode']) {
+			$biz_declare_shortcode_checked = 'checked';
+		}
+
+        $goto_show_button_checked = '';
+        if ($this->options['goto_show_button']) {
+            $goto_show_button_checked = 'checked';
+        }
+        $af = array('fname' => '','femail' => '','fwebsite' => '','ftitle' => '');
+        if ($this->options['ask_fields']['fname'] == 1) { $af['fname'] = 'checked'; }
+        if ($this->options['ask_fields']['femail'] == 1) { $af['femail'] = 'checked'; }
+        if ($this->options['ask_fields']['fwebsite'] == 1) { $af['fwebsite'] = 'checked'; }
+        if ($this->options['ask_fields']['ftitle'] == 1) { $af['ftitle'] = 'checked'; }
+        $rf = array('fname' => '','femail' => '','fwebsite' => '','ftitle' => '');
+        if ($this->options['require_fields']['fname'] == 1) { $rf['fname'] = 'checked'; }
+        if ($this->options['require_fields']['femail'] == 1) { $rf['femail'] = 'checked'; }
+        if ($this->options['require_fields']['fwebsite'] == 1) { $rf['fwebsite'] = 'checked'; }
+        if ($this->options['require_fields']['ftitle'] == 1) { $rf['ftitle'] = 'checked'; }
+        $sf = array('fname' => '','femail' => '','fwebsite' => '','ftitle' => '');
+        if ($this->options['show_fields']['fname'] == 1) { $sf['fname'] = 'checked'; }
+        if ($this->options['show_fields']['femail'] == 1) { $sf['femail'] = 'checked'; }
+        if ($this->options['show_fields']['fwebsite'] == 1) { $sf['fwebsite'] = 'checked'; }
+        if ($this->options['show_fields']['ftitle'] == 1) { $sf['ftitle'] = 'checked'; }
+        echo '
+        <div class="postbox" style="width:700px;"><h3>'. __('Display Options', 'crucible') .'</h3><div id="smar_ad">
+               <form method="post" action=""><div style="background:#eaf2fa;padding:6px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;">
+                        <legend>'. __('General Settings', 'crucible').'</legend>
+                    </div>                    
+<div style="padding:10px;"><input id="show_hcard_on" name="show_hcard_on" type="checkbox" '.$su_checked.' value="1" />&nbsp;
+<label for="show_hcard_on">'. __('Enable Aggregate Rating on Home Page.', 'crucible').'</label>
+<br /><br /> <small>'. __('This will pull data from your Reviews page, then add <code>aggregateRating</code> Schema.org Microdata to your home page.', 'crucible'). '</small><br /><br /><input id="biz_declare" name="biz_declare" type="checkbox" '.$bizdeclare_checked.' value="1" />&nbsp;
+<label for="biz_declare">'. __('Add the LocalBusiness type to the Aggregate Rating on Home Page', 'crucible').'</label>
+<br /><br />
+<small>'. __('Add the LocalBusiness type to the Aggregate Rating above. NOTE: Don\'t check this if you\'re using the theme as is, which already adds your business type. This option is useful if you use a custom template for the home page which may be missing your business microdata.', 'crucible').'</small><br />
+<br /><input id="biz_declare_shortcode" name="biz_declare_shortcode" type="checkbox" '.$biz_declare_shortcode_checked.' value="1" />&nbsp;
+<label for="biz_declare_shortcode">'. __('Add the LocalBusiness type to the Aggregate Rating Shortcode', 'crucible').'</label>
+<br /><br /> <small>'. __('Add the LocalBusiness type to the Aggregate Rating shortcode. This only applies to you if you use the Aggregate Rating shortcode. This is necessary for stars if you use the shortcode on any page besides the home page, the Reviews page, or the Contact page.', 'crucible').'</small><br /><br />
+
+<div class="submit" style="padding:10px 0px 0px 0px;"><input type="submit" class="button-primary" value="'. __('Save Changes', 'crucible') .'" name="Submit"></div>
+</div>         <div style="background:#eaf2fa;padding:6px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;"><legend>'. __('Review Page Settings', 'crucible'). '</legend></div>
+                    <div style="padding:10px;padding-bottom:10px;"><label for="reviews_per_page">'. __('Reviews shown per page: ', 'crucible') . '</label><input style="width:40px;" type="text" id="reviews_per_page" name="reviews_per_page" value="'.$this->options['reviews_per_page'].'" />
+                        <br /><br />
+                        <label for="form_location">'. __('Location of Review Form: ', 'crucible'). '</label>
+                        <select id="form_location" name="form_location">
+                            <option ';if ($this->options['form_location'] == 0) { echo "selected"; } echo ' value="0">'. __('Above Reviews', 'crucible'). '</option>
+                            <option ';if ($this->options['form_location'] == 1) { echo "selected"; } echo ' value="1">'. __('Below Reviews', 'crucible'). '</option>                     </select>
+                        <br /><br />
+                        <label>'. __('Fields to ask for on review form: ', 'crucible'). '</label>
+                        <input data-what="fname" id="ask_fname" name="ask_fields[]" type="checkbox" '.$af['fname'].' value="fname" />&nbsp;<label for="ask_fname"><small>'. __('Name', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
+                        <input data-what="femail" id="ask_femail" name="ask_fields[]" type="checkbox" '.$af['femail'].' value="femail" />&nbsp;<label for="ask_femail"><small>'. __('Email', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
+                        <input data-what="fwebsite" id="ask_fwebsite" name="ask_fields[]" type="checkbox" '.$af['fwebsite'].' value="fwebsite" />&nbsp;<label for="ask_fwebsite"><small>'. __('Website', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
+                        <input data-what="ftitle" id="ask_ftitle" name="ask_fields[]" type="checkbox" '.$af['ftitle'].' value="ftitle" />&nbsp;<label for="ask_ftitle"><small>'. __('Review Title', 'crucible'). '</small></label>
+                        <br /><br />
+                        <label>'. __('Fields to require on review form: ', 'crucible'). '</label>
+                        <input id="require_fname" name="require_fields[]" type="checkbox" '.$rf['fname'].' value="fname" />&nbsp;<label for="require_fname"><small>'. __('Name', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
+                        <input id="require_femail" name="require_fields[]" type="checkbox" '.$rf['femail'].' value="femail" />&nbsp;<label for="require_femail"><small>'. __('Email', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
+                        <input id="require_fwebsite" name="require_fields[]" type="checkbox" '.$rf['fwebsite'].' value="fwebsite" />&nbsp;<label for="require_fwebsite"><small>'. __('Website', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
+                        <input id="require_ftitle" name="require_fields[]" type="checkbox" '.$rf['ftitle'].' value="ftitle" />&nbsp;<label for="require_ftitle"><small>'. __('Review Title', 'crucible'). '</small></label>
+                        <br /><br />
+                        <label>'. __('Fields to show on each approved review: ', 'crucible'). '</label>
+                        <input id="show_fname" name="show_fields[]" type="checkbox" '.$sf['fname'].' value="fname" />&nbsp;<label for="show_fname"><small>'. __('Name', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
+                        <input id="show_femail" name="show_fields[]" type="checkbox" '.$sf['femail'].' value="femail" />&nbsp;<label for="show_femail"><small>'. __('Email', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
+                        <input id="show_fwebsite" name="show_fields[]" type="checkbox" '.$sf['fwebsite'].' value="fwebsite" />&nbsp;<label for="show_fwebsite"><small>'. __('Website', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
+                        <input id="show_ftitle" name="show_fields[]" type="checkbox" '.$sf['ftitle'].' value="ftitle" />&nbsp;<label for="show_ftitle"><small>'. __('Review Title', 'crucible'). '</small></label>
+                        <br />
+                        <small>'. __('It is usually NOT a good idea to show email addresses publicly.', 'crucible'). '</small>
+                        <br /><br />
+                        <label>'. __('Custom fields on review form: ', 'crucible'). '</label>(<small>'. __('You can type in the names of any additional fields you would like here.', 'crucible'). '</small>)
+                        <div style="font-size:10px;padding-top:6px;">
+                        ';
+                        for ($i = 0; $i < 6; $i++) /* 6 custom fields */
+                        {
+                            if ( !isset($this->options['ask_custom'][$i]) ) { $this->options['ask_custom'][$i] = 0; }
+                            if ( !isset($this->options['require_custom'][$i]) ) { $this->options['require_custom'][$i] = 0; }
+                            if ( !isset($this->options['show_custom'][$i]) ) { $this->options['show_custom'][$i] = 0; }
+                            
+                            if ($this->options['ask_custom'][$i] == 1) { $caf = 'checked'; } else { $caf = ''; }
+                            if ($this->options['require_custom'][$i] == 1) { $crf = 'checked'; } else { $crf = ''; }
+                            if ($this->options['show_custom'][$i] == 1) { $csf = 'checked'; } else { $csf = ''; }
+                            echo '
+                            <label for="field_custom'.$i.'">'. __('Field Name: ', 'crucible'). '</label><input id="field_custom'.$i.'" name="field_custom['.$i.']" type="text" value="'.$this->options['field_custom'][$i].'" />&nbsp;&nbsp;&nbsp;
+                            <input '.$caf.' class="custom_ask" data-id="'.$i.'" id="ask_custom'.$i.'" name="ask_custom['.$i.']" type="checkbox" value="1" />&nbsp;<label for="ask_custom'.$i.'">'. __('Ask', 'crucible'). '</label>&nbsp;&nbsp;&nbsp;
+                            <input '.$crf.' class="custom_req" data-id="'.$i.'" id="require_custom'.$i.'" name="require_custom['.$i.']" type="checkbox" value="1" />&nbsp;<label for="require_custom'.$i.'">'. __('Require', 'crucible'). '</label>&nbsp;&nbsp;&nbsp;
+                            <input '.$csf.' class="custom_show" data-id="'.$i.'" id="show_custom'.$i.'" name="show_custom['.$i.']" type="checkbox" value="1" />&nbsp;<label for="show_custom'.$i.'">'. __('Show', 'crucible'). '</label><br />
+                            ';
+                        }
+                        echo '
+                        </div>
+                        <br /><br />
+                        <label for="title_tag">'. __('Heading to use for Review Titles: ', 'crucible'). '</label>
+                        <select id="title_tag" name="title_tag">
+                            <option ';if ($this->options['title_tag'] == 'h2') { echo "selected"; } echo ' value="h2">H2</option>
+                            <option ';if ($this->options['title_tag'] == 'h3') { echo "selected"; } echo ' value="h3">H3</option>
+                            <option ';if ($this->options['title_tag'] == 'h4') { echo "selected"; } echo ' value="h4">H4</option>
+                            <option ';if ($this->options['title_tag'] == 'h5') { echo "selected"; } echo ' value="h5">H6</option>
+                            <option ';if ($this->options['title_tag'] == 'h6') { echo "selected"; } echo ' value="h6">H7</option>
+                        </select>
+                        <br /><br />
+                        <label for="goto_show_button">'. __('Show review form: ', 'crucible'). '</label><input type="checkbox" id="goto_show_button" name="goto_show_button" value="1" '.$goto_show_button_checked.' />
+                        <br />
+                        <small>'. __('If this option is unchecked, there will be no visible way for visitors to submit reviews.', 'crucible'). '</small>
+                        <br /><br />
+                        <label for="goto_leave_text">'. __('Button text used to show review form: ', 'crucible'). '</label><input style="width:250px;" type="text" id="goto_leave_text" name="goto_leave_text" value="'.$this->options['goto_leave_text'].'" />
+                        <br />
+                        <small>'. __('This button will be shown above the first review.', 'crucible'). '</small>
+                        <br /><br />
+                        <label for="leave_text">'. __('Text to be displayed above review form: ', 'crucible'). '</label><input style="width:250px;" type="text" id="goto_leave_text" name="goto_leave_text" value="'.$this->options['goto_leave_text'].'" />
+                        <br />
+                        <small>'. __('This will be shown as a heading immediately above the review form.', 'crucible'). '</small>
+                        <br /><br />
+                        <label for="submit_button_text">'. __('Text to use for review form submit button: ', 'crucible'). '</label><input style="width:200px;" type="text" id="submit_button_text" name="submit_button_text" value="'.$this->options['submit_button_text'].'" />
+                        <br />
+                        <div class="submit" style="padding:10px 0px 0px 0px;"><input type="submit" class="button-primary" value="'. __('Save Changes', 'crucible'). '" name="Submit"></div>
+                    </div>';
+                    settings_fields("smar_options");
+                    echo '
+                </form>
+                <br />
+            </div>
+        </div>';
+        
+    }
+	
+	function security() {
+        if (!current_user_can('manage_options'))
+        {
+            wp_die( __('You do not have sufficient permissions to access this page.','crucible') );
+        }
+    }	
+
+
+function admin_options() {
+        $this->security();
+
+        $msg = '';
+		
+		// make sure the db is created
+		global $wpdb;
+		$exists = $wpdb->get_var("SHOW TABLES LIKE '$this->dbtable'");
+		if ($exists != $this->dbtable) {
+			$exists = $wpdb->get_var("SHOW TABLES LIKE '$this->dbtable'");
+			if ($exists != $this->dbtable) {
+				print "<br /><br /><br /><p class='warning'>". __('COULD NOT CREATE DATABASE TABLE, PLEASE REPORT THIS ERROR', 'crucible'). "</p>";
+			}
+		}
+        
+        if (!isset($this->p->Submit)) { $this->p->Submit = ''; }
+        
+        if ($this->p->Submit == __('Save Changes', 'crucible')) {
+            $msg = $this->update_options();
+            // @test replace	$this->parentClass->get_options();
+			$this->get_options();// @test
+        }
+        
+        if (isset($this->p->email)) { // @todo @test what is them email? can i delete?
+            $msg = $this->update_options();
+            // @test replace	$this->parentClass->get_options();
+			$this->get_options();// @test
+			
+        }
+        
+        echo '
+        <div id="smar_respond_1" class="wrap">
+            <h2>'. __('Reviews - Options', 'crucible'). '</h2>';
+            if ($msg) { echo '<h3 style="color:#a00;">'.$msg.'</h3>'; }
+			$themeobject = wp_get_theme();
+			$admin_page = $themeobject->Template;// @test
+			$linkp = '<a href="'. admin_url("admin.php?page=$admin_page").'">Preferences</a>';
+            echo '<div class="metabox-holder">
+            <div class="postbox" style="width:700px;">
+                <h3 style="cursor:default;">'. __('About Reviews', 'crucible'). '</h3>
+                <div style="padding:10px; background:#ffffff;">
+                    <p>'. __('Reviews allow your customers and visitors to leave reviews or testimonials of your business. Aggregate ratings data from the Reviews page will be pulled into your home page to create rich snippets for search engines on your home page and your Reviews page. Reviews are Schema.org microdata enabled.', 'crucible'). '<br /><br />'
+					. sprintf(__('Activate Reviews by checking the "Add Reviews Section" in %s.', 'crucible'), $linkp).
+'</p><br /> </div> </div>';
+        $this->show_options();
+        echo '<br /></div>';
+    }
+	
+	function admin_view_reviews() {
+        global $wpdb;
+        
+        if (!isset($this->p->s)) { $this->p->s = ''; }
+        $this->p->s_orig = $this->p->s;
+        
+        if (!isset($this->p->review_status)) { $this->p->review_status = 0; }
+        $this->p->review_status = intval($this->p->review_status);
+        
+        /* begin - actions */
+        if (isset($this->p->action)) {
+		
+            if (isset($this->p->r)) {
+                $this->p->r = intval($this->p->r);
+
+                switch ($this->p->action) {
+                    case 'deletereview':
+                        $wpdb->query("DELETE FROM `$this->dbtable` WHERE `id`={$this->p->r} LIMIT 1");
+                        break;
+                    case 'trashreview':
+                        $wpdb->query("UPDATE `$this->dbtable` SET `status`=2 WHERE `id`={$this->p->r} LIMIT 1");
+                        break;
+                    case 'approvereview':
+                        $wpdb->query("UPDATE `$this->dbtable` SET `status`=1 WHERE `id`={$this->p->r} LIMIT 1");
+                        break;
+                    case 'unapprovereview':
+                        $wpdb->query("UPDATE `$this->dbtable` SET `status`=0 WHERE `id`={$this->p->r} LIMIT 1");
+                        break;
+                    case 'update_field':
+                        
+                        ob_end_clean();
+                        
+                        if (!is_array($this->p->json)) {
+                            header('HTTP/1.1 403 Forbidden');
+                            echo json_encode(array("errors" => __('Bad Request', 'crucible')));
+                            exit(); 
+                        }
+                        
+                        $show_val = '';
+                        $update_col = false;
+                        $update_val = false;
+                        
+                        foreach ($this->p->json as $col => $val) {
+                            
+                            switch ($col) {
+                                case 'date_time':
+                                    $d = date("m/d/Y g:i a",strtotime($val));
+                                    if (!$d || $d == '01/01/1970 12:00 am') {
+                                        header('HTTP/1.1 403 Forbidden');
+                                        echo json_encode(array("errors" => __('Bad Date Format', 'crucible')));
+                                        exit(); 
+                                    }
+                                    
+                                    $show_val = $d;
+                                    $d2 = date("Y-m-d H:i:s",strtotime($val));
+                                    $update_col = esc_sql($col);
+                                    $update_val = esc_sql($d2);
+                                    break;
+                                    
+                                default:
+                                    if ($val == '') {
+                                        header('HTTP/1.1 403 Forbidden');
+                                        echo json_encode(array("errors" => __('Bad Value', 'crucible')));
+                                        exit(); 
+                                    }
+									
+                                    /* for storing in DB - fix with IE 8 workaround */
+                                    $val = str_replace( array("<br />","<br/>","<br>") , "\n" , $val );	
+
+                                    if (substr($col,0,7) == 'custom_') /* updating custom fields */
+                                    {
+                                        $custom_fields = array(); /* used for insert as well */
+                                        $custom_count = count($this->options['field_custom']); /* used for insert as well */
+                                        for ($i = 0; $i < $custom_count; $i++)
+                                        {
+                                            $custom_fields[$i] = $this->options['field_custom'][$i];
+                                        }
+
+                                        $custom_num = substr($col,7); /* gets the number after the _ */
+                                        /* get the old custom value */
+                                        $old_value = $wpdb->get_results("SELECT `custom_fields` FROM `$this->dbtable` WHERE `id`={$this->p->r} LIMIT 1");										
+                                        if ($old_value && $wpdb->num_rows)
+                                        {
+                                            $old_value = @unserialize($old_value[0]->custom_fields);
+                                            if (!is_array($old_value)) { $old_value = array(); }
+                                            $custom_name = $custom_fields[$custom_num];
+                                            $old_value[$custom_name] = $val;
+                                            $new_value = serialize($old_value);											
+                                            $update_col = esc_sql('custom_fields');
+                                            $update_val = esc_sql($new_value);
+                                        }
+                                    }
+                                    else /* updating regular fields */
+                                    {									
+                                        $update_col = esc_sql($col);
+                                        $update_val = esc_sql($val);
+                                    }
+
+                                    $show_val = $val;
+                                    
+                                    break;
+                            }
+                            
+                        }
+                        
+                        if ($update_col !== false && $update_val !== false) {
+
+                           $query = "UPDATE `$this->dbtable` SET `$update_col`='$update_val' WHERE `id`={$this->p->r} LIMIT 1";
+                             $wpdb->query($query);
+                            echo $show_val;
+                        }
+                        
+                        exit();
+                        break;
+                }
+            }
+			
+            if ( isset($this->p->delete_reviews) && is_array($this->p->delete_reviews) && count($this->p->delete_reviews) ) {
+                
+                foreach ($this->p->delete_reviews as $i => $rid) {
+                    $this->p->delete_reviews[$i] = intval($rid);
+                }
+				
+                if (isset($this->p->act2)) { $this->p->action = $this->p->action2; }
+				
+                switch ($this->p->action) {
+                    case 'bapprove':
+                        $wpdb->query("UPDATE `$this->dbtable` SET `status`=1 WHERE `id` IN(".implode(',',$this->p->delete_reviews).")");
+                        break;
+                    case 'bunapprove':
+                        $wpdb->query("UPDATE `$this->dbtable` SET `status`=0 WHERE `id` IN(".implode(',',$this->p->delete_reviews).")");
+                        break;
+                    case 'btrash':
+                        $wpdb->query("UPDATE `$this->dbtable` SET `status`=2 WHERE `id` IN(".implode(',',$this->p->delete_reviews).")");
+                        break;
+                    case 'bdelete':
+                        $wpdb->query("DELETE FROM `$this->dbtable` WHERE `id` IN(".implode(',',$this->p->delete_reviews).")");
+                        break;
+                }
+            }
+			
+            $this->force_update_cache(); /* update any caches */            
+            // @test replace	$this->parentClass->smar_redirect("?page=smar_view_reviews&review_status={$this->p->review_status}");
+			
+			$this->smar_redirect("?page=smar_view_reviews&review_status={$this->p->review_status}");
+			
+			
+        }
+        /* end - actions */
+        
+        /* begin - searching */
+        if ($this->p->review_status == -1) {
+            $sql_where = '-1=-1';
+        } else {
+            $sql_where = 'status='.$this->p->review_status;
+        }
+        
+        $and_clause = '';
+        if ($this->p->s != '') { /* searching */
+            $this->p->s = '%'.$this->p->s.'%';
+            $sql_where = '-1=-1';
+            $this->p->review_status = -1;
+            $and_clause = "AND (`reviewer_name` LIKE %s OR `reviewer_email` LIKE %s OR `reviewer_ip` LIKE %s OR `review_text` LIKE %s OR `review_response` LIKE %s OR `reviewer_url` LIKE %s)";
+            $and_clause = $wpdb->prepare($and_clause,$this->p->s,$this->p->s,$this->p->s,$this->p->s,$this->p->s,$this->p->s);
+            
+            $query = "SELECT 
+                `id`,
+                `date_time`,
+                `reviewer_name`,
+                `reviewer_email`,
+                `reviewer_ip`,
+                `review_title`,
+                `review_text`,
+                `review_response`,
+                `review_rating`,
+                `reviewer_url`,
+                `status`,
+                `page_id`,
+                `custom_fields`
+                FROM `$this->dbtable` WHERE $sql_where $and_clause ORDER BY `id` DESC"; 
+            
+            $reviews = $wpdb->get_results($query);
+            $total_reviews = 0; /* no pagination for searches */
+        }
+        /* end - searching */
+        else {
+            // @test replace	$arr_Reviews = $this->parentClass->get_reviews($this->page,$this->options['reviews_per_page'],$this->p->review_status);
+			
+			$arr_Reviews = $this->get_reviews($this->page,$this->options['reviews_per_page'],$this->p->review_status);
+			
+			
+            $reviews = $arr_Reviews[0];
+            $total_reviews = $arr_Reviews[1];
+        }
+        $status_text = "";
+        switch ($this->p->review_status)
+        {
+            case -1:
+                $status_text = __('Submitted', 'crucible');
+                break;
+            case 0:
+                $status_text = __('Pending', 'crucible');
+                break;
+            case 1:
+                $status_text = __('Approved', 'crucible');
+                break;
+            case 2:
+                $status_text = __('Trashed', 'crucible');
+                break;
+        }
+        
+        $pending_count = $wpdb->get_results("SELECT COUNT(*) AS `count_pending` FROM `$this->dbtable` WHERE `status`=0");
+        $pending_count = $pending_count[0]->count_pending;
+		
+        $approved_count = $wpdb->get_results("SELECT COUNT(*) AS `count_approved` FROM `$this->dbtable` WHERE `status`=1");
+        $approved_count = $approved_count[0]->count_approved;
+
+        $trash_count = $wpdb->get_results("SELECT COUNT(*) AS `count_trash` FROM `$this->dbtable` WHERE `status`=2");
+        $trash_count = $trash_count[0]->count_trash;
+        ?>
+        <div id="smar_respond_1" class="wrap">
+            <div class="icon32" id="icon-edit-comments"><br /></div>
+            <h2><?php _e('Reviews', 'crucible'); ?> - <?php echo sprintf(__('%s Reviews', 'crucible'), $status_text); ?></h2>
+              <ul class="subsubsub">
+                <li class="all"><a <?php if ($this->p->review_status == -1) { echo 'class="current"'; } ?> href="?page=smar_view_reviews&amp;review_status=-1"><?php _e('All', 'crucible'); ?></a> |</li>
+                <li class="moderated"><a <?php if ($this->p->review_status == 0) { echo 'class="current"'; } ?> href="?page=smar_view_reviews&amp;review_status=0"><?php _e('Pending ', 'crucible'); ?>
+                    <span class="count">(<span class="pending-count"><?php echo $pending_count;?></span>)</span></a> |
+                </li>
+                <li class="approved"><a <?php if ($this->p->review_status == 1) { echo 'class="current"'; } ?> href="?page=smar_view_reviews&amp;review_status=1"><?php _e('Approved', 'crucible'); ?>
+                    <span class="count">(<span class="pending-count"><?php echo $approved_count;?></span>)</span></a> |
+                </li>
+                <li class="trash"><a <?php if ($this->p->review_status == 2) { echo 'class="current"'; } ?> href="?page=smar_view_reviews&amp;review_status=2"><?php _e('Trash', 'crucible'); ?>
+                    <span class="count">(<span class="pending-count"><?php echo $trash_count;?></span>)</span></a>
+                </li>
+              </ul>
+
+              <form method="GET" action="" id="search-form" name="search-form">
+                  <p class="search-box">
+                      <?php if ($this->p->s_orig): ?><span style='color:#c00;font-weight:bold;'><?php _e('RESULTS FOR: ', 'crucible'); ?></span><?php endif; ?>
+                      <label for="comment-search-input" class="screen-reader-text"><?php _e('Search Reviews:', 'crucible'); ?></label> 
+                      <input type="text" value="<?php echo $this->p->s_orig; ?>" name="s" id="comment-search-input" />
+                      <input type="hidden" name="page" value="smar_view_reviews" />
+                      <input type="submit" class="button" value="<?php _e('Search Reviews', 'crucible'); ?>" />
+                  </p>
+              </form>
+
+              <form method="POST" action="?page=smar_view_reviews" id="comments-form" name="comments-form">
+              <input type="hidden" name="review_status" value="<?php echo $this->p->review_status; ?>" />
+              <div class="tablenav">
+                <div class="alignleft actions">
+                      <select name="action">
+                            <option selected="selected" value="-1"><?php _e('Bulk Actions', 'crucible'); ?></option>
+                            <option value="bunapprove"><?php _e('Unapprove', 'crucible'); ?></option>
+                            <option value="bapprove"><?php _e('Approve', 'crucible'); ?></option>
+                            <option value="btrash"><?php _e('Move to Trash', 'crucible'); ?></option>
+                            <option value="bdelete"><?php _e('Delete Forever', 'crucible'); ?></option>
+                      </select>&nbsp;
+                      <input type="submit" class="button-secondary apply" name="act" value="<?php _e('Apply', 'crucible'); ?>" id="doaction" /></div><br class="clear" /></div> <div class="clear"></div><table cellspacing="0" class="widefat comments fixed"><thead><tr><th style="" class="manage-column column-cb check-column" id="cb" scope="col"><input type="checkbox" /></th><th style="" class="manage-column column-author" id="author" scope="col"><?php _e('Author', 'crucible'); ?></th><th style="" class="manage-column column-comment" id="comment" scope="col"><?php _e('Review', 'crucible'); ?></th></tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th style="" class="manage-column column-cb check-column" scope="col"><input type="checkbox" /></th>
+                    <th style="" class="manage-column column-author" scope="col"><?php _e('Author', 'crucible'); ?></th>
+                    <th style="" class="manage-column column-comment" scope="col"><?php _e('Review', 'crucible'); ?></th>
+                  </tr>
+                </tfoot>
+                <tbody class="list:comment" id="the-comment-list">
+                  <?php
+                  if (count($reviews) == 0) { ?>
+                        <tr><td colspan="3" align="center"><br />
+<?php echo sprintf(__('There are no %s reviews yet.', 'crucible'), $status_text); ?> <br /><br /></td></tr>
+                      <?php
+                  }
+                  foreach ($reviews as $review) {
+                      $rid = $review->id;
+                      $update_path = get_admin_url()."admin-ajax.php?page=smar_view_reviews&r=$rid&action=update_field";
+                      $hash = md5( strtolower( trim( $review->reviewer_email ) ) );
+                      $review->review_title = stripslashes($review->review_title);
+                      $review->review_text = stripslashes($review->review_text);
+                      $review->review_response = stripslashes($review->review_response);
+                      $review->reviewer_name = stripslashes($review->reviewer_name);
+                      if ($review->reviewer_name == '') { $review->reviewer_name = __('Anonymous', 'crucible'); }
+                      $review_text = nl2br($review->review_text);
+                      $review_text = str_replace( array("\r\n","\r","\n") , "" , $review_text );
+                      $review_response = nl2br($review->review_response);
+                      $review_response = str_replace( array("\r\n","\r","\n") , "" , $review_response );
+					  
+					  // @test is this needed??? prob not! test without this. test admin.
+                      $page = get_post($review->page_id);
+
+					  ?>
+                      <tr class="approved" id="review-<?php echo $rid;?>">
+                        <th class="check-column" scope="row"><input type="checkbox" value="<?php echo $rid;?>" name="delete_reviews[]" /></th>
+                        <td class="author column-author">
+                            <img width="32" height="32" class="avatar avatar-32 photo" src=
+                            "http://1.gravatar.com/avatar/<?php echo $hash; ?>?s=32&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D32&amp;r=G"
+                            alt="" />&nbsp;<span style="font-weight:bold;" class="best_in_place" data-url='<?php echo $update_path; ?>' data-object='json' data-attribute='reviewer_name'><?php echo $review->reviewer_name; ?></span>
+                            <br />
+                            <a href="<?php echo $review->reviewer_url; ?>"><?php echo $review->reviewer_url; ?></a><br />
+                            <a href="mailto:<?php echo $review->reviewer_email; ?>"><?php echo $review->reviewer_email; ?></a><br />
+                            <a href="?page=smar_view_reviews&amp;s=<?php echo $review->reviewer_ip; ?>"><?php echo $review->reviewer_ip; ?></a><br />
+                            <?php
+                            $custom_count = count($this->options['field_custom']); /* used for insert as well */
+                            $custom_unserialized = @unserialize($review->custom_fields);
+                            if ($custom_unserialized !== false)
+                            {							
+                                for ($i = 0; $i < $custom_count; $i++)
+                                {
+                                    $custom_field_name = $this->options['field_custom'][$i];
+                                    if ( isset($custom_unserialized[$custom_field_name]) ) {
+                                        $custom_value = $custom_unserialized[$custom_field_name];
+                                        if ($custom_value != '')
+                                        {
+                                            echo "$custom_field_name: <span class='best_in_place' data-url='$update_path' data-object='json' data-attribute='custom_$i'>$custom_value</span><br />";
+                                        }
+                                    }
+                                }
+                            }
+                            ?>
+                            <div style="margin-left:-4px;">
+                                <div style="height:22px;" class="best_in_place" 
+                                     data-collection='[[1,"Rated 1 Star"],[2,"Rated 2 Stars"],[3,"Rated 3 Stars"],[4,"Rated 4 Stars"],[5,"Rated 5 Stars"]]' 
+                                     data-url='<?php echo $update_path; ?>' 
+                                     data-object='json'
+                                     data-attribute='review_rating' 
+                                     data-callback='make_stars_from_rating'
+                                     data-type='select'><?php 
+									 
+									 // @test replace	echo $this->parentClass->output_rating($review->review_rating,false); 
+									 
+									 echo $this->output_rating($review->review_rating,false); 
+									 
+									 ?></div>
+                            </div>
+                        </td>
+                        <td class="comment column-comment">
+                          <div class="smar-submitted-on">
+                            <span class="best_in_place" data-url='<?php echo $update_path; ?>' data-object='json' data-attribute='date_time'>
+<?php echo date(__('m/d/Y g:i a', 'crucible'),strtotime(__($review->date_time, 'crucible'))); ?>
+                            </span>
+                            <?php if ($review->status == 1) : ?>[<a target="_blank" href="<?php 
+							
+							
+							// @test replace	echo $this->parentClass->get_jumplink_for_review($review,$this->page);
+							
+							echo $this->get_jumplink_for_review($review,$this->page);
+							
+							
+							?>"><?php _e('View Review on Page', 'crucible'); ?></a>]<?php endif; ?>
+                          </div>
+                          <p>
+                              <span style="font-size:13px;font-weight:bold;"><?php _e('Title:', 'crucible'); ?>&nbsp;</span>
+                              <span style="font-size:14px; font-weight:bold;" 
+                                    class="best_in_place" 
+                                    data-url='<?php echo $update_path; ?>' 
+                                    data-object='json'
+                                    data-attribute='review_title'><?php echo $review->review_title; ?></span>
+                              <br /><br />
+                              <div class="best_in_place" 
+                                    data-url='<?php echo $update_path; ?>' 
+                                    data-object='json'
+                                    data-attribute='review_text' 
+                                    data-callback='callback_review_text'
+                                    data-type='textarea'><?php echo $review_text; ?></div>
+                             <div style="font-size:13px;font-weight:bold;">
+                                 <br />
+                                 <?php _e('Official Response:', 'crucible'); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                 <span style="font-size:11px;font-style:italic;"><?php _e('Leave this blank if you do not want it to be public', 'crucible'); ?></span>
+                             </div>
+                             <div class="best_in_place" 
+                                    data-url='<?php echo $update_path; ?>'
+                                    data-object='json'
+                                    data-attribute='review_response' 
+                                    data-callback='callback_review_text'
+                                    data-type='textarea'><?php echo $review_response; ?></div>
+                          </p>
+                          <div class="row-actions">
+                            <span class="approve <?php if ($review->status == 0 || $review->status == 2) { echo 'smar_show'; } else { echo 'smar_hide'; }?>"><a title="<?php _e( 'Mark as Approved', 'crucible' ); ?>"
+                            href="?page=smar_view_reviews&amp;action=approvereview&amp;r=<?php echo $rid;?>&amp;review_status=<?php echo $this->p->review_status;?>">
+                            <?php _e('Mark as Approved', 'crucible'); ?></a>&nbsp;|&nbsp;</span>
+                            <span class="unapprove <?php if ($review->status == 1 || $review->status == 2) { echo 'smar_show'; } else { echo 'smar_hide'; }?>"><a title="<?php _e( 'Mark as Unapproved', 'crucible' ); ?>"
+                            href="?page=smar_view_reviews&amp;action=unapprovereview&amp;r=<?php echo $rid;?>&amp;review_status=<?php echo $this->p->review_status;?>">
+                            <?php _e('Mark as Unapproved', 'crucible'); ?></a><?php if ($review->status != 2): ?>&nbsp;|&nbsp;<?php endif; ?></span>
+                            <span class="trash <?php if ($review->status == 2) { echo 'smar_hide'; } else { echo 'smar_show'; }?>"><a title="<?php _e( 'Move to Trash', 'crucible' ); ?>" 
+                            href= "?page=smar_view_reviews&amp;action=trashreview&amp;r=<?php echo $rid;?>&amp;review_status=<?php echo $this->p->review_status;?>">
+                            <?php _e('Move to Trash', 'crucible'); ?></a><?php if ($review->status != 2): ?>&nbsp;|&nbsp;<?php endif; ?></span>
+                            <span class="trash <?php if ($review->status == 2) { echo 'smar_hide'; } else { echo 'smar_show'; }?>"><a title="<?php _e( 'Delete Forever', 'crucible' ); ?>" 
+                            href= "?page=smar_view_reviews&amp;action=deletereview&amp;r=<?php echo $rid;?>&amp;review_status=<?php echo $this->p->review_status;?>">
+                            <?php _e('Delete Forever', 'crucible'); ?></a></span>
+                          </div>
+                        </td>
+                      </tr>
+                  <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
+
+              <div class="tablenav">
+                <div class="alignleft actions" style="float:left;">
+                      <select name="action2">
+                            <option selected="selected" value="-1"><?php _e('Bulk Actions', 'crucible'); ?></option>
+                            <option value="bunapprove"><?php _e('Unapprove', 'crucible'); ?></option>
+                            <option value="bapprove"><?php _e('Approve', 'crucible'); ?></option>
+                            <option value="btrash"><?php _e('Move to Trash', 'crucible'); ?></option>
+                            <option value="bdelete"><?php _e('Delete Forever', 'crucible'); ?></option>
+                      </select>&nbsp;
+                      <input type="submit" class="button-secondary apply" name="act2" value="<?php _e('Apply', 'crucible'); ?>" id="doaction2" />
+                </div>
+                <div class="alignleft actions" style="float:left;padding-left:20px;"><?php 
+				
+				// @test this output
+				// @test replace echo $this->parentClass->pagination($total_reviews, $this->options['reviews_per_page']);
+
+				echo $this->pagination($total_reviews, $this->options['reviews_per_page']);
+
+
+				?></div>  
+                <br class="clear" />
+              </div>
+            </form>
+            <div id="ajax-response"></div>
+          </div>
+        <?php
+    } // end admin_view_reviews	
+
+
+	
+	
+	
+	
+	
+	
+	
+} // end class
+
+
+/*
+if (!defined('IN_SMAR')) {
+	global $SMARTESTReviewsBusiness;
+	$SMARTESTReviewsBusiness = new SMARTESTReviewsBusiness();
+	add_action ('after_setup_theme', array(&$SMARTESTReviewsBusiness,'activate'));// @test does this do anything?
 }
-if (!defined('IN_SMAR')) {global $SMARTESTReviewsBusiness;
-$SMARTESTReviewsBusiness = new SMARTESTReviewsBusiness();
-add_action ('after_setup_theme', array(&$SMARTESTReviewsBusiness,'activate'));
-}
+*/
+
+
+$SMARTESTReviewsBusiness = SMARTESTReviewsBusiness::get_instance();
+
 /* get widget */
 include_once('widget-testimonial.php');
+
+// @test changed SMAR_INSERT to smartest_reviews across site
+add_shortcode( 'smartest_reviews', array( $SMARTESTReviewsBusiness, 'reviews_shortcode') );// @test
+
 add_shortcode( 'aggregate_rating', array( $SMARTESTReviewsBusiness, 'aggregate_footer_func' ) );
+
+
 ?>
