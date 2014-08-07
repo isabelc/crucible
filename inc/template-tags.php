@@ -349,13 +349,13 @@ add_action('crucible_logo', 'crucible_logo');
  */
 function crucible_social_buttons() {
 	global $smartestthemes_options;// @test this one works
-	$tw = empty( $smartestthemes_options['st_business_twitter'] ) ? '' : $smartestthemes_options['st_business_twitter'] );
-	$goo = empty( $smartestthemes_options['st_business_gplus'] ) ? '' : $smartestthemes_options['st_business_gplus'] );
-	$fa = empty( $smartestthemes_options['st_business_facebook'] ) ? '' : $smartestthemes_options['st_business_facebook'] );
-	$yo = empty( $smartestthemes_options['st_business_youtube'] ) ? '' : $smartestthemes_options['st_business_youtube'] );
-	$li = empty( $smartestthemes_options['st_business_linkedin'] ) ? '' : $smartestthemes_options['st_business_linkedin'] );
-	$in = empty( $smartestthemes_options['st_business_instagram'] ) ? '' : $smartestthemes_options['st_business_instagram'] );
-	$pi = empty( $smartestthemes_options['st_business_pinterest'] ) ? '' : $smartestthemes_options['st_business_pinterest'] );
+	$tw = empty( $smartestthemes_options['st_business_twitter'] ) ? '' : $smartestthemes_options['st_business_twitter'];
+	$goo = empty( $smartestthemes_options['st_business_gplus'] ) ? '' : $smartestthemes_options['st_business_gplus'];
+	$fa = empty( $smartestthemes_options['st_business_facebook'] ) ? '' : $smartestthemes_options['st_business_facebook'];
+	$yo = empty( $smartestthemes_options['st_business_youtube'] ) ? '' : $smartestthemes_options['st_business_youtube'];
+	$li = empty( $smartestthemes_options['st_business_linkedin'] ) ? '' : $smartestthemes_options['st_business_linkedin'];
+	$in = empty( $smartestthemes_options['st_business_instagram'] ) ? '' : $smartestthemes_options['st_business_instagram'];
+	$pi = empty( $smartestthemes_options['st_business_pinterest'] ) ? '' : $smartestthemes_options['st_business_pinterest'];
 	$social_url_1 = empty($smartestthemes_options['st_business_socialurl1']) ? '' : $smartestthemes_options['st_business_socialurl1'];
 	$social_url_2 = empty($smartestthemes_options['st_business_socialurl2']) ? '' : $smartestthemes_options['st_business_socialurl2'];
 	$label1 = empty($smartestthemes_options['st_business_sociallabel1']) ? '' : $smartestthemes_options['st_business_sociallabel1'];

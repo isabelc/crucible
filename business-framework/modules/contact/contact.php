@@ -218,7 +218,7 @@ function stcf_process_contact_form($content='') {
 	$date      = date("l, F jS, Y @ g:i a", time() + $offset * 60 * 60);
 	$prepend = empty($smartestthemes_options['st_contactform_prepend']) ? '' : stripslashes($smartestthemes_options['st_contactform_prepend']);
 	$append  = empty($smartestthemes_options['st_contactform_append']) ? '' : stripslashes($smartestthemes_options['st_contactform_append']);
-	$header_from = isset($smartestthemes_options['st_contactform_header_from']) ? $smartestthemes_options['st_contactform_header_from'] ? '';
+	$header_from = isset($smartestthemes_options['st_contactform_header_from']) ? $smartestthemes_options['st_contactform_header_from'] : '';
 	
 	$headers   = "MIME-Version: 1.0\n";
 	
