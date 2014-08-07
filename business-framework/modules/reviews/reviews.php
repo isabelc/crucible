@@ -15,9 +15,9 @@ class SMARTESTReviewsBusiness {
 		return self::$instance;
 	}
 	
-	var $dbtable = 'smareviewsb';
-// @test remove for shortcode	var $force_active_page = false;
-	var $got_aggregate = false;
+	var $dbtable = 'smareviewsb';// @todo consider chnge table name!!!
+
+	var $got_aggregate = false;// @test do i need this? 
 	var $options = array();
 	var $p = '';
 // @test remove for shortcode	var $page = 1;
@@ -28,14 +28,7 @@ class SMARTESTReviewsBusiness {
 
 	
 	
-	
-	
 	private function __construct() {
-	
-	
-	// @test replace with contructor function SMARTESTReviewsBusiness() {
-	
-	
 		global $wpdb;
 		define('IN_SMAR', 1);
         
@@ -50,30 +43,18 @@ class SMARTESTReviewsBusiness {
 		$this->dbtable = $wpdb->prefix . $this->dbtable;
 		$themeobject = wp_get_theme();
 		$this->version = $themeobject->Version;
-
-		// @test replace with better shortcode		add_action('the_content', array($this, 'do_the_content'), 10); /* prio 10 prevents a conflict with some odd themes */
-
-
 		add_action('init', array($this, 'init'));
 		add_action('admin_init', array($this, 'admin_init'));
-
 		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));
-		add_action('template_redirect',array($this, 'template_redirect')); /* handle redirects and form posts, and add style/script if needed */
+		add_action('template_redirect',array($this, 'template_redirect'));
 		add_action('admin_menu', array($this, 'addmenu'));
 		add_action('wp_ajax_update_field', array($this, 'admin_view_reviews'));
-		// @test move to child
 		add_action('save_post', array($this, 'admin_save_post'), 10, 2);
 		add_action( 'admin_init', array($this, 'create_reviews_page'));//@note, but for stand-alone plugin hook to after_setup_theme
 		add_action('wp_enqueue_scripts', array($this, 'smartestreviews_scripts'));
 		add_action('admin_enqueue_scripts', array($this, 'smartestreviews_scripts'));
-
 		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_stuff'));
-
-
-		
-		
     }
-
 
 	function addmenu() {
 		add_options_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'manage_options', 'smar_options', array( $this, 'admin_options'));
@@ -82,31 +63,6 @@ class SMARTESTReviewsBusiness {
 		}
 	}
 
-	
-/*
-    function admin_options() {
-        global $SMARTESTReviewsBusinessAdmin;
-        $this->include_admin();
-        $SMARTESTReviewsBusinessAdmin->real_admin_options();
-    }
-*/
-
-	
-	/* @test
-   function admin_save_post($post_id, $post) {
-       global $SMARTESTReviewsBusinessAdmin;
-        $this->include_admin(); // include admin functions
-       $SMARTESTReviewsBusinessAdmin->real_admin_save_post($post_id);
-    }
-	*/
-	/* @test 
-    function admin_view_reviews() {
-        global $SMARTESTReviewsBusinessAdmin;
-        $this->include_admin();
-        $SMARTESTReviewsBusinessAdmin->real_admin_view_reviews();
-    }
-	*/
-	
 	/* @test this should be maybe fixed to show individual reviews link, if such a thing exists 
 	* also @test does jumplink from admin work if the reveiw is on a page 2+ 
 	*/
@@ -124,8 +80,6 @@ class SMARTESTReviewsBusiness {
         $home_domain = @parse_url(get_home_url());
         $home_domain = $home_domain['scheme'] . "://" . $home_domain['host'] . '/';
         $default_options = array(
-            // 'act_email' => '',// @test see if i can delete if not used elsewhere
-            // 'act_uniq' => '',// @test see if i can delete if not used elsewhere
             // @test remove 'activate' => 0,
             'ask_custom' => array(),
             'ask_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0),
@@ -195,12 +149,7 @@ class SMARTESTReviewsBusiness {
             return false;
         }
 		
-		
-        // @test global $SMARTESTReviewsBusinessAdmin;
-        // @test $this->include_admin(); /* include admin functions */
-        // @test replace $SMARTESTReviewsBusinessAdmin->createUpdateReviewtable(); /* creates table */
 		$this->createUpdateReviewtable(); /* creates table */
-		
 		
         /* initial installation */
         if ($current_dbversion == 0) {
@@ -215,38 +164,13 @@ class SMARTESTReviewsBusiness {
             $this->options['dbversion'] = $plugin_db_version;
             $current_dbversion = $plugin_db_version;
             update_option('smar_options', $this->options);
-			
-            /* @test
-			global $SMARTESTReviewsBusinessAdmin;
-            $this->include_admin();
-            $SMARTESTReviewsBusinessAdmin->force_update_cache(); // update any caches
-			*/
+
 			$this->force_update_cache(); // update any caches
-			
-			
             return true;
         }
         return false;
     }
 
-/* @test don't need this since we use only shortcode	
-    function is_active_page() {
-        global $post;
-        $has_shortcode = $this->force_active_page;
-        if ( $has_shortcode !== false ) {
-            return 'shortcode';
-        }
-        if ( !isset($post) || !isset($post->ID) || intval($post->ID) == 0 ) {
-            return false; // we can only use if we have a valid post ID 
-        }
-        if (!is_singular()) {
-            return false; // not on a single post/page view 
-        }
-        return false;
-    }
-*/
-	
-	
 	function template_redirect() {
 		/* do this in template_redirect so we can try to redirect cleanly */
         global $post;
@@ -282,6 +206,10 @@ class SMARTESTReviewsBusiness {
         }
         return $str;
     }
+	
+	/**
+	* fills the value for got_aggregate()
+	*/
     function get_aggregate_reviews() {
         if ($this->got_aggregate !== false) {
             return $this->got_aggregate;
@@ -304,10 +232,11 @@ class SMARTESTReviewsBusiness {
     }
 	
 	/*
-	// @test $startpage is 1 from reviews, but '' from agg footer. probably make startpage=Null so that it is not required. then add conditional around $startpage below @todo
-	
+
 	// @test if paging is ok when more than 10 reviews exist.
 	// @test what is $status param used for?
+	
+	// @test since the perpage is always 10, does this mean that agg reviews footer will always only count 10 revies? if yes, fix this by adding a 'limit' parameter here so agg reviews can use a 1000 limit or so.
 	*/
     function get_reviews($startpage, $perpage, $status) {
         global $wpdb;
@@ -347,7 +276,8 @@ class SMARTESTReviewsBusiness {
     }
 	
 	/**
-	* Returns the html string for the business declaration prefix to aggregate footer
+	* Returns the html string for the business declaration prefix to the aggregate rating.
+	* Used for both the Home page aggregate footer, and the aggregate rating shortcode.
 	*/
 	function aggregate_footer_business_prefix() {
 		global $smartestthemes_options;
@@ -395,7 +325,7 @@ class SMARTESTReviewsBusiness {
 	}
 	
 	/**
-	* Returns the html string for the aggregate rating
+	* Returns the html string for the aggregate rating for both the home page footer and the aggregate rating shortcode
 	* @todo @test do i need the param here?
 	*/
 	function aggregate_footer_output($is_shortcode=NULL) {
@@ -443,8 +373,8 @@ class SMARTESTReviewsBusiness {
 		return $aggregate_footer_output;
 	}
 	
-	/*
-	* Adds the Aggregate footer on the home page
+	/* @todo don't think is being called at all.
+	* Attaches the Aggregate footer on the home page
 	*/
     function aggregate_footer() {
 		/* only if set to agg Business ratings on front page and is front page & if home page is static then show. */
@@ -550,15 +480,6 @@ class SMARTESTReviewsBusiness {
 	*/
 	function output_reviews_show($perpage, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {	 // @test function ends on lin 674
 	
-	/* @test is $thispage needed, since we always call $max = -1, so $thispage will always be 1 as set at top of class.
-	
-        if ($max != -1) {
-            $thispage = 1;
-        } else {
-            $thispage = $this->page;// @test seems like this is always 1 anyway.
-        }
-		*/
-		
         $arr_Reviews = $this->get_reviews($this->page, $perpage, 1);
 		
         $reviews = $arr_Reviews[0];
@@ -567,7 +488,6 @@ class SMARTESTReviewsBusiness {
         $hidesummary = '';
         $title_tag = $this->options['title_tag'];
 		
-		// @test replace with global 	$smartestthemes_options = get_option('smartestthemes_options');
 		global $smartestthemes_options;
 	
 		$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
@@ -711,56 +631,6 @@ function create_reviews_page() {
 		smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[smartest_reviews]' );
 	}
 }
-
-/* @test remove ********************
-
-// @todo instead of filtering the content, just output into the shortcode!!!!
-function do_the_content($original_content) {
-	global $post;
-        
-	$using_shortcode_insert = false;
-	if ($original_content == 'shortcode_insert') {
-		$original_content = '';
-		$using_shortcode_insert = true;
-	}
-	$the_content = '';
-		
-	// @todo this section differently so we are not calling function '$this->aggregate_footer()' 4 times !! 
-		
-        $is_active_page = $this->is_active_page();// @test what does this tell?
-		
-		
-        // return normal content if this is not an enabled page, or if this is a post not on single post view
-        if (!$is_active_page) {
-           $the_content .= $this->aggregate_footer(); // check if we need to show something in the footer then
-            return $original_content . $the_content;
-        }
-        
-		$the_content .= '<div id="smar_respond_1">';
-        $inside_div = true;
-       
-		if ($this->options['form_location'] == 0) {
-			$the_content .= $this->show_reviews_form();
-		}
-
-		// @test what is inside div here?
-		$ret_Arr = $this->output_reviews_show( $inside_div, $this->options['reviews_per_page'], -1 );
-        $the_content .= $ret_Arr[0];
-        $total_reviews = $ret_Arr[1];
-        
-        $the_content .= $this->pagination($total_reviews, $this->options['reviews_per_page']);
-
-        if ($this->options['form_location'] == 1) {
-            $the_content .= $this->show_reviews_form();
-        }
-        $the_content .= '</div>';
-        $the_content = preg_replace('/\n\r|\r\n|\n|\r|\t/', '', $the_content); // minify to prevent automatic line breaks, not removing double spaces
-
-        return $original_content . $the_content;
-}
-
-*/
-
 
     function output_rating($rating, $enable_hover) {
         $out = '';
@@ -1114,7 +984,7 @@ function do_the_content($original_content) {
 	*/
 	public function reviews_shortcode( $atts ) {
 	
-		global $post;// @test do i need this
+		// @test remove global $post;// @test do i need this
         
 	/* @todo this section differently so we are not calling function '$this->aggregate_footer()' 4 times !! */
 		
@@ -1180,25 +1050,6 @@ function do_the_content($original_content) {
 		}
 	}
 	
-	/* @test
-	function include_admin() {
-		global $SMARTESTReviewsBusinessAdmin;
-		require_once get_template_directory().'/business-framework/modules/reviews/reviews-admin.php';
-	}
-	*/
-	
-	
-	/* @test
-	function admin_init() {
-		global $SMARTESTReviewsBusinessAdmin;
-		$this->include_admin();
-		$SMARTESTReviewsBusinessAdmin->real_admin_init();
-	}
-	function admin_scripts() {
-		global $SMARTESTReviewsBusinessAdmin;
-		$SMARTESTReviewsBusinessAdmin->enqueue_admin_stuff();
-	}
-	*/
 	public function getpluginurl() {
 		return get_template_directory_uri().'/business-framework/modules/reviews/';
 	}
@@ -1206,12 +1057,7 @@ function do_the_content($original_content) {
 	/************ @test begin functions migraing from reviews-admin.php *******************/
 	
 	function admin_init() {
-		
-		// $this->parentClass->init();// @test class where is this called
-		
-		$this->init();// @test
-		
-		
+		$this->init();
 		register_setting( 'smar_options', 'smar_options' );
 	}
 	
@@ -1299,21 +1145,12 @@ function do_the_content($original_content) {
     }
 
 	function enqueue_admin_stuff() {
-	
-	
-			// @test replace $pluginurl = $this->parentClass->getpluginurl();
-			
-			$pluginurl = $this->getpluginurl();// @test
-			
-			
-			
+			$pluginurl = $this->getpluginurl();
             if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' || $this->p->page == 'smar_options' ) ) {
 				wp_enqueue_script('smartest-reviews-admin',$pluginurl.'reviews-admin.js',array('jquery'));
 				wp_enqueue_style('smartest-reviews-admin',$pluginurl.'reviews-admin.css');
             }
 	}	
-	
-	
 	
 	
     function update_options() {
@@ -1716,11 +1553,7 @@ function admin_options() {
             }
 			
             $this->force_update_cache(); /* update any caches */            
-            // @test replace	$this->parentClass->smar_redirect("?page=smar_view_reviews&review_status={$this->p->review_status}");
-			
 			$this->smar_redirect("?page=smar_view_reviews&review_status={$this->p->review_status}");
-			
-			
         }
         /* end - actions */
         
@@ -1760,7 +1593,6 @@ function admin_options() {
         }
         /* end - searching */
         else {
-            // @test replace	$arr_Reviews = $this->parentClass->get_reviews($this->page,$this->options['reviews_per_page'],$this->p->review_status);
 			
 			$arr_Reviews = $this->get_reviews($this->page,$this->options['reviews_per_page'],$this->p->review_status);
 			
@@ -1986,8 +1818,6 @@ function admin_options() {
                 <div class="alignleft actions" style="float:left;padding-left:20px;"><?php 
 				
 				// @test this output
-				// @test replace echo $this->parentClass->pagination($total_reviews, $this->options['reviews_per_page']);
-
 				echo $this->pagination($total_reviews, $this->options['reviews_per_page']);
 
 
