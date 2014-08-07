@@ -17,10 +17,9 @@ class SMARTESTReviewsBusiness {
 	
 	var $dbtable = 'smareviewsb';// @todo consider chnge table name!!!
 
-	var $got_aggregate = false;// @test do i need this? 
+	var $got_aggregate = false;
 	var $options = array();
 	var $p = '';
-// @test remove for shortcode	var $page = 1;
 	var $version = '0.0.0';
 	var $shown_form = false;
 	var $shown_hcard = false;
@@ -31,15 +30,6 @@ class SMARTESTReviewsBusiness {
 	private function __construct() {
 		global $wpdb;
 		define('IN_SMAR', 1);
-        
-        /* uncomment the below block to display strict/notice errors */
-/*
-        restore_error_handler();
-        error_reporting(E_ALL);
-        ini_set('error_reporting', E_ALL);
-        ini_set('html_errors',TRUE);
-        ini_set('display_errors',TRUE);
-*/
 		$this->dbtable = $wpdb->prefix . $this->dbtable;
 		$themeobject = wp_get_theme();
 		$this->version = $themeobject->Version;
@@ -54,6 +44,7 @@ class SMARTESTReviewsBusiness {
 		add_action('wp_enqueue_scripts', array($this, 'smartestreviews_scripts'));
 		add_action('admin_enqueue_scripts', array($this, 'smartestreviews_scripts'));
 		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_stuff'));
+		add_filter( 'the_content', array($this, 'homepage_aggregate_footer') );
     }
 
 	function addmenu() {
@@ -63,8 +54,8 @@ class SMARTESTReviewsBusiness {
 		}
 	}
 
-	/* @test this should be maybe fixed to show individual reviews link, if such a thing exists 
-	* also @test does jumplink from admin work if the reveiw is on a page 2+ 
+	/**
+	* Generates an html link for a review with its page and ID as URL parameters
 	*/
     function get_jumplink_for_review($review,$page) {
 
@@ -80,7 +71,6 @@ class SMARTESTReviewsBusiness {
         $home_domain = @parse_url(get_home_url());
         $home_domain = $home_domain['scheme'] . "://" . $home_domain['host'] . '/';
         $default_options = array(
-            // @test remove 'activate' => 0,
             'ask_custom' => array(),
             'ask_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0),
             'dbversion' => 0,
@@ -231,17 +221,8 @@ class SMARTESTReviewsBusiness {
         return true;
     }
 	
-	/*
-
-	// @test if paging is ok when more than 10 reviews exist.
-	// @test what is $status param used for?
-	
-	// @test since the perpage is always 10, does this mean that agg reviews footer will always only count 10 revies? if yes, fix this by adding a 'limit' parameter here so agg reviews can use a 1000 limit or so.
-	*/
     function get_reviews($startpage, $perpage, $status) {
         global $wpdb;
-		
-		
         $startpage = $startpage - 1; // mysql starts at 0 instead of 1, so reduce them all by 1
         if ($startpage < 0) { $startpage = 0; }
 		$limit = 'LIMIT ' . $startpage * $perpage . ',' . $perpage;
@@ -283,41 +264,12 @@ class SMARTESTReviewsBusiness {
 		global $smartestthemes_options;
 		$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
 		$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
-		$street = empty($smartestthemes_options['st_address_street']) ? '' : $smartestthemes_options['st_address_street'];
-		$city = empty($smartestthemes_options['st_address_city']) ? '' : $smartestthemes_options['st_address_city'];
-		$state = empty($smartestthemes_options['st_address_state']) ? '' : $smartestthemes_options['st_address_state'];
-		$zip = empty($smartestthemes_options['st_address_zip']) ? '' : $smartestthemes_options['st_address_zip'];
-		$country = empty($smartestthemes_options['st_address_country']) ? '' : $smartestthemes_options['st_address_country'];
-		$suite = empty($smartestthemes_options['st_address_suite']) ? '' : $smartestthemes_options['st_address_suite'];
 		$phone = empty($smartestthemes_options['st_phone_number']) ? '' : $smartestthemes_options['st_phone_number'];
-		$isabiz_declare = ' itemscope itemtype="http://schema.org/' . $schema . '"';
-		$aggregate_rating_prefix = '<div id="smar_hcard_s"' . $isabiz_declare . ' class="isa_vcard">';
-		$aggregate_rating_prefix .= '<a href="' . site_url('/')
- . '"><span itemprop="name" id="agg-rating-bn">' . $bn . '</span></a><br />';
- 
-		if ( $street || $city || $state || $zip || $country ) {
-			$aggregate_rating_prefix .= '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" id="agg-rating-postal">';
-			if ($street) {
-						$aggregate_rating_prefix .= '<span itemprop="streetAddress" id="agg-rating-street">' . $street . '</span>&nbsp;';
-			}
 
-			if ($suite) {
-				$aggregate_rating_prefix .= ' ' . $suite . '&nbsp;';
-			}
-			if ($city) {
-				$aggregate_rating_prefix .='<span itemprop="addressLocality" id="agg-rating-city">' . $city . '</span>,&nbsp;';
-			}
-			if ($state) {
-				$aggregate_rating_prefix .='<span itemprop="addressRegion" id="agg-rating-state">' . $state . '</span>,&nbsp;';
-			}
-			if ($zip) {
-				$aggregate_rating_prefix .='<span class="postal-code" itemprop="postalCode">' . $zip . '</span>&nbsp;';
-			}
-			if ($country) {
-				$aggregate_rating_prefix .='<span itemprop="addressCountry" id="agg-rating-country">' . $country . '</span>&nbsp;';
-			}
-			$aggregate_rating_prefix .= '</span>';
-		}
+		$aggregate_rating_prefix = '<div id="smar_hcard_s" itemscope itemtype="http://schema.org/' . $schema . '">';
+		$aggregate_rating_prefix .= '<a href="' . site_url('/')
+ . '"><span itemprop="name" id="agg-rating-bn">' . $bn . '</span></a><br />' . crucible_postal_address();
+		
 		if ( $phone) {
 			$aggregate_rating_prefix .= '<br /><span itemprop="telephone" id="agg-rating-telephone">' . $phone . '</span>';
 		}
@@ -325,21 +277,21 @@ class SMARTESTReviewsBusiness {
 	}
 	
 	/**
-	* Returns the html string for the aggregate rating for both the home page footer and the aggregate rating shortcode
-	* @todo @test do i need the param here?
+	* Gathers the aggregate data.
+	* @return string, the HTML for just the aggregate rating with schema.org microdata
+	*/
+	function get_the_aggregate_rating() {
+		$this->get_aggregate_reviews();// fills the values for got_aggregate
+		$average_score = number_format($this->got_aggregate["aggregate"], 1);
+		$out = '<br /><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" id="hreview-smar-aggregate">' . __('Average rating:', 'crucible'). ' <span itemprop="ratingValue">' . $average_score . '</span> ' . __('out of', 'crucible'). ' <span itemprop="bestRating">5 </span> '. __('based on', 'crucible').' <span itemprop="ratingCount">' . $this->got_aggregate['total'] . ' </span>' . _n( 'review', 'reviews.', $this->got_aggregate['total'], 'crucible' ) . '</span>';
+		return $out;
+	}
+	
+	/**
+	* Returns the HTML string for the entire aggregate rating block for both the home page footer and the aggregate rating shortcode
 	*/
 	function aggregate_footer_output($is_shortcode=NULL) {
-		// gather agg data
-		$arr_Reviews = $this->get_reviews('', $this->options['reviews_per_page'], 1);
-		
-		$total_reviews = intval($arr_Reviews[1]);
-		$this->get_aggregate_reviews();
-		$best_score = 5;
-        $average_score = number_format($this->got_aggregate["aggregate"], 1);
-		
-		$aggregate_footer_output = '<div id="smar_respond_1">';
-		
-		/* we append like this to prevent newlines and wpautop issues */
+		$out = '<div id="smar_respond_1">';
 		
 		// if is home and is set to declare business type on home, do it
 		// or
@@ -348,42 +300,42 @@ class SMARTESTReviewsBusiness {
 		// prepend the business type declaration if needed
 		
 		if ( $this->options['biz_declare'] == 1 && is_front_page() ) {
-			$aggregate_footer_output .= $this->aggregate_footer_business_prefix();
+			$out .= $this->aggregate_footer_business_prefix();
 		} elseif ( (true == $is_shortcode) && ($this->options['biz_declare_shortcode'] == 1) ) {
+		
 			// override the #smar_respond_1, so do not concatenate 
-			$aggregate_footer_output = '<div id="agg-rating-shortcode">' . $this->aggregate_footer_business_prefix();
+			$out = '<div id="agg-rating-shortcode">' . $this->aggregate_footer_business_prefix();
+		
 		} elseif (true == $is_shortcode) {
 		
 			// no business type declaration, but override the #smar_respond_1, so do not concatenate 
-			$aggregate_footer_output = '<div id="agg-rating-shortcode"><div id="smar_hcard_s" class="isa_vcard">';
+			$out = '<div id="agg-rating-shortcode"><div id="smar_hcard_s">';
 		
 		} else {
 			// no business type declaration
-			$aggregate_footer_output .= '<div id="smar_hcard_s" class="isa_vcard">';
+			$out .= '<div id="smar_hcard_s">';
 		}
 
-		// do agg rating for all scenarios
-		$aggregate_footer_output .= '<br /><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" id="hreview-smar-aggregate"> '. __('Average rating:', 'crucible'). ' <span itemprop="ratingValue" class="average">' . $average_score . '</span> ' . __('out of', 'crucible'). ' <span itemprop="bestRating">' . $best_score . ' </span> '. __('based on', 'crucible').' <span itemprop="ratingCount">' . $this->got_aggregate["total"] . ' </span>';
-		if($this->got_aggregate["total"] == 1)
-			$basedon = __('review.', 'crucible');
-		else
-			$basedon = __('reviews.', 'crucible');
-		$aggregate_footer_output .= sprintf(__('%s', 'crucible'), $basedon). '</span>';
-		$aggregate_footer_output .= '</div></div><!-- end agg footer -->';
-		return $aggregate_footer_output;
+		$out .= $this->get_the_aggregate_rating();
+		
+		$out .= '</div></div>';
+		return $out;
 	}
 	
-	/* @todo don't think is being called at all.
-	* Attaches the Aggregate footer on the home page
-	*/
-    function aggregate_footer() {
-		/* only if set to agg Business ratings on front page and is front page & if home page is static then show. */
-		if ( ($this->options['show_hcard_on'] == 1) && is_front_page() && (get_option('show_on_front') == 'page') ) {
-			return $this->aggregate_footer_output();
-		}
-    }
 	/*
-	* Shortcode for the Aggregate footer
+		@todo may will use a template tag inside smar-home.php instead of this content filter for more efficiency.
+	* Filter the content to conditionally attach the Aggregate footer to the home page
+	*/
+    function homepage_aggregate_footer($content) {
+		/* only if Aggregate ratings on front page is enabled, and if is front page & if home page is static */
+		if ( ($this->options['show_hcard_on'] == 1) && is_front_page() && (get_option('show_on_front') == 'page') ) {
+			return $content . $this->aggregate_footer_output();
+		}
+		return $content;
+    }
+	
+	/* @test the shortcode
+	* Shortcode for the Aggregate Rating
 	*/
     function aggregate_footer_func() {
 		return $this->aggregate_footer_output(true);
@@ -397,7 +349,7 @@ class SMARTESTReviewsBusiness {
 	}
 
     function pagination($total_results, $reviews_per_page) {
-        global $post; /* will exist if on a post */
+        global $post;
 
         $out = '';
         $uri = false;
@@ -406,7 +358,7 @@ class SMARTESTReviewsBusiness {
         $range = 2;
         $showitems = ($range * 2) + 1;
 
-        $paged = $this->page;// @test i think i deleted page, but i think this gets the the url parameter for smarp
+        $paged = $this->page;
         if ($paged == 0) { $paged = 1; }
         
         if (!isset($this->p->review_status)) {
@@ -474,31 +426,22 @@ class SMARTESTReviewsBusiness {
         }
     }
 	
-	/*
-	*
-	@test removed 3rd param $max and 1st param $inside_div
+	/**
+	* The html for the Reviews shortcode, which is simply the Reviews page
 	*/
-	function output_reviews_show($perpage, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {	 // @test function ends on lin 674
+	function output_reviews_show($perpage, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
 	
         $arr_Reviews = $this->get_reviews($this->page, $perpage, 1);
-		
         $reviews = $arr_Reviews[0];
         $total_reviews = intval($arr_Reviews[1]);
         $reviews_content = '';
-        $hidesummary = '';
+        $showtitle = '';
         $title_tag = $this->options['title_tag'];
 		
 		global $smartestthemes_options;
-	
 		$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
 		$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 		$phone = empty($smartestthemes_options['st_phone_number']) ? '' : $smartestthemes_options['st_phone_number'];
-		$street = empty($smartestthemes_options['st_address_street']) ? '' : $smartestthemes_options['st_address_street'];
-		$suite = empty($smartestthemes_options['st_address_suite']) ? '' : $smartestthemes_options['st_address_suite'];
-		$city = empty($smartestthemes_options['st_address_city']) ? '' : $smartestthemes_options['st_address_city'];
-		$state = empty($smartestthemes_options['st_address_state']) ? '' : $smartestthemes_options['st_address_state'];
-		$zip = empty($smartestthemes_options['st_address_zip']) ? '' : $smartestthemes_options['st_address_zip'];
-		$country = empty($smartestthemes_options['st_address_country']) ? '' : $smartestthemes_options['st_address_country'];
 		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' : $smartestthemes_options['st_add_reviews'];
 		
 		/* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
@@ -509,38 +452,17 @@ class SMARTESTReviewsBusiness {
 				}
 		*/        
 
-		
-			// @todo see a diffnow of these two string with address info to see if I can just use one for both!!!!!
-		
-        
 		if (count($reviews) == 0) {
 			$reviews_content .= '<p>'. __('There are no reviews yet. Be the first to leave yours!', 'crucible').'</p>';
 		} elseif ($add_reviews != 'true') {
 			$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
 		} else {
 
-			$this->get_aggregate_reviews();
-			$summary = $this->got_aggregate["text"];
-			$best_score = 5;
-			$average_score = number_format($this->got_aggregate["aggregate"], 1);
-			
-
-			// @test this section is for top of Reviews page...
-			$reviews_content .= '<div itemscope itemtype="http://schema.org/'. $schema .'"><br />
-							<span class="isa_vcard">
+			$reviews_content .= '<div class="reviews-list" itemscope itemtype="http://schema.org/'. $schema .'"><br />
 								<a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a><br />
-                                <span itemprop="telephone">' . $phone . '</span><br />
-                                <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                    <span itemprop="streetAddress">' . $street . ' ' .$suite . '</span><br />
-                                    <span itemprop="addressLocality">' . $city . '</span>
-                                    <span itemprop="addressRegion">' . $state . '</span> <span itemprop="postalCode">' . $zip . '</span>
-                                    <span itemprop="addressCountry">' . $country . '</span>
-                                </span>
-							</span><hr />';
+                                <span itemprop="telephone">' . $phone . '</span><br />' . crucible_postal_address() . '<hr />';
 
-
-			
-            foreach ($reviews as $review) {
+			foreach ($reviews as $review) {
                 
                 if ($snippet_length > 0)
                 {
@@ -562,11 +484,8 @@ class SMARTESTReviewsBusiness {
                 if ($this->options['show_fields']['femail'] == 1 && $review->reviewer_email != '') {
                     $review->review_text .= '<br /><small>' . $review->reviewer_email . '</small>';
                 }
-                if ($this->options['show_fields']['ftitle'] == 1) {
-                    /* do nothing */
-                } else {
-                    $review->review_title = substr($review->review_text, 0, 150);
-                    $hidesummary = 'smar_hide';
+                if ($this->options['show_fields']['ftitle'] == 1 && $review->review_title != '') {
+                    $showtitle = true;
                 }
                 
                 if ($show_morelink != '') {// @test what this links to??? prob need to use in conjunction with the trim text parameter. 
@@ -601,38 +520,38 @@ class SMARTESTReviewsBusiness {
                     }//foreach ($this->options['field_custom
                     $custom_shown = preg_replace("%&bull;&nbsp;</div>$%si","</div><div class='smar_clear'></div>",$custom_shown);
                 }// if 0 hide
-			$name_block = '' .'<div class="smar_fl smar_rname">' .'<abbr title="' . $this->iso8601(strtotime($review->date_time)) . '" itemprop="dateCreated">' . date("M d, Y", strtotime($review->date_time)) . '</abbr>&nbsp;' .'<span class="' . $hide_name . '">'. __('by', 'crucible').'</span>&nbsp;' . '<span class="isa_vcard" id="hreview-smar-reviewer-' . $review->id . '">' . '<span class="' . $hide_name . '" itemprop="author">' . $review->reviewer_name . '</span>' . '</span>' . '<div class="smar_clear"></div>' .
+				
+				// @todo replace the iso8601 func
+				
+				$name_block = '' .'<div class="smar_fl smar_rname clear">' .'<abbr title="' . $this->iso8601(strtotime($review->date_time)) . '" itemprop="dateCreated">' . date("M d, Y", strtotime($review->date_time)) . '</abbr>&nbsp;' .'<span class="' . $hide_name . '">'. __('by', 'crucible').'</span>&nbsp;' . '<span class="isa_vcard" id="hreview-smar-reviewer-' . $review->id . '">' . '<span class="' . $hide_name . '" itemprop="author">' . $review->reviewer_name . '</span>' . '</span>' . '<div class="smar_clear"></div>' .
  $custom_shown . '</div>';
-			$reviews_content .= '<div itemprop="review" itemscope itemtype="http://schema.org/Review" id="hreview-' . $review->id . '"><' . $title_tag . ' itemprop="description" class="summary ' . $hidesummary . '">' . $review->review_title . '</' . $title_tag . '><div class="smar_fl smar_sc"><div class="smar_rating">' . $this->output_rating($review->review_rating, false) . '</div></div>' . $name_block . '<div class="smar_clear smar_spacing1"></div><blockquote itemprop="reviewBody" class="description"><p>' . $review->review_text . ' '.__('Rating:', 'crucible').' <span itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"><span itemprop="ratingValue">'.$review->review_rating.'</span></span>  '.__('out of 5.', 'crucible').'</p></blockquote>' . $review_response . '</div><hr />';
+ 
+				$reviews_content .= '<div itemprop="review" itemscope itemtype="http://schema.org/Review" id="hreview-' . $review->id . '">';
+			
+				if ( $showtitle ) {
+					$reviews_content .= '<' . $title_tag . ' itemprop="description" class="summary">' . $review->review_title . '</' . $title_tag . '>';
+				}
+			
+				$reviews_content .= '<div class="smar_fl smar_sc"><div class="smar_rating">' . $this->output_rating($review->review_rating, false) . '</div></div>' . $name_block . '<div class="smar_clear smar_spacing1"></div><blockquote itemprop="reviewBody" class="description"><p>' . $review->review_text . ' '.__('Rating:', 'crucible').' <span itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"><span itemprop="ratingValue">'.$review->review_rating.'</span></span>  '.__('out of 5.', 'crucible').'</p></blockquote>' . $review_response . '</div><hr />';
 
-		}//  foreach ($reviews as $review)
-
-		$reviews_content .= '<span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" id="hreview-smar-aggregate">'. __('Average rating:', 'crucible').' <span itemprop="ratingValue">' . $average_score . '</span> '. __('out of', 'crucible').' <span itemprop="bestRating">' . $best_score . ' </span> '. __('based on', 'crucible').' <span itemprop="reviewCount">' . $this->got_aggregate["total"] . '</span> ';
-					if($this->got_aggregate["total"] == 1)
-					    $basedon = __('review.', 'crucible');
-					else
-					    $basedon = __('reviews.', 'crucible');
-					$reviews_content .= sprintf(__('%s', 'crucible'), $basedon). '</span>';
- // add closing wrapper div for business microdata type
-			$reviews_content .= '</div><!-- for business microdata type, only if there are rev -->';
-			}//if else if (count($reviews
-
-		
-
-        return array($reviews_content, $total_reviews);
-    }
-	
-/**
- * Create the Reviews page
- * @uses smartestthemes_insert_post()
- */
-function create_reviews_page() {
-	if(get_option('st_add_reviews') == 'true') {
-		smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[smartest_reviews]' );
+			}//  foreach ($reviews as $review)
+			$reviews_content .= $this->get_the_aggregate_rating() . '</div><!-- .reviews-list -->';
+			
+		}//if else if (count($reviews
+		return array($reviews_content, $total_reviews);
 	}
-}
+	
+	/**
+	 * Create the Reviews page
+	 * @uses smartestthemes_insert_post()
+	 */
+	public function create_reviews_page() {
+		if(get_option('st_add_reviews') == 'true') {
+			smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[smartest_reviews]' );
+		}
+	}
 
-    function output_rating($rating, $enable_hover) {
+    public function output_rating($rating, $enable_hover) {
         $out = '';
         $rating_width = 20 * $rating; /* 20% for each star if having 5 stars */
         $out .= '<div class="sp_rating">';
@@ -966,42 +885,29 @@ function create_reviews_page() {
 			$this->page = 1;
 		}
 		
-        // @test replace below add_shortcode( 'SMAR_INSERT', array($this, 'shortcode_smar_insert') );// @todo change shortcode name across theme
     }
-	
-	/* this shortcode only adds a flag
-	* @todo regular shortcode instead of this!
-	
-    function shortcode_smar_insert() {
-        $this->force_active_page = 1;
-        return $this->do_the_content('shortcode_insert');        
-    }
-	*/
-	
 	
 	/**
-	* The output for the reviews shortcode
+	* The reviews shortcode
 	*/
 	public function reviews_shortcode( $atts ) {
 	
 		// @test remove global $post;// @test do i need this
-        
-	/* @todo this section differently so we are not calling function '$this->aggregate_footer()' 4 times !! */
-		
-			// @test see how we are going to call this for home page footer:
-			// $this->aggregate_footer();
-        
+
 		$reviews_content = '<div id="smar_respond_1">';
-		
-
-
        
 		if ($this->options['form_location'] == 0) {
 			$reviews_content .= $this->show_reviews_form();
 		}
 
+		// @todo all these params are available for use:
+		// consider use $atts and letting them add atts to shortcode, or else just remove these extra functionality and wasted codespace.
 		
-		$ret_Arr = $this->output_reviews_show( $this->options['reviews_per_page'] );// @test removed 3rd param of -1 which the function calls '$max', and removed 1st param, $inside_div
+		// function output_reviews_show($perpage, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '').
+		
+		
+		$ret_Arr = $this->output_reviews_show( $this->options['reviews_per_page'] );// @test with 2 params
+		
         $reviews_content .= $ret_Arr[0];
         $total_reviews = $ret_Arr[1];
         
@@ -1044,7 +950,7 @@ function create_reviews_page() {
 	/**
 	 * widget
 	 */
-	function smartest_reviews_register_widgets() {
+	public function smartest_reviews_register_widgets() {
 		if( get_option('st_add_reviews') == 'true'  ) {
 			register_widget('SmartestReviewsTestimonial');
 		}
@@ -1054,14 +960,12 @@ function create_reviews_page() {
 		return get_template_directory_uri().'/business-framework/modules/reviews/';
 	}
 	
-	/************ @test begin functions migraing from reviews-admin.php *******************/
-	
-	function admin_init() {
+	public function admin_init() {
 		$this->init();
 		register_setting( 'smar_options', 'smar_options' );
 	}
 	
-	function admin_save_post($post_id, $post) {
+	public function admin_save_post($post_id, $post) {
 		global $meta_box,$wpdb;
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
 			return $post_id;
@@ -1127,9 +1031,7 @@ function create_reviews_page() {
             dbDelta($sql);
         }	
 	
-	
-	
-	function force_update_cache() {
+	public function force_update_cache() {
 			return; /* @todo maybe remove testing to increase performance */
 			global $wpdb;
 				
@@ -1144,16 +1046,15 @@ function create_reviews_page() {
             }
     }
 
-	function enqueue_admin_stuff() {
-			$pluginurl = $this->getpluginurl();
-            if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' || $this->p->page == 'smar_options' ) ) {
-				wp_enqueue_script('smartest-reviews-admin',$pluginurl.'reviews-admin.js',array('jquery'));
-				wp_enqueue_style('smartest-reviews-admin',$pluginurl.'reviews-admin.css');
-            }
+	public function enqueue_admin_stuff() {
+		$pluginurl = $this->getpluginurl();
+		if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' || $this->p->page == 'smar_options' ) ) {
+			wp_enqueue_script('smartest-reviews-admin',$pluginurl.'reviews-admin.js',array('jquery'));
+			wp_enqueue_style('smartest-reviews-admin',$pluginurl.'reviews-admin.css');
+		}
 	}	
 	
-	
-    function update_options() {
+	public function update_options() {
         /* we still process and validate this internally, instead of using the Settings API */
         global $wpdb;
         $this->security();
@@ -1222,7 +1123,7 @@ function create_reviews_page() {
         
        return __('Your settings have been saved.', 'crucible');
     }
-    function show_options() {
+	public function show_options() {
         $su_checked = '';
         if ($this->options['show_hcard_on']) {
             $su_checked = 'checked';
@@ -1382,15 +1283,12 @@ function admin_options() {
         
         if ($this->p->Submit == __('Save Changes', 'crucible')) {
             $msg = $this->update_options();
-            // @test replace	$this->parentClass->get_options();
-			$this->get_options();// @test
+			$this->get_options();
         }
         
         if (isset($this->p->email)) { // @todo @test what is them email? can i delete?
             $msg = $this->update_options();
-            // @test replace	$this->parentClass->get_options();
-			$this->get_options();// @test
-			
+			$this->get_options();
         }
         
         echo '
@@ -1593,10 +1491,7 @@ function admin_options() {
         }
         /* end - searching */
         else {
-			
 			$arr_Reviews = $this->get_reviews($this->page,$this->options['reviews_per_page'],$this->p->review_status);
-			
-			
             $reviews = $arr_Reviews[0];
             $total_reviews = $arr_Reviews[1];
         }
@@ -1644,7 +1539,7 @@ function admin_options() {
 
               <form method="GET" action="" id="search-form" name="search-form">
                   <p class="search-box">
-                      <?php if ($this->p->s_orig): ?><span style='color:#c00;font-weight:bold;'><?php _e('RESULTS FOR: ', 'crucible'); ?></span><?php endif; ?>
+                      <?php if ($this->p->s_orig): ?><span style='color:#c00;font-weight:bold;'><?php _e('RESULTS FOR: ', 'crucible'); ?></span><br /><?php endif; ?>
                       <label for="comment-search-input" class="screen-reader-text"><?php _e('Search Reviews:', 'crucible'); ?></label> 
                       <input type="text" value="<?php echo $this->p->s_orig; ?>" name="s" id="comment-search-input" />
                       <input type="hidden" name="page" value="smar_view_reviews" />
@@ -1693,8 +1588,7 @@ function admin_options() {
                       $review_response = nl2br($review->review_response);
                       $review_response = str_replace( array("\r\n","\r","\n") , "" , $review_response );
 					  
-					  // @test is this needed??? prob not! test without this. test admin.
-                      $page = get_post($review->page_id);
+                      // @test without this $page = get_post($review->page_id);
 
 					  ?>
                       <tr class="approved" id="review-<?php echo $rid;?>">
@@ -1733,28 +1627,29 @@ function admin_options() {
                                      data-attribute='review_rating' 
                                      data-callback='make_stars_from_rating'
                                      data-type='select'><?php 
-									 
-									 // @test replace	echo $this->parentClass->output_rating($review->review_rating,false); 
-									 
-									 echo $this->output_rating($review->review_rating,false); 
+									 echo $this->output_rating($review->review_rating,false); // @test
 									 
 									 ?></div>
-                            </div>
+								</div>
                         </td>
                         <td class="comment column-comment">
                           <div class="smar-submitted-on">
                             <span class="best_in_place" data-url='<?php echo $update_path; ?>' data-object='json' data-attribute='date_time'>
 <?php echo date(__('m/d/Y g:i a', 'crucible'),strtotime(__($review->date_time, 'crucible'))); ?>
                             </span>
-                            <?php if ($review->status == 1) : ?>[<a target="_blank" href="<?php 
+                            <?php if ($review->status == 1) : 
 							
 							
-							// @test replace	echo $this->parentClass->get_jumplink_for_review($review,$this->page);
 							
-							echo $this->get_jumplink_for_review($review,$this->page);
+								// @test hide jumplink if on a search page...
+								if ($this->p->s == '') {
+									/* not searching */
+								
+									?>[<a target="_blank" href="<?php 
 							
-							
-							?>"><?php _e('View Review on Page', 'crucible'); ?></a>]<?php endif; ?>
+									echo $this->get_jumplink_for_review($review,$this->page);// @todo get page a diff method. ?>"><?php _e('View Review on Page', 'crucible'); ?></a>]<?php
+								}
+							endif; ?>
                           </div>
                           <p>
                               <span style="font-size:13px;font-weight:bold;"><?php _e('Title:', 'crucible'); ?>&nbsp;</span>
@@ -1829,36 +1724,11 @@ function admin_options() {
           </div>
         <?php
     } // end admin_view_reviews	
-
-
-	
-	
-	
-	
-	
-	
 	
 } // end class
-
-
-/*
-if (!defined('IN_SMAR')) {
-	global $SMARTESTReviewsBusiness;
-	$SMARTESTReviewsBusiness = new SMARTESTReviewsBusiness();
-	add_action ('after_setup_theme', array(&$SMARTESTReviewsBusiness,'activate'));// @test does this do anything?
-}
-*/
-
-
 $SMARTESTReviewsBusiness = SMARTESTReviewsBusiness::get_instance();
-
 /* get widget */
 include_once('widget-testimonial.php');
-
-// @test changed SMAR_INSERT to smartest_reviews across site
-add_shortcode( 'smartest_reviews', array( $SMARTESTReviewsBusiness, 'reviews_shortcode') );// @test
-
+add_shortcode( 'smartest_reviews', array( $SMARTESTReviewsBusiness, 'reviews_shortcode' ) );
 add_shortcode( 'aggregate_rating', array( $SMARTESTReviewsBusiness, 'aggregate_footer_func' ) );
-
-
 ?>

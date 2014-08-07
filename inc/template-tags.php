@@ -242,29 +242,48 @@ function crucible_entry_meta() {
 }
 endif;
 
-/**
- * Display Contact info with microdata from Schema.org
- */
-function crucible_contact_info() {
-	global $smartestthemes_options;// @test yes, it works
-	
-	$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
-	$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
+/** 
+* Return the postal address with microdata
+*/
+function crucible_postal_address() {
+	global $smartestthemes_options;
 	$street = empty($smartestthemes_options['st_address_street']) ? '' : $smartestthemes_options['st_address_street'];
 	$city = empty($smartestthemes_options['st_address_city']) ? '' : $smartestthemes_options['st_address_city'];
 	$state = empty($smartestthemes_options['st_address_state']) ? '' : $smartestthemes_options['st_address_state'];
 	$zip = empty($smartestthemes_options['st_address_zip']) ? '' : $smartestthemes_options['st_address_zip'];
 	$country = empty($smartestthemes_options['st_address_country']) ? '' : $smartestthemes_options['st_address_country'];
-	$suite = empty($smartestthemes_options['st_address_suite']) ? '' : $smartestthemes_options['st_address_suite'];
+	$suite = empty($smartestthemes_options['st_address_suite']) ? '' : $smartestthemes_options['st_address_suite'];	
+
+	$out = '';
+	
+	if ( $street || $city || $state || $zip || $country || $suite ) {
+	
+		$out .= '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . $street . '</span>&nbsp; ' . $suite . '<br /><span itemprop="addressLocality"> ' . $city . '</span>';
+		if ( $city && $state ) {
+			$out .= ', ';
+		}
+		$out .= '<span itemprop="addressRegion">' . $state . '</span>&nbsp;<span itemprop="postalCode">' . $zip . '</span>&nbsp; ' . $country . '</span>	&nbsp;<br />';
+	}
+	return $out;
+}
+
+/**
+ * Display Contact info with microdata from Schema.org
+ */
+function crucible_contact_info() {
+	global $smartestthemes_options;
+	
+	$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
+	$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 	$phone = empty($smartestthemes_options['st_phone_number']) ? '' : $smartestthemes_options['st_phone_number'];
 	$fax = empty($smartestthemes_options['st_fax_numb']) ? '' : $smartestthemes_options['st_fax_numb'];
 	$show_email = empty($smartestthemes_options['st_show_contactemail']) ? '' : $smartestthemes_options['st_show_contactemail'];
 	
-	$output = '<div itemscope itemtype="http://schema.org/'.$schema. '"><p><strong itemprop="name">' . $bn . '</strong></p><p class="main-address"><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">' . $street . '</span>&nbsp; ' . $suite . '<br /><span itemprop="addressLocality"> ' . $city . '</span>';
-	if ( $city && $state ) {
-		$output .= ', ';
-	}
-	$output .= '<span itemprop="addressRegion">' . $state . '</span>&nbsp;<span temprop="postalCode">' . $zip . '</span>&nbsp; ' . $country . '</span>	&nbsp;<br />';
+	
+	$output = '<div itemscope itemtype="http://schema.org/'.$schema. '"><p><strong itemprop="name">' . $bn . '</strong></p><p class="main-address">';
+	
+	$output .= crucible_postal_address();// @test
+	
 	if ( $phone ) {
 		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. $phone . '</span> &nbsp;';
 	}
