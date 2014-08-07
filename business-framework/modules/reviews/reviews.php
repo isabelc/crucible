@@ -498,7 +498,7 @@ class SMARTESTReviewsBusiness {
 		$state = empty($smartestthemes_options['st_address_state']) ? '' : $smartestthemes_options['st_address_state'];
 		$zip = empty($smartestthemes_options['st_address_zip']) ? '' : $smartestthemes_options['st_address_zip'];
 		$country = empty($smartestthemes_options['st_address_country']) ? '' : $smartestthemes_options['st_address_country'];
-		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' $smartestthemes_options['st_add_reviews'];
+		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' : $smartestthemes_options['st_add_reviews'];
 		
 		/* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
 				 trying to access a page that does not exist -- send to main page 
@@ -514,6 +514,7 @@ class SMARTESTReviewsBusiness {
             $reviews_content .= '<!-- no inside div --><div id="smar_respond_1"';
 				$reviews_content .= ' itemscope itemtype="http://schema.org/'. $schema .'">
 							<span class="isa_vcard" id="hreview-smar-hcard-for-' . $review->id . '">
+							<!-- @test out CASE no insdie div -->
                                 <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a>
                                 <span itemprop="telephone">' . $phone_number . '</span>
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
@@ -525,7 +526,6 @@ class SMARTESTReviewsBusiness {
 		if (count($reviews) == 0) {
 			$reviews_content .= '<p>'. __('There are no reviews yet. Be the first to leave yours!', 'crucible').'</p>';
 		} elseif ($add_reviews != 'true') {
-			// @todo @test is this case even needed?
 			$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
 		} else {
 
@@ -535,9 +535,9 @@ class SMARTESTReviewsBusiness {
 			$best_score = 5;
 			$average_score = number_format($this->got_aggregate["aggregate"], 1);
 			$reviews_content .= '<div itemscope itemtype="http://schema.org/'. $schema .'"><!-- @test out CASE 3 --><br />
-							<span class="isa_vcard">
+							<span class="isa_vcard"><!-- @test out CASE 3 -->
                                 <a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a><br />
-                                <span itemprop="telephone">' . $number . '</span><br />
+                                <span itemprop="telephone">' . $phone . '</span><br />
                                 <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
                                     <span itemprop="streetAddress">' . $street . ' ' .$suite . '</span><br />
                                     <span itemprop="addressLocality">' . $city . '</span>

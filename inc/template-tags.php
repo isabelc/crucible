@@ -359,7 +359,7 @@ function crucible_social_buttons() {
 	$social_url_1 = empty($smartestthemes_options['st_business_socialurl1']) ? '' : $smartestthemes_options['st_business_socialurl1'];
 	$social_url_2 = empty($smartestthemes_options['st_business_socialurl2']) ? '' : $smartestthemes_options['st_business_socialurl2'];
 	$label1 = empty($smartestthemes_options['st_business_sociallabel1']) ? '' : $smartestthemes_options['st_business_sociallabel1'];
-	$label2 = emtpy($smartestthemes_options['st_business_sociallabel2']) ? '' : $smartestthemes_options['st_business_sociallabel2'];
+	$label2 = empty($smartestthemes_options['st_business_sociallabel2']) ? '' : $smartestthemes_options['st_business_sociallabel2'];
 	
 	// don't do unless at least one is entered
 	if( $tw || $goo || $fa || $yo || $li || $in || $pi ) {
