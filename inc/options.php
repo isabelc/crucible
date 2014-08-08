@@ -442,6 +442,14 @@ $options[] = array( 'name' => __( 'Custom content after results', 'crucible' ),
 		'id' => $shortname.'_contactform_append',
 		'std' => '',
 		'type' => 'textarea');
+		
+/* Reviews */		
+$options[] = array(
+	'name' => __( 'Reviews','crucible' ),
+	'class' => 'reviews',
+	'type' => 'heading');
+
+		
 /* Scripts */
 $options[] = array(
 	'name' => __('Scripts','crucible'),
