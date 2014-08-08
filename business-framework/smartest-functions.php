@@ -6,7 +6,7 @@
 
 function smartestthemes_login_logo() {
 
-	global $smartestthemes_options; // @test yes it works
+	global $smartestthemes_options;
 	$buslogo =  isset($smartestthemes_options['logo_setting']) ? $smartestthemes_options['logo_setting'] : '';
 	
 	// if there is a logo, show it, else do text
