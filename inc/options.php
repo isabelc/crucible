@@ -112,7 +112,7 @@ $options[] = array( 'name' => __('Business Hours','crucible'),
 					'std' => '',
 					'type' => 'textarea');
 /* Preferences */
-$options[] = array( 'name' => __('Preferences','crucible'),'class' => 'pencil',
+$options[] = array( 'name' => __('Preferences','crucible'),'class' => 'preferences',
 					'type' => 'heading');
 $options[] = array( 'name' => __('Add Staff section?','crucible'),
 					'desc' => __('Check this to show your staff memebers.','crucible'),
@@ -206,7 +206,7 @@ $options[] = array( 'name' => __('Change Slideshow Height','crucible'),
 					
 /* Custom CSS */
 $options[] = array(
-	'name' => __('Custom CSS','crucible'),'class' => 'colors',
+	'name' => __('Custom CSS','crucible'),'class' => 'custom-css',
 	'type' => 'heading'
 );
 $options[] = array(
@@ -218,7 +218,7 @@ $options[] = array(
 );
 
 /* About Page */
-$options[] = array( 'name' => __('About Page','crucible'),'class' => 'aboutcircle',
+$options[] = array( 'name' => __('About Page','crucible'),'class' => 'about-at',
 					'type' => 'heading');
 					
 $options[] = array( 'name' => __('About Your Business','crucible'),
@@ -239,7 +239,7 @@ $options[] = array( 'name' => __('Disable About Page','crucible'),
 					'type' => 'checkbox');
 
 /* Social Media */
-$options[] = array( 'name' => __('Social Media','crucible'),'class' => 'smartsocial',
+$options[] = array( 'name' => __('Social Media','crucible'),'class' => 'social',
 					'type' => 'heading');
 					
 $options[] = array( 'name' => __('Facebook Page','crucible'),
@@ -473,31 +473,31 @@ $options[] = array(
 /* Advanced */
 $options[] = array(
 	'name' => __('Advanced','crucible'),
-	'class' => 'settings',
+	'class' => 'advanced',
 	'type' => 'heading'
 );
 $options[] = array( 'name' => __('Disable Automatic Smartest Theme Actions','crucible'),
-						'type' => 'info',
-						'std' => __('This Smartest Theme does things by default that regular themes don\'t do. You may decide that you don\'t need such performance.<br /><br />Here you can disable some of these actions.','crucible'));
+	'type' => 'info',
+	'std' => __('This Smartest Theme does things by default that regular themes don\'t do. You may decide that you don\'t need such performance.<br /><br />Here you can disable some of these actions.','crucible'));
 $options[] = array( 'name' => __('Front Page and Posts Page Settings','crucible'),
-					'desc' => sprintf(__('Check this to stop forcing \'Posts Page\' setting to a page titled \'Blog\'. Checking this will allow you to choose your own Posts Page in %s.', 'crucible'), $rlink),
-					'id' => $shortname.'_stop_blog',
-					'std' => 'false',
-					'type' => 'checkbox');
+	'desc' => sprintf(__('Check this to stop forcing \'Posts Page\' setting to a page titled \'Blog\'. Checking this will allow you to choose your own Posts Page in %s.', 'crucible'), $rlink),
+	'id' => $shortname.'_stop_blog',
+	'std' => 'false',
+	'type' => 'checkbox');
 $options[] = array('desc' => sprintf(__('Check this to stop forcing \'Static Front Page\' setting to \'Home\'. Checking this will allow you to choose your own static Front Page in %s.', 'crucible'), $rlink),
-					'id' => $shortname.'_stop_static',
-					'std' => 'false',
-					'type' => 'checkbox');
+	'id' => $shortname.'_stop_static',
+	'std' => 'false',
+	'type' => 'checkbox');
 $options[] = array( 'name' => __('Disable Automatic Home Page Creation','crucible'),
-					'desc' => __('Check this to stop the page titled "Home" to be automatically created every time you delete it. This will permanently delete the automatically-created Home page.', 'crucible'),
-					'id' => $shortname.'_stop_home',
-					'std' => 'false',
-					'type' => 'checkbox');
+	'desc' => __('Check this to stop the page titled "Home" to be automatically created every time you delete it. This will permanently delete the automatically-created Home page.', 'crucible'),
+	'id' => $shortname.'_stop_home',
+	'std' => 'false',
+	'type' => 'checkbox');
 $options[] = array( 'name' => __('Disable Contact Page','crucible'),
-					'desc' => sprintf( __( 'Check this to disable the Contact page. This will delete the automatically-created Contact page. You will still be able to use the shortcode to add a contact form: %s', 'crucible' ), '<code>[smartestthemes_contact_form]</code>' ),
-					'id' => $shortname.'_stop_contact',
-					'std' => 'false',
-					'type' => 'checkbox');
+	'desc' => sprintf( __( 'Check this to disable the Contact page. This will delete the automatically-created Contact page. You will still be able to use the shortcode to add a contact form: %s', 'crucible' ), '<code>[smartestthemes_contact_form]</code>' ),
+	'id' => $shortname.'_stop_contact',
+	'std' => 'false',
+	'type' => 'checkbox');
 $options[] = array( 'name' => __('Disable Social Share Buttons','crucible'),
 	'desc' => __('Check this to stop inserting  Google+ Share, Tweet, Facebook Share, and Pinterest Pin it buttons at the bottom of single posts.', 'crucible'),
 	'id' => $shortname.'_stop_smartshare',
