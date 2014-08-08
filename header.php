@@ -13,9 +13,8 @@
 <?php wp_head(); ?>
 </head>
 <?php
-global $smartestthemes_options;// @test this one works
-$schema = isset( $smartestthemes_options['st_business_itemtype'] ) ? $smartestthemes_options['st_business_itemtype'] : 'LocalBusiness';
-?>
+global $smartestthemes_options;
+$schema = empty( $smartestthemes_options['st_business_itemtype'] ) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype']; ?>
 <body <?php body_class(); if ( is_front_page() ) { echo ' itemscope itemtype="http://schema.org/'.$schema.'"';} ?>>
 
 <div id="page" class="hfeed site">

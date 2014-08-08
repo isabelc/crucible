@@ -167,29 +167,22 @@ $options[] = array( 	'desc' => sprintf( __('%s Set Custom Sort-Order? %s Check t
 					'id' => $shortname.'_enable_service_sort',
 					'std' => 'false',
 					'type' => 'checkbox');
-
-$options[] = array( 'name' => __('Add Reviews Section?','crucible'),
-					'desc' => __('Check this to add a page to let visitors submit reviews.','crucible'),
-					'id' => $shortname.'_add_reviews',
-					'std' => 'true',
-					'type' => 'checkbox');
-
 // @new comment out NEXT 3 OPTIONS if not using home slideshow.
 $options[] = array( 'name' => __('Show Slideshow on Homepage?','crucible'),
-					'desc' => __('Check this if you want to show the slideshow on your homepage.','crucible'),
-					'id' => $shortname.'_show_slider',
-					'std' => 'true',
-					'type' => 'checkbox');
+	'desc' => __('Check this if you want to show the slideshow on your homepage.','crucible'),
+	'id' => $shortname.'_show_slider',
+	'std' => 'true',
+	'type' => 'checkbox');
 $options[] = array( 'name' => __('Slide Duration','crucible'),
-                    'desc' => __('How many seconds do you want to pause on each slide?','crucible'),
-                    'id' => $shortname.'_slide_duration',
-                    'std' => '5',
-                    'type' => 'select',
-                    'options' => array('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15'));
+	'desc' => __('How many seconds do you want to pause on each slide?','crucible'),
+	'id' => $shortname.'_slide_duration',
+	'std' => '5',
+	'type' => 'select',
+	'options' => array('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15'));
 $options[] = array( 'name' => __('Slideshow Transition Speed','crucible'),
-                    'desc' => __('How fast do you want the transition between images to be? (in milliseconds)','crucible'),
-                    'id' => $shortname.'_slider_trans_speed',
-                    'std' => '800',
+	'desc' => __('How fast do you want the transition between images to be? (in milliseconds)','crucible'),
+	'id' => $shortname.'_slider_trans_speed',
+	'std' => '800',
                     'type' => 'select',
                     'options' => array('300','400','500','600','700','800','900','1000','1100','1200','1300','1400','1500','1600','1700','1800','1900','2000'));
 		
@@ -239,54 +232,46 @@ $options[] = array( 'name' => __('Disable About Page','crucible'),
 					'type' => 'checkbox');
 
 /* Social Media */
-$options[] = array( 'name' => __('Social Media','crucible'),'class' => 'social',
-					'type' => 'heading');
-					
-$options[] = array( 'name' => __('Facebook Page','crucible'),
-                    'desc' => sprintf(__('The ID of your business Facebook page. Tip: the part of the address that comes after %1$swww.facebook.com/%2$s','crucible'), '<code>', '</code>'),
-                    'id' => $shortname.'_business_facebook',
-                    'type' => 'text');
-
-$options[] = array( 'name' => __('Twitter','crucible'),
-                    'desc' => __('The username of your business Twitter profile. Tip: the part after \'@\'','crucible'),
-                    'id' => $shortname.'_business_twitter',
-                    'type' => 'text');
-
-$options[] = array( 'name' => __('Google Plus','crucible'),
-                    'desc' => __('The ID of your business Google Plus page.','crucible'),
-                    'id' => $shortname.'_business_gplus',
-                    'type' => 'text');
-
-$options[] = array( 'name' => __('YouTube','crucible'),
-                    'desc' => sprintf(__('The name of your YouTube channel. Tip: Your Youtube name or ID, or the part of the address after %1$swww.youtube.com/user/%2$s','crucible'), '<code>', '</code>'),
-                    'id' => $shortname.'_business_youtube',
-                    'type' => 'text');
-
-$options[] = array( 'name' => __('Linkedin','crucible'),
-                    'desc' => sprintf(__('Your company Linkedin profile. The part of the profile address after %1$swww.linkedin.com/%2$s.', 'crucible'), '<code>', '</code>'),
-                    'id' => $shortname.'_business_linkedin',
-                    'type' => 'text');
-
-					
-$options[] = array( 'name' => __('Instagram','crucible'),
-                    'desc' => sprintf(__('Your company\'s Instagram username. The part of the profile address after %1$swww.instagram.com/%2$s. ', 'crucible'), '<code>', '</code>'),
-                    'id' => $shortname.'_business_instagram',
-                    'type' => 'text');
-
-$options[] = array( 'name' => __('Pinterest','crucible'),
-                    'desc' => sprintf(__('Your company\'s Pinterest username. The part of the address after %1$swww.pinterest.com/%2$s. You can enter just the username, or a particular board, such as %1$susername/BOARD_NAME%2$s', 'crucible'), '<code>', '</code>'),
-                    'id' => $shortname.'_business_pinterest',
-                    'type' => 'text');
-
-$options[] = array( 'name' => __('Another Profile','crucible'),
-                    'desc' => __('Add another business profile URL.  Example: https://www.flickr.com/photos/YourUserName','crucible'),
-                    'id' => $shortname.'_business_socialurl1',
-                    'type' => 'text');
 $options[] = array(
-                    'desc' => __('Give a title for the business profile you entered above. Example: Flickr','crucible'),
-                    'id' => $shortname.'_business_sociallabel1',
-                    'type' => 'text');
-
+	'name' => __('Social Media','crucible'),
+	'class' => 'social',
+	'type' => 'heading');
+$options[] = array( 'name' => __('Facebook Page','crucible'),
+	'desc' => sprintf(__('The ID of your business Facebook page. Tip: the part of the address that comes after %1$swww.facebook.com/%2$s','crucible'), '<code>', '</code>'),
+	'id' => $shortname.'_business_facebook',
+	'type' => 'text');
+$options[] = array( 'name' => __('Twitter','crucible'),
+	'desc' => __('The username of your business Twitter profile. Tip: the part after \'@\'','crucible'),
+	'id' => $shortname.'_business_twitter',
+	'type' => 'text');
+$options[] = array( 'name' => __('Google Plus','crucible'),
+	'desc' => __('The ID of your business Google Plus page.','crucible'),
+	'id' => $shortname.'_business_gplus',
+	'type' => 'text');
+$options[] = array( 'name' => __('YouTube','crucible'),
+	'desc' => sprintf(__('The name of your YouTube channel. Tip: Your Youtube name or ID, or the part of the address after %1$swww.youtube.com/user/%2$s','crucible'), '<code>', '</code>'),
+	'id' => $shortname.'_business_youtube',
+	'type' => 'text');
+$options[] = array( 'name' => __('Linkedin','crucible'),
+	'desc' => sprintf(__('Your company Linkedin profile. The part of the profile address after %1$swww.linkedin.com/%2$s.', 'crucible'), '<code>', '</code>'),
+	'id' => $shortname.'_business_linkedin',
+	'type' => 'text');
+$options[] = array( 'name' => __('Instagram','crucible'),
+	'desc' => sprintf(__('Your company\'s Instagram username. The part of the profile address after %1$swww.instagram.com/%2$s. ', 'crucible'), '<code>', '</code>'),
+	'id' => $shortname.'_business_instagram',
+	'type' => 'text');
+$options[] = array( 'name' => __('Pinterest','crucible'),
+	'desc' => sprintf(__('Your company\'s Pinterest username. The part of the address after %1$swww.pinterest.com/%2$s. You can enter just the username, or a particular board, such as %1$susername/BOARD_NAME%2$s', 'crucible'), '<code>', '</code>'),
+	'id' => $shortname.'_business_pinterest',
+	'type' => 'text');
+$options[] = array( 'name' => __('Another Profile','crucible'),
+	'desc' => __('Add another business profile URL.  Example: https://www.flickr.com/photos/YourUserName','crucible'),
+	'id' => $shortname.'_business_socialurl1',
+	'type' => 'text');
+$options[] = array(
+	'desc' => __('Give a title for the business profile you entered above. Example: Flickr','crucible'),
+	'id' => $shortname.'_business_sociallabel1',
+	'type' => 'text');
 $options[] = array(
 	'name' => __('Another Profile','crucible'),
 	'desc' => __('Add another business profile URL. Example: http://YourName.tumblr.com/','crucible'),
@@ -298,7 +283,6 @@ $options[] = array(
 	'id' => $shortname.'_business_sociallabel2',
 	'type' => 'text'
 );
-
 /* SEO */
 $options[] = array(
 	'name' => __('SEO','crucible'),
@@ -344,147 +328,161 @@ $options[] = array(
 );
 
 /* Branding */
-$options[] = array( 'name' => __('Backend Branding','crucible'),'class' => 'branding',
-					'type' => 'heading');
+$options[] = array(
+	'name' => __('Backend Branding','crucible'),
+	'class' => 'branding',
+	'type' => 'heading');
 $options[] = array( 'name' => __('Replace This Page\'s Logo','crucible'),
-					'desc' => __('See the "Smartest Themes" logo at the top of this page? Upload a logo here to replace this page\'s logo. Or specify the image address of your online logo, like http://yoursite.com/logo.png','crucible'),
-					'id' => $shortname.'_backend_logo',
-					'std' => '',
-					'type' => 'upload');
+	'desc' => __('See the "Smartest Themes" logo at the top of this page? Upload a logo here to replace this page\'s logo. Or specify the image address of your online logo, like http://yoursite.com/logo.png','crucible'),
+	'id' => $shortname.'_backend_logo',
+	'std' => '',
+	'type' => 'upload');
 $options[] = array( 'name' => __('Custom WP Admin Footer Text','crucible'),
-                    'desc' => __('By default, the text at the bottom of this page is "Thank you for creating with WordPress." Replace it with your own custom text here.','crucible'),
-                    'id' => $shortname.'_admin_footer',
-                    'type' => 'textarea');
+	'desc' => __('By default, the text at the bottom of this page is "Thank you for creating with WordPress." Replace it with your own custom text here.','crucible'),
+	'id' => $shortname.'_admin_footer',
+	'type' => 'textarea');
 $options[] = array( 
-                    'desc' => __('Or check here to completely remove the Admin Footer Text.','crucible'),
-                    'id' => $shortname.'_remove_adminfooter',
-                    'type' => 'checkbox');
-
+	'desc' => __('Or check here to completely remove the Admin Footer Text.','crucible'),
+	'id' => $shortname.'_remove_adminfooter',
+	'type' => 'checkbox');
 $options[] = array( 'name' => __('Remove WordPress Links From Admin Bar','crucible'),
-					'desc' => __('See the Wordpress link on the left of the bar across the top of this page? Check here to remove that link.','crucible'),
-					'id' => $shortname.'_remove_wplinks',
-					'std' => 'false',
-					'type' => 'checkbox');
+	'desc' => __('See the Wordpress link on the left of the bar across the top of this page? Check here to remove that link.','crucible'),
+	'id' => $shortname.'_remove_wplinks',
+	'std' => 'false',
+	'type' => 'checkbox');
 $options[] = array( 'type' => 'info',
-						'std' => __('<em>Refresh this page to see the effect of these changes.</em>','crucible')
-						);
+	'std' => __('<em>Refresh this page to see the effect of these changes.</em>','crucible')
+	);
 /* Contact form */
 $options[] = array( 'name' => __( 'Contact Form','crucible' ),
-		'class' => 'mail',
-		'type' => 'heading');
+	'class' => 'mail',
+	'type' => 'heading');
 $options[] = array( 'name' => __( 'Your Name', 'crucible' ),
-		'desc' => __( 'How would you like to be addressed in messages sent from the contact form?', 'crucible' ),
-		'id' => $shortname.'_contactform_name',
-		'std' => $admin_name,
-		'type' => 'text');
+	'desc' => __( 'How would you like to be addressed in messages sent from the contact form?', 'crucible' ),
+	'id' => $shortname.'_contactform_name',
+	'std' => $admin_name,
+	'type' => 'text');
 $options[] = array( 'name' => __( 'Your Email', 'crucible' ),
-		'desc' => __( 'Where would you like to receive messages sent from the contact form? If blank, the default is the admin email set in Settings -> General', 'crucible' ),
-		'id' => $shortname.'_contactform_email',
-		'std' => '',
-		'type' => 'text');
+	'desc' => __( 'Where would you like to receive messages sent from the contact form? If blank, the default is the admin email set in Settings -> General', 'crucible' ),
+	'id' => $shortname.'_contactform_email',
+	'std' => '',
+	'type' => 'text');
 $options[] = array( 'name' => __( 'Show "From:" Your Visitor', 'crucible' ),
-		'desc' => sprintf(__( 'Check this box if you want the %1$s"From:"%2$s in the email header to be the name and email of the visitor. Please note that some web hosts, such as DreamHost and BlueHost, will not send these messages. (GoDaddy hosting is okay with this option.) Test this option after you enable it. If left unchecked, the default is "From" your email setting from above.','crucible' ), '<strong>', '</strong>'),
-		'id' => $shortname.'_contactform_header_from',
-		'std' => 'false',
-		'type' => 'checkbox');
+	'desc' => sprintf(__( 'Check this box if you want the %1$s"From:"%2$s in the email header to be the name and email of the visitor. Please note that some web hosts, such as DreamHost and BlueHost, will not send these messages. (GoDaddy hosting is okay with this option.) Test this option after you enable it. If left unchecked, the default is "From" your email setting from above.','crucible' ), '<strong>', '</strong>'),
+	'id' => $shortname.'_contactform_header_from',
+	'std' => 'false',
+	'type' => 'checkbox');
 $options[] = array( 'name' => __( 'Default Subject', 'crucible' ),
-		'desc' => __( 'What should be the default subject line for the contact messages? Default is "Message sent from your contact form".', 'crucible' ),
-		'id' => $shortname.'_contactform_subject',
-		'std' => __( 'Message sent from your contact form', 'crucible' ),
-		'type' => 'text');
+	'desc' => __( 'What should be the default subject line for the contact messages? Default is "Message sent from your contact form".', 'crucible' ),
+	'id' => $shortname.'_contactform_subject',
+	'std' => __( 'Message sent from your contact form', 'crucible' ),
+	'type' => 'text');
 $options[] = array( 'name' => __( 'Success Message', 'crucible' ),
-		'desc' => __( 'When the form is sucessfully submitted, this message will be displayed to the sender. Default is "Success! Your message has been sent."', 'crucible' ),
-		'id' => $shortname.'_contactform_success',
-		'std' => '<strong>' . __( 'Success! ', 'crucible' ) . '</strong> ' . __( 'Your message has been sent.', 'crucible'),
-		'type' => 'textarea');
+	'desc' => __( 'When the form is sucessfully submitted, this message will be displayed to the sender. Default is "Success! Your message has been sent."', 'crucible' ),
+	'id' => $shortname.'_contactform_success',
+	'std' => '<strong>' . __( 'Success! ', 'crucible' ) . '</strong> ' . __( 'Your message has been sent.', 'crucible'),
+	'type' => 'textarea');
 $options[] = array( 'name' => __( 'Error Message', 'crucible' ),
-		'desc' => __( 'If the user skips a required field, this message will be displayed. Default is "Please complete the required fields."', 'crucible' ),
-		'id' => $shortname.'_contactform_error',
-		'std' => '<strong>' . __( 'Please complete the required fields.', 'crucible' ) . '</strong>',
-		'type' => 'textarea');
+	'desc' => __( 'If the user skips a required field, this message will be displayed. Default is "Please complete the required fields."', 'crucible' ),
+	'id' => $shortname.'_contactform_error',
+	'std' => '<strong>' . __( 'Please complete the required fields.', 'crucible' ) . '</strong>',
+	'type' => 'textarea');
 $options[] = array( 'name' => __( 'Enable Captcha', 'crucible' ),
-		'desc' => __( 'Check this box if you want to enable the captcha (challenge question/answer).', 'crucible' ),
-		'id' => $shortname.'_contactform_captcha',
-		'std' => 'true',
-		'type' => 'checkbox');
+	'desc' => __( 'Check this box if you want to enable the captcha (challenge question/answer).', 'crucible' ),
+	'id' => $shortname.'_contactform_captcha',
+	'std' => 'true',
+	'type' => 'checkbox');
 $options[] = array( 'name' => __( 'Time Offset', 'crucible' ), 
-		'desc' => sprintf( __( 'Please specify the time offset from the "Current time" listed below. For example, +1 or -1. If no offset, enter "0" (zero).<br />Current time: %s <br /><br />', 'crucible' ), $currtime ),
-		'id' => $shortname.'_contactform_offset',
-		'std' => '',
-		'type' => 'text');
+	'desc' => sprintf( __( 'Please specify the time offset from the "Current time" listed below. For example, +1 or -1. If no offset, enter "0" (zero).<br />Current time: %s <br /><br />', 'crucible' ), $currtime ),
+	'id' => $shortname.'_contactform_offset',
+	'std' => '',
+	'type' => 'text');
 $options[] = array( 'name' => __( 'Add Phone Number Field', 'crucible' ),
-		'desc' => __( 'Check this box to add a phone number field to the contact form.', 'crucible' ),
-		'id' => $shortname.'_contactform_include_phone',
-		'std' => 'false',
-		'type' => 'checkbox');
+	'desc' => __( 'Check this box to add a phone number field to the contact form.', 'crucible' ),
+	'id' => $shortname.'_contactform_include_phone',
+	'std' => 'false',
+	'type' => 'checkbox');
 $options[] = array(
-		'desc' => sprintf(__( 'Make the phone number %srequired.%s This has no effect if you do not check the box above.', 'crucible' ), '<strong>', '</strong>' ),
-		'id' => $shortname.'_contactform_required_phone',
-		'std' => 'false',
-		'type' => 'checkbox');
-$options[] = array( 'name' => __( 'Custom content before the form', 'crucible' ),
-		'desc' => __( 'Add some text/markup to appear <em>before</em> the contact form (optional).', 'crucible' ),
-		'id' => $shortname.'_contactform_preform',
-		'std' => '',
-		'type' => 'textarea');
-$options[] = array( 'name' => __( 'Custom content after the form', 'crucible' ),
-		'desc' => __( 'Add some text/markup to appear <em>after</em> the contact form (optional).', 'crucible' ),
-		'id' => $shortname.'_contactform_appform',
-		'std' => '',
-		'type' => 'textarea');
-$options[] = array( 'name' => __( 'Custom content before results', 'crucible' ),
-		'desc' => __( 'Add some text/markup to appear <em>before</em> the success message (optional).', 'crucible' ),
-		'id' => $shortname.'_contactform_prepend',
-		'std' => '',
-		'type' => 'textarea');
-$options[] = array( 'name' => __( 'Custom content after results', 'crucible' ),
-		'desc' => __( 'Add some text/markup to appear <em>after</em> the success message (optional).', 'crucible' ),
-		'id' => $shortname.'_contactform_append',
-		'std' => '',
-		'type' => 'textarea');
-		
+	'desc' => sprintf(__( 'Make the phone number %srequired.%s This has no effect if you do not check the box above.', 'crucible' ), '<strong>', '</strong>' ),
+	'id' => $shortname.'_contactform_required_phone',
+	'std' => 'false',
+	'type' => 'checkbox');
+$options[] = array(
+	'name' => __( 'Custom content before the form', 'crucible' ),
+	'desc' => __( 'Add some text/markup to appear <em>before</em> the contact form (optional).', 'crucible' ),
+	'id' => $shortname.'_contactform_preform',
+	'std' => '',
+	'type' => 'textarea');
+$options[] = array(
+	'name' => __( 'Custom content after the form', 'crucible' ),
+	'desc' => __( 'Add some text/markup to appear <em>after</em> the contact form (optional).', 'crucible' ),
+	'id' => $shortname.'_contactform_appform',
+	'std' => '',
+	'type' => 'textarea');
+$options[] = array(
+	'name' => __( 'Custom content before results', 'crucible' ),
+	'desc' => __( 'Add some text/markup to appear <em>before</em> the success message (optional).', 'crucible' ),
+	'id' => $shortname.'_contactform_prepend',
+	'std' => '',
+	'type' => 'textarea');
+$options[] = array(
+	'name' => __( 'Custom content after results', 'crucible' ),
+	'desc' => __( 'Add some text/markup to appear <em>after</em> the success message (optional).', 'crucible' ),
+	'id' => $shortname.'_contactform_append',
+	'std' => '',
+	'type' => 'textarea');
 /* Reviews */		
 $options[] = array(
 	'name' => __( 'Reviews','crucible' ),
 	'class' => 'reviews',
 	'type' => 'heading');
-
-		
+	
+$options[] = array(
+	'name' => __('About Reviews','crucible'),
+	'type' => 'info',
+	'std' => __('Aggregate ratings data from your Reviews will be used to create rich snippets for search engines on your home page and your Reviews page. Reviews are marked up with Schema.org microdata, as recommended by Google.','crucible'));
+	
+$options[] = array(
+	'name' => __('Enable Reviews?','crucible'),
+	'desc' => __('Check this to add a page to let visitors submit reviews for your approval. Reviews are not public unless you approve them.','crucible'),
+	'id' => $shortname.'_add_reviews',
+	'std' => 'true',
+	'type' => 'checkbox');
+	
 /* Scripts */
 $options[] = array(
 	'name' => __('Scripts','crucible'),
 	'class' => 'scripts',
-	'type' => 'heading'
-);
+	'type' => 'heading');
 $options[] = array(
 	'name' => __('Analytics Code','crucible'),
 	'desc' => __('Paste your analytics script here.','crucible'),
 	'id' => $shortname.'_script_analytics',
 	'std' => '',
-	'type' => 'textarea'
-);
+	'type' => 'textarea');
 $options[] = array(
 	'name' => __('Additional Scripts To Load','crucible'),
 	'desc' => __('Paste any scripts here to be loaded into wp_head. Remember your script tags.','crucible'),
 	'id' => $shortname.'_scripts_head',
 	'std' => '',
-	'type' => 'textarea'
-);
+	'type' => 'textarea');
 /* Advanced */
 $options[] = array(
 	'name' => __('Advanced','crucible'),
 	'class' => 'advanced',
-	'type' => 'heading'
-);
-$options[] = array( 'name' => __('Disable Automatic Smartest Theme Actions','crucible'),
+	'type' => 'heading');
+$options[] = array(
+	'name' => __('Disable Automatic Smartest Theme Actions','crucible'),
 	'type' => 'info',
 	'std' => __('This Smartest Theme does things by default that regular themes don\'t do. You may decide that you don\'t need such performance.<br /><br />Here you can disable some of these actions.','crucible'));
-$options[] = array( 'name' => __('Front Page and Posts Page Settings','crucible'),
+$options[] = array(
+	'name' => __('Front Page and Posts Page Settings','crucible'),
 	'desc' => sprintf(__('Check this to stop forcing \'Posts Page\' setting to a page titled \'Blog\'. Checking this will allow you to choose your own Posts Page in %s.', 'crucible'), $rlink),
 	'id' => $shortname.'_stop_blog',
 	'std' => 'false',
 	'type' => 'checkbox');
-$options[] = array('desc' => sprintf(__('Check this to stop forcing \'Static Front Page\' setting to \'Home\'. Checking this will allow you to choose your own static Front Page in %s.', 'crucible'), $rlink),
+$options[] = array(
+	'desc' => sprintf(__('Check this to stop forcing \'Static Front Page\' setting to \'Home\'. Checking this will allow you to choose your own static Front Page in %s.', 'crucible'), $rlink),
 	'id' => $shortname.'_stop_static',
 	'std' => 'false',
 	'type' => 'checkbox');
