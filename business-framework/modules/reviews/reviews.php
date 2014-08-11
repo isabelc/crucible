@@ -6,7 +6,6 @@
  */
 class SMARTESTReviewsBusiness {
 
-
 	private static $instance = null;
 	public static function get_instance() {
 		if ( null == self::$instance ) {
@@ -16,16 +15,11 @@ class SMARTESTReviewsBusiness {
 	}
 	
 	var $dbtable = 'smareviewsb';// @todo consider chnge table name!!!
-
 	var $got_aggregate = false;
 	var $options = array();
 	var $p = '';
 	var $version = '0.0.0';
-	var $shown_form = false;
-	var $shown_hcard = false;
 	var $status_msg = '';
-
-	
 	
 	private function __construct() {
 		global $wpdb;
@@ -58,7 +52,6 @@ class SMARTESTReviewsBusiness {
 	* Generates an html link for a review with its page and ID as URL parameters
 	*/
     function get_jumplink_for_review($review,$page) {
-
        $link = get_permalink( get_option('smartestthemes_reviews_page_id') );
         if (strpos($link,'?') === false) {
             $link = trailingslashit($link) . "?smarp=$page#hreview-$review->id";
@@ -81,7 +74,6 @@ class SMARTESTReviewsBusiness {
             'leave_text' => __('Submit your review', 'crucible'),
             'require_custom' => array(),
             'require_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0),
-            'reviews_per_page' => 10,
             'show_custom' => array(),
             'show_fields' => array('fname' => 1, 'femail' => 0, 'fwebsite' => 0, 'ftitle' => 1),
 			'submit_button_text' => __('Submit your review', 'crucible'),
@@ -270,11 +262,10 @@ class SMARTESTReviewsBusiness {
 		$phone_class = ('reviews' == $location) ? 'st-reviews-business-phone' : 'st-agg-rating-phone';
 		$closer = ('reviews' == $location) ? '</span><hr />' : '</span>';
 		$out = '';
-
+		
 		if ('reviews' == $location) {
 			$out .= '<div class="reviews-list" itemprop="itemReviewed" itemscope itemtype="http://schema.org/'. $schema .'"><span class="' . $wrapper_class. '">';
 		} else {
-		
 			$out .= '<span class="' . $wrapper_class. '" itemprop="itemReviewed" itemscope itemtype="http://schema.org/'. $schema .'">';
 		}
 		
@@ -297,7 +288,6 @@ class SMARTESTReviewsBusiness {
 	function get_the_aggregate_rating( $location ) {// @test pass a param through here for $location below
 		
 		$this->get_aggregate_reviews();// fills the values for got_aggregate
-		
 		$average_score = number_format($this->got_aggregate["aggregate"], 1);
 		
 		$out = '<br /><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" id="hreview-smar-aggregate">' . __('Average rating:', 'crucible'). ' <span itemprop="ratingValue">' . $average_score . '</span> ' . __('out of', 'crucible'). ' <span itemprop="bestRating">5 </span> '. __('based on', 'crucible').' <span itemprop="ratingCount">' . $this->got_aggregate['total'] . ' </span>' . _n( 'review', 'reviews.', $this->got_aggregate['total'], 'crucible' );
@@ -327,14 +317,8 @@ class SMARTESTReviewsBusiness {
 	* Filter the content to conditionally attach the Aggregate footer to the home page
 	*/
     function homepage_aggregate_footer($content) {
-		/* only if Aggregate ratings on front page is enabled, and if is front page & if home page is static */
-		
-		
-		if ( 
-			is_front_page() 
-			&& 
-			(get_option('show_on_front') == 'page')
-		) {
+		/* only if is front page & if home page is static */
+		if ( is_front_page() && (get_option('show_on_front') == 'page')	) {
 			return $content . $this->aggregate_footer_output();
 		}
 		return $content;
@@ -354,9 +338,16 @@ class SMARTESTReviewsBusiness {
 		return (substr($date, 0, strlen($date) - 2) . ':' . substr($date, -2));
 	}
 
-    function pagination($total_results, $reviews_per_page) {
+	// @test removed 2nd param, $reviews_per_page
+    function pagination($total_results) {
         global $post;
 
+		$per_page = get_option('st_reviews_per_page');// @test if I should instead do global .
+		if ( empty($per_page) || ( $per_page < 1 ) || ! is_numeric($per_page) ) {
+			$per_page = 10;
+		}
+
+		
         $out = '';
         $uri = false;
         $pretty = false;
@@ -371,7 +362,7 @@ class SMARTESTReviewsBusiness {
 			$this->p->review_status = 0;
 		}
 
-        $pages = ceil($total_results / $reviews_per_page);
+        $pages = ceil($total_results / $per_page);// @test
 
         if ($pages > 1) {
             if (is_admin()) {
@@ -432,12 +423,21 @@ class SMARTESTReviewsBusiness {
         }
     }
 	
-	/**
+	/** // @test removed 1st param: $perpage, which is reviews per page
 	* The HTML for the entire Reviews list
 	*/
-	function output_reviews_show($perpage, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
+	function output_reviews_show($hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
 	
-        $arr_Reviews = $this->get_reviews($this->page, $perpage, 1);
+		global $smartestthemes_options;
+		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' : $smartestthemes_options['st_add_reviews'];
+	
+		// @test 
+		$per_page = empty($smartestthemes_options['st_reviews_per_page']) ? '10' : $smartestthemes_options['st_add_reviews'];
+		if ( ( $per_page < 1 ) || ! is_numeric($per_page) ) {
+			$per_page = 10;
+		}
+		
+        $arr_Reviews = $this->get_reviews($this->page, $per_page, 1);
         $reviews = $arr_Reviews[0];
         $total_reviews = intval($arr_Reviews[1]);
         $reviews_content = '';
@@ -445,8 +445,7 @@ class SMARTESTReviewsBusiness {
         $title_tag = $this->options['title_tag'];
 		
 		
-		global $smartestthemes_options;
-		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' : $smartestthemes_options['st_add_reviews'];
+	
 		
 		/* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
 				 trying to access a page that does not exist -- send to main page 
@@ -912,12 +911,13 @@ class SMARTESTReviewsBusiness {
 		// function output_reviews_show($perpage, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '').
 		
 		
-		$ret_Arr = $this->output_reviews_show( $this->options['reviews_per_page'] );// @test with 2 params
+		$ret_Arr = $this->output_reviews_show();// @test with 2 params
+			// @test removed reviews per page param!!
 		
         $reviews_content .= $ret_Arr[0];
         $total_reviews = $ret_Arr[1];
         
-		$reviews_content .= $this->pagination($total_reviews, $this->options['reviews_per_page']);
+		$reviews_content .= $this->pagination($total_reviews);
 
         if ($this->options['form_location'] == 1) {
             $reviews_content .= $this->show_reviews_form();
@@ -1115,9 +1115,10 @@ class SMARTESTReviewsBusiness {
 			if (!isset($this->p->goto_show_button)) { $this->p->goto_show_button = 0; }
 			$updated_options['form_location'] = intval($this->p->form_location);
 			$updated_options['goto_show_button'] = intval($this->p->goto_show_button);
-			$updated_options['reviews_per_page'] = intval($this->p->reviews_per_page);
 			
-            if ($updated_options['reviews_per_page'] < 1) { $updated_options['reviews_per_page'] = 10; }
+			
+            
+			
             update_option('smar_options', $updated_options);
             $this->force_update_cache(); /* update any caches */
         
@@ -1157,9 +1158,14 @@ class SMARTESTReviewsBusiness {
 
 
 
+					
 
        <div style="background:#eaf2fa;padding:6px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;"><legend>'. __('Review Page Settings', 'crucible'). '</legend></div>
-                    <div style="padding:10px;padding-bottom:10px;"><label for="reviews_per_page">'. __('Reviews shown per page: ', 'crucible') . '</label><input style="width:40px;" type="text" id="reviews_per_page" name="reviews_per_page" value="'.$this->options['reviews_per_page'].'" />
+                    <div style="padding:10px;padding-bottom:10px;">
+					
+
+					
+					
                         <br /><br />
                         <label for="form_location">'. __('Location of Review Form: ', 'crucible'). '</label>
                         <select id="form_location" name="form_location">
@@ -1297,6 +1303,11 @@ function admin_options() {
 	
 	function admin_view_reviews() {
         global $wpdb;
+		
+		$per_page = get_option('st_reviews_per_page');// @test if I should instead do global .
+		if ( empty($per_page) || ( $per_page < 1 ) || ! is_numeric($per_page) ) {
+			$per_page = 10;
+		}
         
         if (!isset($this->p->s)) { $this->p->s = ''; }
         $this->p->s_orig = $this->p->s;
@@ -1477,7 +1488,7 @@ function admin_options() {
         }
         /* end - searching */
         else {
-			$arr_Reviews = $this->get_reviews($this->page,$this->options['reviews_per_page'],$this->p->review_status);
+			$arr_Reviews = $this->get_reviews($this->page,$per_page,$this->p->review_status);
             $reviews = $arr_Reviews[0];
             $total_reviews = $arr_Reviews[1];
         }
@@ -1699,9 +1710,7 @@ function admin_options() {
                 <div class="alignleft actions" style="float:left;padding-left:20px;"><?php 
 				
 				// @test this output
-				echo $this->pagination($total_reviews, $this->options['reviews_per_page']);
-
-
+				echo $this->pagination($total_reviews);
 				?></div>  
                 <br class="clear" />
               </div>

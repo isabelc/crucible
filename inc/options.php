@@ -71,7 +71,7 @@ $options[] = array(
 $options[] = array(
                     'desc' => __('Business city','crucible'),
                     'id' => $shortname.'_address_city',
-				'class' => 'half',
+					'class' => 'half',
                     'type' => 'text');
 $options[] = array( 
                     'desc' => __('Business state: if in the U.S., enter the state that your business is in','crucible'),
@@ -431,6 +431,7 @@ $options[] = array(
 	'id' => $shortname.'_contactform_append',
 	'std' => '',
 	'type' => 'textarea');
+	
 /* Reviews */		
 $options[] = array(
 	'name' => __( 'Reviews','crucible' ),
@@ -448,6 +449,25 @@ $options[] = array(
 	'id' => $shortname.'_add_reviews',
 	'std' => 'true',
 	'type' => 'checkbox');
+	
+// @test	
+	
+$options[] = array(
+	'name' => __('Reviews shown per page:', 'crucible'),
+	'desc' => __('','crucible'),
+	'id' => $shortname.'_reviews_per_page',
+	'std' => '10',
+	'type' => 'text');
+    
+		
+	
+	
+	
+	
+	
+	
+	
+	
 	
 /* Scripts */
 $options[] = array(
