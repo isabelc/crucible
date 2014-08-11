@@ -1304,7 +1304,7 @@ function admin_options() {
 	function admin_view_reviews() {
         global $wpdb;
 		
-		$per_page = get_option('st_reviews_per_page');// @test if I should instead do global .
+		$per_page = get_option('st_reviews_per_page');// @test if I should instead do global
 		if ( empty($per_page) || ( $per_page < 1 ) || ! is_numeric($per_page) ) {
 			$per_page = 10;
 		}
