@@ -84,7 +84,6 @@ class SMARTESTReviewsBusiness {
             'reviews_per_page' => 10,
             'show_custom' => array(),
             'show_fields' => array('fname' => 1, 'femail' => 0, 'fwebsite' => 0, 'ftitle' => 1),
-			'biz_declare_shortcode' => 0,
 			'submit_button_text' => __('Submit your review', 'crucible'),
             'title_tag' => 'h2'
         );
@@ -258,7 +257,7 @@ class SMARTESTReviewsBusiness {
 	
 	/**
 	* Returns the HTML string for the business schema, address, and phone with microdata for the aggregate rating.
-	* @param, string, the location it is called from, accepts 'reviews', 'reviews-footer' or 'footer' @test
+	* @param, string, the location it is called from, accepts 'reviews' or 'footer' @test
 	*/
 	public function get_business_schema( $location ) {
 	
@@ -290,7 +289,7 @@ class SMARTESTReviewsBusiness {
 
 	/**
 	* Gathers the aggregate data.
-	* @param string, the location it is called from, accepts 'reviews', 'reviews-footer', or 'footer'
+	* @param string, the location it is called from, accepts 'reviews-footer', or 'footer'
 	* @return string, the HTML for just the aggregate rating with schema.org microdata
 	*/
 	function get_the_aggregate_rating( $location ) {// @test pass a param through here for $location below
@@ -313,7 +312,7 @@ class SMARTESTReviewsBusiness {
 	}
 	
 	/**
-	* Returns the HTML string for the entire aggregate rating block for both the home page footer and the aggregate rating shortcode
+	* Returns the HTML string for the entire aggregate rating block.
 	*/
 	function aggregate_footer_output() {
 		$out = '<div class="st-reviews-aggregate">';// @test CSS id was smar_respond_1, 
@@ -893,7 +892,7 @@ class SMARTESTReviewsBusiness {
     }
 	
 	/**
-	* The reviews shortcode
+	* The reviews page shortcode
 	*/
 	public function reviews_shortcode( $atts ) {
 	
@@ -1112,16 +1111,10 @@ class SMARTESTReviewsBusiness {
             
             /* prevent E_NOTICE warnings */
 			if (!isset($this->p->goto_show_button)) { $this->p->goto_show_button = 0; }
-			
-
-			if (!isset($this->p->biz_declare_shortcode)) { $this->p->biz_declare_shortcode = 0; }
-
 			$updated_options['form_location'] = intval($this->p->form_location);
 			$updated_options['goto_show_button'] = intval($this->p->goto_show_button);
 			$updated_options['reviews_per_page'] = intval($this->p->reviews_per_page);
 			
-
-			$updated_options['biz_declare_shortcode'] = intval($this->p->biz_declare_shortcode);
             if ($updated_options['reviews_per_page'] < 1) { $updated_options['reviews_per_page'] = 10; }
             update_option('smar_options', $updated_options);
             $this->force_update_cache(); /* update any caches */
@@ -1130,10 +1123,7 @@ class SMARTESTReviewsBusiness {
     }
 	public function show_options() {
 
-		$biz_declare_shortcode_checked = '';
-		if ($this->options['biz_declare_shortcode']) {
-			$biz_declare_shortcode_checked = 'checked';
-		}
+
 
         $goto_show_button_checked = '';
         if ($this->options['goto_show_button']) {
@@ -1162,23 +1152,6 @@ class SMARTESTReviewsBusiness {
 					
 					
 					
-<div style="padding:10px;">
-
-
-
-
-
-<input id="biz_declare_shortcode" name="biz_declare_shortcode" type="checkbox" '.$biz_declare_shortcode_checked.' value="1" />&nbsp;
-<label for="biz_declare_shortcode">'. __('Add the LocalBusiness type to the Aggregate Rating Shortcode', 'crucible').'</label>
-
-<br /><br /> <small>'. __('Add the LocalBusiness type to the Aggregate Rating shortcode. This only applies to you if you use the Aggregate Rating shortcode. This is necessary for stars if you use the shortcode on any page besides the home page, the Reviews page, or the Contact page.', 'crucible').'</small>
-
-
-
-<br /><br />
-
-<div class="submit" style="padding:10px 0px 0px 0px;"><input type="submit" class="button-primary" value="'. __('Save Changes', 'crucible') .'" name="Submit"></div>
-</div>  
 
 
 
