@@ -265,21 +265,23 @@ class SMARTESTReviewsBusiness {
 		$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
 		$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 		$phone = empty($smartestthemes_options['st_phone_number']) ? '' : $smartestthemes_options['st_phone_number'];
-		
-
 		$wrapper_class = ('reviews' == $location) ? 'st-reviews-business-schema' : 'st-aggregate-business-schema';
+		$bn_class = ('reviews' == $location) ? 'st-reviews-business-name' : 'st-agg-rating-bn';
+		$phone_class = ('reviews' == $location) ? 'st-reviews-business-phone' : 'st-agg-rating-phone';
 		$closer = ('reviews' == $location) ? '</span><hr />' : '</span>';
-
 		$out = '';
-		
+
 		if ('reviews' == $location) {
-			$out .= '<div class="reviews-list">';
+			$out .= '<div class="reviews-list" itemprop="itemReviewed" itemscope itemtype="http://schema.org/'. $schema .'"><span class="' . $wrapper_class. '">';
+		} else {
+		
+			$out .= '<span class="' . $wrapper_class. '" itemprop="itemReviewed" itemscope itemtype="http://schema.org/'. $schema .'">';
 		}
 		
-		$out .= '<span class="' . $wrapper_class. '" itemprop="itemReviewed" itemscope itemtype="http://schema.org/'. $schema .'"><a href="' . site_url('/') . '"><span itemprop="name" class="agg-rating-bn">' . $bn . '</span></a><br />';
+		$out .= '<a href="' . site_url('/') . '"><span itemprop="name" class="' . $bn_class. '">' . $bn . '</span></a><br />';
 				
 		if ( $phone) {
-			$out .= '<span itemprop="telephone" id="agg-rating-telephone">' . $phone . '</span><br />';
+			$out .= '<span itemprop="telephone" class="' . $phone_class. '">' . $phone . '</span><br />';
 		}
 
 		$out .= crucible_postal_address() . $closer;
