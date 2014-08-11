@@ -459,15 +459,7 @@ $options[] = array(
 	'std' => '10',
 	'type' => 'text');
     
-		
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 /* Scripts */
 $options[] = array(
