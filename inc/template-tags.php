@@ -423,19 +423,12 @@ add_action('crucible_social_buttons', 'crucible_social_buttons');
 function crucible_footer() {
 	global $smartestthemes_options;// @test this one works
 	$output = '';
-	$override_footer = isset($smartestthemes_options['override_footer']) ? $smartestthemes_options['override_footer'] : '';
-	$footer_text = isset($smartestthemes_options['footer_text']) ? $smartestthemes_options['footer_text'] : '';
+	$override_footer = empty($smartestthemes_options['override_footer']) ? '' : $smartestthemes_options['override_footer'];
+	$footer_text = empty($smartestthemes_options['footer_text']) ? '' : $smartestthemes_options['footer_text'];
+	$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 	
-	if ( empty( $override_footer ) ) { // no override, so do default
-		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
-
-		$bn = stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
-		if($bn) {
-			$output .= $bn;
-		} else {
-			$output .= get_bloginfo('name');
-		}
-		$output .= '</a><span id="custom-footer">';
+	if ( ! $override_footer ) { // no override, so do default
+		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '"><span itemprop="name">' . $bn . '</span></a><span id="custom-footer">';
 		if ( $footer_text ) {
 			$output .= '<br />';// if default plus custom, need <br />
 		}
