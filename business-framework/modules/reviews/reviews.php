@@ -256,79 +256,88 @@ class SMARTESTReviewsBusiness {
         return array($reviews, $total_reviews);
     }
 	
+	
+	
 	/**
-	* Returns the html string for the business declaration prefix to the aggregate rating.
-	* Used for both the Home page aggregate footer, and the aggregate rating shortcode.
+	* Returns the HTML string for the business schema, address, and phone with microdata for the aggregate rating.
+	* @param, string, the location it is called from, accepts 'reviews', 'reviews-footer' or 'footer' @test
 	*/
-	function aggregate_footer_business_prefix() {
+	public function get_business_schema( $location ) {
+	
 		global $smartestthemes_options;
 		$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
 		$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 		$phone = empty($smartestthemes_options['st_phone_number']) ? '' : $smartestthemes_options['st_phone_number'];
-
-		$aggregate_rating_prefix = '<div id="smar_hcard_s" itemscope itemtype="http://schema.org/' . $schema . '">';
-		$aggregate_rating_prefix .= '<a href="' . site_url('/')
- . '"><span itemprop="name" id="agg-rating-bn">' . $bn . '</span></a><br />' . crucible_postal_address();
 		
-		if ( $phone) {
-			$aggregate_rating_prefix .= '<br /><span itemprop="telephone" id="agg-rating-telephone">' . $phone . '</span>';
+
+		$wrapper_class = ('reviews' == $location) ? 'st-reviews-business-schema' : 'st-aggregate-business-schema';
+		$closer = ('reviews' == $location) ? '</span><hr />' : '</span>';
+
+		$out = '';
+		
+		if ('reviews' == $location) {
+			$out .= '<div class="reviews-list">';
 		}
-		return $aggregate_rating_prefix;
+		
+		$out .= '<span class="' . $wrapper_class. '" itemprop="itemReviewed" itemscope itemtype="http://schema.org/'. $schema .'"><a href="' . site_url('/') . '"><span itemprop="name" class="agg-rating-bn">' . $bn . '</span></a><br />';
+				
+		if ( $phone) {
+			$out .= '<span itemprop="telephone" id="agg-rating-telephone">' . $phone . '</span><br />';
+		}
+
+		$out .= crucible_postal_address() . $closer;
+		
+		return $out;
 	}
-	
+
 	/**
 	* Gathers the aggregate data.
+	* @param string, the location it is called from, accepts 'reviews', 'reviews-footer', or 'footer'
 	* @return string, the HTML for just the aggregate rating with schema.org microdata
 	*/
-	function get_the_aggregate_rating() {
+	function get_the_aggregate_rating( $location ) {// @test pass a param through here for $location below
+		
 		$this->get_aggregate_reviews();// fills the values for got_aggregate
+		
 		$average_score = number_format($this->got_aggregate["aggregate"], 1);
-		$out = '<br /><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" id="hreview-smar-aggregate">' . __('Average rating:', 'crucible'). ' <span itemprop="ratingValue">' . $average_score . '</span> ' . __('out of', 'crucible'). ' <span itemprop="bestRating">5 </span> '. __('based on', 'crucible').' <span itemprop="ratingCount">' . $this->got_aggregate['total'] . ' </span>' . _n( 'review', 'reviews.', $this->got_aggregate['total'], 'crucible' ) . '</span>';
+		
+		$out = '<br /><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" id="hreview-smar-aggregate">' . __('Average rating:', 'crucible'). ' <span itemprop="ratingValue">' . $average_score . '</span> ' . __('out of', 'crucible'). ' <span itemprop="bestRating">5 </span> '. __('based on', 'crucible').' <span itemprop="ratingCount">' . $this->got_aggregate['total'] . ' </span>' . _n( 'review', 'reviews.', $this->got_aggregate['total'], 'crucible' );
+
+		if ( 'reviews-footer' != $location ) {
+			$out .= $this->get_business_schema( $location );
+		}
+
+		$out .= '</span>';
+		
+		// @test the $this->get_business_schema( $location ) above.
+	
 		return $out;
 	}
 	
 	/**
 	* Returns the HTML string for the entire aggregate rating block for both the home page footer and the aggregate rating shortcode
 	*/
-	function aggregate_footer_output($is_shortcode=NULL) {
-		$out = '<div id="smar_respond_1">';
-		
-		// if is home and is set to declare business type on home, do it
-		// or
-		// if is shortcode and is set to declare business type on shortcode
-		
-		// prepend the business type declaration if needed
-		
-		if ( $this->options['biz_declare'] == 1 && is_front_page() ) {
-			$out .= $this->aggregate_footer_business_prefix();
-		} elseif ( (true == $is_shortcode) && ($this->options['biz_declare_shortcode'] == 1) ) {
-		
-			// override the #smar_respond_1, so do not concatenate 
-			$out = '<div id="agg-rating-shortcode">' . $this->aggregate_footer_business_prefix();
-		
-		} elseif (true == $is_shortcode) {
-		
-			// no business type declaration, but override the #smar_respond_1, so do not concatenate 
-			$out = '<div id="agg-rating-shortcode"><div id="smar_hcard_s">';
-		
-		} else {
-			// no business type declaration
-			$out .= '<div id="smar_hcard_s">';
-		}
-
-		$out .= $this->get_the_aggregate_rating();
-		
-		$out .= '</div></div>';
+	function aggregate_footer_output() {
+		$out = '<div class="st-reviews-aggregate">';// @test CSS id was smar_respond_1, 
+		$out .= $this->get_the_aggregate_rating( 'footer' );// @test param
+		$out .= '</div>';
 		return $out;
 	}
 	
-	/*
-		@todo may will use a template tag inside smar-home.php instead of this content filter for more efficiency.
+	/* @todo may will use a template tag inside smar-home.php instead of this content filter for more efficiency.
 	* Filter the content to conditionally attach the Aggregate footer to the home page
 	*/
     function homepage_aggregate_footer($content) {
 		/* only if Aggregate ratings on front page is enabled, and if is front page & if home page is static */
-		if ( ($this->options['show_hcard_on'] == 1) && is_front_page() && (get_option('show_on_front') == 'page') ) {
+		
+		
+		if ( 
+//@test			($this->options['show_hcard_on'] == 1)
+//@test			&&
+			is_front_page() 
+			&& 
+			(get_option('show_on_front') == 'page')
+		) {
 			return $content . $this->aggregate_footer_output();
 		}
 		return $content;
@@ -338,7 +347,7 @@ class SMARTESTReviewsBusiness {
 	* Shortcode for the Aggregate Rating
 	*/
     function aggregate_footer_func() {
-		return $this->aggregate_footer_output(true);
+		return $this->aggregate_footer_output();
     }
 
 	function iso8601($time=false) {
@@ -427,7 +436,7 @@ class SMARTESTReviewsBusiness {
     }
 	
 	/**
-	* The html for the Reviews shortcode, which is simply the Reviews page
+	* The HTML for the entire Reviews list
 	*/
 	function output_reviews_show($perpage, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
 	
@@ -438,10 +447,8 @@ class SMARTESTReviewsBusiness {
         $showtitle = '';
         $title_tag = $this->options['title_tag'];
 		
+		
 		global $smartestthemes_options;
-		$schema = empty($smartestthemes_options['st_business_itemtype']) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
-		$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
-		$phone = empty($smartestthemes_options['st_phone_number']) ? '' : $smartestthemes_options['st_phone_number'];
 		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' : $smartestthemes_options['st_add_reviews'];
 		
 		/* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
@@ -458,9 +465,7 @@ class SMARTESTReviewsBusiness {
 			$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
 		} else {
 
-			$reviews_content .= '<div class="reviews-list" itemscope itemtype="http://schema.org/'. $schema .'"><br />
-								<a href="' . site_url('/') . '"><span itemprop="name">' . $bn . '</span></a><br />
-                                <span itemprop="telephone">' . $phone . '</span><br />' . crucible_postal_address() . '<hr />';
+			$reviews_content .= $this->get_business_schema( 'reviews' );// @test
 
 			foreach ($reviews as $review) {
                 
@@ -535,7 +540,11 @@ class SMARTESTReviewsBusiness {
 				$reviews_content .= '<div class="smar_fl smar_sc"><div class="smar_rating">' . $this->output_rating($review->review_rating, false) . '</div></div>' . $name_block . '<div class="smar_clear smar_spacing1"></div><blockquote itemprop="reviewBody" class="description"><p>' . $review->review_text . ' '.__('Rating:', 'crucible').' <span itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"><span itemprop="ratingValue">'.$review->review_rating.'</span></span>  '.__('out of 5.', 'crucible').'</p></blockquote>' . $review_response . '</div><hr />';
 
 			}//  foreach ($reviews as $review)
-			$reviews_content .= $this->get_the_aggregate_rating() . '</div><!-- .reviews-list -->';
+			$reviews_content .= $this->get_the_aggregate_rating('reviews-footer') . '</div><!-- .reviews-list -->';
+			// @test param 'reviews-footer' above
+			
+			 
+			
 			
 		}//if else if (count($reviews
 		return array($reviews_content, $total_reviews);
