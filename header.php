@@ -18,8 +18,7 @@ $schema = empty( $smartestthemes_options['st_business_itemtype'] ) ? 'LocalBusin
 <body <?php body_class(); if ( is_front_page() ) { echo ' itemscope itemtype="http://schema.org/'.$schema.'"';} ?>>
 
 <div id="page" class="site">
-<?php
-// do_action( 'crucible_social_buttons' ); // @new @todo here or in footer, decide per theme
+<?php // do_action( 'crucible_social_buttons' ); // @new @todo here or in footer, decide per theme
 ?>
 	<header id="masthead" class="site-header" role="banner">
 	
