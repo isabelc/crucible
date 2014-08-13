@@ -9,6 +9,9 @@
     
     jQuery(".best_in_place").best_in_place();
     
+	/* @test prob do not need these lines.. . . until line 85...
+	
+	*/
     jQuery("#require_fname, #show_fname").click(function(){
         if ( jQuery(this).is(":checked") ) {
             jQuery("#ask_fname").attr('checked','checked');

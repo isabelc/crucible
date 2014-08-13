@@ -65,16 +65,13 @@ class SMARTESTReviewsBusiness {
         $home_domain = $home_domain['scheme'] . "://" . $home_domain['host'] . '/';
         $default_options = array(
             'ask_custom' => array(),
-            'ask_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0),
             'dbversion' => 0,
             'field_custom' => array(),
             'goto_leave_text' => __('Click here to submit your review.', 'crucible'),
             'goto_show_button' => 1,
             'leave_text' => __('Submit your review', 'crucible'),
             'require_custom' => array(),
-            'require_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0),
             'show_custom' => array(),
-            'show_fields' => array('fname' => 1, 'femail' => 0, 'fwebsite' => 0, 'ftitle' => 1),
 			'submit_button_text' => __('Submit your review', 'crucible'),
             'title_tag' => 'h2'
         );
@@ -470,7 +467,11 @@ class SMARTESTReviewsBusiness {
                 }
                 
                 $hide_name = '';
-                if ($this->options['show_fields']['fname'] == 0) {
+				
+				
+				
+				
+                if (get_option('st_reviews_show_fields_show_fname') == 'false') {
                     $review->reviewer_name = __('Anonymous', 'crucible');
                     $hide_name = 'smar_hide';
                 }
@@ -478,17 +479,17 @@ class SMARTESTReviewsBusiness {
                     $review->reviewer_name = __('Anonymous', 'crucible');
                 }
 
-                if ($this->options['show_fields']['fwebsite'] == 1 && $review->reviewer_url != '') {
+                if (get_option('st_reviews_show_fields_show_fwebsite') == 'true' && $review->reviewer_url != '') {
                     $review->review_text .= '<br /><small><a href="' . $review->reviewer_url . '">' . $review->reviewer_url . '</a></small>';
                 }
-                if ($this->options['show_fields']['femail'] == 1 && $review->reviewer_email != '') {
+                if (get_option('st_reviews_show_fields_show_femail') == 'true' && $review->reviewer_email != '') {
                     $review->review_text .= '<br /><small>' . $review->reviewer_email . '</small>';
                 }
-                if ($this->options['show_fields']['ftitle'] == 1 && $review->review_title != '') {
+                if (get_option('st_reviews_show_fields_show_ftitle') == 'true' && $review->review_title != '') {
                     $showtitle = true;
                 }
                 
-                if ($show_morelink != '') {// @test what this links to??? prob need to use in conjunction with the trim text parameter. 
+                if ($show_morelink != '') {// @test what this links to??? prob need to use in conjunction with the trim text parameter.  or @todo remove this.
                     $review->review_text .= " <a href='".$this->get_jumplink_for_review($review,1)."'>$show_morelink</a>";
                 }
                 
@@ -585,38 +586,40 @@ class SMARTESTReviewsBusiness {
         for ($i = 0; $i < 15; $i++) {
             $rand_prefixes[] = $this->rand_string(mt_rand(1, 8));
         }
+		
+		/* @test what to do with this/ what is it used for ? */
         if (!isset($this->p->fname)) { $this->p->fname = ''; }
         if (!isset($this->p->femail)) { $this->p->femail = ''; }
         if (!isset($this->p->fwebsite)) { $this->p->fwebsite = ''; }
         if (!isset($this->p->ftitle)) { $this->p->ftitle = ''; }
         if (!isset($this->p->ftext)) { $this->p->ftext = ''; }
 
-        if ($this->options['ask_fields']['fname'] == 1) {
-            if ($this->options['require_fields']['fname'] == 1) {
+        if (get_option('st_reviews_ask_fields_ask_fname') == 'true') {
+            if (get_option('st_reviews_require_fields_require_fname') == 'true') {
                 $req = '*';
             } else {
                 $req = '';
             }
             $fields .= '<tr><td><label for="' . $rand_prefixes[0] . '-fname" class="comment-field">'. __('Name:', 'crucible').' ' . $req . '</label></td><td><input class="text-input" type="text" id="' . $rand_prefixes[0] . '-fname" name="' . $rand_prefixes[0] . '-fname" value="' . $this->p->fname . '" /></td></tr>';
         }
-        if ($this->options['ask_fields']['femail'] == 1) {
-            if ($this->options['require_fields']['femail'] == 1) {
+        if (get_option('st_reviews_ask_fields_ask_femail') == 'true') {
+            if (get_option('st_reviews_require_fields_require_femail') == 'true') {
                 $req = '*';
             } else {
                 $req = '';
             }
             $fields .= '<tr><td><label for="' . $rand_prefixes[1] . '-femail" class="comment-field">'. __('Email:', 'crucible').' ' . $req . '</label></td><td><input class="text-input" type="text" id="' . $rand_prefixes[1] . '-femail" name="' . $rand_prefixes[1] . '-femail" value="' . $this->p->femail . '" /></td></tr>';
         }
-        if ($this->options['ask_fields']['fwebsite'] == 1) {
-            if ($this->options['require_fields']['fwebsite'] == 1) {
+        if (get_option('st_reviews_ask_fields_ask_fwebsite') == 'true') {
+            if (get_option('st_reviews_require_fields_require_fwebsite') == 'true') {
                 $req = '*';
             } else {
                 $req = '';
             }
             $fields .= '<tr><td><label for="' . $rand_prefixes[2] . '-fwebsite" class="comment-field">'. __('Website:', 'crucible').' ' . $req . '</label></td><td><input class="text-input" type="text" id="' . $rand_prefixes[2] . '-fwebsite" name="' . $rand_prefixes[2] . '-fwebsite" value="' . $this->p->fwebsite . '" /></td></tr>';
         }
-        if ($this->options['ask_fields']['ftitle'] == 1) {
-            if ($this->options['require_fields']['ftitle'] == 1) {
+        if (get_option('st_reviews_ask_fields_ask_ftitle') == 'true') {
+            if (get_option('st_reviews_require_fields_require_ftitle') == 'true') {
                 $req = '*';
             } else {
                 $req = '';
@@ -648,18 +651,35 @@ class SMARTESTReviewsBusiness {
 
         $some_required = '';
         
-        foreach ($this->options['require_fields'] as $col => $val) {
-            if ($val == 1) {
+		
+		// @test this logic to add the reqired fields to the front end form.
+		
+		$rn = get_option('st_reviews_require_fields_require_fname');
+		$re = get_option('st_reviews_require_fields_require_femail');
+		$rw = get_option('st_reviews_require_fields_require_fwebsite');
+		$rt = get_option('st_reviews_require_fields_require_ftitle');
+		
+		$require_fields = array(
+			'st_reviews_require_fields_require_fname'		=> $rn,
+			'st_reviews_require_fields_require_femail'		=> $re,
+			'st_reviews_require_fields_require_fwebsite'	=> $rw,
+			'st_reviews_require_fields_require_ftitle'		=> $rt);// @test
+		
+
+		
+		
+        foreach ($require_fields as $col => $val) {
+            if ($val == 'true') {
                 $col = str_replace("'","\'",$col);
                 $req_js .= "smar_req.push('$col');";
-                $some_required = '<small>* '. __('Required Field', 'crucible').'</small>';
+                $some_required = '<small>* '. __('Required', 'crucible').'</small>';
             }
         }
 
         foreach ($this->options['require_custom'] as $i => $val) {
             if ($val == 1) {
                 $req_js .= "smar_req.push('custom_$i');";
-                $some_required = '<small>* '. __('Required Field', 'crucible').'</small>';
+                $some_required = '<small>* '. __('Required', 'crucible').'</small>';
             }
         }
         
@@ -755,10 +775,30 @@ class SMARTESTReviewsBusiness {
         /* begin - server-side validation */
         $errors = '';
 
-        foreach ($this->options['require_fields'] as $col => $val) {
-            if ($val == 1) {
+		$rn = get_option('st_reviews_require_fields_require_fname');
+		$re = get_option('st_reviews_require_fields_require_femail');
+		$rw = get_option('st_reviews_require_fields_require_fwebsite');
+		$rt = get_option('st_reviews_require_fields_require_ftitle');
+		
+		$require_fields = array(
+			'st_reviews_require_fields_require_fname'		=> $rn,
+			'st_reviews_require_fields_require_femail'		=> $re,
+			'st_reviews_require_fields_require_fwebsite'	=> $rw,
+			'st_reviews_require_fields_require_ftitle'		=> $rt);// @test
+		
+		
+        foreach ($require_fields as $col => $val) {
+            if ($val == 'true') {
                 if (!isset($this->p->$col) || $this->p->$col == '') {
-                    $nice_name = ucfirst(substr($col, 1));
+				
+				// @test
+
+					$extract_nice_name = explode('_', $col);
+					$nice_name_pre = end($extract_nice_name);
+				
+				// @test end
+				
+                    $nice_name = ucfirst(substr($nice_name_pre, 1));// @test what is $col here? will it look good in the msg?
                     $errors .= __('You must include your', 'crucible').' ' . $nice_name . '.<br />';
                 }
             }
@@ -780,19 +820,16 @@ class SMARTESTReviewsBusiness {
             }
         }
         
+		
+	
+
         /* only do regex matching if not blank */
-        if ($this->p->femail != '' && $this->options['ask_fields']['femail'] == 1) {
+        if ($this->p->femail != '' && get_option('st_reviews_ask_fields_ask_femail') == 'true') {
             if (!preg_match('/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/', $this->p->femail)) {
                 $errors .= __('The email address provided is not valid.', 'crucible').'<br />';
             }
         }
 
-        /* only do regex matching if not blank */
-        if ($this->p->fwebsite != '' && $this->options['ask_fields']['fwebsite'] == 1) {
-            if (!preg_match('/^\S+:\/\/\S+\.\S+.+$/', $this->p->fwebsite)) {
-                $errors .= __('The website provided is not valid. Be sure to include http://', 'crucible').'<br />';
-            }
-        }
 
         if (intval($this->p->fconfirm1) == 1 || intval($this->p->fconfirm3) == 1) {
             $errors .= __('You have triggered our anti-spam system. Please try again. Code 001.', 'crucible').'<br />';
@@ -948,7 +985,7 @@ class SMARTESTReviewsBusiness {
 					'code2' => __('Code 2.', 'crucible'),
 					'code3' => __('Code 3.', 'crucible'),
 					'rating' => __('Please select a star rating from 1 to 5.', 'crucible'),
-					'website' => __('The website provided is not valid. Be sure to include', 'crucible')
+					'website' => __('You must include a website.', 'crucible')
 					);
 				wp_localize_script( 'smartest-reviews', 'smartlocal', $loc);
 			}
@@ -1055,6 +1092,7 @@ class SMARTESTReviewsBusiness {
 
 	public function enqueue_admin_stuff() {
 		$pluginurl = $this->getpluginurl();
+		// @todo see if need to check if we are on both of these pages...
 		if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' || $this->p->page == 'smar_options' ) ) {
 			wp_enqueue_script('smartest-reviews-admin',$pluginurl.'reviews-admin.js',array('jquery'));
 			wp_enqueue_style('smartest-reviews-admin',$pluginurl.'reviews-admin.css');
@@ -1068,18 +1106,7 @@ class SMARTESTReviewsBusiness {
            check_admin_referer('smar_options-options'); /* nonce check */
             $updated_options = $this->options;
             /* reset these to 0 so we can grab the settings below */
-            $updated_options['ask_fields']['fname'] = 0;
-            $updated_options['ask_fields']['femail'] = 0;
-            $updated_options['ask_fields']['fwebsite'] = 0;
-            $updated_options['ask_fields']['ftitle'] = 0;
-            $updated_options['require_fields']['fname'] = 0;
-            $updated_options['require_fields']['femail'] = 0;
-            $updated_options['require_fields']['fwebsite'] = 0;
-            $updated_options['require_fields']['ftitle'] = 0;
-            $updated_options['show_fields']['fname'] = 0;
-            $updated_options['show_fields']['femail'] = 0;
-            $updated_options['show_fields']['fwebsite'] = 0;
-            $updated_options['show_fields']['ftitle'] = 0;
+
             $updated_options['ask_custom'] = array();
             $updated_options['field_custom'] = array();
             $updated_options['require_custom'] = array();
@@ -1100,11 +1127,8 @@ class SMARTESTReviewsBusiness {
                         case 'show_custom':
                             foreach ($val as $i => $v) { $updated_options[$col][$i] = 1; } /* checkbox array with ints */
                             break;
-                        case 'ask_fields':
-                        case 'require_fields':
-                        case 'show_fields':
-                            foreach ($val as $v) { $updated_options[$col]["$v"] = 1; } /* checkbox array with names */
-                            break;
+                        
+						
                         default:
                             $updated_options[$col] = $val; /* a non-array normal field */
                             break;
@@ -1133,21 +1157,14 @@ class SMARTESTReviewsBusiness {
         if ($this->options['goto_show_button']) {
             $goto_show_button_checked = 'checked';
         }
+
+		// @test remove next 3
         $af = array('fname' => '','femail' => '','fwebsite' => '','ftitle' => '');
-        if ($this->options['ask_fields']['fname'] == 1) { $af['fname'] = 'checked'; }
-        if ($this->options['ask_fields']['femail'] == 1) { $af['femail'] = 'checked'; }
-        if ($this->options['ask_fields']['fwebsite'] == 1) { $af['fwebsite'] = 'checked'; }
-        if ($this->options['ask_fields']['ftitle'] == 1) { $af['ftitle'] = 'checked'; }
+
         $rf = array('fname' => '','femail' => '','fwebsite' => '','ftitle' => '');
-        if ($this->options['require_fields']['fname'] == 1) { $rf['fname'] = 'checked'; }
-        if ($this->options['require_fields']['femail'] == 1) { $rf['femail'] = 'checked'; }
-        if ($this->options['require_fields']['fwebsite'] == 1) { $rf['fwebsite'] = 'checked'; }
-        if ($this->options['require_fields']['ftitle'] == 1) { $rf['ftitle'] = 'checked'; }
+
         $sf = array('fname' => '','femail' => '','fwebsite' => '','ftitle' => '');
-        if ($this->options['show_fields']['fname'] == 1) { $sf['fname'] = 'checked'; }
-        if ($this->options['show_fields']['femail'] == 1) { $sf['femail'] = 'checked'; }
-        if ($this->options['show_fields']['fwebsite'] == 1) { $sf['fwebsite'] = 'checked'; }
-        if ($this->options['show_fields']['ftitle'] == 1) { $sf['ftitle'] = 'checked'; }
+
         echo '
         <div class="postbox" style="width:700px;"><h3>'. __('Display Options', 'crucible') .'</h3><div id="smar_ad">
                <form method="post" action=""><div style="background:#eaf2fa;padding:6px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;">
@@ -1170,28 +1187,6 @@ class SMARTESTReviewsBusiness {
                         <br /><br />
                         
 						
-						
-						
-                        <label>'. __('Fields to ask for on review form: ', 'crucible'). '</label>
-                        <input data-what="fname" id="ask_fname" name="ask_fields[]" type="checkbox" '.$af['fname'].' value="fname" />&nbsp;<label for="ask_fname"><small>'. __('Name', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
-                        <input data-what="femail" id="ask_femail" name="ask_fields[]" type="checkbox" '.$af['femail'].' value="femail" />&nbsp;<label for="ask_femail"><small>'. __('Email', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
-                        <input data-what="fwebsite" id="ask_fwebsite" name="ask_fields[]" type="checkbox" '.$af['fwebsite'].' value="fwebsite" />&nbsp;<label for="ask_fwebsite"><small>'. __('Website', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
-                        <input data-what="ftitle" id="ask_ftitle" name="ask_fields[]" type="checkbox" '.$af['ftitle'].' value="ftitle" />&nbsp;<label for="ask_ftitle"><small>'. __('Review Title', 'crucible'). '</small></label>
-                        <br /><br />
-                        <label>'. __('Fields to require on review form: ', 'crucible'). '</label>
-                        <input id="require_fname" name="require_fields[]" type="checkbox" '.$rf['fname'].' value="fname" />&nbsp;<label for="require_fname"><small>'. __('Name', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
-                        <input id="require_femail" name="require_fields[]" type="checkbox" '.$rf['femail'].' value="femail" />&nbsp;<label for="require_femail"><small>'. __('Email', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
-                        <input id="require_fwebsite" name="require_fields[]" type="checkbox" '.$rf['fwebsite'].' value="fwebsite" />&nbsp;<label for="require_fwebsite"><small>'. __('Website', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
-                        <input id="require_ftitle" name="require_fields[]" type="checkbox" '.$rf['ftitle'].' value="ftitle" />&nbsp;<label for="require_ftitle"><small>'. __('Review Title', 'crucible'). '</small></label>
-                        <br /><br />
-                        <label>'. __('Fields to show on each approved review: ', 'crucible'). '</label>
-                        <input id="show_fname" name="show_fields[]" type="checkbox" '.$sf['fname'].' value="fname" />&nbsp;<label for="show_fname"><small>'. __('Name', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
-                        <input id="show_femail" name="show_fields[]" type="checkbox" '.$sf['femail'].' value="femail" />&nbsp;<label for="show_femail"><small>'. __('Email', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
-                        <input id="show_fwebsite" name="show_fields[]" type="checkbox" '.$sf['fwebsite'].' value="fwebsite" />&nbsp;<label for="show_fwebsite"><small>'. __('Website', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
-                        <input id="show_ftitle" name="show_fields[]" type="checkbox" '.$sf['ftitle'].' value="ftitle" />&nbsp;<label for="show_ftitle"><small>'. __('Review Title', 'crucible'). '</small></label>
-                        <br />
-                        <small>'. __('It is usually NOT a good idea to show email addresses publicly.', 'crucible'). '</small>
-                        <br /><br />
                         <label>'. __('Custom fields on review form: ', 'crucible'). '</label>(<small>'. __('You can type in the names of any additional fields you would like here.', 'crucible'). '</small>)
                         <div style="font-size:10px;padding-top:6px;">
                         ';

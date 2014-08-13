@@ -298,7 +298,7 @@ add_filter( 'post_class', 'crucible_remove_hentry_class' );
 /** @test remove this function
  * Log my own debug messages
  */
-function isa_log_my_messages( $message ) {
+function isa_log( $message ) {
     if (WP_DEBUG === true) {
         if ( is_array( $message) || is_object( $message ) ) {
             error_log( print_r( $message, true ) );

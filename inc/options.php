@@ -461,27 +461,70 @@ $options[] = array(
     
 
 $options[] = array(
-	'name' => __('Location of Review Form','crucible'),
-	'desc' => '',
-	'id' => $shortname.'_reviews_form_location',
-	'type' => 'select2',
-	'std' => 'above',
+	'name'	=> __('Location of Review Form','crucible'),
+	'desc'	=> '',
+	'id'	=> $shortname.'_reviews_form_location',
+	'type'	=> 'select2',
+	'std'	=> 'above',
 	'options' => array(
 			'above' => __('Above Reviews', 'crucible'),
 			'below' => __('Below Reviews', 'crucible')));// @test
 
 
 
+			
+			
+	// @test case multicheck
+	
+	
+$options[] = array(
+	'name'	=> __('Fields to ask for on Review Form','crucible'),
+	'desc'	=> '',
+	'id'	=> $shortname.'_reviews_ask_fields',// @test
+	'type'	=> 'multicheck',
+	'std'	=> array(
+			'ask_fname',
+			'ask_femail'),// @test
+	'options' => array(
+			'ask_fname'		=> __('Name', 'crucible'),
+			'ask_femail'	=> __('Email', 'crucible'),
+			'ask_fwebsite'	=> __('Website', 'crucible'),
+			'ask_ftitle' 	=> __('Review Title', 'crucible'))
+			);// @test	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
+$options[] = array(
+	'name' => __('Fields to require on Review Form','crucible'),
+	'desc' => '',
+	'id' => $shortname.'_reviews_require_fields',// @test
+	'type' => 'multicheck',
+	'std' => array('require_fname'),// @test
+	'options' => array(
+			'require_fname'		=> __('Name', 'crucible'),
+			'require_femail'	=> __('Email', 'crucible'),
+			'require_fwebsite'	=> __('Website', 'crucible'),
+			'require_ftitle' 	=> __('Review Title', 'crucible'))
+			);// @test	
+		
+
+		
+$options[] = array(
+	'name' => __('Fields to show on each approved review','crucible'),
+	'desc' => __('It is usually NOT a good idea to show email addresses publicly.', 'crucible'),// @test maybe leave this out
+	'id' => $shortname.'_reviews_show_fields',// @test
+	'type' => 'multicheck',
+	'std' => array('show_fname'),// @test
+	'options' => array(
+			'show_fname'	=> __('Name', 'crucible'),
+			'show_femail'	=> __('Email', 'crucible'),
+			'show_fwebsite'	=> __('Website', 'crucible'),
+			'show_ftitle' 	=> __('Review Title', 'crucible'))
+			);// @test	
+
+
+			
+
 	
 /* Scripts */
 $options[] = array(

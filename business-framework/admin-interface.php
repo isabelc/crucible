@@ -784,24 +784,44 @@ function smartestthemes_machine($options) {
 			
 			foreach ($value['options'] as $key => $option) {
 											 
-			$smartestthemes_key = $value['id'] . '_' . $key;
-			$saved_std = get_option($smartestthemes_key);
-					
-			if(!empty($saved_std)) 
-			{ 
-				  if($saved_std == 'true'){
-					 $checked = 'checked="checked"';  
-				  } 
-				  else{
-					  $checked = '';     
-				  }    
-			} 
-			elseif( $std == $key) {
-			   $checked = 'checked="checked"';
+				$smartestthemes_key = $value['id'] . '_' . $key;
+				$saved_std = get_option($smartestthemes_key);
+						
+				if(!empty($saved_std)) { 
+					  if($saved_std == 'true'){
+						 $checked = 'checked="checked"';  
+					  } 
+					  else{
+						  $checked = '';     
+					  }
+				}
+				elseif( $std == $key) {
+				   $checked = 'checked="checked"';
+				}
+				else {
+					$checked = '';
+				}
+				 
+				
+				
+				$output .= '<input type="checkbox" class="checkbox smartestthemes-input" name="'. $smartestthemes_key .'" id="'. $smartestthemes_key .'" value="true" '. $checked .' /><label for="'. $smartestthemes_key .'">'. $option .'</label><br />';
+				
+				
+/* @test below is my custom, but did not work to save my options, so I will try the default way .
+
+				
+			if(($pos = strpos($key, '_')) !== false){
+			   $extract_data = substr($key, $pos + 1);
+			} else {
+				$extract_data = $key;
 			}
-			else {
-				$checked = '';                                                                                    }
-			$output .= '<input type="checkbox" class="checkbox smartestthemes-input" name="'. $smartestthemes_key .'" id="'. $smartestthemes_key .'" value="true" '. $checked .' /><label for="'. $smartestthemes_key .'">'. $option .'</label><br />';
+
+			$output .= '<input data-what="'. $extract_data .'" type="checkbox" class="checkbox smartestthemes-input" name="'. $value['id'] .'" id="' . $key .'" value="true" '. $checked .' /><label for="'. $key .'">'. $option .'</label><br />';// @test
+
+*/
+
+			
+			
 										
 			}
 		break;

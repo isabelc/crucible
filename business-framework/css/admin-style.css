@@ -457,6 +457,9 @@ background-position: -392px 0
 #smartestthemes-container input.checkbox {
 	width: 30px;
 }
+#smartestthemes-container .section-multicheck  input.checkbox {
+    margin: 6px;
+}
 #smartestthemes-container input.smartestthemes-radio {
 	width: 30px;
 }
