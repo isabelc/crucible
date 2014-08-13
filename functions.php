@@ -286,6 +286,15 @@ function crucible_texture_class( $classes ) {
 }
 add_filter('body_class','crucible_texture_class');
 
+/**
+* Remove hentry from post_class
+*/
+function crucible_remove_hentry_class( $classes ) {
+    $classes = array_diff( $classes, array( 'hentry' ) );
+    return $classes;
+}
+add_filter( 'post_class', 'crucible_remove_hentry_class' );
+
 /** @test remove this function
  * Log my own debug messages
  */
