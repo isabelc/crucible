@@ -68,7 +68,6 @@ class SMARTESTReviewsBusiness {
             'ask_fields' => array('fname' => 1, 'femail' => 1, 'fwebsite' => 0, 'ftitle' => 0),
             'dbversion' => 0,
             'field_custom' => array(),
-            'form_location' => 0,
             'goto_leave_text' => __('Click here to submit your review.', 'crucible'),
             'goto_show_button' => 1,
             'leave_text' => __('Submit your review', 'crucible'),
@@ -901,7 +900,9 @@ class SMARTESTReviewsBusiness {
 
 		$reviews_content = '<div id="smar_respond_1">';
        
-		if ($this->options['form_location'] == 0) {
+		global $smartestthemes_options;
+		
+		if ( $smartestthemes_options['st_reviews_form_location'] == 'above' ) { // @test
 			$reviews_content .= $this->show_reviews_form();
 		}
 
@@ -919,7 +920,7 @@ class SMARTESTReviewsBusiness {
         
 		$reviews_content .= $this->pagination($total_reviews);
 
-        if ($this->options['form_location'] == 1) {
+        if ( $smartestthemes_options['st_reviews_form_location'] == 'below' ) { // @test
             $reviews_content .= $this->show_reviews_form();
         }
         $reviews_content .= '</div>';
@@ -1113,7 +1114,7 @@ class SMARTESTReviewsBusiness {
             
             /* prevent E_NOTICE warnings */
 			if (!isset($this->p->goto_show_button)) { $this->p->goto_show_button = 0; }
-			$updated_options['form_location'] = intval($this->p->form_location);
+			
 			$updated_options['goto_show_button'] = intval($this->p->goto_show_button);
 			
 			
@@ -1167,11 +1168,10 @@ class SMARTESTReviewsBusiness {
 					
 					
                         <br /><br />
-                        <label for="form_location">'. __('Location of Review Form: ', 'crucible'). '</label>
-                        <select id="form_location" name="form_location">
-                            <option ';if ($this->options['form_location'] == 0) { echo "selected"; } echo ' value="0">'. __('Above Reviews', 'crucible'). '</option>
-                            <option ';if ($this->options['form_location'] == 1) { echo "selected"; } echo ' value="1">'. __('Below Reviews', 'crucible'). '</option>                     </select>
-                        <br /><br />
+                        
+						
+						
+						
                         <label>'. __('Fields to ask for on review form: ', 'crucible'). '</label>
                         <input data-what="fname" id="ask_fname" name="ask_fields[]" type="checkbox" '.$af['fname'].' value="fname" />&nbsp;<label for="ask_fname"><small>'. __('Name', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;
                         <input data-what="femail" id="ask_femail" name="ask_fields[]" type="checkbox" '.$af['femail'].' value="femail" />&nbsp;<label for="ask_femail"><small>'. __('Email', 'crucible'). '</small></label>&nbsp;&nbsp;&nbsp;

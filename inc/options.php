@@ -448,18 +448,40 @@ $options[] = array(
 	'desc' => __('Check this to add a page to let visitors submit reviews for your approval. Reviews are not public unless you approve them.','crucible'),
 	'id' => $shortname.'_add_reviews',
 	'std' => 'true',
-	'type' => 'checkbox');
+	'type' => 'checkbox');// @test
 	
-// @test	
+// @test every single reviews option
 	
 $options[] = array(
 	'name' => __('Reviews shown per page:', 'crucible'),
 	'desc' => __('','crucible'),
 	'id' => $shortname.'_reviews_per_page',
 	'std' => '10',
-	'type' => 'text');
+	'type' => 'text');// @test
     
 
+$options[] = array(
+	'name' => __('Location of Review Form','crucible'),
+	'desc' => '',
+	'id' => $shortname.'_reviews_form_location',
+	'type' => 'select2',
+	'std' => 'above',
+	'options' => array(
+			'above' => __('Above Reviews', 'crucible'),
+			'below' => __('Below Reviews', 'crucible')));// @test
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 /* Scripts */
 $options[] = array(
