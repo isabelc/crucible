@@ -44,23 +44,18 @@ function valsmarform_2(newid,oldid,err) {
         }
     }
 	
-	// @todo add validation for review title
-    
-	/* @test remove 
-    if (newid === 'fwebsite' && jQuery("#"+oldid).val() !== "") {
-        myval = jQuery("#"+oldid).val();
-        if (/^\S+:\/\/\S+\.\S+.+$/.test(myval) == false) {
-            err.push(smartlocal.website+" http://");
-        }
-    }
-    */
 	/*
 	You must include your
 	*/
 	
 	if (newid === 'fwebsite' && jQuery("#"+oldid).val() == "") {
 		err.push(smartlocal.website);
-    }	
+    }
+	
+	// @test validate review title
+	if (newid === 'ftitle' && jQuery("#"+oldid).val() == "") {
+		err.push(smartlocal.title);
+    }
 	
     if (newid === "ftext" && jQuery("#"+oldid).val().length < 5) {
         err.push(smartlocal.review);

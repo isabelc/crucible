@@ -982,7 +982,8 @@ class SMARTESTReviewsBusiness {
 					'code2' => __('Code 2.', 'crucible'),
 					'code3' => __('Code 3.', 'crucible'),
 					'rating' => __('Please select a star rating from 1 to 5.', 'crucible'),
-					'website' => __('You must include a website.', 'crucible')
+					'website' => __('You must include a website.', 'crucible'),
+					'title' => __('You must include a Review Title.', 'crucible')
 					);
 				wp_localize_script( 'smartest-reviews', 'smartlocal', $loc);
 			}
