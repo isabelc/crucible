@@ -44,15 +44,15 @@ function valsmarform_2(newid,oldid,err) {
         }
     }
 	
-	/*
-	You must include your
-	*/
+
+	// validate required fields @test
 	
 	if (newid === 'fwebsite' && jQuery("#"+oldid).val() == "") {
 		err.push(smartlocal.website);
     }
 	
-	// @test validate review title
+	// @test validate review title. only do this if is required.
+	
 	if (newid === 'ftitle' && jQuery("#"+oldid).val() == "") {
 		err.push(smartlocal.title);
     }

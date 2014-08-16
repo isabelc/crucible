@@ -973,6 +973,7 @@ class SMARTESTReviewsBusiness {
 			if( is_page(get_option('smartestthemes_reviews_page_id'))) {
 				wp_enqueue_style('smartest-reviews');
 		        wp_enqueue_script('smartest-reviews');
+				
 				$loc = array(
 					'hidebutton' => __('Click here to hide form', 'crucible'),
 					'email' => __('The email address provided is not valid.', 'crucible'),
@@ -983,7 +984,12 @@ class SMARTESTReviewsBusiness {
 					'code3' => __('Code 3.', 'crucible'),
 					'rating' => __('Please select a star rating from 1 to 5.', 'crucible'),
 					'website' => __('You must include a website.', 'crucible'),
-					'title' => __('You must include a Review Title.', 'crucible')
+					'title' => __('You must include a Review Title.', 'crucible'),
+					'req_name' => get_option('st_reviews_require_fields_require_fname'),
+					'req_email' => get_option('st_reviews_require_fields_require_femail'),
+					'req_website' => get_option('st_reviews_require_fields_require_fwebsite'),
+					'req_title' => get_option('st_reviews_require_fields_require_ftitle')
+					// @test send which fields are required!!!
 					);
 				wp_localize_script( 'smartest-reviews', 'smartlocal', $loc);
 			}
