@@ -54,9 +54,9 @@ class SMARTESTReviewsBusiness {
     function get_jumplink_for_review($review,$page) {
        $link = get_permalink( get_option('smartestthemes_reviews_page_id') );
         if (strpos($link,'?') === false) {
-            $link = trailingslashit($link) . "?smarp=$page#hreview-$review->id";
+            $link = trailingslashit($link) . "?smarp=$page#review-$review->id";
         } else {
-            $link = $link . "&smarp=$page#hreview-$review->id";
+            $link = $link . "&smarp=$page#review-$review->id";
         }
         return $link;
     }
@@ -154,8 +154,6 @@ class SMARTESTReviewsBusiness {
         }
         if (isset($_COOKIE['smar_status_msg'])) {
 		
-			isa_log( '$_Cookie is set.==========================================' );// @test
-		
             $this->status_msg = $_COOKIE['smar_status_msg'];
             if ( !headers_sent() ) {
                 setcookie('smar_status_msg', '', time() - 3600); /* delete the cookie */
@@ -163,20 +161,16 @@ class SMARTESTReviewsBusiness {
             }
         }
         
-		$GET_P = "submitsmar_$post->ID";// 2test maybe this post id is missing from send form..
+		$GET_P = "submitsmar_$post->ID";
 		
         if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $this->options['submit_button_text'])
         {
-		
-			isa_log( 'We do have a $GET_P. it is : ' . "\r\n" . $GET_P . '================================================= ALSO, WE HAVE $this->p->$GET_P, IT IS: ' . "\r\n" . $this->p->$GET_P );// @test
-			
-			
             $msg = $this->add_review($post->ID);
             $has_error = $msg[0];
             $status_msg = $msg[1];
             $url = get_permalink($post->ID);
             $cookie = array('smar_status_msg' => $status_msg);
-            $this->smar_redirect($url, $cookie);// @new this is prob maybe
+            $this->smar_redirect($url, $cookie);
         }
 	}
 	/**
@@ -200,7 +194,7 @@ class SMARTESTReviewsBusiness {
             return $this->got_aggregate;
         }
         global $wpdb;
-        $pageID = get_option('smartestthemes_reviews_page_id');// @test with new query below, on line 242
+        $pageID = get_option('smartestthemes_reviews_page_id');
         $row = $wpdb->get_results("SELECT COUNT(*) AS `total`,AVG(review_rating) AS `aggregate_rating`,MAX(review_rating) AS `max_rating` FROM `$this->dbtable` WHERE `status`=1");
         /* make sure we have at least one review before continuing below */
         if ($wpdb->num_rows == 0 || $row[0]->total == 0) {
@@ -291,30 +285,27 @@ class SMARTESTReviewsBusiness {
 	* @param string, the location it is called from, accepts 'reviews-footer', or 'footer'
 	* @return string, the HTML for just the aggregate rating with schema.org microdata
 	*/
-	function get_the_aggregate_rating( $location ) {// @test pass a param through here for $location below
+	function get_the_aggregate_rating( $location ) {
 		
 		$this->get_aggregate_reviews();// fills the values for got_aggregate
 		$average_score = number_format($this->got_aggregate["aggregate"], 1);
 		
-		$out = '<br /><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" id="hreview-smar-aggregate">' . __('Average rating:', 'crucible'). ' <span itemprop="ratingValue">' . $average_score . '</span> ' . __('out of', 'crucible'). ' <span itemprop="bestRating">5 </span> '. __('based on', 'crucible').' <span itemprop="ratingCount">' . $this->got_aggregate['total'] . ' </span>' . _n( 'review', 'reviews.', $this->got_aggregate['total'], 'crucible' );
+		$out = '<br /><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="smar-aggregate-rating">' . __('Average rating:', 'crucible'). ' <span itemprop="ratingValue">' . $average_score . '</span> ' . __('out of', 'crucible'). ' <span itemprop="bestRating">5 </span> '. __('based on', 'crucible').' <span itemprop="ratingCount">' . $this->got_aggregate['total'] . ' </span>' . _n( 'review', 'reviews.', $this->got_aggregate['total'], 'crucible' );
 
 		if ( 'reviews-footer' != $location ) {
 			$out .= $this->get_business_schema( $location );
 		}
-
 		$out .= '</span>';
-		
-		// @test the $this->get_business_schema( $location ) above.
-	
 		return $out;
 	}
 	
 	/**
 	* Returns the HTML string for the entire aggregate rating block.
 	*/
-	function aggregate_footer_output() {
-		$out = '<div class="st-reviews-aggregate">';// @test CSS id was smar_respond_1, 
-		$out .= $this->get_the_aggregate_rating( 'footer' );// @test param
+	function aggregate_footer_output( $homefooter = NULL ) {
+		$class = $homefooter ? 'screen-reader-text' : 'st-reviews-aggregate';
+		$out = '<div class="' . $class . '">';
+		$out .= $this->get_the_aggregate_rating( 'footer' );
 		$out .= '</div>';
 		return $out;
 	}
@@ -325,7 +316,7 @@ class SMARTESTReviewsBusiness {
     function homepage_aggregate_footer($content) {
 		/* only if is front page & if home page is static */
 		if ( is_front_page() && (get_option('show_on_front') == 'page')	) {
-			return $content . $this->aggregate_footer_output();
+			return $content . $this->aggregate_footer_output(true);
 		}
 		return $content;
     }
@@ -344,7 +335,6 @@ class SMARTESTReviewsBusiness {
 		return (substr($date, 0, strlen($date) - 2) . ':' . substr($date, -2));
 	}
 
-	// @test removed 2nd param, $reviews_per_page
     function pagination($total_results) {
         global $post;
 
@@ -429,7 +419,7 @@ class SMARTESTReviewsBusiness {
         }
     }
 	
-	/** // @test removed 1st param: $perpage, which is reviews per page
+	/**
 	* The HTML for the entire Reviews list
 	*/
 	function output_reviews_show($hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
@@ -534,10 +524,10 @@ class SMARTESTReviewsBusiness {
 				
 				// @todo replace the iso8601 func
 				
-				$name_block = '' .'<div class="smar_fl smar_rname clear">' .'<abbr title="' . $this->iso8601(strtotime($review->date_time)) . '" itemprop="dateCreated">' . date("M d, Y", strtotime($review->date_time)) . '</abbr>&nbsp;' .'<span class="' . $hide_name . '">'. __('by', 'crucible').'</span>&nbsp;' . '<span class="isa_vcard" id="hreview-smar-reviewer-' . $review->id . '">' . '<span class="' . $hide_name . '" itemprop="author">' . $review->reviewer_name . '</span>' . '</span>' . '<div class="smar_clear"></div>' .
+				$name_block = '' .'<div class="smar_fl smar_rname clear">' .'<abbr title="' . $this->iso8601(strtotime($review->date_time)) . '" itemprop="dateCreated">' . date("M d, Y", strtotime($review->date_time)) . '</abbr>&nbsp;' .'<span class="' . $hide_name . '">'. __('by', 'crucible').'</span>&nbsp;' . '<span class="isa_vcard" id="review-smar-reviewer-' . $review->id . '">' . '<span class="' . $hide_name . '" itemprop="author">' . $review->reviewer_name . '</span>' . '</span>' . '<div class="smar_clear"></div>' .
  $custom_shown . '</div>';
  
-				$reviews_content .= '<div itemprop="review" itemscope itemtype="http://schema.org/Review" id="hreview-' . $review->id . '">';
+				$reviews_content .= '<div itemprop="review" itemscope itemtype="http://schema.org/Review" id="review-' . $review->id . '">';
 			
 				if ( $showtitle ) {
 					$reviews_content .= '<' . $title_tag . ' itemprop="description" class="summary">' . $review->review_title . '</' . $title_tag . '>';
@@ -804,10 +794,10 @@ class SMARTESTReviewsBusiness {
 				$extract_f_name = explode('_', $col);
 				$f_name = end($extract_f_name);
 					
-                if (!isset($this->p->$f_name) || $this->p->$f_name == '') {// @test converted $col to $f_name
+                if (!isset($this->p->$f_name) || $this->p->$f_name == '') {
 				
 					// remove the 1st char, then capitalize the new first char
-                    $nice_name = ucfirst(substr($f_name, 1));// @test what is $col here? will it look good in the msg?
+                    $nice_name = ucfirst(substr($f_name, 1));
                     $errors .= __('You must include your', 'crucible').' ' . $nice_name . '.<br />';
                 }
             }
@@ -958,9 +948,7 @@ class SMARTESTReviewsBusiness {
 		// function output_reviews_show($perpage, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '').
 		
 		
-		$ret_Arr = $this->output_reviews_show();// @test with 2 params
-			// @test removed reviews per page param!!
-		
+		$ret_Arr = $this->output_reviews_show();
         $reviews_content .= $ret_Arr[0];
         $total_reviews = $ret_Arr[1];
         
@@ -1642,13 +1630,13 @@ function admin_options() {
 							
 							
 							
-								// @test hide jumplink if on a search page...
+								// hide jumplink if on a search page...
 								if ($this->p->s == '') {
 									/* not searching */
 								
 									?>[<a target="_blank" href="<?php 
 							
-									echo $this->get_jumplink_for_review($review,$this->page);// @todo get page a diff method. ?>"><?php _e('View Review on Page', 'crucible'); ?></a>]<?php
+									echo $this->get_jumplink_for_review($review,$this->page); ?>"><?php _e('View Review on Page', 'crucible'); ?></a>]<?php
 								}
 							endif; ?>
                           </div>
