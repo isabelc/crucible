@@ -147,22 +147,30 @@ class SMARTESTReviewsBusiness {
     }
 
 	function template_redirect() {
-		/* do this in template_redirect so we can try to redirect cleanly */
         global $post;
         if (!isset($post) || !isset($post->ID)) {
             $post = new stdClass();
             $post->ID = 0;
         }
         if (isset($_COOKIE['smar_status_msg'])) {
+		
+			isa_log( '$_Cookie is set.==========================================' );// @test
+		
             $this->status_msg = $_COOKIE['smar_status_msg'];
             if ( !headers_sent() ) {
                 setcookie('smar_status_msg', '', time() - 3600); /* delete the cookie */
                 unset($_COOKIE['smar_status_msg']);
             }
         }
-        $GET_P = "submitsmar_$post->ID";
+        
+		$GET_P = "submitsmar_$post->ID";// 2test maybe this post id is missing from send form..
+		
         if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $this->options['submit_button_text'])
         {
+		
+			isa_log( 'We do have a $GET_P. it is : ' . "\r\n" . $GET_P . '================================================= ALSO, WE HAVE $this->p->$GET_P, IT IS: ' . "\r\n" . $this->p->$GET_P );// @test
+			
+			
             $msg = $this->add_review($post->ID);
             $has_error = $msg[0];
             $status_msg = $msg[1];
@@ -171,10 +179,12 @@ class SMARTESTReviewsBusiness {
             $this->smar_redirect($url, $cookie);// @new this is prob maybe
         }
 	}
+	/**
+	* Generate a random string
+	*/
     function rand_string($length) {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $str = '';
-
         $size = strlen($chars);
         for ($i = 0; $i < $length; $i++) {
             $str .= $chars[rand(0, $size - 1)];
@@ -670,7 +680,7 @@ class SMARTESTReviewsBusiness {
 		
         foreach ($require_fields as $col => $val) {
             if ($val == 'true') {
-                $col = str_replace("'","\'",$col);
+                $col = str_replace("'","\'",$col);// escape single quotes @test is this needed??
                 $req_js .= "smar_req.push('$col');";
                 $some_required = '<small>* '. __('Required', 'crucible').'</small>';
             }
@@ -786,19 +796,18 @@ class SMARTESTReviewsBusiness {
 			'st_reviews_require_fields_require_fwebsite'	=> $rw,
 			'st_reviews_require_fields_require_ftitle'		=> $rt);// @test
 		
-		
+	
         foreach ($require_fields as $col => $val) {
             if ($val == 'true') {
-                if (!isset($this->p->$col) || $this->p->$col == '') {
+			
+				// extract final section after the last _
+				$extract_f_name = explode('_', $col);
+				$f_name = end($extract_f_name);
+					
+                if (!isset($this->p->$f_name) || $this->p->$f_name == '') {// @test converted $col to $f_name
 				
-				// @test
-
-					$extract_nice_name = explode('_', $col);
-					$nice_name_pre = end($extract_nice_name);
-				
-				// @test end
-				
-                    $nice_name = ucfirst(substr($nice_name_pre, 1));// @test what is $col here? will it look good in the msg?
+					// remove the 1st char, then capitalize the new first char
+                    $nice_name = ucfirst(substr($f_name, 1));// @test what is $col here? will it look good in the msg?
                     $errors .= __('You must include your', 'crucible').' ' . $nice_name . '.<br />';
                 }
             }
