@@ -574,13 +574,20 @@ class SMARTESTReviewsBusiness {
         global $post, $current_user;
         $fields = '';
         $out = '';
-        $req_js = "<script type='text/javascript'>";
+
         if ( isset($_COOKIE['smar_status_msg']) ) {
             $this->status_msg = $_COOKIE['smar_status_msg'];
         }
+		
+		/* @test remove. does it still work?
+		
         if ($this->status_msg != '') {
             $req_js .= "smar_del_cookie('smar_status_msg');";
         }
+		
+		*/
+		
+		
         /* a silly and crazy but effective antispam measure.. bots wont have a clue */
         $rand_prefixes = array();
         for ($i = 0; $i < 15; $i++) {
@@ -652,8 +659,6 @@ class SMARTESTReviewsBusiness {
         $some_required = '';
         
 		
-		// @test this logic to add the reqired fields to the front end form.
-		
 		$rn = get_option('st_reviews_require_fields_require_fname');
 		$re = get_option('st_reviews_require_fields_require_femail');
 		$rw = get_option('st_reviews_require_fields_require_fwebsite');
@@ -667,23 +672,26 @@ class SMARTESTReviewsBusiness {
 		
 
 		
-		
+/* @test remove 		
         foreach ($require_fields as $col => $val) {
             if ($val == 'true') {
                 $col = str_replace("'","\'",$col);// escape single quotes @test is this needed??
-                $req_js .= "smar_req.push('$col');";
+
                 $some_required = '<small>* '. __('Required', 'crucible').'</small>';
             }
         }
+		
 
         foreach ($this->options['require_custom'] as $i => $val) {
             if ($val == 1) {
-                $req_js .= "smar_req.push('custom_$i');";
+                
                 $some_required = '<small>* '. __('Required', 'crucible').'</small>';
             }
         }
+*/
+
         
-        $req_js .= "</script>\n";
+        
         
         if ($this->options['goto_show_button'] == 1) {
             $button_html = '<div class="smar_status_msg">' . $this->status_msg . '</div>'; /* show errors or thank you message here */
@@ -692,14 +700,17 @@ class SMARTESTReviewsBusiness {
         }
 
         /* different output variables make it easier to debug this section */
-        $out .= '<div id="smar_respond_2">' . $req_js . '
-                    <form class="smarcform" id="smar_commentform" method="post" action="javascript:void(0);">
-                        <div id="smar_div_2">
-                            <input type="hidden" id="frating" name="frating" />
-                            <table id="smar_table_2">
-                                <tbody>
-                                    <tr><td colspan="2"><div id="smar_postcomment">' . $this->options["leave_text"] . '</div></td></tr>
-                                    ' . $fields;
+		// @test remove $req_js below if not needed
+//        $out .= '<div id="smar_respond_2">' . $req_js . '
+
+        $out .= '<div id="smar_respond_2">
+				<form class="smarcform" id="smar_commentform" method="post" action="javascript:void(0);">
+					<div id="smar_div_2">
+					<input type="hidden" id="frating" name="frating" />
+					<table id="smar_table_2">
+						<tbody>
+							<tr><td colspan="2"><div id="smar_postcomment">' . $this->options["leave_text"] . '</div></td></tr>
+							' . $fields;
 
         $out2 = '   
             <tr>
@@ -977,7 +988,8 @@ class SMARTESTReviewsBusiness {
 				$loc = array(
 					'hidebutton' => __('Click here to hide form', 'crucible'),
 					'email' => __('The email address provided is not valid.', 'crucible'),
-					'name' => __('You must include your ', 'crucible'),
+					'email_empty' => __('You must include your email. Your email will not be published.', 'crucible'),
+					'name' => __('You must include your name.', 'crucible'),
 					'review' => __('You must include a review. Please make reviews at least 4 letters.', 'crucible'),
 					'human' => __('You must confirm that you are human.', 'crucible'),
 					'code2' => __('Code 2.', 'crucible'),
@@ -988,9 +1000,7 @@ class SMARTESTReviewsBusiness {
 					'req_name' => get_option('st_reviews_require_fields_require_fname'),
 					'req_email' => get_option('st_reviews_require_fields_require_femail'),
 					'req_website' => get_option('st_reviews_require_fields_require_fwebsite'),
-					'req_title' => get_option('st_reviews_require_fields_require_ftitle')
-					// @test send which fields are required!!!
-					);
+					'req_title' => get_option('st_reviews_require_fields_require_ftitle'));
 				wp_localize_script( 'smartest-reviews', 'smartlocal', $loc);
 			}
 		}

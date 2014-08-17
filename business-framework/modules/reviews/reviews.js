@@ -1,7 +1,5 @@
 ﻿var smar_old_btn_val = smartlocal.hidebutton;
 
-var smar_req = [];
-
 function smar_strpos (haystack, needle, offset) {
   var i = (haystack+'').indexOf(needle, (offset || 0));
   return i === -1 ? false : i;
@@ -11,52 +9,49 @@ function smar_ucfirst(str) {
     var firstLetter = str.slice(0,1);
     return firstLetter.toUpperCase() + str.substring(1);
 }
-
+/* @test remove  does it still work
 function smar_del_cookie(name) {
     document.cookie = name + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
 }
-
+*/
 function smar_jump_to() {
     jQuery(document).ready(function(){
         window.location.hash="smar_respond_1";
     });
 }
-
+/* validate required fields */
 function valsmarform_2(newid,oldid,err) {
     
     var myval = '';
-    
-    for (var i in smar_req) {
-        var col = smar_req[i];
-        if (newid === col && jQuery("#"+oldid).val() === "") {			
-            var nice_name = jQuery('label[for="'+oldid+'"]').html();
-            nice_name = nice_name.replace(":","");
-            nice_name = nice_name.replace("*","");
-            nice_name = jQuery.trim(nice_name);
-            err.push(smartlocal.name+nice_name+".");
-        }
-    }
-    
-    if (newid === 'femail' && jQuery("#"+oldid).val() !== "") {
-        myval = jQuery("#"+oldid).val();
-        if (/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(myval) == false) {
-            err.push(smartlocal.email);
-        }
-    }
 	
+	if (smartlocal.req_name == 'true') {
+		if (newid === 'fname' && jQuery("#"+oldid).val() == "") {
+			err.push(smartlocal.name);
+		}
+	}
+	if (smartlocal.req_email == 'true') {
+		if (newid === 'femail' && jQuery("#"+oldid).val() !== "") {
+			myval = jQuery("#"+oldid).val();
+			if (/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(myval) == false) {
+				err.push(smartlocal.email);
+			}
+		}
+		
+		if (newid === 'femail' && jQuery("#"+oldid).val() == "") {
+			err.push(smartlocal.email_empty);
+		}
 
-	// validate required fields @test
-	
-	if (newid === 'fwebsite' && jQuery("#"+oldid).val() == "") {
-		err.push(smartlocal.website);
-    }
-	
-	// @test validate review title. only do this if is required.
-	
-	if (newid === 'ftitle' && jQuery("#"+oldid).val() == "") {
-		err.push(smartlocal.title);
-    }
-	
+	}
+	if (smartlocal.req_website == 'true') {
+		if (newid === 'fwebsite' && jQuery("#"+oldid).val() == "") {
+			err.push(smartlocal.website);
+		}
+	}
+	if (smartlocal.req_title == 'true') {
+		if (newid === 'ftitle' && jQuery("#"+oldid).val() == "") {
+			err.push(smartlocal.title);
+		}
+	}
     if (newid === "ftext" && jQuery("#"+oldid).val().length < 5) {
         err.push(smartlocal.review);
     }
