@@ -422,7 +422,7 @@ class SMARTESTReviewsBusiness {
 	/**
 	* The HTML for the entire Reviews list
 	*/
-	function output_reviews_show($hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '') {
+	function output_reviews_show() {
 	
 		global $smartestthemes_options;
 		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' : $smartestthemes_options['st_add_reviews'];
@@ -456,20 +456,11 @@ class SMARTESTReviewsBusiness {
 		} elseif ($add_reviews != 'true') {
 			$reviews_content .= '<p>'.__('Reviews are not available.', 'crucible').'</p>';
 		} else {
-
-			$reviews_content .= $this->get_business_schema( 'reviews' );// @test
+			$reviews_content .= $this->get_business_schema( 'reviews' );
 
 			foreach ($reviews as $review) {
                 
-                if ($snippet_length > 0)
-                {
-                    $review->review_text = wp_trim_words( $review->review_text, $snippet_length, '<a href="'. $this->get_jumplink_for_review($review,1) .'"> ...Read More</a>' ); // @test link
-                }
-                
                 $hide_name = '';
-				
-				
-				
 				
                 if (get_option('st_reviews_show_fields_show_fname') == 'false') {
                     $review->reviewer_name = __('Anonymous', 'crucible');
@@ -489,40 +480,31 @@ class SMARTESTReviewsBusiness {
                     $showtitle = true;
                 }
                 
-                if ($show_morelink != '') {// @test what this links to??? prob need to use in conjunction with the trim text parameter.  or @todo remove this.
-                    $review->review_text .= " <a href='".$this->get_jumplink_for_review($review,1)."'>$show_morelink</a>";
-                }
-                
                 $review->review_text = nl2br($review->review_text);
                 $review_response = '';
                 
-                if ($hide_response == 0)// @todo this is good, document this!
-                {
-                    if (strlen($review->review_response) > 0) {
-                        $review_response = '<p class="response"><strong>'.__('Response:', 'crucible').'</strong> ' . nl2br($review->review_response) . '</p>';
-                    }
-                }
+				if (strlen($review->review_response) > 0) {
+					$review_response = '<p class="response"><strong>'.__('Response:', 'crucible').'</strong> ' . nl2br($review->review_response) . '</p>';
+				}
 
                 $custom_shown = '';
-                if ($hide_custom == 0)
-                {
-                    $custom_fields_unserialized = @unserialize($review->custom_fields);
-                    if (!is_array($custom_fields_unserialized)) {
-                        $custom_fields_unserialized = array();
-                    }
+                
+                
+				$custom_fields_unserialized = @unserialize($review->custom_fields);
+				if (!is_array($custom_fields_unserialized)) {
+					$custom_fields_unserialized = array();
+				}
 					
-                    foreach ($this->options['field_custom'] as $i => $val) {  
-                        if ( isset($custom_fields_unserialized[$val]) ) {
-                            $show = $this->options['show_custom'][$i];							
-                            if ($show == 1 && $custom_fields_unserialized[$val] != '') {
-                                $custom_shown .= "<div class='smar_fl'>" . $val . ': ' . $custom_fields_unserialized[$val] . '&nbsp;&bull;&nbsp;</div>';
-                            }
-                        }
-                    }//foreach ($this->options['field_custom
-                    $custom_shown = preg_replace("%&bull;&nbsp;</div>$%si","</div><div class='smar_clear'></div>",$custom_shown);
-                }// if 0 hide
-				
-				// @todo replace the iso8601 func
+				foreach ($this->options['field_custom'] as $i => $val) {  
+					if ( isset($custom_fields_unserialized[$val]) ) {
+						$show = $this->options['show_custom'][$i];							
+						if ($show == 1 && $custom_fields_unserialized[$val] != '') {
+							$custom_shown .= "<div class='smar_fl'>" . $val . ': ' . $custom_fields_unserialized[$val] . '&nbsp;&bull;&nbsp;</div>';
+						}
+					}
+				}//foreach ($this->options['field_custom
+				$custom_shown = preg_replace("%&bull;&nbsp;</div>$%si","</div><div class='smar_clear'></div>",$custom_shown);
+                
 				
 				$name_block = '' .'<div class="smar_fl smar_rname clear">' .'<abbr title="' . $this->iso8601(strtotime($review->date_time)) . '" itemprop="dateCreated">' . date("M d, Y", strtotime($review->date_time)) . '</abbr>&nbsp;' .'<span class="' . $hide_name . '">'. __('by', 'crucible').'</span>&nbsp;' . '<span class="isa_vcard" id="review-smar-reviewer-' . $review->id . '">' . '<span class="' . $hide_name . '" itemprop="author">' . $review->reviewer_name . '</span>' . '</span>' . '<div class="smar_clear"></div>' .
  $custom_shown . '</div>';
@@ -537,10 +519,6 @@ class SMARTESTReviewsBusiness {
 
 			}//  foreach ($reviews as $review)
 			$reviews_content .= $this->get_the_aggregate_rating('reviews-footer') . '</div><!-- .reviews-list -->';
-			// @test param 'reviews-footer' above
-			
-			 
-			
 			
 		}//if else if (count($reviews
 		return array($reviews_content, $total_reviews);
@@ -953,16 +931,9 @@ class SMARTESTReviewsBusiness {
 			$reviews_content .= $this->show_reviews_form();
 		}
 
-		// @todo all these params are available for use:
-		// consider use $atts and letting them add atts to shortcode, or else just remove these extra functionality and wasted codespace.
-		
-		// function output_reviews_show($perpage, $hide_custom = 0, $hide_response = 0, $snippet_length = 0, $show_morelink = '').
-		
-		
 		$ret_Arr = $this->output_reviews_show();
         $reviews_content .= $ret_Arr[0];
         $total_reviews = $ret_Arr[1];
-        
 		$reviews_content .= $this->pagination($total_reviews);
 
         if ( $smartestthemes_options['st_reviews_form_location'] == 'below' ) { // @test
