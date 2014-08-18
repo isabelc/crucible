@@ -307,3 +307,4 @@ function isa_log( $message ) {
         }
     }
 }
+	

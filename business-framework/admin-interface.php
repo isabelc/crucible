@@ -642,9 +642,9 @@ function smartestthemes_machine($options) {
 		switch ( $value['type'] ) {
 		
 		case 'text':
-	if( !empty($value['std']) ) {
-			$val = esc_attr($value['std']);
-		}
+			if( !empty($value['std']) ) {
+				$val = esc_attr($value['std']);
+			}
 			$std = esc_attr(get_option($value['id']));
 			if ( $std != "") { $val = $std; }
 			$output .= '<input class="smartestthemes-input" name="'. $value['id'] .'" id="'. $value['id'] .'" type="'. $value['type'] .'" value="'. stripslashes($val) .'" />';
@@ -780,8 +780,8 @@ function smartestthemes_machine($options) {
 		break;
 		case "multicheck":
 		
-			$std =  $value['std'];         
-			
+			$std = ! empty($value['std']) ? $value['std'] : '';
+			$multiclass = ! empty($value['class']) ? $value['class'] : '';
 			foreach ($value['options'] as $key => $option) {
 											 
 				$smartestthemes_key = $value['id'] . '_' . $key;
@@ -804,7 +804,11 @@ function smartestthemes_machine($options) {
 				 
 				
 				
-				$output .= '<input type="checkbox" class="checkbox smartestthemes-input" name="'. $smartestthemes_key .'" id="'. $smartestthemes_key .'" value="true" '. $checked .' /><label for="'. $smartestthemes_key .'">'. $option .'</label><br />';
+				$output .= '<input type="checkbox" class="checkbox smartestthemes-input" name="'. $smartestthemes_key .'" id="'. $smartestthemes_key .'" value="true" '. $checked .' /><label for="'. $smartestthemes_key .'">'. $option .'</label>';
+				
+				if ( ! $multiclass ) {
+					$output .= '<br />';
+				}
 				
 				
 /* @test below is my custom, but did not work to save my options, so I will try the default way .

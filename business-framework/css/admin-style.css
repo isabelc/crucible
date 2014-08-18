@@ -330,13 +330,11 @@ background-position: -392px 0
 .group .half {
 	width: 250px;
 	max-width: 250px;
-	height: 140px;
+	height: 90px;
 	float: left;
 	margin: 10px 10px 30px 10px;
 }
-.group .half {
-	height: 90px;
-}
+
 /* @test do i need this one */
 #smartestthemes-container #content #smartestthemes-option-colors .explain {
 	width: auto;
@@ -359,7 +357,6 @@ background-position: -392px 0
 	margin-bottom: 30px;
 }
 #smartestthemes-container #content .section h3.heading {
-	font-family: ;
 	margin: 10px 0;
 	padding: 7px 0;
 	border-bottom: 1px solid #e7e7e7;
@@ -409,6 +406,31 @@ background-position: -392px 0
 	border: 1px solid #d4eeaa;
 	color: #424242;
 }
+
+
+#smartestthemes-container #content .plain-title .controls,
+#smartestthemes-container #content .intro .controls {
+	font-family: "Lucida Grande",Sans-serif;
+	margin: 10px 0;
+	padding: 7px 0 0;
+	background: transparent;
+	border:0;
+	color: #222;
+	font-size: 1.3em;
+}
+#smartestthemes-container #content .intro .controls {
+	font-family: "Open Sans",sans-serif;
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+}
+#smartestthemes-container #content .plain-title {
+	border-bottom: 1px solid #e7e7e7;
+	font-weight: 600;
+}
+
+
+
 #smartestthemes-container #content .section-info .controls small {
 	font-size: 12px;
 }
@@ -448,9 +470,30 @@ background-position: -392px 0
 #smartestthemes-container input[type=text] {
 	width: 330px;
 }
-#smartestthemes-container .half input[type=text] {
+#smartestthemes-container .half input[type=text],
+#smartestthemes-container .half-multi input[type=text] {
 	width: 210px;
 }
+#smartestthemes-container .half-multi .controls:before {
+	content: 'Field Name:';
+}
+#smartestthemes-container .half-multi,
+#smartestthemes-container .multi {
+	width: auto;
+	display: inline;
+}
+
+#smartestthemes-container #content .half-multi .controls {
+    width: 295px;
+}
+
+#smartestthemes-container #content .multi .controls {
+    width: 235px;
+}
+
+.half-multi .clear{clear:none;}
+
+
 #smartestthemes-container input.smartestthemes-input-calendar {
 	width: 320px;
 }

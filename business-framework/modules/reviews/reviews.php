@@ -64,14 +64,11 @@ class SMARTESTReviewsBusiness {
         $home_domain = @parse_url(get_home_url());
         $home_domain = $home_domain['scheme'] . "://" . $home_domain['host'] . '/';
         $default_options = array(
-            'ask_custom' => array(),
             'dbversion' => 0,
             'field_custom' => array(),
             'goto_leave_text' => __('Click here to submit your review.', 'crucible'),
             'goto_show_button' => 1,
             'leave_text' => __('Submit your review', 'crucible'),
-            'require_custom' => array(),
-            'show_custom' => array(),
 			'submit_button_text' => __('Submit your review', 'crucible'),
             'title_tag' => 'h2'
         );
@@ -249,7 +246,7 @@ class SMARTESTReviewsBusiness {
 	
 	/**
 	* Returns the HTML string for the business schema, address, and phone with microdata for the aggregate rating.
-	* @param, string, the location it is called from, accepts 'reviews' or 'footer' @test
+	* @param, string, the location it is called from, accepts 'reviews' or 'footer'
 	*/
 	public function get_business_schema( $location ) {
 	
@@ -495,19 +492,17 @@ class SMARTESTReviewsBusiness {
 					$custom_fields_unserialized = array();
 				}
 					
-				foreach ($this->options['field_custom'] as $i => $val) {  
-					if ( isset($custom_fields_unserialized[$val]) ) {
-						$show = $this->options['show_custom'][$i];							
-						if ($show == 1 && $custom_fields_unserialized[$val] != '') {
-							$custom_shown .= "<div class='smar_fl'>" . $val . ': ' . $custom_fields_unserialized[$val] . '&nbsp;&bull;&nbsp;</div>';
+				for ($i = 0; $i < 6; $i++) {
+					if ( isset($custom_fields_unserialized[$i]) ) {
+					
+						// if show is checked
+						if ( get_option('st_reviews_custom' . $i . '_show') == 'true' && $custom_fields_unserialized[$i] != '') {
+							$custom_shown .= '<div class="st-reviews-custom-field-' . $i . '"><span class="reviews-custom-label">' . $smartestthemes_options['st_reviews_custom_field_' . $i] . ': </span> <span class="reviews-custom-vlue"> ' . $custom_fields_unserialized[$i] . ' </span></div>';
 						}
 					}
-				}//foreach ($this->options['field_custom
-				$custom_shown = preg_replace("%&bull;&nbsp;</div>$%si","</div><div class='smar_clear'></div>",$custom_shown);
-                
 				
-				$name_block = '' .'<div class="smar_fl smar_rname clear">' .'<abbr title="' . $this->iso8601(strtotime($review->date_time)) . '" itemprop="dateCreated">' . date("M d, Y", strtotime($review->date_time)) . '</abbr>&nbsp;' .'<span class="' . $hide_name . '">'. __('by', 'crucible').'</span>&nbsp;' . '<span class="isa_vcard" id="review-smar-reviewer-' . $review->id . '">' . '<span class="' . $hide_name . '" itemprop="author">' . $review->reviewer_name . '</span>' . '</span>' . '<div class="smar_clear"></div>' .
- $custom_shown . '</div>';
+				}
+				$name_block = '' .'<div class="smar_fl smar_rname clear">' .'<abbr title="' . $this->iso8601(strtotime($review->date_time)) . '" itemprop="dateCreated">' . date("M d, Y", strtotime($review->date_time)) . '</abbr>&nbsp;' .'<span class="' . $hide_name . '">'. __('by', 'crucible').'</span>&nbsp;' . '<span class="isa_vcard" id="review-smar-reviewer-' . $review->id . '">' . '<span class="' . $hide_name . '" itemprop="author">' . $review->reviewer_name . '</span>' . '</span>' . '<div class="smar_clear"></div>' . $custom_shown . '</div>';
  
 				$reviews_content .= '<div itemprop="review" itemscope itemtype="http://schema.org/Review" id="review-' . $review->id . '">';
 			
@@ -549,30 +544,26 @@ class SMARTESTReviewsBusiness {
     }
 
     function show_reviews_form() {
-        global $post, $current_user;
+		// @test do i need current_user here?
+        global $post, $current_user, $smartestthemes_options;
         $fields = '';
         $out = '';
+		$req_js = '';
 
         if ( isset($_COOKIE['smar_status_msg']) ) {
             $this->status_msg = $_COOKIE['smar_status_msg'];
         }
 		
-		/* @test remove. does it still work?
-		
         if ($this->status_msg != '') {
-            $req_js .= "smar_del_cookie('smar_status_msg');";
+            $req_js .= "<script type='text/javascript'>smar_del_cookie('smar_status_msg');</script>";
         }
-		
-		*/
-		
-		
+
         /* a silly and crazy but effective antispam measure.. bots wont have a clue */
         $rand_prefixes = array();
         for ($i = 0; $i < 15; $i++) {
             $rand_prefixes[] = $this->rand_string(mt_rand(1, 8));
         }
 		
-		/* @test what to do with this/ what is it used for ? */
         if (!isset($this->p->fname)) { $this->p->fname = ''; }
         if (!isset($this->p->femail)) { $this->p->femail = ''; }
         if (!isset($this->p->fwebsite)) { $this->p->fwebsite = ''; }
@@ -612,28 +603,36 @@ class SMARTESTReviewsBusiness {
             $fields .= '<tr><td><label for="' . $rand_prefixes[3] . '-ftitle" class="comment-field">'. __('Review Title:', 'crucible').' ' . $req . '</label></td><td><input class="text-input" type="text" id="' . $rand_prefixes[3] . '-ftitle" name="' . $rand_prefixes[3] . '-ftitle" maxlength="150" value="' . $this->p->ftitle . '" /></td></tr>';
         }
 
-        $custom_fields = array(); /* used for insert as well */
-        $custom_count = count($this->options['field_custom']); /* used for insert as well */
-        for ($i = 0; $i < $custom_count; $i++) {
-            $custom_fields[$i] = $this->options['field_custom'][$i];
+		
+		for ($i = 0; $i < 6; $i++) {
+			
+			// for each of the 6, if ask is checked
+			if (get_option('st_reviews_custom' . $i . '_ask') == 'true') {
+			
+				$custom_i = "custom_$i";
+				if (!isset($this->p->$custom_i)) {
+					$this->p->$custom_i = '';
+				}
+			
+				if (get_option('st_reviews_custom' . $i . '_require') == 'true') {
+					$req = '*';
+				} else {
+					$req = '';
+				}
+				
+				// get the field label
+				$field_label = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : $smartestthemes_options['st_reviews_custom_field_' . $i];	// @test
+
+					
+				$fields .= '<tr><td><label for="custom_' . $i . '" class="comment-field">' . $field_label . ': ' . $req . '</label></td><td><input class="text-input" type="text" id="custom_' . $i . '" name="custom_' . $i . '" maxlength="150" value="' . $this->p->$custom_i . '" /></td></tr>';
+			
+			
+			}
+			
         }
 
-        foreach ($this->options['ask_custom'] as $i => $val) {
-            if ( isset($this->options['ask_custom'][$i]) ) {
-                if ($val == 1) {
-                    if ($this->options['require_custom'][$i] == 1) {
-                        $req = '*';
-                    } else {
-                        $req = '';
-                    }
 
-                    $custom_i = "custom_$i";
-                    if (!isset($this->p->$custom_i)) { $this->p->$custom_i = ''; }
-                    $fields .= '<tr><td><label for="custom_' . $i . '" class="comment-field">' . $custom_fields[$i] . ': ' . $req . '</label></td><td><input class="text-input" type="text" id="custom_' . $i . '" name="custom_' . $i . '" maxlength="150" value="' . $this->p->$custom_i . '" /></td></tr>';
-                }
-            } 
-        }
-
+		/* @test do i need this section? */
         $some_required = '';
         
 		
@@ -650,27 +649,7 @@ class SMARTESTReviewsBusiness {
 		
 
 		
-/* @test remove 		
-        foreach ($require_fields as $col => $val) {
-            if ($val == 'true') {
-                $col = str_replace("'","\'",$col);// escape single quotes @test is this needed??
-
-                $some_required = '<small>* '. __('Required', 'crucible').'</small>';
-            }
-        }
-		
-
-        foreach ($this->options['require_custom'] as $i => $val) {
-            if ($val == 1) {
-                
-                $some_required = '<small>* '. __('Required', 'crucible').'</small>';
-            }
-        }
-*/
-
-        
-        
-        
+       
         if ($this->options['goto_show_button'] == 1) {
             $button_html = '<div class="smar_status_msg">' . $this->status_msg . '</div>'; /* show errors or thank you message here */
             $button_html .= '<p><a id="smar_button_1" href="javascript:void(0);">' . $this->options['goto_leave_text'] . '</a></p>';
@@ -678,11 +657,15 @@ class SMARTESTReviewsBusiness {
         }
 
         /* different output variables make it easier to debug this section */
-		// @test remove $req_js below if not needed
-//        $out .= '<div id="smar_respond_2">' . $req_js . '
 
-        $out .= '<div id="smar_respond_2">
-				<form class="smarcform" id="smar_commentform" method="post" action="javascript:void(0);">
+        $out .= '<div id="smar_respond_2">';
+		
+		if ( $req_js ) {
+			$out .= $req_js;
+		}
+		
+		// is class smarcform needed on form @test
+		$out .= '<form class="smarcform" id="st-reviews-form" method="post" action="javascript:void(0);">
 					<div id="smar_div_2">
 					<input type="hidden" id="frating" name="frating" />
 					<table id="smar_table_2">
@@ -721,8 +704,11 @@ class SMARTESTReviewsBusiness {
         return $out . $out2 . $out3 . $out4;
     }
 
+	/* insert reviews into db and send mail notification to admin
+	* @test is param sent properly?
+	*/
     function add_review($pageID) {
-        global $wpdb;
+        global $wpdb,$smartestthemes_options;
 
         /* begin - some antispam magic */
         $this->newp = new stdClass();
@@ -792,26 +778,20 @@ class SMARTESTReviewsBusiness {
             }
         }
 
-        $custom_fields = array(); /* used for insert as well */
-        $custom_count = count($this->options['field_custom']); /* used for insert as well */
-        for ($i = 0; $i < $custom_count; $i++) {
-            $custom_fields[$i] = $this->options['field_custom'][$i];
-        }
-
-        foreach ($this->options['require_custom'] as $i => $val) {
-            if ($val == 1) {
-                $custom_i = "custom_$i";
-                if (!isset($this->p->$custom_i) || $this->p->$custom_i == '') {
-                    $nice_name = $custom_fields[$i];
-                    $errors .= __('You must include your', 'crucible').' ' . $nice_name . '.<br />';
-                }
-            }
-        }
-        
+		for ($i = 0; $i < 6; $i++) {
 		
-	
+			if (get_option('st_reviews_custom' . $i . '_require') == 'true') {
+				$custom_i = "custom_$i";
+				if (!isset($this->p->$custom_i) || $this->p->$custom_i == '') {
+					// get field name for error msg
+					$nice_name = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : stripslashes(esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]));// @test slashes
+					$errors .= __('You must complete "', 'crucible'). ' ' . $nice_name . '".<br />';
+				}
+			}
+            
+		}
 
-        /* only do regex matching if not blank */
+		/* only do regex matching if not blank */
         if ($this->p->femail != '' && get_option('st_reviews_ask_fields_ask_femail') == 'true') {
             if (!preg_match('/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/', $this->p->femail)) {
                 $errors .= __('The email address provided is not valid.', 'crucible').'<br />';
@@ -835,15 +815,25 @@ class SMARTESTReviewsBusiness {
             $errors .= __('You must include a review. Please make reviews at least 5 letters.', 'crucible').'<br />';
         }
 
-        /* returns true for errors */
-        if ($errors) {
-            return array(true, "<div>$errors</div>");
-        }
-        /* end - server-side validation */
+		/* returns true for errors */
+		if ($errors) {
+			return array(true, "<div>$errors</div>");
+		}
+		/* end - server-side validation */
 
-        $custom_insert = array();
+		/***************************************************
+		
+			@todo my new $custom_insert array...
+		
+		
+			this is the old way....
+			
+			
+		**************************************************
+		
+		$custom_insert = array();
 
-		 $this->options['ask_custom'] = array(0, 1, 2, 3, 4, 5);
+		$this->options['ask_custom'] = array(0, 1, 2, 3, 4, 5);
 		
         for ($i = 0; $i < $custom_count; $i++) {		
             if ($this->options['ask_custom'][$i] == 1) {
@@ -855,13 +845,32 @@ class SMARTESTReviewsBusiness {
             }
         }
         $custom_insert = serialize($custom_insert);
+		
+		*/
+		
+		$custom_insert = array();
+		for ($i = 0; $i < 6; $i++) {
+		
+			// for each of the 6, if ask is checked
+			
+			if (get_option('st_reviews_custom' . $i . '_ask') == 'true') {
+			
+				// @test remove $name = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]);// @test
+
+                $custom_i = "custom_$i";				
+                if ( isset($this->p->$custom_i) ) {
+                    $custom_insert[$i] = $this->p->$custom_i;// @test
+                }
+			
+			}
+		}
+		$custom_insert = serialize($custom_insert);
         $query = $wpdb->prepare("INSERT INTO `$this->dbtable` 
                 (`date_time`, `reviewer_name`, `reviewer_email`, `reviewer_ip`, `review_title`, `review_text`, `status`, `review_rating`, `reviewer_url`, `custom_fields`, `page_id`) 
                 VALUES (%s, %s, %s, %s, %s, %s, %d, %d, %s, %s, %d)", $date_time, $this->p->fname, $this->p->femail, $ip, $this->p->ftitle, $this->p->ftext, 0, $this->p->frating, $this->p->fwebsite, $custom_insert, $pageID);
 
         $wpdb->query($query);
-		$smartestthemes_options = get_option('smartestthemes_options');
-		$bn = stripslashes_deep($smartestthemes_options['st_business_name']);if(!$bn) {$bn = get_bloginfo('name'); }
+		$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep($smartestthemes_options['st_business_name']);
         $admin_linkpre = get_admin_url().'admin.php?page=smar_view_reviews';
         $admin_link = sprintf(__('Link to admin approval page: %s', 'crucible'), $admin_linkpre);
 		$ac = sprintf(__('A new review has been posted on %1$s\'s website.','crucible'),$bn) . "\n\n" .
@@ -955,23 +964,44 @@ class SMARTESTReviewsBusiness {
 			if( is_page(get_option('smartestthemes_reviews_page_id'))) {
 				wp_enqueue_style('smartest-reviews');
 		        wp_enqueue_script('smartest-reviews');
+				global $smartestthemes_options;
+				
+				$custom_field = array();
+				for ($i = 0; $i < 6; $i++) {
+					$custom_field[] = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : $smartestthemes_options['st_reviews_custom_field_' . $i];
+				}
 				
 				$loc = array(
-					'hidebutton' => __('Click here to hide form', 'crucible'),
-					'email' => __('The email address provided is not valid.', 'crucible'),
-					'email_empty' => __('You must include your email. Your email will not be published.', 'crucible'),
-					'name' => __('You must include your name.', 'crucible'),
-					'review' => __('You must include a review. Please make reviews at least 4 letters.', 'crucible'),
-					'human' => __('You must confirm that you are human.', 'crucible'),
-					'code2' => __('Code 2.', 'crucible'),
-					'code3' => __('Code 3.', 'crucible'),
-					'rating' => __('Please select a star rating from 1 to 5.', 'crucible'),
-					'website' => __('You must include a website.', 'crucible'),
-					'title' => __('You must include a Review Title.', 'crucible'),
-					'req_name' => get_option('st_reviews_require_fields_require_fname'),
-					'req_email' => get_option('st_reviews_require_fields_require_femail'),
-					'req_website' => get_option('st_reviews_require_fields_require_fwebsite'),
-					'req_title' => get_option('st_reviews_require_fields_require_ftitle'));
+					'hidebutton'		=> __('Click here to hide form', 'crucible'),
+					'email'				=> __('The email address provided is not valid.', 'crucible'),
+					'email_empty'		=> __('You must include your email. Your email will not be published.', 'crucible'),
+					'name'				=> __('You must include your name.', 'crucible'),
+					'review'			=> __('You must include a review. Please make reviews at least 4 letters.', 'crucible'),
+					'human'				=> __('You must confirm that you are human.', 'crucible'),
+					'code2'				=> __('Code 2.', 'crucible'),
+					'code3'				=> __('Code 3.', 'crucible'),
+					'rating'			=> __('Please select a star rating from 1 to 5.', 'crucible'),
+					'website'			=> __('You must include a website.', 'crucible'),
+					'title'				=> __('You must include a Review Title.', 'crucible'),
+					'req_name'			=> get_option('st_reviews_require_fields_require_fname'),
+					'req_email'			=> get_option('st_reviews_require_fields_require_femail'),
+					'req_website'		=> get_option('st_reviews_require_fields_require_fwebsite'),
+					'req_title'			=> get_option('st_reviews_require_fields_require_ftitle'),
+					'req_custom0'		=> get_option('st_reviews_custom0_require'),// @test
+					'req_custom0_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[0]),
+					'req_custom1'		=> get_option('st_reviews_custom1_require'),// @test
+					'req_custom1_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[1]),
+					'req_custom2'		=> get_option('st_reviews_custom2_require'),// @test
+					'req_custom2_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[2]),
+					'req_custom3'		=> get_option('st_reviews_custom3_require'),// @test
+					'req_custom3_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[3]),
+					'req_custom4'		=> get_option('st_reviews_custom4_require'),// @test
+					'req_custom4_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[4]),
+					'req_custom5'		=> get_option('st_reviews_custom5_require'),// @tes5
+					'req_custom5_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[5])
+					
+					
+					);
 				wp_localize_script( 'smartest-reviews', 'smartlocal', $loc);
 			}
 		}
@@ -1092,10 +1122,6 @@ class SMARTESTReviewsBusiness {
             $updated_options = $this->options;
             /* reset these to 0 so we can grab the settings below */
 
-            $updated_options['ask_custom'] = array();
-            $updated_options['field_custom'] = array();
-            $updated_options['require_custom'] = array();
-            $updated_options['show_custom'] = array();
 		
             /* quick update of all options needed */
             foreach ($this->p as $col => $val)
@@ -1104,15 +1130,11 @@ class SMARTESTReviewsBusiness {
                 {
                     switch($col)
                     {
-                        case 'field_custom': /* we should always hit field_custom before ask_custom, etc */
-                            foreach ($val as $i => $name) { $updated_options[$col][$i] = ucwords( strtolower( $name ) ); } /* we are so special */
-                            break;
+					/*
+                      
                         case 'ask_custom':
                         case 'require_custom':
-                        case 'show_custom':
-                            foreach ($val as $i => $v) { $updated_options[$col][$i] = 1; } /* checkbox array with ints */
-                            break;
-                        
+					*/
 						
                         default:
                             $updated_options[$col] = $val; /* a non-array normal field */
@@ -1164,33 +1186,8 @@ class SMARTESTReviewsBusiness {
 					
 
        <div style="background:#eaf2fa;padding:6px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;"><legend>'. __('Review Page Settings', 'crucible'). '</legend></div>
-                    <div style="padding:10px;padding-bottom:10px;">
-					
-
-					
-					
-                        <br /><br />
-                        
-						
-                        <label>'. __('Custom fields on review form: ', 'crucible'). '</label>(<small>'. __('You can type in the names of any additional fields you would like here.', 'crucible'). '</small>)
-                        <div style="font-size:10px;padding-top:6px;">
-                        ';
-                        for ($i = 0; $i < 6; $i++) /* 6 custom fields */
-                        {
-                            if ( !isset($this->options['ask_custom'][$i]) ) { $this->options['ask_custom'][$i] = 0; }
-                            if ( !isset($this->options['require_custom'][$i]) ) { $this->options['require_custom'][$i] = 0; }
-                            if ( !isset($this->options['show_custom'][$i]) ) { $this->options['show_custom'][$i] = 0; }
-                            
-                            if ($this->options['ask_custom'][$i] == 1) { $caf = 'checked'; } else { $caf = ''; }
-                            if ($this->options['require_custom'][$i] == 1) { $crf = 'checked'; } else { $crf = ''; }
-                            if ($this->options['show_custom'][$i] == 1) { $csf = 'checked'; } else { $csf = ''; }
-                            echo '
-                            <label for="field_custom'.$i.'">'. __('Field Name: ', 'crucible'). '</label><input id="field_custom'.$i.'" name="field_custom['.$i.']" type="text" value="'.$this->options['field_custom'][$i].'" />&nbsp;&nbsp;&nbsp;
-                            <input '.$caf.' class="custom_ask" data-id="'.$i.'" id="ask_custom'.$i.'" name="ask_custom['.$i.']" type="checkbox" value="1" />&nbsp;<label for="ask_custom'.$i.'">'. __('Ask', 'crucible'). '</label>&nbsp;&nbsp;&nbsp;
-                            <input '.$crf.' class="custom_req" data-id="'.$i.'" id="require_custom'.$i.'" name="require_custom['.$i.']" type="checkbox" value="1" />&nbsp;<label for="require_custom'.$i.'">'. __('Require', 'crucible'). '</label>&nbsp;&nbsp;&nbsp;
-                            <input '.$csf.' class="custom_show" data-id="'.$i.'" id="show_custom'.$i.'" name="show_custom['.$i.']" type="checkbox" value="1" />&nbsp;<label for="show_custom'.$i.'">'. __('Show', 'crucible'). '</label><br />
-                            ';
-                        }
+                    <div style="padding:10px;padding-bottom:10px;">';
+                     
                         echo '
                         </div>
                         <br /><br />

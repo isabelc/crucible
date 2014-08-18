@@ -41,132 +41,145 @@ $schema_itemtypes = array(
 'Plumber' => 'Plumber',
 'RoofingContractor' => 'Roofing Contractor');
 $options = array();
-$options[] = array( 'name' => __('Welcome','crucible'),
-					'type' => 'heading');
-$options[] = array( 'name' => sprintf( __('Welcome to %s by Smartest Themes!','crucible'), $themename ),
-				'type' => 'info',
-				'std' => __('Your business website is up and running. On the left are tabs to customize your site, but everything is optional.<br /><br />To make your website more complete, enter the <strong>Business Info</strong> tab on the left. <br /><br />Then, take a moment to browse all the tabs so you can see what options are available. You can upload your logo in <strong>Appearance -> Customize</strong>.<br /><br />To get started, first click the \'<strong>Save all Changes</strong>\' button to save the theme defaults.','crucible') );
+$options[] = array(
+	'name' => __('Welcome','crucible'),
+	'type' => 'heading');
+$options[] = array(
+	'name' => sprintf( __('Welcome to %s by Smartest Themes!','crucible'), $themename ),
+	'type' => 'info',
+	'std' => __('Your business website is up and running. On the left are tabs to customize your site, but everything is optional.<br /><br />To make your website more complete, enter the <strong>Business Info</strong> tab on the left. <br /><br />Then, take a moment to browse all the tabs so you can see what options are available. You can upload your logo in <strong>Appearance -> Customize</strong>.<br /><br />To get started, first click the \'<strong>Save all Changes</strong>\' button to save the theme defaults.','crucible') );
 
 /* Business */
-$options[] = array( 'name' => __('Business Info','crucible'),'class' => 'money',
-					'type' => 'heading');
-					
-$options[] = array( 'name' => __('Business Name','crucible'),
-					'desc' => __('Enter the name of your business or organization.','crucible'),
-					'id' => $shortname.'_business_name',
-					'type' => 'text');
-$options[] = array( 'name' => __('Attention Grabber For Homepage','crucible'),
-                    'desc' => __('The large tag line shown under the slider on the home page. For example, "How can we help you?"','crucible'),
-                    'id' => $shortname.'_attention_grabber',
-				'std' => __( 'How can we help you?', 'crucible' ),
-                    'type' => 'text');
-$options[] = array( 'name' => __('Business Street Address','crucible'),
-                    'desc' => __('The street address of your business','crucible'),
-                    'id' => $shortname.'_address_street',
-                    'type' => 'text');
 $options[] = array(
-                    'desc' => __('Business suite or apartment number','crucible'),
-                    'id' => $shortname.'_address_suite',
-                    'type' => 'text');
+	'name' => __('Business Info','crucible'),
+	'class' => 'money',
+	'type' => 'heading');
 $options[] = array(
-                    'desc' => __('Business city','crucible'),
-                    'id' => $shortname.'_address_city',
-					'class' => 'half',
-                    'type' => 'text');
+	'name' => __('Business Name','crucible'),
+	'desc' => __('Enter the name of your business or organization.','crucible'),
+	'id' => $shortname.'_business_name',
+	'type' => 'text');
+$options[] = array(
+	'name' => __('Attention Grabber For Homepage','crucible'),
+	'desc' => __('The large tag line shown under the slider on the home page. For example, "How can we help you?"','crucible'),
+	'id' => $shortname.'_attention_grabber',
+	'std' => __( 'How can we help you?', 'crucible' ),
+	'type' => 'text');
+$options[] = array(
+	'name' => __('Business Street Address','crucible'),
+	'desc' => __('The street address of your business','crucible'),
+	'id' => $shortname.'_address_street',
+	'type' => 'text');
+$options[] = array(
+	'desc' => __('Business suite or apartment number','crucible'),
+	'id' => $shortname.'_address_suite',
+	'type' => 'text');
+$options[] = array(
+	'desc' => __('Business city','crucible'),
+	'id' => $shortname.'_address_city',
+	'class' => 'half',
+	'type' => 'text');
 $options[] = array( 
-                    'desc' => __('Business state: if in the U.S., enter the state that your business is in','crucible'),
-                    'id' => $shortname.'_address_state',
-				'class' => 'half',
-                    'type' => 'text');
+	'desc' => __('Business state: if in the U.S., enter the state that your business is in','crucible'),
+	'id' => $shortname.'_address_state',
+	'class' => 'half',
+	'type' => 'text');
 $options[] = array(
-                    'desc' => __('Business zip code','crucible'),
-                    'id' => $shortname.'_address_zip',
-				'class' => 'half',
-                    'type' => 'text');
+	'desc' => __('Business zip code','crucible'),
+	'id' => $shortname.'_address_zip',
+	'class' => 'half',
+	'type' => 'text');
 $options[] = array(
-                    'desc' => __('Business Country: the country that your business is in','crucible'),
-                    'id' => $shortname.'_address_country',
-				'class' => 'half',
-                    'type' => 'text');
-$options[] = array( 'name' => __('Business Phone Number','crucible'),
-                    'desc' => __('Optional. Your business phone number to be displayed on your Contact page. Example: 555-555-5555.','crucible'),
-                    'id' => $shortname.'_phone_number',
-                    'type' => 'text');
-$options[] = array( 'name' => __('Business Fax Number','crucible'),
-                    'desc' => __('Optional. Your business fax number to be displayed on your Contact page. Example: 555-555-5555.','crucible'),
-                    'id' => $shortname.'_fax_numb',
-                    'type' => 'text');
-$options[] = array( 'name' => __('Display Business Email Address?','crucible'),
-					'desc' => sprintf(__('Check this to show your business email address on your Contact Page. You can change your email address in %s.', 'crucible'), $slink ),
-					'id' => $shortname.'_show_contactemail',
-					'std' => 'false',
-					'type' => 'checkbox');
-$options[] = array( 'name' => __('Google Map','crucible'),
-                    'desc' => sprintf(__('If you want to show a Google Map for your business address, paste here your HTML embed code from %s.','crucible'), '<a href="http://maps.google.com" target="_blank">Google Maps</a>' ),
-                    'id' => $shortname.'_google_map',
-                    'std' => '',
-                    'type' => 'textarea');
-$options[] = array( 'name' => __('Business Hours','crucible'),
-						'desc' => __('Optional. Enter your hours here if you want to display them. Example:<br /><br />Monday - Friday: 7:30 am - 6:00<br />Saturday: 7:30 am - Noon<br /><br />', 'crucible'),
-					'id' => $shortname.'_hours',
-					'std' => '',
-					'type' => 'textarea');
+	'desc' => __('Business Country: the country that your business is in','crucible'),
+	'id' => $shortname.'_address_country',
+	'class' => 'half',
+	'type' => 'text');
+$options[] = array(
+	'name' => __('Business Phone Number','crucible'),
+	'desc' => __('Optional. Your business phone number to be displayed on your Contact page. Example: 555-555-5555.','crucible'),
+	'id' => $shortname.'_phone_number',
+	'type' => 'text');
+$options[] = array(
+	'name' => __('Business Fax Number','crucible'),
+	'desc' => __('Optional. Your business fax number to be displayed on your Contact page. Example: 555-555-5555.','crucible'),
+	'id' => $shortname.'_fax_numb',
+	'type' => 'text');
+$options[] = array(
+	'name' => __('Display Business Email Address?','crucible'),
+	'desc' => sprintf(__('Check this to show your business email address on your Contact Page. You can change your email address in %s.', 'crucible'), $slink ),
+	'id' => $shortname.'_show_contactemail',
+	'std' => 'false',
+	'type' => 'checkbox');
+$options[] = array(
+	'name' => __('Google Map','crucible'),
+	'desc' => sprintf(__('If you want to show a Google Map for your business address, paste here your HTML embed code from %s.','crucible'), '<a href="http://maps.google.com" target="_blank">Google Maps</a>' ),
+	'id' => $shortname.'_google_map',
+	'std' => '',
+	'type' => 'textarea');
+$options[] = array(
+	'name' => __('Business Hours','crucible'),
+	'desc' => __('Optional. Enter your hours here if you want to display them. Example:<br /><br />Monday - Friday: 7:30 am - 6:00<br />Saturday: 7:30 am - Noon<br /><br />', 'crucible'),
+	'id' => $shortname.'_hours',
+	'std' => '',
+	'type' => 'textarea');
 /* Preferences */
-$options[] = array( 'name' => __('Preferences','crucible'),'class' => 'preferences',
-					'type' => 'heading');
-$options[] = array( 'name' => __('Add Staff section?','crucible'),
-					'desc' => __('Check this to show your staff memebers.','crucible'),
-					'id' => $shortname.'_show_staff',
-					'std' => 'true',
-					'type' => 'checkbox');
 $options[] = array(
-                    'desc' => __('Optional: Enter a custom title for the Staff Page. Default is \'Meet The Staff\'','crucible'),
-                    'id' => $shortname.'_business_staffpagetitle',
-					'std' => '',
-                    'type' => 'text');
+	'name' => __('Preferences','crucible'),
+	'class' => 'preferences',
+	'type' => 'heading');
 $options[] = array(
-                    'desc' => __('Optional: Enter a custom title for the Staff menu label . Default is \'Staff\'','crucible'),
-                    'id' => $shortname.'_business_staffmenulabel',
-					'std' => '',
-                    'type' => 'text');
-$options[] = array( 'name' => __('Add Announcements section?','crucible'),
-					'desc' => __('Check this to add an Announcements (News) section.','crucible'),
-					'id' => $shortname.'_show_news',
-					'std' => 'true',
-					'type' => 'checkbox');
+	'name' => __('Add Staff section?','crucible'),
+	'desc' => __('Check this to show your staff memebers.','crucible'),
+	'id' => $shortname.'_show_staff',
+	'std' => 'true',
+	'type' => 'checkbox');
+$options[] = array(
+	'desc' => __('Optional: Enter a custom title for the Staff Page. Default is \'Meet The Staff\'','crucible'),
+	'id' => $shortname.'_business_staffpagetitle',
+	'std' => '',
+	'type' => 'text');
+$options[] = array(
+	'desc' => __('Optional: Enter a custom title for the Staff menu label . Default is \'Staff\'','crucible'),
+	'id' => $shortname.'_business_staffmenulabel',
+	'std' => '',
+	'type' => 'text');
+$options[] = array(
+	'name' => __('Add Announcements section?','crucible'),
+	'desc' => __('Check this to add an Announcements (News) section.','crucible'),
+	'id' => $shortname.'_show_news',
+	'std' => 'true',
+	'type' => 'checkbox');
 $options[] = array( 
-                    'desc' => __('Optional: Enter a custom title for the News Page. Default is \'Announcements\'','crucible'),
-                    'id' => $shortname.'_business_newspagetitle',
-					'std' => '',
-                    'type' => 'text');
+	'desc' => __('Optional: Enter a custom title for the News Page. Default is \'Announcements\'','crucible'),
+	'id' => $shortname.'_business_newspagetitle',
+	'std' => '',
+	'type' => 'text');
 $options[] = array(
-                    'desc' => __('Optional: Enter a custom title for the News menu label. Default is \'News\'','crucible'),
-                    'id' => $shortname.'_business_newsmenulabel',
-					'std' => '',
-                    'type' => 'text');
-
-$options[] = array( 'name' => __('Add Services?','crucible'),
-					'desc' => __('Check this to show your services.','crucible'),
-					'id' => $shortname.'_show_services',
-					'std' => 'true',
-					'type' => 'checkbox');
-
+	'desc' => __('Optional: Enter a custom title for the News menu label. Default is \'News\'','crucible'),
+	'id' => $shortname.'_business_newsmenulabel',
+	'std' => '',
+	'type' => 'text');
+$options[] = array(
+	'name' => __('Add Services?','crucible'),
+	'desc' => __('Check this to show your services.','crucible'),
+	'id' => $shortname.'_show_services',
+	'std' => 'true',
+	'type' => 'checkbox');
 $options[] = array( 
-                    'desc' => __('Optional: Enter a custom title for the Services Page. Default is \'Services\'','crucible'),
-                    'id' => $shortname.'_business_servicespagetitle',
-					'std' => '',
-                    'type' => 'text');
-					
+	'desc' => __('Optional: Enter a custom title for the Services Page. Default is \'Services\'','crucible'),
+	'id' => $shortname.'_business_servicespagetitle',
+	'std' => '',
+	'type' => 'text');
 $options[] = array(
-                    'desc' => __('Optional: Enter a custom title for the Services menu label. Default is \'Services\'','crucible'),
-                    'id' => $shortname.'_business_servicesmenulabel',
-					'std' => '',
-                    'type' => 'text');
-
-$options[] = array( 	'desc' => sprintf( __('%s Set Custom Sort-Order? %s Check this to set a custom sort-order for services. Default sort-order is descending order by date of post.','crucible'), '<strong>', '</strong>' ),
-					'id' => $shortname.'_enable_service_sort',
-					'std' => 'false',
-					'type' => 'checkbox');
+	'desc' => __('Optional: Enter a custom title for the Services menu label. Default is \'Services\'','crucible'),
+	'id' => $shortname.'_business_servicesmenulabel',
+	'std' => '',
+	'type' => 'text');
+$options[] = array(
+	'desc' => sprintf( __('%s Set Custom Sort-Order? %s Check this to set a custom sort-order for services. Default sort-order is descending order by date of post.','crucible'), '<strong>', '</strong>' ),
+	'id' => $shortname.'_enable_service_sort',
+	'std' => 'false',
+	'type' => 'checkbox');
 // @new comment out NEXT 3 OPTIONS if not using home slideshow.
 $options[] = array( 'name' => __('Show Slideshow on Homepage?','crucible'),
 	'desc' => __('Check this if you want to show the slideshow on your homepage.','crucible'),
@@ -211,26 +224,28 @@ $options[] = array(
 );
 
 /* About Page */
-$options[] = array( 'name' => __('About Page','crucible'),'class' => 'about-at',
-					'type' => 'heading');
-					
-$options[] = array( 'name' => __('About Your Business','crucible'),
-						'desc' => __('The \'About Page\' is a page about your business. Type what you want your visitors to read here. It may be a history, a sales pitch, or anything you like. To enlarge the text area, drag the lower right corner down.', 'crucible'),
-					'id' => $shortname.'_about_page',
-					'std' => '',
-					'type' => 'textarea');
-
-$options[] = array( 'name' => __('About Page Picture','crucible'),
-					'desc' => __('Upload a picture for your About page, or specify the image address of an online picture, like http://yoursite.com/picture.png','crucible'),
-					'id' => $shortname.'_about_picture',
-					'std' => '',
-					'type' => 'upload');
-$options[] = array( 'name' => __('Disable About Page','crucible'),
-					'desc' => __('Check this to disable the About page altogether. This will delete the automatically-created About page.', 'crucible'),
-					'id' => $shortname.'_stop_about',
-					'std' => 'false',
-					'type' => 'checkbox');
-
+$options[] = array(
+	'name' => __('About Page','crucible'),
+	'class' => 'about-at',
+	'type' => 'heading');
+$options[] = array(
+	'name' => __('About Your Business','crucible'),
+	'desc' => __('The \'About Page\' is a page about your business. Type what you want your visitors to read here. It may be a history, a sales pitch, or anything you like. To enlarge the text area, drag the lower right corner down.', 'crucible'),
+	'id' => $shortname.'_about_page',
+	'std' => '',
+	'type' => 'textarea');
+$options[] = array(
+	'name' => __('About Page Picture','crucible'),
+	'desc' => __('Upload a picture for your About page, or specify the image address of an online picture, like http://yoursite.com/picture.png','crucible'),
+	'id' => $shortname.'_about_picture',
+	'std' => '',
+	'type' => 'upload');
+$options[] = array(
+	'name' => __('Disable About Page','crucible'),
+	'desc' => __('Check this to disable the About page altogether. This will delete the automatically-created About page.', 'crucible'),
+	'id' => $shortname.'_stop_about',
+	'std' => 'false',
+	'type' => 'checkbox');
 /* Social Media */
 $options[] = array(
 	'name' => __('Social Media','crucible'),
@@ -326,7 +341,6 @@ $options[] = array(
 	'std' => 'false',
 	'type' => 'checkbox'
 );
-
 /* Branding */
 $options[] = array(
 	'name' => __('Backend Branding','crucible'),
@@ -470,59 +484,89 @@ $options[] = array(
 			'above' => __('Above Reviews', 'crucible'),
 			'below' => __('Below Reviews', 'crucible')));// @test
 
-
-
-			
-			
-	// @test case multicheck
-	
-	
 $options[] = array(
 	'name'	=> __('Fields to ask for on Review Form','crucible'),
 	'desc'	=> '',
-	'id'	=> $shortname.'_reviews_ask_fields',// @test
+	'id'	=> $shortname.'_reviews_ask_fields',
 	'type'	=> 'multicheck',
 	'std'	=> array(
 			'ask_fname',
-			'ask_femail'),// @test
+			'ask_femail'),
 	'options' => array(
 			'ask_fname'		=> __('Name', 'crucible'),
 			'ask_femail'	=> __('Email', 'crucible'),
 			'ask_fwebsite'	=> __('Website', 'crucible'),
 			'ask_ftitle' 	=> __('Review Title', 'crucible'))
-			);// @test	
-	
-	
+			);
 	
 $options[] = array(
 	'name' => __('Fields to require on Review Form','crucible'),
 	'desc' => '',
-	'id' => $shortname.'_reviews_require_fields',// @test
+	'id' => $shortname.'_reviews_require_fields',
 	'type' => 'multicheck',
-	'std' => array('require_fname'),// @test
+	'std' => array('require_fname'),
 	'options' => array(
 			'require_fname'		=> __('Name', 'crucible'),
 			'require_femail'	=> __('Email', 'crucible'),
 			'require_fwebsite'	=> __('Website', 'crucible'),
 			'require_ftitle' 	=> __('Review Title', 'crucible'))
-			);// @test	
-		
-
+			);
 		
 $options[] = array(
 	'name' => __('Fields to show on each approved review','crucible'),
-	'desc' => __('It is usually NOT a good idea to show email addresses publicly.', 'crucible'),// @test maybe leave this out
-	'id' => $shortname.'_reviews_show_fields',// @test
+	'desc' => __('It is usually NOT a good idea to show email addresses publicly.', 'crucible'),
+	'id' => $shortname.'_reviews_show_fields',
 	'type' => 'multicheck',
-	'std' => array('show_fname'),// @test
+	'std' => array('show_fname'),
 	'options' => array(
 			'show_fname'	=> __('Name', 'crucible'),
 			'show_femail'	=> __('Email', 'crucible'),
 			'show_fwebsite'	=> __('Website', 'crucible'),
 			'show_ftitle' 	=> __('Review Title', 'crucible'))
-			);// @test	
+			);
 
+$options[] = array( 
+	'type' => 'info',
+	'std' => __('Custom Fields on Review Form','crucible'),
+	'class'	=> 'plain-title',
+	);
+$options[] = array( 
+	'type' => 'info',
+	'std' => __('Enter the names of any additional fields you would like.','crucible'),
+	'class'	=> 'intro',
+	);
 
+/* 6 custom fields */
+for ($i = 0; $i < 6; $i++) {
+	$options[] = array(
+		'desc'	=> '',
+		'id'	=> $shortname.'_reviews_custom_field_' . $i,
+		'std'	=> '',
+		'class'	=> 'half-multi',
+		'type'	=> 'text');
+				
+	$options[] = array(
+		'desc'	=> '',
+		'id'	=> $shortname.'_reviews_custom' . $i,
+		'type'	=> 'multicheck',
+		'std'	=> '',
+		'class'	=> 'multi',
+		'options'	=> array(
+				'ask'		=> __('Ask', 'crucible'),
+				'require'	=> __('Require', 'crucible'),
+				'show'		=> __('Show', 'crucible')));
+
+}			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 
 	
