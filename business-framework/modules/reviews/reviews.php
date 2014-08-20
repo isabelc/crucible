@@ -66,11 +66,7 @@ class SMARTESTReviewsBusiness {
         $default_options = array(
             'dbversion' => 0,
             'field_custom' => array(),
-            'goto_leave_text' => __('Click here to submit your review.', 'crucible'),
-            'goto_show_button' => 1,
-            'leave_text' => __('Submit your review', 'crucible'),
-			'submit_button_text' => __('Submit your review', 'crucible'),
-            'title_tag' => 'h2'
+            'leave_text' => __('Submit your review', 'crucible')
         );
          $this->options = get_option('smar_options', $default_options);
         /* magically easy migrations to newer versions */
@@ -160,10 +156,21 @@ class SMARTESTReviewsBusiness {
         
 		$GET_P = "submitsmar_$post->ID";
 		
-        if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $this->options['submit_button_text'])
+        // @test replace this line see if form still works if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $this->options['submit_button_text'])
+		
+		
+		
+		
+		
+		if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $this->options['submit_button_text'])
+		
         {
+		
+			isa_log($this->p->$GET_P); // @test remove 
+			
+			
             $msg = $this->add_review($post->ID);
-            $has_error = $msg[0];
+            $has_error = $msg[0];// @test what is this doing here
             $status_msg = $msg[1];
             $url = get_permalink($post->ID);
             $cookie = array('smar_status_msg' => $status_msg);
@@ -435,7 +442,7 @@ class SMARTESTReviewsBusiness {
         $total_reviews = intval($arr_Reviews[1]);
         $reviews_content = '';
         $showtitle = '';
-        $title_tag = $this->options['title_tag'];
+        $title_tag = empty($smartestthemes_options['st_reviews_title_tag']) ? 'h2' : $smartestthemes_options['st_reviews_title_tag'];// @test
 		
 		
 	
@@ -650,14 +657,17 @@ class SMARTESTReviewsBusiness {
 
 		
        
-        if ($this->options['goto_show_button'] == 1) {
-            $button_html = '<div class="smar_status_msg">' . $this->status_msg . '</div>'; /* show errors or thank you message here */
-            $button_html .= '<p><a id="smar_button_1" href="javascript:void(0);">' . $this->options['goto_leave_text'] . '</a></p>';
-            $out .= $button_html;
-        }
-
-        /* different output variables make it easier to debug this section */
-
+		$button_html = '<div class="smar_status_msg">' . $this->status_msg . '</div>'; /* show errors or thank you message */
+		
+		$button_text = empty($smartestthemes_options['st_reviews_show_form_button']) ? __('Click here to submit your review','crucible') : esc_attr($smartestthemes_options['st_reviews_show_form_button']);
+		
+		
+		$button_html .= '<p><a id="smar_button_1" href="javascript:void(0);">' . $button_text . '</a></p>';// @test
+		
+		$submit_button_text = empty($smartestthemes_options['st_review_submit_button_text']) ? __('Submit Your Review','crucible') : esc_attr($smartestthemes_options['st_review_submit_button_text']);
+		
+		$out .= $button_html;
+        
         $out .= '<div id="smar_respond_2">';
 		
 		if ( $req_js ) {
@@ -692,7 +702,7 @@ class SMARTESTReviewsBusiness {
                                     <input type="checkbox" name="' . $rand_prefixes[8] . '-fconfirm3" id="fconfirm3" value="1" />
                                 </td>
                             </tr>
-                            <tr><td colspan="2"><input id="smar_submit_btn" name="submitsmar_' . $post->ID . '" type="submit" value="' . $this->options['submit_button_text'] . '" /></td></tr>
+                            <tr><td colspan="2"><input id="smar_submit_btn" name="submitsmar_' . $post->ID . '" type="submit" value="' . $submit_button_text . '" /></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -821,32 +831,6 @@ class SMARTESTReviewsBusiness {
 		}
 		/* end - server-side validation */
 
-		/***************************************************
-		
-			@todo my new $custom_insert array...
-		
-		
-			this is the old way....
-			
-			
-		**************************************************
-		
-		$custom_insert = array();
-
-		$this->options['ask_custom'] = array(0, 1, 2, 3, 4, 5);
-		
-        for ($i = 0; $i < $custom_count; $i++) {		
-            if ($this->options['ask_custom'][$i] == 1) {
-                $name = $custom_fields[$i];
-                $custom_i = "custom_$i";				
-                if ( isset($this->p->$custom_i) ) {
-                    $custom_insert[$name] = ucfirst($this->p->$custom_i);
-                }
-            }
-        }
-        $custom_insert = serialize($custom_insert);
-		
-		*/
 		
 		$custom_insert = array();
 		for ($i = 0; $i < 6; $i++) {
@@ -1143,10 +1127,10 @@ class SMARTESTReviewsBusiness {
                 }
             }
             
-            /* prevent E_NOTICE warnings */
-			if (!isset($this->p->goto_show_button)) { $this->p->goto_show_button = 0; }
+            
 			
-			$updated_options['goto_show_button'] = intval($this->p->goto_show_button);
+			
+			
 			
 			
             
@@ -1156,74 +1140,11 @@ class SMARTESTReviewsBusiness {
         
        return __('Your settings have been saved.', 'crucible');
     }
-	public function show_options() {
-
-
-
-        $goto_show_button_checked = '';
-        if ($this->options['goto_show_button']) {
-            $goto_show_button_checked = 'checked';
-        }
-
-		// @test remove next 3
-        $af = array('fname' => '','femail' => '','fwebsite' => '','ftitle' => '');
-
-        $rf = array('fname' => '','femail' => '','fwebsite' => '','ftitle' => '');
-
-        $sf = array('fname' => '','femail' => '','fwebsite' => '','ftitle' => '');
-
-        echo '
-        <div class="postbox" style="width:700px;"><h3>'. __('Display Options', 'crucible') .'</h3><div id="smar_ad">
-               <form method="post" action=""><div style="background:#eaf2fa;padding:6px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;">
-                        <legend>'. __('General Settings', 'crucible').'</legend>
-                    </div>
-					
-					
-					
-
-
-
-					
-
-       <div style="background:#eaf2fa;padding:6px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;"><legend>'. __('Review Page Settings', 'crucible'). '</legend></div>
-                    <div style="padding:10px;padding-bottom:10px;">';
-                     
-                        echo '
-                        </div>
-                        <br /><br />
-                        <label for="title_tag">'. __('Heading to use for Review Titles: ', 'crucible'). '</label>
-                        <select id="title_tag" name="title_tag">
-                            <option ';if ($this->options['title_tag'] == 'h2') { echo "selected"; } echo ' value="h2">H2</option>
-                            <option ';if ($this->options['title_tag'] == 'h3') { echo "selected"; } echo ' value="h3">H3</option>
-                            <option ';if ($this->options['title_tag'] == 'h4') { echo "selected"; } echo ' value="h4">H4</option>
-                            <option ';if ($this->options['title_tag'] == 'h5') { echo "selected"; } echo ' value="h5">H6</option>
-                            <option ';if ($this->options['title_tag'] == 'h6') { echo "selected"; } echo ' value="h6">H7</option>
-                        </select>
-                        <br /><br />
-                        <label for="goto_show_button">'. __('Show review form: ', 'crucible'). '</label><input type="checkbox" id="goto_show_button" name="goto_show_button" value="1" '.$goto_show_button_checked.' />
-                        <br />
-                        <small>'. __('If this option is unchecked, there will be no visible way for visitors to submit reviews.', 'crucible'). '</small>
-                        <br /><br />
-                        <label for="goto_leave_text">'. __('Button text used to show review form: ', 'crucible'). '</label><input style="width:250px;" type="text" id="goto_leave_text" name="goto_leave_text" value="'.$this->options['goto_leave_text'].'" />
-                        <br />
-                        <small>'. __('This button will be shown above the first review.', 'crucible'). '</small>
-                        <br /><br />
-                        <label for="leave_text">'. __('Text to be displayed above review form: ', 'crucible'). '</label><input style="width:250px;" type="text" id="goto_leave_text" name="goto_leave_text" value="'.$this->options['goto_leave_text'].'" />
-                        <br />
-                        <small>'. __('This will be shown as a heading immediately above the review form.', 'crucible'). '</small>
-                        <br /><br />
-                        <label for="submit_button_text">'. __('Text to use for review form submit button: ', 'crucible'). '</label><input style="width:200px;" type="text" id="submit_button_text" name="submit_button_text" value="'.$this->options['submit_button_text'].'" />
-                        <br />
-                        <div class="submit" style="padding:10px 0px 0px 0px;"><input type="submit" class="button-primary" value="'. __('Save Changes', 'crucible'). '" name="Submit"></div>
-                    </div>';
-                    settings_fields("smar_options");
-                    echo '
-                </form>
-                <br />
-            </div>
-        </div>';
-        
-    }
+	
+	// @todo remove all settings_fields("smar_options");
+	// 	and 
+	// show_options
+	
 	
 	function security() {
         if (!current_user_can('manage_options'))
@@ -1234,7 +1155,7 @@ class SMARTESTReviewsBusiness {
 
 
 function admin_options() {
-        $this->security();
+        $this->security();// @todo remove this if not needed 
 
         $msg = '';
 		
@@ -1274,7 +1195,7 @@ function admin_options() {
                     <p>'. __('Reviews allow your customers and visitors to leave reviews or testimonials of your business. Aggregate ratings data from the Reviews page will be pulled into your home page to create rich snippets for search engines on your home page and your Reviews page. Reviews are Schema.org microdata enabled.', 'crucible'). '<br /><br />'
 					. sprintf(__('Activate Reviews by checking the "Add Reviews Section" in %s.', 'crucible'), $linkp).
 '</p><br /> </div> </div>';
-        $this->show_options();
+        // @todo remove $this->show_options();
         echo '<br /></div>';
     }
 	

@@ -558,17 +558,43 @@ for ($i = 0; $i < 6; $i++) {
 
 }			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+$options[] = array(
+	'name' => __('Heading to use for Review Titles','crucible'),
+	'desc' => __('select an HTML heading tag','crucible'),
+	'id' => $shortname.'_reviews_title_tag',// @test
+	'std' => 'h2',
+	'type' => 'select',
+	'options' => array('h2','h3','h4','h5','h6'));			
+		
+$options[] = array(
+		'name' => __('Button text for showing the Review form','crucible'),
+		'desc'	=> __('Clicking this button will show the Reviews form. What do you want this button to say?','crucible'),
+		'id'	=> $shortname.'_reviews_show_form_button',// @test
+		'std'	=> __('Click here to submit your review','crucible'),
+		'type'	=> 'text');
 
+$options[] = array(
+		'name' => __('Heading to be displayed above the Review form','crucible'),
+		'desc'	=> __('This will be shown as a heading immediately above the review form.','crucible'),
+		'id'	=> $shortname.'_review_form_heading',// @test think this is not used anywhere!
+		'std'	=> __('Submit Your Review','crucible'),
+		'type'	=> 'text');
+
+
+
+
+$options[] = array(
+		'name' => __('Text to use for Review Form Submit Button','crucible'),
+		'desc'	=> __('This will be shown as a heading immediately above the review form.','crucible'),
+		'id'	=> $shortname.'_review_submit_button_text',// @test
+		'std'	=> __('Submit Your Review','crucible'),
+		'type'	=> 'text');
+
+
+
+		
+			
+			
 	
 /* Scripts */
 $options[] = array(
