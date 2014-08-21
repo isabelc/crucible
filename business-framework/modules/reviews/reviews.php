@@ -42,7 +42,6 @@ class SMARTESTReviewsBusiness {
     }
 
 	function addmenu() {
-		add_options_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'manage_options', 'smar_options', array( $this, 'admin_options'));
 		if(get_option('st_add_reviews') == 'true') {       
 			add_menu_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array($this, 'admin_view_reviews'), 'dashicons-star-filled', 62);
 		}
@@ -1153,52 +1152,6 @@ class SMARTESTReviewsBusiness {
         }
     }	
 
-
-function admin_options() {
-        $this->security();// @todo remove this if not needed 
-
-        $msg = '';
-		
-		// make sure the db is created
-		global $wpdb;
-		$exists = $wpdb->get_var("SHOW TABLES LIKE '$this->dbtable'");
-		if ($exists != $this->dbtable) {
-			$exists = $wpdb->get_var("SHOW TABLES LIKE '$this->dbtable'");
-			if ($exists != $this->dbtable) {
-				print "<br /><br /><br /><p class='warning'>". __('COULD NOT CREATE DATABASE TABLE, PLEASE REPORT THIS ERROR', 'crucible'). "</p>";
-			}
-		}
-        
-        if (!isset($this->p->Submit)) { $this->p->Submit = ''; }
-        
-        if ($this->p->Submit == __('Save Changes', 'crucible')) {
-            $msg = $this->update_options();
-			$this->get_options();
-        }
-        
-        if (isset($this->p->email)) { // @todo @test what is them email? can i delete?
-            $msg = $this->update_options();
-			$this->get_options();
-        }
-        
-        echo '
-        <div id="smar_respond_1" class="wrap">
-            <h2>'. __('Reviews - Options', 'crucible'). '</h2>';
-            if ($msg) { echo '<h3 style="color:#a00;">'.$msg.'</h3>'; }
-			$themeobject = wp_get_theme();
-			$admin_page = $themeobject->Template;// @test
-			$linkp = '<a href="'. admin_url("admin.php?page=$admin_page").'">Preferences</a>';
-            echo '<div class="metabox-holder">
-            <div class="postbox" style="width:700px;">
-                <h3 style="cursor:default;">'. __('About Reviews', 'crucible'). '</h3>
-                <div style="padding:10px; background:#ffffff;">
-                    <p>'. __('Reviews allow your customers and visitors to leave reviews or testimonials of your business. Aggregate ratings data from the Reviews page will be pulled into your home page to create rich snippets for search engines on your home page and your Reviews page. Reviews are Schema.org microdata enabled.', 'crucible'). '<br /><br />'
-					. sprintf(__('Activate Reviews by checking the "Add Reviews Section" in %s.', 'crucible'), $linkp).
-'</p><br /> </div> </div>';
-        // @todo remove $this->show_options();
-        echo '<br /></div>';
-    }
-	
 	function admin_view_reviews() {
         global $wpdb;
 		
