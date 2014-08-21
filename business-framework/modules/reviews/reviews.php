@@ -17,15 +17,13 @@ class SMARTESTReviewsBusiness {
 	var $dbtable = 'smareviewsb';// @todo consider chnge table name!!!
 	var $got_aggregate = false;
 	var $p = '';
-	var $version = '0.0.0';// @test is needed
 	var $status_msg = '';
+	var $url = get_template_directory_uri().'/business-framework/modules/reviews/';// @test
 	
 	private function __construct() {
 		global $wpdb;
 		define('IN_SMAR', 1);
 		$this->dbtable = $wpdb->prefix . $this->dbtable;
-		$themeobject = wp_get_theme();
-		$this->version = $themeobject->Version;
 		add_action('init', array($this, 'init'));
 		add_action('admin_init', array($this, 'admin_init'));// @test is this needed still
 		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));
@@ -34,9 +32,9 @@ class SMARTESTReviewsBusiness {
 		add_action('wp_ajax_update_field', array($this, 'admin_view_reviews'));
 		add_action('save_post', array($this, 'admin_save_post'), 10, 2);
 		add_action( 'admin_init', array($this, 'create_reviews_page'));//@note, but for stand-alone plugin hook to after_setup_theme
-		add_action('wp_enqueue_scripts', array($this, 'smartestreviews_scripts'));
-		add_action('admin_enqueue_scripts', array($this, 'smartestreviews_scripts'));
-		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_stuff'));
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+		add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
+		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
 		add_filter( 'the_content', array($this, 'homepage_aggregate_footer') );
     }
 
@@ -78,29 +76,8 @@ class SMARTESTReviewsBusiness {
         }
     }
 	
-	// @todo don't think need this: $this->version
-    function check_migrate() {
-        
-		
-		// @todo here check 1st if table exists.
-		/*
-		global $wpdb;
-		$table_name = "your-table-name-here";
-		if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
-			//table is not created. you may create the table here.
-		}
-*/
-
-		
-		$this->createUpdateReviewtable(); /* creates table */
-		
-		// @test do i need $this->force_update_cache(); // update any caches
-		
-        
-    }
-
 	function template_redirect() {
-        global $post;
+        global $post, $smartestthemes_options;
         if (!isset($post) || !isset($post->ID)) {
             $post = new stdClass();
             $post->ID = 0;
@@ -118,11 +95,9 @@ class SMARTESTReviewsBusiness {
 		
         // @test replace this line see if form still works if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $this->options['submit_button_text'])
 		
-		
-		
-		
-		
-		if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $this->options['submit_button_text'])
+
+		// @test
+		if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $smartestthemes_options['st_review_submit_button_text'])
 		
         {
 		
@@ -854,18 +829,41 @@ class SMARTESTReviewsBusiness {
         
         exit();
     }
-
+	/**
+	* initiate Reviews and create the Reviews table
+	*/
     public function init() { /* used for admin_init also */
         $this->make_p_obj(); /* make P variables object */
         
-        $this->check_migrate(); /* call on every instance to see if we have upgraded in any way */
-		
-		
-        if ( !isset($this->p->smarp) ) {
+		global $wpdb;
+		if($wpdb->get_var("SHOW TABLES LIKE '$this->dbtable'") != $table_name) {
+			require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
+            $sql = "CREATE TABLE $this->dbtable (
+                      id int(11) NOT NULL AUTO_INCREMENT,
+                      date_time datetime NOT NULL,
+                      reviewer_name varchar(150) DEFAULT NULL,
+                      reviewer_email varchar(150) DEFAULT NULL,
+                      reviewer_ip varchar(15) DEFAULT NULL,
+                      review_title varchar(150) DEFAULT NULL,
+                      review_text text,
+                      review_response text,
+                      status tinyint(1) DEFAULT '0',
+                      review_rating tinyint(2) DEFAULT '0',
+                      reviewer_url varchar(255) NOT NULL,
+                      page_id int(11) NOT NULL DEFAULT '0',
+                      custom_fields text,
+                      PRIMARY KEY  (id),
+                      KEY status (status),
+                      KEY page_id (page_id)
+                      )";
+            dbDelta($sql);
+		}
+
+		if ( !isset($this->p->smarp) ) {
 			$this->p->smarp = 1;
 		}
-        $this->page = intval($this->p->smarp);
-        if ($this->page < 1) {
+		$this->page = intval($this->p->smarp);
+		if ($this->page < 1) {
 			$this->page = 1;
 		}
 		
@@ -903,10 +901,10 @@ class SMARTESTReviewsBusiness {
 	
 	}// end reviews_shortcode
 	
-	function smartestreviews_scripts() {
+	function enqueue_scripts() {
 		if( get_option('st_add_reviews') == 'true'  ) {
-			wp_register_style('smartest-reviews', $this->getpluginurl() . 'reviews.css', array(), $this->version);
-			wp_register_script('smartest-reviews', $this->getpluginurl() . 'reviews.js', array('jquery'), $this->version);
+			wp_register_style('smartest-reviews', $url . 'reviews.css');
+			wp_register_script('smartest-reviews', $url . 'reviews.js', array('jquery'));
 			if( is_page(get_option('smartestthemes_reviews_page_id'))) {
 				wp_enqueue_style('smartest-reviews');
 		        wp_enqueue_script('smartest-reviews');
@@ -960,11 +958,11 @@ class SMARTESTReviewsBusiness {
 			register_widget('SmartestReviewsTestimonial');
 		}
 	}
-	
+	/* @test remove & replace with a class var
 	public function getpluginurl() {
 		return get_template_directory_uri().'/business-framework/modules/reviews/';
 	}
-	
+	*/
 	// @test is this method needed
 	public function admin_init() {
 		$this->init();
@@ -1012,79 +1010,15 @@ class SMARTESTReviewsBusiness {
             return $post_id;
 	}
 	
-	
-	function createUpdateReviewTable() {
-            require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
-            
-            $sql = "CREATE TABLE $this->dbtable (
-                      id int(11) NOT NULL AUTO_INCREMENT,
-                      date_time datetime NOT NULL,
-                      reviewer_name varchar(150) DEFAULT NULL,
-                      reviewer_email varchar(150) DEFAULT NULL,
-                      reviewer_ip varchar(15) DEFAULT NULL,
-                      review_title varchar(150) DEFAULT NULL,
-                      review_text text,
-                      review_response text,
-                      status tinyint(1) DEFAULT '0',
-                      review_rating tinyint(2) DEFAULT '0',
-                      reviewer_url varchar(255) NOT NULL,
-                      page_id int(11) NOT NULL DEFAULT '0',
-                      custom_fields text,
-                      PRIMARY KEY  (id),
-                      KEY status (status),
-                      KEY page_id (page_id)
-                      )";
-            
-            dbDelta($sql);
-        }	
-	
-	public function force_update_cache() {
-			return; /* @todo maybe remove testing to increase performance */
-			global $wpdb;
-				
-			/* update all pages */
-			$pages = $wpdb->get_results( "SELECT `ID` FROM $wpdb->posts AS `p`" );
-			foreach ($pages as $page) {
-                $post = get_post($page->ID);
-				if ($post) {
-					clean_post_cache($page->ID);
-					wp_update_post($post);
-                }
-            }
-    }
-
-	public function enqueue_admin_stuff() {
-		$pluginurl = $this->getpluginurl();// @todo how many time is this method used? maybe minify
+	public function enqueue_admin_scripts() {
+		// @test remove $pluginurl = $this->getpluginurl();
 		// @todo see if need to check if we are on both of these pages...
 		if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' ) ) {
-			wp_enqueue_script('st-reviews-admin',$pluginurl.'reviews-admin.js',array('jquery'));
-			wp_enqueue_style('st-reviews-admin',$pluginurl.'reviews-admin.css');
+			wp_enqueue_script('st-reviews-admin',$url.'reviews-admin.js',array('jquery'));
+			wp_enqueue_style('st-reviews-admin',$url.'reviews-admin.css');
 		}
 	}	
 	
-
-	
-	// @todo do i need these methods?
-		//	$this->force_update_cache(); /* update any caches */
-		// $this->security();
-		// $this->options
-		
-		
-		
-		
-	
-	// @todo remove all settings_fields("smar_options");
-	// 	and 
-	// show_options
-	
-	
-	function security() {
-        if (!current_user_can('manage_options'))
-        {
-            wp_die( __('You do not have sufficient permissions to access this page.','crucible') );
-        }
-    }	
-
 	function admin_view_reviews() {
         global $wpdb;
 		
@@ -1162,10 +1096,10 @@ class SMARTESTReviewsBusiness {
                                     if (substr($col,0,7) == 'custom_') /* updating custom fields */
                                     {
                                         $custom_fields = array(); /* used for insert as well */
-                                        $custom_count = count($this->options['field_custom']); /* used for insert as well */
+                                        $custom_count = count($this->options['field_custom']); // @test need
                                         for ($i = 0; $i < $custom_count; $i++)
                                         {
-                                            $custom_fields[$i] = $this->options['field_custom'][$i];
+                                            $custom_fields[$i] = $this->options['field_custom'][$i];// @test need?
                                         }
 
                                         $custom_num = substr($col,7); /* gets the number after the _ */
@@ -1230,8 +1164,6 @@ class SMARTESTReviewsBusiness {
                         break;
                 }
             }
-			
-            $this->force_update_cache(); /* update any caches */            
 			$this->smar_redirect("?page=smar_view_reviews&review_status={$this->p->review_status}");
         }
         /* end - actions */
@@ -1437,9 +1369,7 @@ class SMARTESTReviewsBusiness {
 								if ( isset($custom_unserialized[$i]) ) {
 								
 									$label = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]);
-									
 									$value = empty($custom_unserialized[$i]) ? '' : esc_attr($custom_unserialized[$i]);
-									
 									echo $label . ': <span class="best_in_place" data-url="' . $update_path . '" data-object="json" data-attribute="custom_' . $i . '">' . $value . ' </span><br />';
 									
 								}
