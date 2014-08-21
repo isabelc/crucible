@@ -16,9 +16,8 @@ class SMARTESTReviewsBusiness {
 	
 	var $dbtable = 'smareviewsb';// @todo consider chnge table name!!!
 	var $got_aggregate = false;
-	var $options = array();
 	var $p = '';
-	var $version = '0.0.0';
+	var $version = '0.0.0';// @test is needed
 	var $status_msg = '';
 	
 	private function __construct() {
@@ -28,7 +27,7 @@ class SMARTESTReviewsBusiness {
 		$themeobject = wp_get_theme();
 		$this->version = $themeobject->Version;
 		add_action('init', array($this, 'init'));
-		add_action('admin_init', array($this, 'admin_init'));
+		add_action('admin_init', array($this, 'admin_init'));// @test is this needed still
 		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));
 		add_action('template_redirect',array($this, 'template_redirect'));
 		add_action('admin_menu', array($this, 'addmenu'));
@@ -59,35 +58,7 @@ class SMARTESTReviewsBusiness {
         }
         return $link;
     }
-    function get_options() {
-        $home_domain = @parse_url(get_home_url());
-        $home_domain = $home_domain['scheme'] . "://" . $home_domain['host'] . '/';
-        $default_options = array(
-            'dbversion' => 0,
-            'field_custom' => array(),
-            'leave_text' => __('Submit your review', 'crucible')
-        );
-         $this->options = get_option('smar_options', $default_options);
-        /* magically easy migrations to newer versions */
-        $has_new = false;
-        foreach ($default_options as $col => $def_val) {
-            if (!isset($this->options[$col])) {
-                $this->options[$col] = $def_val;
-                $has_new = true;
-            }
-            if (is_array($def_val)) {
-                foreach ($def_val as $acol => $aval) {
-                    if (!isset($this->options[$col][$acol])) {
-                        $this->options[$col][$acol] = $aval;
-                        $has_new = true;
-                    }
-                }
-            }
-        }
-        if ($has_new) {
-            update_option('smar_options', $this->options);
-        }
-    }
+    
     function make_p_obj() {
         $this->p = new stdClass();
         foreach ($_GET as $c => $val) {
@@ -106,36 +77,26 @@ class SMARTESTReviewsBusiness {
             }
         }
     }
+	
+	// @todo don't think need this: $this->version
     function check_migrate() {
-        global $wpdb;
-        $migrated = false;
-        /* remove me after official release */
-        $current_dbversion = intval(str_replace('.', '', $this->options['dbversion']));
-        $plugin_db_version = intval(str_replace('.', '', $this->version));
-        if ($current_dbversion == $plugin_db_version) {
-            return false;
-        }
+        
+		
+		// @todo here check 1st if table exists.
+		/*
+		global $wpdb;
+		$table_name = "your-table-name-here";
+		if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+			//table is not created. you may create the table here.
+		}
+*/
+
 		
 		$this->createUpdateReviewtable(); /* creates table */
 		
-        /* initial installation */
-        if ($current_dbversion == 0) {
-           $this->options['dbversion'] = $plugin_db_version;
-            $current_dbversion = $plugin_db_version;
-            update_option('smar_options', $this->options);
-            return false;
-        }
+		// @test do i need $this->force_update_cache(); // update any caches
+		
         
-        /* Push dbversion to current version */
-        if ($current_dbversion != $plugin_db_version || $migrated == true) {
-            $this->options['dbversion'] = $plugin_db_version;
-            $current_dbversion = $plugin_db_version;
-            update_option('smar_options', $this->options);
-
-			$this->force_update_cache(); // update any caches
-            return true;
-        }
-        return false;
     }
 
 	function template_redirect() {
@@ -663,7 +624,9 @@ class SMARTESTReviewsBusiness {
 		
 		$button_html .= '<p><a id="smar_button_1" href="javascript:void(0);">' . $button_text . '</a></p>';// @test
 		
-		$submit_button_text = empty($smartestthemes_options['st_review_submit_button_text']) ? __('Submit Your Review','crucible') : esc_attr($smartestthemes_options['st_review_submit_button_text']);
+		$submit_button_text = empty($smartestthemes_options['st_review_submit_button_text']) ? __('Submit Your Review','crucible') : esc_attr($smartestthemes_options['st_review_submit_button_text']);// @test
+		
+		$form_heading = empty($smartestthemes_options['st_review_form_heading']) ? __('Submit Your Review','crucible') : esc_attr($smartestthemes_options['st_review_form_heading']);// // @test
 		
 		$out .= $button_html;
         
@@ -679,7 +642,7 @@ class SMARTESTReviewsBusiness {
 					<input type="hidden" id="frating" name="frating" />
 					<table id="smar_table_2">
 						<tbody>
-							<tr><td colspan="2"><div id="smar_postcomment">' . $this->options["leave_text"] . '</div></td></tr>
+							<tr><td colspan="2"><div id="smar_postcomment">' . $form_heading . '</div></td></tr>
 							' . $fields;
 
         $out2 = '   
@@ -894,7 +857,7 @@ class SMARTESTReviewsBusiness {
 
     public function init() { /* used for admin_init also */
         $this->make_p_obj(); /* make P variables object */
-        $this->get_options();
+        
         $this->check_migrate(); /* call on every instance to see if we have upgraded in any way */
 		
 		
@@ -1002,9 +965,11 @@ class SMARTESTReviewsBusiness {
 		return get_template_directory_uri().'/business-framework/modules/reviews/';
 	}
 	
+	// @test is this method needed
 	public function admin_init() {
 		$this->init();
-		register_setting( 'smar_options', 'smar_options' );
+		
+
 	}
 	
 	public function admin_save_post($post_id, $post) {
@@ -1089,56 +1054,24 @@ class SMARTESTReviewsBusiness {
     }
 
 	public function enqueue_admin_stuff() {
-		$pluginurl = $this->getpluginurl();
+		$pluginurl = $this->getpluginurl();// @todo how many time is this method used? maybe minify
 		// @todo see if need to check if we are on both of these pages...
-		if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' || $this->p->page == 'smar_options' ) ) {
-			wp_enqueue_script('smartest-reviews-admin',$pluginurl.'reviews-admin.js',array('jquery'));
-			wp_enqueue_style('smartest-reviews-admin',$pluginurl.'reviews-admin.css');
+		if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' ) ) {
+			wp_enqueue_script('st-reviews-admin',$pluginurl.'reviews-admin.js',array('jquery'));
+			wp_enqueue_style('st-reviews-admin',$pluginurl.'reviews-admin.css');
 		}
 	}	
 	
-	public function update_options() {
-        /* we still process and validate this internally, instead of using the Settings API */
-        global $wpdb;
-        $this->security();
-           check_admin_referer('smar_options-options'); /* nonce check */
-            $updated_options = $this->options;
-            /* reset these to 0 so we can grab the settings below */
 
+	
+	// @todo do i need these methods?
+		//	$this->force_update_cache(); /* update any caches */
+		// $this->security();
+		// $this->options
 		
-            /* quick update of all options needed */
-            foreach ($this->p as $col => $val)
-            {
-                if (isset($this->options[$col]))
-                {
-                    switch($col)
-                    {
-					/*
-                      
-                        case 'ask_custom':
-                        case 'require_custom':
-					*/
-						
-                        default:
-                            $updated_options[$col] = $val; /* a non-array normal field */
-                            break;
-                    }
-                }
-            }
-            
-            
-			
-			
-			
-			
-			
-            
-			
-            update_option('smar_options', $updated_options);
-            $this->force_update_cache(); /* update any caches */
-        
-       return __('Your settings have been saved.', 'crucible');
-    }
+		
+		
+		
 	
 	// @todo remove all settings_fields("smar_options");
 	// 	and 
@@ -1225,7 +1158,7 @@ class SMARTESTReviewsBusiness {
 									
                                     /* for storing in DB - fix with IE 8 workaround */
                                     $val = str_replace( array("<br />","<br/>","<br>") , "\n" , $val );	
-
+// @test if this is needed
                                     if (substr($col,0,7) == 'custom_') /* updating custom fields */
                                     {
                                         $custom_fields = array(); /* used for insert as well */
@@ -1449,24 +1382,7 @@ class SMARTESTReviewsBusiness {
                             <a href="<?php echo $review->reviewer_url; ?>"><?php echo $review->reviewer_url; ?></a><br />
                             <a href="mailto:<?php echo $review->reviewer_email; ?>"><?php echo $review->reviewer_email; ?></a><br />
                             <a href="?page=smar_view_reviews&amp;s=<?php echo $review->reviewer_ip; ?>"><?php echo $review->reviewer_ip; ?></a><br />
-                            <?php
-                            $custom_count = count($this->options['field_custom']); /* used for insert as well */
-                            $custom_unserialized = @unserialize($review->custom_fields);
-                            if ($custom_unserialized !== false)
-                            {							
-                                for ($i = 0; $i < $custom_count; $i++)
-                                {
-                                    $custom_field_name = $this->options['field_custom'][$i];
-                                    if ( isset($custom_unserialized[$custom_field_name]) ) {
-                                        $custom_value = $custom_unserialized[$custom_field_name];
-                                        if ($custom_value != '')
-                                        {
-                                            echo "$custom_field_name: <span class='best_in_place' data-url='$update_path' data-object='json' data-attribute='custom_$i'>$custom_value</span><br />";
-                                        }
-                                    }
-                                }
-                            }
-                            ?>
+                            <!-- @test custom fields were here -->
                             <div style="margin-left:-4px;">
                                 <div style="height:22px;" class="best_in_place" 
                                      data-collection='[[1,"Rated 1 Star"],[2,"Rated 2 Stars"],[3,"Rated 3 Stars"],[4,"Rated 4 Stars"],[5,"Rated 5 Stars"]]' 
@@ -1507,6 +1423,33 @@ class SMARTESTReviewsBusiness {
                                     data-object='json'
                                     data-attribute='review_title'><?php echo $review->review_title; ?></span>
                               <br /><br />
+							  
+							  <?php
+							  
+							  // @test custom fields here in admin 
+							  
+							$custom_unserialized = @unserialize($review->custom_fields);
+							if (!is_array($custom_unserialized)) {
+								$custom_unserialized = array();
+							}
+					
+							for ($i = 0; $i < 6; $i++) {
+								if ( isset($custom_unserialized[$i]) ) {
+								
+									$label = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]);
+									
+									$value = empty($custom_unserialized[$i]) ? '' : esc_attr($custom_unserialized[$i]);
+									
+									echo $label . ': <span class="best_in_place" data-url="' . $update_path . '" data-object="json" data-attribute="custom_' . $i . '">' . $value . ' </span><br />';
+									
+								}
+							
+							}
+			
+							// @test end 
+                            ?>
+							
+							  <br /><br />
                               <div class="best_in_place" 
                                     data-url='<?php echo $update_path; ?>' 
                                     data-object='json'
