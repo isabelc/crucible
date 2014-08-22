@@ -1,5 +1,5 @@
 <?php
-/**
+/** @test updated
  * @package Smartest Themes Business Framework
  * @subpackage Reviews
  * Description: Get reviews from visitors, and aggregate ratings and stars for your business in search results. Adds Microdata markup (Schema.org) for rich snippets. Includes Testimonial widget. Optional: pulls aggregaterating to home page. Option to not pull it to home page, and just have a reviews page. Requires Smartest Themes for full functionality.
