@@ -23,14 +23,18 @@ class SMARTESTReviewsBusiness {
 		global $wpdb;
 		define('IN_SMAR', 1);
 		$this->dbtable = $wpdb->prefix . $this->dbtable;
-		add_action('init', array($this, 'init'));
-		add_action('admin_init', array($this, 'admin_init'));// @test is this needed still
+		
+		add_action('init', array($this, 'init'));// @test
+		
+		// create Reviews page
+		add_action('admin_init', array($this, 'admin_init'));// @test 
+		
+		
 		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));
 		add_action('template_redirect',array($this, 'template_redirect'));
 		add_action('admin_menu', array($this, 'addmenu'));
 		add_action('wp_ajax_update_field', array($this, 'admin_view_reviews'));
 		add_action('save_post', array($this, 'admin_save_post'), 10, 2);
-		add_action( 'admin_init', array($this, 'create_reviews_page'));//@note, but for stand-alone plugin hook to after_setup_theme
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 		add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
 		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
@@ -73,43 +77,62 @@ class SMARTESTReviewsBusiness {
                 $this->p->$c = trim(stripslashes($val));
             }
         }
+		
+		// @todo THIS GIVES NOTHING, JUST AN EMPTY ARRAY. BOTH OF THESE BELOW GIVE NOTHING! WHAT THE HECK @TEST
+		// isa_log('=======================================$_POST: =====' . $_POST . '============================================'); // @test remove 
+		
+		// isa_log('=======================================$_GET: =====' . $_GET . '============================================'); // @test remove 
+		
+		
     }
 	
 	function template_redirect() {
-        global $post, $smartestthemes_options;
+		global $post, $smartestthemes_options;
+
+		// prevent errors
         if (!isset($post) || !isset($post->ID)) {
             $post = new stdClass();
             $post->ID = 0;
         }
-        if (isset($_COOKIE['smar_status_msg'])) {
 		
-            $this->status_msg = $_COOKIE['smar_status_msg'];
-            if ( !headers_sent() ) {
-                setcookie('smar_status_msg', '', time() - 3600); /* delete the cookie */
-                unset($_COOKIE['smar_status_msg']);
-            }
-        }
+		if ($post->ID > 0) {
+		
+		
+			if (isset($_COOKIE['smar_status_msg'])) {
+			
+				// @test debug the cookie msg....
+			
+						
+				isa_log('================================$_COOKIE smar_status_msg===========' . $_COOKIE['smar_status_msg'] . '============================================'); // @test
+							
+			
+				$this->status_msg = $_COOKIE['smar_status_msg'];
+				if ( !headers_sent() ) {
+					setcookie('smar_status_msg', '', time() - 3600); /* delete the cookie */
+					unset($_COOKIE['smar_status_msg']);
+				}
+			}
         
-		$GET_P = "submitsmar_$post->ID";
-		
-        // @test replace this line see if form still works if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $this->options['submit_button_text'])
-		
 
-		// @test
-		if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $smartestthemes_options['st_review_submit_button_text'])
-		
-        {
-		
-			isa_log($this->p->$GET_P); // @test remove 
-			
-			
-            $msg = $this->add_review($post->ID);
-            $has_error = $msg[0];// @test what is this doing here
-            $status_msg = $msg[1];
-            $url = get_permalink($post->ID);
-            $cookie = array('smar_status_msg' => $status_msg);
-            $this->smar_redirect($url, $cookie);
-        }
+			// only if our Reviews form was submitted...
+			if ( isset($_POST["submitsmar_$post->ID"]) ) {
+				$get = $_POST["submitsmar_$post->ID"];
+					
+				// @test replace this line see if form still works if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $this->options['submit_button_text'])
+				
+				
+				isa_log('================================  $get  ============' . $get . '============================================'); // @test
+
+				if ( $get == $smartestthemes_options['st_review_submit_button_text'] ) {
+						$msg = $this->add_review($post->ID);
+						$has_error = $msg[0];
+						$status_msg = $msg[1];
+						$url = get_permalink($post->ID);
+						$cookie = array('smar_status_msg' => $status_msg);
+						$this->smar_redirect($url, $cookie);
+				}
+			}
+		}
 	}
 	/**
 	* Generate a random string
@@ -289,7 +312,7 @@ class SMARTESTReviewsBusiness {
         $range = 2;
         $showitems = ($range * 2) + 1;
 
-        $paged = $this->page;
+        $paged = $this->page;// @test this is not showing up!
         if ($paged == 0) { $paged = 1; }
         
         if (!isset($this->p->review_status)) {
@@ -357,6 +380,13 @@ class SMARTESTReviewsBusiness {
         }
     }
 	
+	/*
+	
+	// @todo a problem in which the fields need to be saved with the values for custom fields, otherwise it assumes the first filled in custom field is always the first lable, which may not align.
+	*/
+	
+	
+	
 	/**
 	* The HTML for the entire Reviews list
 	*/
@@ -371,7 +401,7 @@ class SMARTESTReviewsBusiness {
 			$per_page = 10;
 		}
 		
-        $arr_Reviews = $this->get_reviews($this->page, $per_page, 1);
+        $arr_Reviews = $this->get_reviews($this->page, $per_page, 1);// @test // @test this is not showing up!
         $reviews = $arr_Reviews[0];
         $total_reviews = intval($arr_Reviews[1]);
         $reviews_content = '';
@@ -460,16 +490,6 @@ class SMARTESTReviewsBusiness {
 		return array($reviews_content, $total_reviews);
 	}
 	
-	/**
-	 * Create the Reviews page
-	 * @uses smartestthemes_insert_post()
-	 */
-	public function create_reviews_page() {
-		if(get_option('st_add_reviews') == 'true') {
-			smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[smartest_reviews]' );
-		}
-	}
-
     public function output_rating($rating, $enable_hover) {
         $out = '';
         $rating_width = 20 * $rating; /* 20% for each star if having 5 stars */
@@ -610,8 +630,8 @@ class SMARTESTReviewsBusiness {
 			$out .= $req_js;
 		}
 		
-		// is class smarcform needed on form @test
-		$out .= '<form class="smarcform" id="st-reviews-form" method="post" action="javascript:void(0);">
+		// @test removed class="smarcform" from form
+		$out .= '<form id="st-reviews-form" method="post" action="javascript:void(0);">
 					<div id="smar_div_2">
 					<input type="hidden" id="frating" name="frating" />
 					<table id="smar_table_2">
@@ -828,15 +848,29 @@ class SMARTESTReviewsBusiness {
         
         exit();
     }
+	
+	
 	/**
-	* initiate Reviews and create the Reviews table
+	* Create the Reviews table unless it exists
 	*/
-    public function init() { /* used for admin_init also */
-        $this->make_p_obj(); /* make P variables object */
-        
+	
+	function create_table() {
 		global $wpdb;
-		if($wpdb->get_var("SHOW TABLES LIKE '$this->dbtable'") != $table_name) {
-			require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
+		
+		$charset_collate = '';
+
+		if ( ! empty( $wpdb->charset ) ) {
+		  $charset_collate = "DEFAULT CHARACTER SET {$wpdb->charset}";
+		}
+
+		if ( ! empty( $wpdb->collate ) ) {
+		  $charset_collate .= " COLLATE {$wpdb->collate}";
+		}
+
+		// @test remove KEY page_id (page_id) from table since don't need.
+		
+		if($wpdb->get_var("SHOW TABLES LIKE '$this->dbtable'") != $this->dbtable) {
+			// @test remove. does table still create? require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
             $sql = "CREATE TABLE $this->dbtable (
                       id int(11) NOT NULL AUTO_INCREMENT,
                       date_time datetime NOT NULL,
@@ -854,10 +888,21 @@ class SMARTESTReviewsBusiness {
                       PRIMARY KEY  (id),
                       KEY status (status),
                       KEY page_id (page_id)
-                      )";
-            dbDelta($sql);
-		}
+                      ) $charset_collate;";
 
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
+		}
+		return true;
+	}
+	
+	/**
+	* Initiate Reviews
+	* 
+	*/
+    public function init() {
+        $this->make_p_obj(); /* make P variables object */
+		$this->create_table();// @test does this remove PHP errors?
 		if ( !isset($this->p->smarp) ) {
 			$this->p->smarp = 1;
 		}
@@ -865,7 +910,6 @@ class SMARTESTReviewsBusiness {
 		if ($this->page < 1) {
 			$this->page = 1;
 		}
-		
     }
 	
 	/**
@@ -964,9 +1008,18 @@ class SMARTESTReviewsBusiness {
 		return get_template_directory_uri().'/business-framework/modules/reviews/';
 	}
 	
-	// @test is this method needed
+	/**
+	* create the Reviews page
+	* @uses smartestthemes_insert_post()
+	*/
 	public function admin_init() {
-		$this->init();
+	
+		// Create the Reviews page, if enabled
+		if(get_option('st_add_reviews') == 'true') {
+			smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[smartest_reviews]' );
+		}
+		
+		// @test need? $this->init();
 		
 
 	}
@@ -1017,12 +1070,12 @@ class SMARTESTReviewsBusiness {
 			wp_enqueue_style('st-reviews-admin',$this->dir_url().'reviews-admin.css');
 		}
 	}	
-	
+	/* @test function is from line 1073 to line 1504... */
 	function admin_view_reviews() {
-        global $wpdb;
+        global $wpdb, $smartestthemes_options;
 		
-		$per_page = get_option('st_reviews_per_page');// @test if I should instead do global
-		if ( empty($per_page) || ( $per_page < 1 ) || ! is_numeric($per_page) ) {
+		$per_page = empty($smartestthemes_options['st_reviews_per_page']) ? 10 : $smartestthemes_options['st_reviews_per_page'];// @test
+		if ( ( $per_page < 1 ) || ! is_numeric($per_page) ) {
 			$per_page = 10;
 		}
         
@@ -1313,7 +1366,6 @@ class SMARTESTReviewsBusiness {
                             <a href="<?php echo $review->reviewer_url; ?>"><?php echo $review->reviewer_url; ?></a><br />
                             <a href="mailto:<?php echo $review->reviewer_email; ?>"><?php echo $review->reviewer_email; ?></a><br />
                             <a href="?page=smar_view_reviews&amp;s=<?php echo $review->reviewer_ip; ?>"><?php echo $review->reviewer_ip; ?></a><br />
-                            <!-- @test custom fields were here -->
                             <div style="margin-left:-4px;">
                                 <div style="height:22px;" class="best_in_place" 
                                      data-collection='[[1,"Rated 1 Star"],[2,"Rated 2 Stars"],[3,"Rated 3 Stars"],[4,"Rated 4 Stars"],[5,"Rated 5 Stars"]]' 
@@ -1354,30 +1406,22 @@ class SMARTESTReviewsBusiness {
                                     data-object='json'
                                     data-attribute='review_title'><?php echo $review->review_title; ?></span>
                               <br /><br />
-							  
-							  <?php
-							  
-							  // @test custom fields here in admin 
-							  
+							<?php
 							$custom_unserialized = @unserialize($review->custom_fields);
 							if (!is_array($custom_unserialized)) {
 								$custom_unserialized = array();
 							}
-					
 							for ($i = 0; $i < 6; $i++) {
 								if ( isset($custom_unserialized[$i]) ) {
-								
 									$label = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]);
+										
 									$value = empty($custom_unserialized[$i]) ? '' : esc_attr($custom_unserialized[$i]);
-									echo $label . ': <span class="best_in_place" data-url="' . $update_path . '" data-object="json" data-attribute="custom_' . $i . '">' . $value . ' </span><br />';
-									
+										
+									echo '<strong>' . $label . '</strong>: <span class="best_in_place" data-url="' . $update_path . '" data-object="json" data-attribute="custom_' . $i . '">' . $value . ' </span><br />';
+										
 								}
-							
 							}
-			
-							// @test end 
-                            ?>
-							
+							?>
 							  <br /><br />
                               <div class="best_in_place" 
                                     data-url='<?php echo $update_path; ?>' 
