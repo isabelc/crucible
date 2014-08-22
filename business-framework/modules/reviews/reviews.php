@@ -14,29 +14,23 @@ class SMARTESTReviewsBusiness {
 		return self::$instance;
 	}
 	
-	var $dbtable = 'smareviewsb';// @todo consider chnge table name!!!
+	// @test move below var $dbtable = 'smareviewsb';// @todo consider chnge table name!!!
 	var $got_aggregate = false;
 	var $p = '';
 	var $status_msg = '';
 	
 	private function __construct() {
 		global $wpdb;
-		define('IN_SMAR', 1);
-		$this->dbtable = $wpdb->prefix . $this->dbtable;
-		
-		add_action('init', array($this, 'init'));// @test
-		
-		// create Reviews page
-		add_action('admin_init', array($this, 'admin_init'));// @test 
-		
-		
+		define('IN_SMAR', 1);// @test is needed ?
+		$this->dbtable = $wpdb->prefix . 'smareviewsb';// @test moved name here
+		add_action('init', array($this, 'init'));
+		add_action('admin_init', array($this, 'create_reviews_page'));
 		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));
 		add_action('template_redirect',array($this, 'template_redirect'));
 		add_action('admin_menu', array($this, 'addmenu'));
 		add_action('wp_ajax_update_field', array($this, 'admin_view_reviews'));
 		add_action('save_post', array($this, 'admin_save_post'), 10, 2);
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
-		add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
 		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
 		add_filter( 'the_content', array($this, 'homepage_aggregate_footer') );
     }
@@ -898,11 +892,10 @@ class SMARTESTReviewsBusiness {
 	
 	/**
 	* Initiate Reviews
-	* 
 	*/
     public function init() {
         $this->make_p_obj(); /* make P variables object */
-		$this->create_table();// @test does this remove PHP errors?
+		$this->create_table();
 		if ( !isset($this->p->smarp) ) {
 			$this->p->smarp = 1;
 		}
@@ -943,8 +936,10 @@ class SMARTESTReviewsBusiness {
 	
 	
 	}// end reviews_shortcode
-	
-	function enqueue_scripts() {
+	/**
+	 * Load css and js on Reviews page
+	 */
+	public function enqueue_scripts() {
 		if( get_option('st_add_reviews') == 'true'  ) {
 			wp_register_style('smartest-reviews', $this->dir_url() . 'reviews.css');
 			wp_register_script('smartest-reviews', $this->dir_url() . 'reviews.js', array('jquery'));
@@ -1009,19 +1004,13 @@ class SMARTESTReviewsBusiness {
 	}
 	
 	/**
-	* create the Reviews page
+	* Create the Reviews page, if enabled.
 	* @uses smartestthemes_insert_post()
 	*/
-	public function admin_init() {
-	
-		// Create the Reviews page, if enabled
+	public function create_reviews_page() {
 		if(get_option('st_add_reviews') == 'true') {
 			smartestthemes_insert_post('page', esc_sql( _x('reviews', 'page_slug', 'crucible') ), 'smartestthemes_reviews_page_id', __('Reviews', 'crucible'), '[smartest_reviews]' );
 		}
-		
-		// @test need? $this->init();
-		
-
 	}
 	
 	public function admin_save_post($post_id, $post) {
@@ -1063,7 +1052,9 @@ class SMARTESTReviewsBusiness {
 
             return $post_id;
 	}
-	
+	/**
+	 * Load admin css and js on admin View Reviews page
+	 */	
 	public function enqueue_admin_scripts() {
 		if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' ) ) {
 			wp_enqueue_script('st-reviews-admin',$this->dir_url().'reviews-admin.js',array('jquery'));
