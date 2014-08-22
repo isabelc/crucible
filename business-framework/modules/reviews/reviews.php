@@ -1,5 +1,5 @@
 <?php
-/** @test updated
+/** @test updated 8/22 3:01pm
  * @package Smartest Themes Business Framework
  * @subpackage Reviews
  * Description: Get reviews from visitors, and aggregate ratings and stars for your business in search results. Adds Microdata markup (Schema.org) for rich snippets. Includes Testimonial widget. Optional: pulls aggregaterating to home page. Option to not pull it to home page, and just have a reviews page. Requires Smartest Themes for full functionality.
@@ -205,7 +205,7 @@ class SMARTESTReviewsBusiness {
 		if ('reviews' == $location) {
 			$out .= '<div class="reviews-list" itemprop="itemReviewed" itemscope itemtype="http://schema.org/'. $schema .'"><span class="' . $wrapper_class. '">';
 		} else {
-			$out .= '<span class="' . $wrapper_class. '" itemprop="itemReviewed" itemscope itemtype="http://schema.org/'. $schema .'">';
+			$out .= '<br /><span class="' . $wrapper_class. '" itemprop="itemReviewed" itemscope itemtype="http://schema.org/'. $schema .'">';
 		}
 		
 		$out .= '<a href="' . site_url('/') . '"><span itemprop="name" class="' . $bn_class. '">' . $bn . '</span></a><br />';
@@ -260,7 +260,7 @@ class SMARTESTReviewsBusiness {
 		return $content;
     }
 	
-	/* @test the shortcode
+	/*
 	* Shortcode for the Aggregate Rating
 	*/
     function aggregate_footer_func() {
@@ -356,11 +356,6 @@ class SMARTESTReviewsBusiness {
         }
     }
 	
-	/*
-	
-	// @todo a problem in which the fields need to be saved with the values for custom fields, otherwise it assumes the first filled in custom field is always the first lable, which may not align.
-	*/
-	
 	/**
 	* The HTML for the entire Reviews list
 	*/
@@ -423,7 +418,10 @@ class SMARTESTReviewsBusiness {
                 $review_response = '';
                 
 				if (strlen($review->review_response) > 0) {
-					$review_response = '<p class="response"><strong>'.__('Response:', 'crucible').'</strong> ' . nl2br($review->review_response) . '</p>';
+				
+					$prep_response = nl2br($review->review_response);
+					
+					$review_response = '<p class="response"><strong>'.__('Response:', 'crucible').'</strong> ' . stripslashes_deep(esc_attr($prep_response)) . '</p>';
 				}
 
                 $custom_shown = '';
@@ -432,7 +430,7 @@ class SMARTESTReviewsBusiness {
 				if (!is_array($custom_fields_unserialized)) {
 					$custom_fields_unserialized = array();
 				}
-					
+		
 				for ($i = 0; $i < 6; $i++) {
 					if ( isset($custom_fields_unserialized[$i]) ) {
 						$is_label_entered = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : $smartestthemes_options['st_reviews_custom_field_' . $i];
@@ -445,15 +443,15 @@ class SMARTESTReviewsBusiness {
 					}
 				
 				}
-				$name_block = '' .'<div class="smar_fl smar_rname clear">' .'<abbr title="' . $this->iso8601(strtotime($review->date_time)) . '" itemprop="dateCreated">' . date("M d, Y", strtotime($review->date_time)) . '</abbr>&nbsp;' .'<span class="' . $hide_name . '">'. __('by', 'crucible').'</span>&nbsp;' . '<span class="isa_vcard" id="review-smar-reviewer-' . $review->id . '">' . '<span class="' . $hide_name . '" itemprop="author">' . $review->reviewer_name . '</span>' . '</span>' . '<div class="smar_clear"></div>' . $custom_shown . '</div>';
+				$name_block = '' .'<div class="smar_fl smar_rname clear">' .'<abbr title="' . $this->iso8601(strtotime($review->date_time)) . '" itemprop="dateCreated">' . date("M d, Y", strtotime($review->date_time)) . '</abbr>&nbsp;' .'<span class="' . $hide_name . '">'. __('by', 'crucible').'</span>&nbsp;' . '<span class="isa_vcard" id="review-smar-reviewer-' . $review->id . '">' . '<span class="' . $hide_name . '" itemprop="author">' . stripslashes_deep(esc_attr($review->reviewer_name)) . '</span>' . '</span>' . '<div class="smar_clear"></div>' . $custom_shown . '</div>';
  
 				$reviews_content .= '<div itemprop="review" itemscope itemtype="http://schema.org/Review" id="review-' . $review->id . '">';
 			
 				if ( $showtitle ) {
-					$reviews_content .= '<' . $title_tag . ' itemprop="description" class="summary">' . $review->review_title . '</' . $title_tag . '>';
+					$reviews_content .= '<' . $title_tag . ' itemprop="description" class="summary">' . stripslashes_deep(esc_attr($review->review_title)) . '</' . $title_tag . '>';
 				}
 			
-				$reviews_content .= '<div class="smar_fl smar_sc"><div class="smar_rating">' . $this->output_rating($review->review_rating, false) . '</div></div>' . $name_block . '<div class="smar_clear smar_spacing1"></div><blockquote itemprop="reviewBody" class="description"><p>' . $review->review_text . ' '.__('Rating:', 'crucible').' <span itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"><span itemprop="ratingValue">'.$review->review_rating.'</span></span>  '.__('out of 5.', 'crucible').'</p></blockquote>' . $review_response . '</div><hr />';
+				$reviews_content .= '<div class="smar_fl smar_sc"><div class="smar_rating">' . $this->output_rating($review->review_rating, false) . '</div></div>' . $name_block . '<div class="smar_clear smar_spacing1"></div><blockquote itemprop="reviewBody" class="description"><p>' . stripslashes_deep(esc_attr($review->review_text)) . ' '.__('Rating:', 'crucible').' <span itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"><span itemprop="ratingValue">'.$review->review_rating.'</span></span>  '.__('out of 5.', 'crucible').'</p></blockquote>' . $review_response . '</div><hr />';
 
 			}//  foreach ($reviews as $review)
 			$reviews_content .= $this->get_the_aggregate_rating('reviews-footer') . '</div><!-- .reviews-list -->';
@@ -563,9 +561,9 @@ class SMARTESTReviewsBusiness {
 
 		$button_html = '<div id="smar_status_msg">' . $this->status_msg . '</div>'; /* show errors or thank you message */
 		$button_text = empty($smartestthemes_options['st_reviews_show_form_button']) ? __('Click here to submit your review','crucible') : esc_attr($smartestthemes_options['st_reviews_show_form_button']);
-		$button_html .= '<p><a id="smar_button_1" href="javascript:void(0);">' . $button_text . '</a></p>';// @test
-		$submit_button_text = empty($smartestthemes_options['st_review_submit_button_text']) ? __('Submit Your Review','crucible') : esc_attr($smartestthemes_options['st_review_submit_button_text']);// @test
-		$form_heading = empty($smartestthemes_options['st_review_form_heading']) ? __('Submit Your Review','crucible') : esc_attr($smartestthemes_options['st_review_form_heading']);// // @test
+		$button_html .= '<p><a id="smar_button_1" href="javascript:void(0);">' . $button_text . '</a></p>';
+		$submit_button_text = empty($smartestthemes_options['st_review_submit_button_text']) ? __('Submit Your Review','crucible') : esc_attr($smartestthemes_options['st_review_submit_button_text']);
+		$form_heading = empty($smartestthemes_options['st_review_form_heading']) ? __('Submit Your Review','crucible') : esc_attr($smartestthemes_options['st_review_form_heading']);
 		
 		$out .= $button_html . '<div id="smar_respond_2">';
 		
@@ -665,7 +663,7 @@ class SMARTESTReviewsBusiness {
 			'st_reviews_require_fields_require_fname'		=> $rn,
 			'st_reviews_require_fields_require_femail'		=> $re,
 			'st_reviews_require_fields_require_fwebsite'	=> $rw,
-			'st_reviews_require_fields_require_ftitle'		=> $rt);// @test
+			'st_reviews_require_fields_require_ftitle'		=> $rt);
 		
 	
         foreach ($require_fields as $col => $val) {
@@ -690,7 +688,7 @@ class SMARTESTReviewsBusiness {
 				$custom_i = "custom_$i";
 				if (!isset($this->p->$custom_i) || $this->p->$custom_i == '') {
 					// get field name for error msg
-					$nice_name = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : stripslashes(esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]));
+					$nice_name = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : stripslashes($smartestthemes_options['st_reviews_custom_field_' . $i]);
 					$errors .= __('You must complete "', 'crucible'). ' ' . $nice_name . '".<br />';
 				}
 			}
@@ -809,9 +807,6 @@ class SMARTESTReviewsBusiness {
 		if ( ! empty( $wpdb->collate ) ) {
 		  $charset_collate .= " COLLATE {$wpdb->collate}";
 		}
-
-		// @test remove KEY page_id (page_id) from table since don't need.
-		
 		if($wpdb->get_var("SHOW TABLES LIKE '$this->dbtable'") != $this->dbtable) {
             $sql = "CREATE TABLE $this->dbtable (
                       id int(11) NOT NULL AUTO_INCREMENT,
@@ -1004,7 +999,6 @@ class SMARTESTReviewsBusiness {
 			wp_enqueue_style('st-reviews-admin',$this->dir_url().'reviews-admin.css');
 		}
 	}	
-	/* @test function is from line 1073 to line 1504... */
 	function admin_view_reviews() {
         global $wpdb, $smartestthemes_options;
 		
@@ -1040,7 +1034,8 @@ class SMARTESTReviewsBusiness {
                         break;
                     case 'update_field':
                         
-                        ob_end_clean();
+						if (ob_get_length())
+							ob_end_clean();
                         
                         if (!is_array($this->p->json)) {
                             header('HTTP/1.1 403 Forbidden');
@@ -1065,8 +1060,8 @@ class SMARTESTReviewsBusiness {
                                     
                                     $show_val = $d;
                                     $d2 = date("Y-m-d H:i:s",strtotime($val));
-                                    $update_col = esc_sql($col);
-                                    $update_val = esc_sql($d2);
+                                    $update_col = $col;
+                                    $update_val = $d2;
                                     break;
                                     
                                 default:
@@ -1078,34 +1073,45 @@ class SMARTESTReviewsBusiness {
 									
                                     /* for storing in DB - fix with IE 8 workaround */
                                     $val = str_replace( array("<br />","<br/>","<br>") , "\n" , $val );	
-// @test if this is needed
+ 
                                     if (substr($col,0,7) == 'custom_') /* updating custom fields */
                                     {
-                                        $custom_fields = array();
-                                        $custom_count = count($this->options['field_custom']); // @test need
-                                        for ($i = 0; $i < $custom_count; $i++)
-                                        {
-                                            $custom_fields[$i] = $this->options['field_custom'][$i];// @test need?
-                                        }
-
-                                        $custom_num = substr($col,7); /* gets the number after the _ */
-                                        /* get the old custom value */
-                                        $old_value = $wpdb->get_results("SELECT `custom_fields` FROM `$this->dbtable` WHERE `id`={$this->p->r} LIMIT 1");										
+									
+										// @test this is prep to insert into db. 
+                                        $custom_num = substr($col,7); // gets the number after the _
+										
+                                        // get the old custom value 
+                                        $old_value = $wpdb->get_results("SELECT `custom_fields` FROM `$this->dbtable` WHERE `id`={$this->p->r} LIMIT 1");	
+										
                                         if ($old_value && $wpdb->num_rows)
                                         {
                                             $old_value = @unserialize($old_value[0]->custom_fields);
-                                            if (!is_array($old_value)) { $old_value = array(); }
-                                            $custom_name = $custom_fields[$custom_num];
-                                            $old_value[$custom_name] = $val;
-                                            $new_value = serialize($old_value);											
-                                            $update_col = esc_sql('custom_fields');
-                                            $update_val = esc_sql($new_value);
+											
+                                            if (!is_array($old_value)) {
+												$old_value = array();
+											}
+
+											$old_value[$custom_num] = $val;// assign the new value
+											$update_col = 'custom_fields';//@test
+											$update_val = serialize($old_value);// @test
+											
+
                                         }
+										
+										
+										// @test end original way to update custom field.s
+										
+										
+										
+										
+										
+										
+										
                                     }
                                     else /* updating regular fields */
                                     {									
-                                        $update_col = esc_sql($col);
-                                        $update_val = esc_sql($val);
+                                        $update_col = $col;
+                                        $update_val = $val;
                                     }
 
                                     $show_val = $val;
@@ -1116,10 +1122,13 @@ class SMARTESTReviewsBusiness {
                         }
                         
                         if ($update_col !== false && $update_val !== false) {
-
-                           $query = "UPDATE `$this->dbtable` SET `$update_col`='$update_val' WHERE `id`={$this->p->r} LIMIT 1";
-                             $wpdb->query($query);
-                            echo $show_val;
+						
+							$query = $wpdb->prepare("UPDATE `$this->dbtable` SET `$update_col` = %s WHERE `id` ={$this->p->r} LIMIT 1", $update_val);
+							
+							$update_db = $wpdb->query($query);
+							
+							echo $show_val;
+						
                         }
                         
                         exit();
@@ -1288,10 +1297,7 @@ class SMARTESTReviewsBusiness {
                       $review_text = str_replace( array("\r\n","\r","\n") , "" , $review_text );
                       $review_response = nl2br($review->review_response);
                       $review_response = str_replace( array("\r\n","\r","\n") , "" , $review_response );
-					  
-                      // @test without this $page = get_post($review->page_id);
-
-					  ?>
+					?>
                       <tr class="approved" id="review-<?php echo $rid;?>">
                         <th class="check-column" scope="row"><input type="checkbox" value="<?php echo $rid;?>" name="delete_reviews[]" /></th>
                         <td class="author column-author">

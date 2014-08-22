@@ -456,16 +456,12 @@ $options[] = array(
 	'name' => __('About Reviews','crucible'),
 	'type' => 'info',
 	'std' => __('Aggregate ratings data from your Reviews will be used to create rich snippets for search engines on your home page and your Reviews page. Reviews are marked up with Schema.org microdata, as recommended by Google.','crucible'));
-	
 $options[] = array(
 	'name' => __('Enable Reviews?','crucible'),
 	'desc' => __('Check this to add a page to let visitors submit reviews for your approval. Reviews are not public unless you approve them.','crucible'),
 	'id' => $shortname.'_add_reviews',
 	'std' => 'true',
-	'type' => 'checkbox');// @test
-	
-// @test every single reviews option
-	
+	'type' => 'checkbox');
 $options[] = array(
 	'name' => __('Reviews shown per page:', 'crucible'),
 	'desc' => __('Enter a number. If blank, the default is 10.','crucible'),
