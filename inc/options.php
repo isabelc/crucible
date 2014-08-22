@@ -468,7 +468,7 @@ $options[] = array(
 	
 $options[] = array(
 	'name' => __('Reviews shown per page:', 'crucible'),
-	'desc' => __('','crucible'),
+	'desc' => __('Enter a number. If blank, the default is 10.','crucible'),
 	'id' => $shortname.'_reviews_per_page',
 	'std' => '10',
 	'type' => 'text');// @test

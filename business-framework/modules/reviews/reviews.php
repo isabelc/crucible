@@ -293,12 +293,11 @@ class SMARTESTReviewsBusiness {
     function pagination($total_results) {
         global $post;
 
-		$per_page = get_option('st_reviews_per_page');// @test if I should instead do global .
+		$per_page = get_option('st_reviews_per_page');
 		if ( empty($per_page) || ( $per_page < 1 ) || ! is_numeric($per_page) ) {
 			$per_page = 10;
 		}
-
-		
+	
         $out = '';
         $uri = false;
         $pretty = false;
@@ -387,8 +386,8 @@ class SMARTESTReviewsBusiness {
 		global $smartestthemes_options;
 		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' : $smartestthemes_options['st_add_reviews'];
 	
-		// @test 
-		$per_page = empty($smartestthemes_options['st_reviews_per_page']) ? '10' : $smartestthemes_options['st_add_reviews'];
+		// @test
+		$per_page = empty($smartestthemes_options['st_reviews_per_page']) ? '10' : $smartestthemes_options['st_reviews_per_page'];
 		if ( ( $per_page < 1 ) || ! is_numeric($per_page) ) {
 			$per_page = 10;
 		}
@@ -1063,7 +1062,7 @@ class SMARTESTReviewsBusiness {
 	function admin_view_reviews() {
         global $wpdb, $smartestthemes_options;
 		
-		$per_page = empty($smartestthemes_options['st_reviews_per_page']) ? 10 : $smartestthemes_options['st_reviews_per_page'];// @test
+		$per_page = empty($smartestthemes_options['st_reviews_per_page']) ? 10 : $smartestthemes_options['st_reviews_per_page'];// @test THIS WORKS, BUT DOESN'T WORK ON FRONT.
 		if ( ( $per_page < 1 ) || ! is_numeric($per_page) ) {
 			$per_page = 10;
 		}
