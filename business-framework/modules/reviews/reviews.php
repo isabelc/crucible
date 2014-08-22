@@ -91,39 +91,23 @@ class SMARTESTReviewsBusiness {
 		
 		if ($post->ID > 0) {
 		
-		
 			if (isset($_COOKIE['smar_status_msg'])) {
-			
-				// @test debug the cookie msg....
-			
-						
-				isa_log('================================$_COOKIE smar_status_msg===========' . $_COOKIE['smar_status_msg'] . '============================================'); // @test
-							
-			
 				$this->status_msg = $_COOKIE['smar_status_msg'];
 				if ( !headers_sent() ) {
 					setcookie('smar_status_msg', '', time() - 3600); /* delete the cookie */
 					unset($_COOKIE['smar_status_msg']);
 				}
 			}
-        
 
 			// only if our Reviews form was submitted...
 			if ( isset($_POST["submitsmar_$post->ID"]) ) {
 				$get = $_POST["submitsmar_$post->ID"];
-					
-				// @test replace this line see if form still works if ($post->ID > 0 && isset($this->p->$GET_P) && $this->p->$GET_P == $this->options['submit_button_text'])
-				
-				
-				isa_log('================================  $get  ============' . $get . '============================================'); // @test
-
 				if ( $get == $smartestthemes_options['st_review_submit_button_text'] ) {
-						$msg = $this->add_review($post->ID);
-						$has_error = $msg[0];
-						$status_msg = $msg[1];
-						$url = get_permalink($post->ID);
-						$cookie = array('smar_status_msg' => $status_msg);
-						$this->smar_redirect($url, $cookie);
+					$msg = $this->add_review($post->ID);
+					$has_error = $msg[0];
+					$status_msg = $msg[1];
+					$cookie = array('smar_status_msg' => $status_msg);
+					$this->smar_redirect(get_option('smartestthemes_reviews_page_id') . '#smar_status_msg', $cookie);
 				}
 			}
 		}
@@ -305,14 +289,13 @@ class SMARTESTReviewsBusiness {
         $range = 2;
         $showitems = ($range * 2) + 1;
 
-        $paged = $this->page;// @test this is not showing up!
+        $paged = $this->page;
         if ($paged == 0) { $paged = 1; }
         
         if (!isset($this->p->review_status)) {
 			$this->p->review_status = 0;
 		}
-
-        $pages = ceil($total_results / $per_page);// @test
+        $pages = ceil($total_results / $per_page);
 
         if ($pages > 1) {
             if (is_admin()) {
@@ -599,29 +582,18 @@ class SMARTESTReviewsBusiness {
 			'st_reviews_require_fields_require_fwebsite'	=> $rw,
 			'st_reviews_require_fields_require_ftitle'		=> $rt);// @test
 		
-
-		
-       
-		$button_html = '<div class="smar_status_msg">' . $this->status_msg . '</div>'; /* show errors or thank you message */
-		
+		$button_html = '<div id="smar_status_msg">' . $this->status_msg . '</div>'; /* show errors or thank you message */
 		$button_text = empty($smartestthemes_options['st_reviews_show_form_button']) ? __('Click here to submit your review','crucible') : esc_attr($smartestthemes_options['st_reviews_show_form_button']);
-		
-		
 		$button_html .= '<p><a id="smar_button_1" href="javascript:void(0);">' . $button_text . '</a></p>';// @test
-		
 		$submit_button_text = empty($smartestthemes_options['st_review_submit_button_text']) ? __('Submit Your Review','crucible') : esc_attr($smartestthemes_options['st_review_submit_button_text']);// @test
-		
 		$form_heading = empty($smartestthemes_options['st_review_form_heading']) ? __('Submit Your Review','crucible') : esc_attr($smartestthemes_options['st_review_form_heading']);// // @test
 		
-		$out .= $button_html;
-        
-        $out .= '<div id="smar_respond_2">';
+		$out .= $button_html . '<div id="smar_respond_2">';
 		
 		if ( $req_js ) {
 			$out .= $req_js;
 		}
 		
-		// @test removed class="smarcform" from form
 		$out .= '<form id="st-reviews-form" method="post" action="javascript:void(0);">
 					<div id="smar_div_2">
 					<input type="hidden" id="frating" name="frating" />
@@ -637,23 +609,23 @@ class SMARTESTReviewsBusiness {
             </tr>';
 
         $out3 = '
-                            <tr><td colspan="2"><label for="' . $rand_prefixes[5] . '-ftext" class="comment-field">'. __('Review:', 'crucible').'</label></td></tr>
-                            <tr><td colspan="2"><textarea id="' . $rand_prefixes[5] . '-ftext" name="' . $rand_prefixes[5] . '-ftext" rows="8" cols="50">' . $this->p->ftext . '</textarea></td></tr>
-                            <tr>
-                                <td colspan="2" id="smar_check_confirm">
-                                    ' . $some_required . '
-                                    <div class="smar_clear"></div>    
-                                    <input type="checkbox" name="' . $rand_prefixes[6] . '-fconfirm1" id="fconfirm1" value="1" />
-                                    <div class="smar_fl"><input type="checkbox" name="' . $rand_prefixes[7] . '-fconfirm2" id="fconfirm2" value="1" /></div><div class="smar_fl smar_checklabel"><label for="fconfirm2">'. __('Check this box to confirm you are human.', 'crucible').'</label></div>
-                                    <div class="smar_clear"></div>
-                                    <input type="checkbox" name="' . $rand_prefixes[8] . '-fconfirm3" id="fconfirm3" value="1" />
-                                </td>
-                            </tr>
-                            <tr><td colspan="2"><input id="smar_submit_btn" name="submitsmar_' . $post->ID . '" type="submit" value="' . $submit_button_text . '" /></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </form>';
+			<tr><td colspan="2"><label for="' . $rand_prefixes[5] . '-ftext" class="comment-field">'. __('Review:', 'crucible').'</label></td></tr>
+			<tr><td colspan="2"><textarea id="' . $rand_prefixes[5] . '-ftext" name="' . $rand_prefixes[5] . '-ftext" rows="8" cols="50">' . $this->p->ftext . '</textarea></td></tr>
+			<tr>
+				<td colspan="2" id="smar_check_confirm">
+					' . $some_required . '
+					<div class="smar_clear"></div>    
+					<input type="checkbox" name="' . $rand_prefixes[6] . '-fconfirm1" id="fconfirm1" value="1" />
+					<div class="smar_fl"><input type="checkbox" name="' . $rand_prefixes[7] . '-fconfirm2" id="fconfirm2" value="1" /></div><div class="smar_fl smar_checklabel"><label for="fconfirm2">'. __('Check this box to confirm you are human.', 'crucible').'</label></div>
+					<div class="smar_clear"></div>
+					<input type="checkbox" name="' . $rand_prefixes[8] . '-fconfirm3" id="fconfirm3" value="1" />
+					</td>
+				</tr>
+				<tr><td colspan="2"><input id="smar_submit_btn" name="submitsmar_' . $post->ID . '" type="submit" value="' . $submit_button_text . '" /></td></tr>
+				</tbody>
+				</table>
+				</div>
+				</form>';
 
         $out4 = '<hr /></div>';
         $out4 .= '<div class="smar_clear smar_pb5"></div>';
@@ -662,7 +634,6 @@ class SMARTESTReviewsBusiness {
     }
 
 	/* insert reviews into db and send mail notification to admin
-	* @test is param sent properly?
 	*/
     function add_review($pageID) {
         global $wpdb,$smartestthemes_options;
@@ -813,6 +784,9 @@ class SMARTESTReviewsBusiness {
         /* returns false for no error */
         return array(false, '<div>'.__('Thank you for your comments. All submissions are moderated and if approved, yours will appear soon.', 'crucible').'</div>');
     }
+	/**
+	* Refresh the page when a Review is submitted
+	*/
     function smar_redirect($url, $cookie = array()) {
         $headers_sent = headers_sent();
         if ($headers_sent == true) {
@@ -833,8 +807,10 @@ class SMARTESTReviewsBusiness {
             foreach ($cookie as $col => $val) {
                 setcookie($col, $val); /* add cookie via headers */
             }
-		if (ob_get_length()) ob_end_clean();
-            wp_redirect($url);
+			if (ob_get_length()) {
+				ob_end_clean();
+			}
+			wp_redirect($url);
         }
         
         exit();
@@ -907,13 +883,10 @@ class SMARTESTReviewsBusiness {
 	*/
 	public function reviews_shortcode( $atts ) {
 	
-		// @test remove global $post;// @test do i need this
-
 		$reviews_content = '<div id="smar_respond_1">';
-       
+      
 		global $smartestthemes_options;
-		
-		if ( $smartestthemes_options['st_reviews_form_location'] == 'above' ) { // @test
+		if ( $smartestthemes_options['st_reviews_form_location'] == 'above' ) {
 			$reviews_content .= $this->show_reviews_form();
 		}
 
@@ -922,7 +895,7 @@ class SMARTESTReviewsBusiness {
         $total_reviews = $ret_Arr[1];
 		$reviews_content .= $this->pagination($total_reviews);
 
-        if ( $smartestthemes_options['st_reviews_form_location'] == 'below' ) { // @test
+        if ( $smartestthemes_options['st_reviews_form_location'] == 'below' ) {
             $reviews_content .= $this->show_reviews_form();
         }
         $reviews_content .= '</div>';
@@ -966,20 +939,18 @@ class SMARTESTReviewsBusiness {
 					'req_email'			=> get_option('st_reviews_require_fields_require_femail'),
 					'req_website'		=> get_option('st_reviews_require_fields_require_fwebsite'),
 					'req_title'			=> get_option('st_reviews_require_fields_require_ftitle'),
-					'req_custom0'		=> get_option('st_reviews_custom0_require'),// @test
+					'req_custom0'		=> get_option('st_reviews_custom0_require'),
 					'req_custom0_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[0]),
-					'req_custom1'		=> get_option('st_reviews_custom1_require'),// @test
+					'req_custom1'		=> get_option('st_reviews_custom1_require'),
 					'req_custom1_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[1]),
-					'req_custom2'		=> get_option('st_reviews_custom2_require'),// @test
+					'req_custom2'		=> get_option('st_reviews_custom2_require'),
 					'req_custom2_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[2]),
-					'req_custom3'		=> get_option('st_reviews_custom3_require'),// @test
+					'req_custom3'		=> get_option('st_reviews_custom3_require'),
 					'req_custom3_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[3]),
-					'req_custom4'		=> get_option('st_reviews_custom4_require'),// @test
+					'req_custom4'		=> get_option('st_reviews_custom4_require'),
 					'req_custom4_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[4]),
-					'req_custom5'		=> get_option('st_reviews_custom5_require'),// @tes5
+					'req_custom5'		=> get_option('st_reviews_custom5_require'),
 					'req_custom5_error'	=> sprintf(__('You must complete "%1$s".', 'crucible'), $custom_field[5])
-					
-					
 					);
 				wp_localize_script( 'smartest-reviews', 'smartlocal', $loc);
 			}
@@ -1062,7 +1033,7 @@ class SMARTESTReviewsBusiness {
 	function admin_view_reviews() {
         global $wpdb, $smartestthemes_options;
 		
-		$per_page = empty($smartestthemes_options['st_reviews_per_page']) ? 10 : $smartestthemes_options['st_reviews_per_page'];// @test THIS WORKS, BUT DOESN'T WORK ON FRONT.
+		$per_page = empty($smartestthemes_options['st_reviews_per_page']) ? 10 : $smartestthemes_options['st_reviews_per_page'];
 		if ( ( $per_page < 1 ) || ! is_numeric($per_page) ) {
 			$per_page = 10;
 		}
@@ -1135,7 +1106,7 @@ class SMARTESTReviewsBusiness {
 // @test if this is needed
                                     if (substr($col,0,7) == 'custom_') /* updating custom fields */
                                     {
-                                        $custom_fields = array(); /* used for insert as well */
+                                        $custom_fields = array();
                                         $custom_count = count($this->options['field_custom']); // @test need
                                         for ($i = 0; $i < $custom_count; $i++)
                                         {

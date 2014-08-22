@@ -471,7 +471,7 @@ $options[] = array(
 	'desc' => __('Enter a number. If blank, the default is 10.','crucible'),
 	'id' => $shortname.'_reviews_per_page',
 	'std' => '10',
-	'type' => 'text');// @test
+	'type' => 'text');
     
 
 $options[] = array(
@@ -482,7 +482,7 @@ $options[] = array(
 	'std'	=> 'above',
 	'options' => array(
 			'above' => __('Above Reviews', 'crucible'),
-			'below' => __('Below Reviews', 'crucible')));// @test
+			'below' => __('Below Reviews', 'crucible')));
 
 $options[] = array(
 	'name'	=> __('Fields to ask for on Review Form','crucible'),
