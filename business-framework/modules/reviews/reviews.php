@@ -369,21 +369,17 @@ class SMARTESTReviewsBusiness {
 		global $smartestthemes_options;
 		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' : $smartestthemes_options['st_add_reviews'];
 	
-		// @test
 		$per_page = empty($smartestthemes_options['st_reviews_per_page']) ? '10' : $smartestthemes_options['st_reviews_per_page'];
 		if ( ( $per_page < 1 ) || ! is_numeric($per_page) ) {
 			$per_page = 10;
 		}
 		
-        $arr_Reviews = $this->get_reviews($this->page, $per_page, 1);// @test // @test this is not showing up!
+        $arr_Reviews = $this->get_reviews($this->page, $per_page, 1);
         $reviews = $arr_Reviews[0];
         $total_reviews = intval($arr_Reviews[1]);
         $reviews_content = '';
         $showtitle = '';
-        $title_tag = empty($smartestthemes_options['st_reviews_title_tag']) ? 'h2' : $smartestthemes_options['st_reviews_title_tag'];// @test
-		
-		
-	
+        $title_tag = empty($smartestthemes_options['st_reviews_title_tag']) ? 'h2' : $smartestthemes_options['st_reviews_title_tag'];
 		
 		/* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
 				 trying to access a page that does not exist -- send to main page 
@@ -418,10 +414,11 @@ class SMARTESTReviewsBusiness {
                 if (get_option('st_reviews_show_fields_show_femail') == 'true' && $review->reviewer_email != '') {
                     $review->review_text .= '<br /><small>' . $review->reviewer_email . '</small>';
                 }
+				
                 if (get_option('st_reviews_show_fields_show_ftitle') == 'true' && $review->review_title != '') {
                     $showtitle = true;
                 }
-                
+
                 $review->review_text = nl2br($review->review_text);
                 $review_response = '';
                 
@@ -431,7 +428,6 @@ class SMARTESTReviewsBusiness {
 
                 $custom_shown = '';
                 
-                
 				$custom_fields_unserialized = @unserialize($review->custom_fields);
 				if (!is_array($custom_fields_unserialized)) {
 					$custom_fields_unserialized = array();
@@ -439,10 +435,12 @@ class SMARTESTReviewsBusiness {
 					
 				for ($i = 0; $i < 6; $i++) {
 					if ( isset($custom_fields_unserialized[$i]) ) {
+						$is_label_entered = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : $smartestthemes_options['st_reviews_custom_field_' . $i];
 					
-						// if show is checked
-						if ( get_option('st_reviews_custom' . $i . '_show') == 'true' && $custom_fields_unserialized[$i] != '') {
-							$custom_shown .= '<div class="st-reviews-custom-field-' . $i . '"><span class="reviews-custom-label">' . $smartestthemes_options['st_reviews_custom_field_' . $i] . ': </span> <span class="reviews-custom-vlue"> ' . $custom_fields_unserialized[$i] . ' </span></div>';
+						// if label is entered and show is checked
+						if ( $is_label_entered && get_option('st_reviews_custom' . $i . '_show') == 'true' && $custom_fields_unserialized[$i] != '') {
+						
+							$custom_shown .= '<div class="st-reviews-custom-field-' . $i . '"><span class="reviews-custom-label">' . $is_label_entered . ': </span> <span class="reviews-custom-vlue"> ' . $custom_fields_unserialized[$i] . ' </span></div>';
 						}
 					}
 				
@@ -540,9 +538,12 @@ class SMARTESTReviewsBusiness {
 
 		
 		for ($i = 0; $i < 6; $i++) {
+		
+			// get the field label
+			$field_label = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : $smartestthemes_options['st_reviews_custom_field_' . $i];
 			
-			// for each of the 6, if ask is checked
-			if (get_option('st_reviews_custom' . $i . '_ask') == 'true') {
+			// for each of the 6, if label is entered and if ask is checked
+			if ( $field_label && (get_option('st_reviews_custom' . $i . '_ask') == 'true')) {
 			
 				$custom_i = "custom_$i";
 				if (!isset($this->p->$custom_i)) {
@@ -554,34 +555,12 @@ class SMARTESTReviewsBusiness {
 				} else {
 					$req = '';
 				}
-				
-				// get the field label
-				$field_label = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : $smartestthemes_options['st_reviews_custom_field_' . $i];	// @test
-
 					
 				$fields .= '<tr><td><label for="custom_' . $i . '" class="comment-field">' . $field_label . ': ' . $req . '</label></td><td><input class="text-input" type="text" id="custom_' . $i . '" name="custom_' . $i . '" maxlength="150" value="' . $this->p->$custom_i . '" /></td></tr>';
 			
-			
 			}
-			
         }
 
-
-		/* @test do i need this section? */
-        $some_required = '';
-        
-		
-		$rn = get_option('st_reviews_require_fields_require_fname');
-		$re = get_option('st_reviews_require_fields_require_femail');
-		$rw = get_option('st_reviews_require_fields_require_fwebsite');
-		$rt = get_option('st_reviews_require_fields_require_ftitle');
-		
-		$require_fields = array(
-			'st_reviews_require_fields_require_fname'		=> $rn,
-			'st_reviews_require_fields_require_femail'		=> $re,
-			'st_reviews_require_fields_require_fwebsite'	=> $rw,
-			'st_reviews_require_fields_require_ftitle'		=> $rt);// @test
-		
 		$button_html = '<div id="smar_status_msg">' . $this->status_msg . '</div>'; /* show errors or thank you message */
 		$button_text = empty($smartestthemes_options['st_reviews_show_form_button']) ? __('Click here to submit your review','crucible') : esc_attr($smartestthemes_options['st_reviews_show_form_button']);
 		$button_html .= '<p><a id="smar_button_1" href="javascript:void(0);">' . $button_text . '</a></p>';// @test
@@ -613,7 +592,6 @@ class SMARTESTReviewsBusiness {
 			<tr><td colspan="2"><textarea id="' . $rand_prefixes[5] . '-ftext" name="' . $rand_prefixes[5] . '-ftext" rows="8" cols="50">' . $this->p->ftext . '</textarea></td></tr>
 			<tr>
 				<td colspan="2" id="smar_check_confirm">
-					' . $some_required . '
 					<div class="smar_clear"></div>    
 					<input type="checkbox" name="' . $rand_prefixes[6] . '-fconfirm1" id="fconfirm1" value="1" />
 					<div class="smar_fl"><input type="checkbox" name="' . $rand_prefixes[7] . '-fconfirm2" id="fconfirm2" value="1" /></div><div class="smar_fl smar_checklabel"><label for="fconfirm2">'. __('Check this box to confirm you are human.', 'crucible').'</label></div>
@@ -712,7 +690,7 @@ class SMARTESTReviewsBusiness {
 				$custom_i = "custom_$i";
 				if (!isset($this->p->$custom_i) || $this->p->$custom_i == '') {
 					// get field name for error msg
-					$nice_name = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : stripslashes(esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]));// @test slashes
+					$nice_name = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : stripslashes(esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]));
 					$errors .= __('You must complete "', 'crucible'). ' ' . $nice_name . '".<br />';
 				}
 			}
@@ -756,12 +734,10 @@ class SMARTESTReviewsBusiness {
 			// for each of the 6, if ask is checked
 			
 			if (get_option('st_reviews_custom' . $i . '_ask') == 'true') {
-			
-				// @test remove $name = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]);// @test
 
                 $custom_i = "custom_$i";				
                 if ( isset($this->p->$custom_i) ) {
-                    $custom_insert[$i] = $this->p->$custom_i;// @test
+                    $custom_insert[$i] = $this->p->$custom_i;
                 }
 			
 			}
@@ -837,7 +813,6 @@ class SMARTESTReviewsBusiness {
 		// @test remove KEY page_id (page_id) from table since don't need.
 		
 		if($wpdb->get_var("SHOW TABLES LIKE '$this->dbtable'") != $this->dbtable) {
-			// @test remove. does table still create? require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
             $sql = "CREATE TABLE $this->dbtable (
                       id int(11) NOT NULL AUTO_INCREMENT,
                       date_time datetime NOT NULL,
@@ -1373,8 +1348,10 @@ class SMARTESTReviewsBusiness {
 								$custom_unserialized = array();
 							}
 							for ($i = 0; $i < 6; $i++) {
-								if ( isset($custom_unserialized[$i]) ) {
-									$label = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]);
+							
+								$label = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]);
+							
+								if ( isset($custom_unserialized[$i]) && $label ) {
 										
 									$value = empty($custom_unserialized[$i]) ? '' : esc_attr($custom_unserialized[$i]);
 										
@@ -1383,7 +1360,7 @@ class SMARTESTReviewsBusiness {
 								}
 							}
 							?>
-							  <br /><br />
+							  
                               <div class="best_in_place" 
                                     data-url='<?php echo $update_path; ?>' 
                                     data-object='json'

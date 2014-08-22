@@ -472,8 +472,6 @@ $options[] = array(
 	'id' => $shortname.'_reviews_per_page',
 	'std' => '10',
 	'type' => 'text');
-    
-
 $options[] = array(
 	'name'	=> __('Location of Review Form','crucible'),
 	'desc'	=> '',
@@ -483,7 +481,6 @@ $options[] = array(
 	'options' => array(
 			'above' => __('Above Reviews', 'crucible'),
 			'below' => __('Below Reviews', 'crucible')));
-
 $options[] = array(
 	'name'	=> __('Fields to ask for on Review Form','crucible'),
 	'desc'	=> '',
@@ -498,7 +495,6 @@ $options[] = array(
 			'ask_fwebsite'	=> __('Website', 'crucible'),
 			'ask_ftitle' 	=> __('Review Title', 'crucible'))
 			);
-	
 $options[] = array(
 	'name' => __('Fields to require on Review Form','crucible'),
 	'desc' => '',
@@ -511,7 +507,6 @@ $options[] = array(
 			'require_fwebsite'	=> __('Website', 'crucible'),
 			'require_ftitle' 	=> __('Review Title', 'crucible'))
 			);
-		
 $options[] = array(
 	'name' => __('Fields to show on each approved review','crucible'),
 	'desc' => __('It is usually NOT a good idea to show email addresses publicly.', 'crucible'),
@@ -524,7 +519,6 @@ $options[] = array(
 			'show_fwebsite'	=> __('Website', 'crucible'),
 			'show_ftitle' 	=> __('Review Title', 'crucible'))
 			);
-
 $options[] = array( 
 	'type' => 'info',
 	'std' => __('Custom Fields on Review Form','crucible'),
@@ -535,7 +529,6 @@ $options[] = array(
 	'std' => __('Enter the names of any additional fields you would like.','crucible'),
 	'class'	=> 'intro',
 	);
-
 /* 6 custom fields */
 for ($i = 0; $i < 6; $i++) {
 	$options[] = array(
@@ -557,36 +550,29 @@ for ($i = 0; $i < 6; $i++) {
 				'show'		=> __('Show', 'crucible')));
 
 }			
-			
 $options[] = array(
-	'name' => __('Heading to use for Review Titles','crucible'),
-	'desc' => __('select an HTML heading tag','crucible'),
-	'id' => $shortname.'_reviews_title_tag',// @test
+	'name' => __('Heading tag to use for Review Titles','crucible'),
+	'desc' => __('Select an HTML heading tag for the individual review titles.','crucible'),
+	'id' => $shortname.'_reviews_title_tag',
 	'std' => 'h2',
 	'type' => 'select',
 	'options' => array('h2','h3','h4','h5','h6'));			
-		
 $options[] = array(
 		'name' => __('Button text for showing the Review form','crucible'),
-		'desc'	=> __('Clicking this button will show the Reviews form. What do you want this button to say?','crucible'),
-		'id'	=> $shortname.'_reviews_show_form_button',// @test
+		'desc'	=> __('Clicking this button will show the review submission form. What do you want this button to say?','crucible'),
+		'id'	=> $shortname.'_reviews_show_form_button',
 		'std'	=> __('Click here to submit your review','crucible'),
 		'type'	=> 'text');
-
 $options[] = array(
 		'name' => __('Heading to be displayed above the Review form','crucible'),
 		'desc'	=> __('This will be shown as a heading immediately above the review form.','crucible'),
-		'id'	=> $shortname.'_review_form_heading',// @test think this is not used anywhere!
+		'id'	=> $shortname.'_review_form_heading',
 		'std'	=> __('Submit Your Review','crucible'),
 		'type'	=> 'text');
-
-
-
-
 $options[] = array(
 		'name' => __('Text to use for Review Form Submit Button','crucible'),
-		'desc'	=> __('This will be shown as a heading immediately above the review form.','crucible'),
-		'id'	=> $shortname.'_review_submit_button_text',// @test
+		'desc'	=> __('This is the Submit button to submit a review. What do you want this button to say?','crucible'),
+		'id'	=> $shortname.'_review_submit_button_text',
 		'std'	=> __('Submit Your Review','crucible'),
 		'type'	=> 'text');
 
