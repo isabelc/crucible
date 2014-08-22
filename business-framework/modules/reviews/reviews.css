@@ -1,17 +1,7 @@
 #smar_respond_1 h2.summary,
 #smar_respond_1 h3.summary,#smar_respond_1 h4.summary,#smar_respond_1 h5.summary,#smar_respond_1 h6.summary{padding:5px 0}#smar_respond_1 blockquote.description{font-size:14px;font-weight:400}#smar_respond_1 blockquote.description p{font-size:14px;font-weight:400;display:inline!important}#smar_respond_1 p.response{font-size:14px;font-weight:400;font-style:italic}
 
-
-/* @todo do i need these?? */
-
-
-/* @todo do i need these?? */
-#smar_hcard_h{display:none}
-
-
-
 #smar_postcomment{font-size:1.1em;font-weight:700}#st-reviews-form label{display:inline!important}#st-reviews-form #fconfirm1,#st-reviews-form #fconfirm3{display:none}#smar_ad{background:#fff}#smar_ad label{font-weight:700}#st-reviews-form #fconfirm2{width:auto!important}
-
 #smar_respond_1,#smar_respond_2{margin:0!important;padding:0!important;clear:both!important}
 
 #smar_respond_1 p,#smar_respond_2 p{margin:0!important;padding:0!important;line-height:120%!important;margin-top:2px!important;margin-bottom:2px!important}#smar_respond_1 .smar_rating,#st-reviews-form .smar_rating{border:0!important;margin:0!important;padding:0!important;margin-left:0!important;margin-top:0!important;overflow:hidden;height:16px}#smar_respond_1 .sp_rating{line-height:1.7em;display:block}#smar_respond_1 .sp_rating *{border:0 none;margin:0;padding:0}#smar_respond_1 .base{background:url(newstars.png) 0 0 no-repeat;width:85px;height:17px;float:left;padding-right:4px;overflow:hidden;display:block}#smar_respond_1 .average{background:url(newstars.png) 0 -16px no-repeat;text-indent:-9999px;height:17px}#smar_respond_2{display:none;background-color:inherit}
