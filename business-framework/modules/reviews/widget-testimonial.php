@@ -95,5 +95,4 @@ class SmartestReviewsTestimonial extends WP_Widget {
 	</p>
 		<?php 
 	}
-
 } ?>

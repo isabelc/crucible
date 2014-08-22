@@ -1,5 +1,5 @@
 <?php
-/** @test updated 8/22 3:01pm
+/**
  * @package Smartest Themes Business Framework
  * @subpackage Reviews
  * Description: Get reviews from visitors, and aggregate ratings and stars for your business in search results. Adds Microdata markup (Schema.org) for rich snippets. Includes Testimonial widget. Optional: pulls aggregaterating to home page. Option to not pull it to home page, and just have a reviews page. Requires Smartest Themes for full functionality.
@@ -14,15 +14,14 @@ class SMARTESTReviewsBusiness {
 		return self::$instance;
 	}
 	
-	// @test move below var $dbtable = 'smareviewsb';// @todo consider chnge table name!!!
 	var $got_aggregate = false;
 	var $p = '';
 	var $status_msg = '';
 	
 	private function __construct() {
 		global $wpdb;
-		define('IN_SMAR', 1);// @test is needed ?
-		$this->dbtable = $wpdb->prefix . 'smareviewsb';// @test moved name here
+		// @todo consider chnge table name!!!
+		$this->dbtable = $wpdb->prefix . 'smareviewsb';
 		add_action('init', array($this, 'init'));
 		add_action('admin_init', array($this, 'create_reviews_page'));
 		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));
@@ -53,32 +52,25 @@ class SMARTESTReviewsBusiness {
         }
         return $link;
     }
-    
-    function make_p_obj() {
-        $this->p = new stdClass();
-        foreach ($_GET as $c => $val) {
-            if (is_array($val)) {
-                $this->p->$c = $val;
-            } else {
-                $this->p->$c = trim(stripslashes($val));
-            }
-        }
 
-        foreach ($_POST as $c => $val) {
-            if (is_array($val)) {
-                $this->p->$c = $val;
-            } else {
-                $this->p->$c = trim(stripslashes($val));
-            }
-        }
-		
-		// @todo THIS GIVES NOTHING, JUST AN EMPTY ARRAY. BOTH OF THESE BELOW GIVE NOTHING! WHAT THE HECK @TEST
-		// isa_log('=======================================$_POST: =====' . $_POST . '============================================'); // @test remove 
-		
-		// isa_log('=======================================$_GET: =====' . $_GET . '============================================'); // @test remove 
-		
-		
-    }
+	function make_p_obj() {
+		$this->p = new stdClass();
+		foreach ($_GET as $c => $val) {
+			if (is_array($val)) {
+				$this->p->$c = $val;
+			} else {
+				$this->p->$c = trim(stripslashes($val));
+			}
+		}
+
+		foreach ($_POST as $c => $val) {
+			if (is_array($val)) {
+				$this->p->$c = $val;
+			} else {
+				$this->p->$c = trim(stripslashes($val));
+			}
+		}
+	}
 	
 	function template_redirect() {
 		global $post, $smartestthemes_options;
@@ -115,76 +107,73 @@ class SMARTESTReviewsBusiness {
 	/**
 	* Generate a random string
 	*/
-    function rand_string($length) {
-        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        $str = '';
-        $size = strlen($chars);
-        for ($i = 0; $i < $length; $i++) {
-            $str .= $chars[rand(0, $size - 1)];
-        }
-        return $str;
-    }
+	function rand_string($length) {
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		$str = '';
+		$size = strlen($chars);
+		for ($i = 0; $i < $length; $i++) {
+			$str .= $chars[rand(0, $size - 1)];
+		}
+		return $str;
+	}
 	
 	/**
 	* fills the value for got_aggregate()
 	*/
-    function get_aggregate_reviews() {
-        if ($this->got_aggregate !== false) {
-            return $this->got_aggregate;
-        }
-        global $wpdb;
-        $pageID = get_option('smartestthemes_reviews_page_id');
-        $row = $wpdb->get_results("SELECT COUNT(*) AS `total`,AVG(review_rating) AS `aggregate_rating`,MAX(review_rating) AS `max_rating` FROM `$this->dbtable` WHERE `status`=1");
-        /* make sure we have at least one review before continuing below */
-        if ($wpdb->num_rows == 0 || $row[0]->total == 0) {
-            $this->got_aggregate = array("aggregate" => 0, "max" => 0, "total" => 0, "text" => __('Reviews for my site', 'crucible'));
-            return false;
-        }
-        $aggregate_rating = $row[0]->aggregate_rating;
-        $max_rating = $row[0]->max_rating;
-        $total_reviews = $row[0]->total;
-        $row = $wpdb->get_results("SELECT `review_text` FROM `$this->dbtable` WHERE `page_id`=$pageID AND `status`=1 ORDER BY `date_time` DESC");
+	function get_aggregate_reviews() {
+		if ($this->got_aggregate !== false) {
+			return $this->got_aggregate;
+		}
+		global $wpdb;
+		$pageID = get_option('smartestthemes_reviews_page_id');
+		$row = $wpdb->get_results("SELECT COUNT(*) AS `total`,AVG(review_rating) AS `aggregate_rating`,MAX(review_rating) AS `max_rating` FROM `$this->dbtable` WHERE `status`=1");
+		/* make sure we have at least one review before continuing below */
+		if ($wpdb->num_rows == 0 || $row[0]->total == 0) {
+			$this->got_aggregate = array("aggregate" => 0, "max" => 0, "total" => 0, "text" => __('Reviews for my site', 'crucible'));
+			return false;
+		}
+		$aggregate_rating = $row[0]->aggregate_rating;
+		$max_rating = $row[0]->max_rating;
+		$total_reviews = $row[0]->total;
+		$row = $wpdb->get_results("SELECT `review_text` FROM `$this->dbtable` WHERE `page_id`=$pageID AND `status`=1 ORDER BY `date_time` DESC");
 		$sample_text = ! empty( $row[0]->review_text ) ? substr($row[0]->review_text, 0, 180) : '';
-        $this->got_aggregate = array("aggregate" => $aggregate_rating, "max" => $max_rating, "total" => $total_reviews, "text" => $sample_text);
-        return true;
-    }
+		$this->got_aggregate = array("aggregate" => $aggregate_rating, "max" => $max_rating, "total" => $total_reviews, "text" => $sample_text);
+		return true;
+	}
 	
-    function get_reviews($startpage, $perpage, $status) {
-        global $wpdb;
-        $startpage = $startpage - 1; // mysql starts at 0 instead of 1, so reduce them all by 1
-        if ($startpage < 0) { $startpage = 0; }
+	function get_reviews($startpage, $perpage, $status) {
+		global $wpdb;
+		$startpage = $startpage - 1; // mysql starts at 0 instead of 1, so reduce them all by 1
+		if ($startpage < 0) { $startpage = 0; }
 		$limit = 'LIMIT ' . $startpage * $perpage . ',' . $perpage;
 		
-        if ($status == -1) {
-            $qry_status = '1=1';
-        } else {
-            $qry_status = "`status`=$status";
-        }
+		if ($status == -1) {
+			$qry_status = '1=1';
+		} else {
+			$qry_status = "`status`=$status";
+		}
 
-        $reviews = $wpdb->get_results("SELECT 
-            `id`,
-            `date_time`,
-            `reviewer_name`,
-            `reviewer_email`,
-            `review_title`,
-            `review_text`,
-            `review_response`,
-            `review_rating`,
-            `reviewer_url`,
-            `reviewer_ip`,
-            `status`,
-            `page_id`,
-            `custom_fields`
-            FROM `$this->dbtable` WHERE $qry_status ORDER BY `date_time` DESC $limit
-            ");
-        $total_reviews = $wpdb->get_results("SELECT COUNT(*) AS `total` FROM `$this->dbtable` WHERE $qry_status");
-
-        $total_reviews = $total_reviews[0]->total;
-
-        return array($reviews, $total_reviews);
+		$reviews = $wpdb->get_results("SELECT 
+			`id`,
+			`date_time`,
+			`reviewer_name`,
+			`reviewer_email`,
+			`review_title`,
+			`review_text`,
+			`review_response`,
+			`review_rating`,
+			`reviewer_url`,
+			`reviewer_ip`,
+			`status`,
+			`page_id`,
+			`custom_fields`
+			FROM `$this->dbtable` WHERE $qry_status ORDER BY `date_time` DESC $limit
+			");
+		$total_reviews = $wpdb->get_results("SELECT COUNT(*) AS `total` FROM `$this->dbtable` WHERE $qry_status");
+		$total_reviews = $total_reviews[0]->total;
+		
+		return array($reviews, $total_reviews);
     }
-	
-	
 	
 	/**
 	* Returns the HTML string for the business schema, address, and phone with microdata for the aggregate rating.
@@ -249,7 +238,7 @@ class SMARTESTReviewsBusiness {
 		return $out;
 	}
 	
-	/* @todo may will use a template tag inside smar-home.php instead of this content filter for more efficiency.
+	/*
 	* Filter the content to conditionally attach the Aggregate footer to the home page
 	*/
     function homepage_aggregate_footer($content) {
@@ -433,12 +422,12 @@ class SMARTESTReviewsBusiness {
 		
 				for ($i = 0; $i < 6; $i++) {
 					if ( isset($custom_fields_unserialized[$i]) ) {
-						$is_label_entered = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : $smartestthemes_options['st_reviews_custom_field_' . $i];
+						$is_label_entered = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : stripslashes_deep(esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]));
 					
 						// if label is entered and show is checked
 						if ( $is_label_entered && get_option('st_reviews_custom' . $i . '_show') == 'true' && $custom_fields_unserialized[$i] != '') {
 						
-							$custom_shown .= '<div class="st-reviews-custom-field-' . $i . '"><span class="reviews-custom-label">' . $is_label_entered . ': </span> <span class="reviews-custom-vlue"> ' . $custom_fields_unserialized[$i] . ' </span></div>';
+							$custom_shown .= '<div class="st-reviews-custom-field-' . $i . '"><span class="reviews-custom-label">' . $is_label_entered . ': </span> <span class="reviews-custom-vlue"> ' . stripslashes_deep(esc_attr($custom_fields_unserialized[$i])) . ' </span></div>';
 						}
 					}
 				
@@ -475,8 +464,7 @@ class SMARTESTReviewsBusiness {
     }
 
     function show_reviews_form() {
-		// @test do i need current_user here?
-        global $post, $current_user, $smartestthemes_options;
+        global $post, $smartestthemes_options;
         $fields = '';
         $out = '';
 		$req_js = '';
@@ -869,13 +857,9 @@ class SMARTESTReviewsBusiness {
             $reviews_content .= $this->show_reviews_form();
         }
         $reviews_content .= '</div>';
-        
-		// @test may not need this?? 	$reviews_content = preg_replace('/\n\r|\r\n|\n|\r|\t/', '', $reviews_content); /* minify to prevent automatic line breaks, not removing double spaces */
-
         return $reviews_content;
+	}
 	
-	
-	}// end reviews_shortcode
 	/**
 	 * Load css and js on Reviews page
 	 */
@@ -959,36 +943,33 @@ class SMARTESTReviewsBusiness {
 
 		// check permissions
 		if ( isset($this->p->post_type) && $this->p->post_type == 'page' ) {
-                if (!current_user_can('edit_page', $post_id)) {
-                    return $post_id;
-                }
-            } elseif (!current_user_can('edit_post', $post_id)) {
-                return $post_id;
-            }
+			if (!current_user_can('edit_page', $post_id)) {
+				return $post_id;
+			}
+		} elseif (!current_user_can('edit_post', $post_id)) {
+			return $post_id;
+		}
 
-			if ( isset($meta_box) && isset($meta_box['fields']) && is_array($meta_box['fields']) )
-			{
-				foreach ($meta_box['fields'] as $field) {
+		if ( isset($meta_box) && isset($meta_box['fields']) && is_array($meta_box['fields']) ) {
+			foreach ($meta_box['fields'] as $field) {
 					
-					if ( isset($this->p->post_title) ) {
-						$old = get_post_meta($post_id, $field['id'], true);
+				if ( isset($this->p->post_title) ) {
+					$old = get_post_meta($post_id, $field['id'], true);
 						
-						if (isset($this->p->$field['id'])) {
-							$new = $this->p->$field['id'];
-							if ($new && $new != $old) {
-								update_post_meta($post_id, $field['id'], $new);
-							} elseif ($new == '' && $old) {
-								delete_post_meta($post_id, $field['id'], $old);
-							}
-						} else {
+					if (isset($this->p->$field['id'])) {
+						$new = $this->p->$field['id'];
+						if ($new && $new != $old) {
+							update_post_meta($post_id, $field['id'], $new);
+						} elseif ($new == '' && $old) {
 							delete_post_meta($post_id, $field['id'], $old);
 						}
+					} else {
+						delete_post_meta($post_id, $field['id'], $old);
 					}
-					
 				}
 			}
-
-            return $post_id;
+		}
+		return $post_id;
 	}
 	/**
 	 * Load admin css and js on admin View Reviews page
@@ -1076,8 +1057,6 @@ class SMARTESTReviewsBusiness {
  
                                     if (substr($col,0,7) == 'custom_') /* updating custom fields */
                                     {
-									
-										// @test this is prep to insert into db. 
                                         $custom_num = substr($col,7); // gets the number after the _
 										
                                         // get the old custom value 
@@ -1092,20 +1071,10 @@ class SMARTESTReviewsBusiness {
 											}
 
 											$old_value[$custom_num] = $val;// assign the new value
-											$update_col = 'custom_fields';//@test
-											$update_val = serialize($old_value);// @test
-											
+											$update_col = 'custom_fields';
+											$update_val = serialize($old_value);
 
                                         }
-										
-										
-										// @test end original way to update custom field.s
-										
-										
-										
-										
-										
-										
 										
                                     }
                                     else /* updating regular fields */
@@ -1316,10 +1285,9 @@ class SMARTESTReviewsBusiness {
                                      data-attribute='review_rating' 
                                      data-callback='make_stars_from_rating'
                                      data-type='select'><?php 
-									 echo $this->output_rating($review->review_rating,false); // @test
-									 
-									 ?></div>
-								</div>
+									 echo $this->output_rating($review->review_rating,false);
+								?></div>
+							</div>
                         </td>
                         <td class="comment column-comment">
                           <div class="smar-submitted-on">
@@ -1327,9 +1295,7 @@ class SMARTESTReviewsBusiness {
 <?php echo date(__('m/d/Y g:i a', 'crucible'),strtotime(__($review->date_time, 'crucible'))); ?>
                             </span>
                             <?php if ($review->status == 1) : 
-							
-							
-							
+
 								// hide jumplink if on a search page...
 								if ($this->p->s == '') {
 									/* not searching */
