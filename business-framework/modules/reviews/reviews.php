@@ -18,7 +18,6 @@ class SMARTESTReviewsBusiness {
 	var $got_aggregate = false;
 	var $p = '';
 	var $status_msg = '';
-	var $url = get_template_directory_uri().'/business-framework/modules/reviews/';// @test
 	
 	private function __construct() {
 		global $wpdb;
@@ -903,8 +902,8 @@ class SMARTESTReviewsBusiness {
 	
 	function enqueue_scripts() {
 		if( get_option('st_add_reviews') == 'true'  ) {
-			wp_register_style('smartest-reviews', $url . 'reviews.css');
-			wp_register_script('smartest-reviews', $url . 'reviews.js', array('jquery'));
+			wp_register_style('smartest-reviews', $this->dir_url() . 'reviews.css');
+			wp_register_script('smartest-reviews', $this->dir_url() . 'reviews.js', array('jquery'));
 			if( is_page(get_option('smartestthemes_reviews_page_id'))) {
 				wp_enqueue_style('smartest-reviews');
 		        wp_enqueue_script('smartest-reviews');
@@ -958,11 +957,13 @@ class SMARTESTReviewsBusiness {
 			register_widget('SmartestReviewsTestimonial');
 		}
 	}
-	/* @test remove & replace with a class var
-	public function getpluginurl() {
+	/*
+	* Return the URL for the Reviews files directory
+	*/
+	public function dir_url() {
 		return get_template_directory_uri().'/business-framework/modules/reviews/';
 	}
-	*/
+	
 	// @test is this method needed
 	public function admin_init() {
 		$this->init();
@@ -1011,11 +1012,9 @@ class SMARTESTReviewsBusiness {
 	}
 	
 	public function enqueue_admin_scripts() {
-		// @test remove $pluginurl = $this->getpluginurl();
-		// @todo see if need to check if we are on both of these pages...
 		if (isset($this->p->page) && ( $this->p->page == 'smar_view_reviews' ) ) {
-			wp_enqueue_script('st-reviews-admin',$url.'reviews-admin.js',array('jquery'));
-			wp_enqueue_style('st-reviews-admin',$url.'reviews-admin.css');
+			wp_enqueue_script('st-reviews-admin',$this->dir_url().'reviews-admin.js',array('jquery'));
+			wp_enqueue_style('st-reviews-admin',$this->dir_url().'reviews-admin.css');
 		}
 	}	
 	
