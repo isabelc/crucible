@@ -1,7 +1,5 @@
 ﻿.smar_show{display:inline}.smar_hide{display:none}.smar_sc{padding:0 10px 0 0}
 
-/* @me thinks this is not needed here */
-.smar_rname{padding:0;line-height:20px}
 .smar_clear{clear:both}/* @me thinks this is not needed here */
 
 
@@ -12,3 +10,25 @@
 #smar_respond_1 .base{background:url(newstars.png) 0 0 no-repeat;width:85px;height:17px;float:left;padding-right:4px;overflow:hidden;display:block}
 
 #smar_respond_1 .average{background:url(newstars.png) 0 -16px no-repeat;text-indent:-9999px;height:17px}
+
+.smar_pagination a, .smar_pagination .smar_current {
+	padding: 0px 10px 3px;
+	background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.05);
+	font-size: 16px;
+	font-weight: 400;
+}
+.smar_pagination_page {display:inline;}
+
+@media screen and (max-device-width:768px) {
+	.smar_pagination a, .smar_pagination .smar_current {
+		padding: 20px;
+		font-size: 22px;
+	}
+	.reviews-admin{
+		float:none;
+		clear:left;
+	}
+	.reviews-admin .smar_pagination{
+		margin:30px;
+	}
+}

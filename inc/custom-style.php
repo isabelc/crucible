@@ -155,7 +155,7 @@ a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{
 	color:<?php echo $link_hover_color; ?>;
 }
 
-.button, button, html input[type="button"], #smar_pagination .smar_current, #smar_pagination a:hover, input[type="reset"],input[type="submit"],#smar_button_1,#smar_submit_btn{
+.button, button, html input[type="button"], .smar_pagination .smar_current, .smar_pagination a:hover, input[type="reset"],input[type="submit"],#smar_button_1,#smar_submit_btn{
 
     background:<?php echo $button_color; ?>;
 	color:<?php echo $button_text_color; ?>;

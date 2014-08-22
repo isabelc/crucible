@@ -30,7 +30,7 @@ a#smar_button_1{
 #smar_table_2 tbody tr:nth-child(even), #smar_table_2 tbody tr:nth-child(2n) {background-color:inherit !important;}
 #st-reviews-form input{padding:0;margin:0!important;width:200px!important;min-height:36px;}#st-reviews-form textarea{padding:0!important;margin:0!important;width:400px!important;height:100px!important}#st-reviews-form small{padding:0!important;margin:0!important}#st-reviews-form table,#st-reviews-form td{border:0!important;border-style:none!important}
 
-#smar_pagination{clear:both;padding:0;margin-top:1.6em;position:relative;font-size:11px;line-height:13px}#smar_pagination_page{float:left;display:block;line-height:30px;padding-right:5px}#smar_pagination .smar_current,#smar_pagination a{display:block;float:left;margin:2px 5px 2px 0;padding:6px 9px 5px;text-decoration:none;width:auto;color:#fff;background:#555}#smar_pagination a:hover{color:#fff;background:#3279BB}#smar_pagination .smar_current{padding:6px 9px 5px;background:#3279BB;color:#fff}
+.smar_pagination{clear:both;padding:0;margin-top:1.6em;position:relative;font-size:11px;line-height:13px}.smar_pagination_page{float:left;display:block;line-height:30px;padding-right:5px}.smar_pagination .smar_current,.smar_pagination a{display:block;float:left;margin:2px 5px 2px 0;padding:6px 9px 5px;text-decoration:none;width:auto;color:#fff;background:#555}.smar_pagination a:hover{color:#fff;background:#3279BB}.smar_pagination .smar_current{padding:6px 9px 5px;background:#3279BB;color:#fff}
 
 h2.reviewstitle{margin-top:1.5em}
 

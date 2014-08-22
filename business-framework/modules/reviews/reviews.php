@@ -329,7 +329,7 @@ class SMARTESTReviewsBusiness {
                 } /* page is using get variables for pageid */
             }
 
-            $out .= '<div id="smar_pagination"><div id="smar_pagination_page">'. __('Page: ', 'crucible'). '</div>';
+            $out .= '<div class="smar_pagination"><div class="smar_pagination_page">'. __('Page: ', 'crucible'). '</div>';
 
             if ($paged > 2 && $paged > $range + 1 && $showitems < $pages) {
                 if ($uri && $pretty) {
@@ -378,8 +378,6 @@ class SMARTESTReviewsBusiness {
 	
 	// @todo a problem in which the fields need to be saved with the values for custom fields, otherwise it assumes the first filled in custom field is always the first lable, which may not align.
 	*/
-	
-	
 	
 	/**
 	* The HTML for the entire Reviews list
@@ -1314,7 +1312,9 @@ class SMARTESTReviewsBusiness {
                             <option value="btrash"><?php _e('Move to Trash', 'crucible'); ?></option>
                             <option value="bdelete"><?php _e('Delete Forever', 'crucible'); ?></option>
                       </select>&nbsp;
-                      <input type="submit" class="button-secondary apply" name="act" value="<?php _e('Apply', 'crucible'); ?>" id="doaction" /></div><br class="clear" /></div> <div class="clear"></div><table cellspacing="0" class="widefat comments fixed"><thead><tr><th style="" class="manage-column column-cb check-column" id="cb" scope="col"><input type="checkbox" /></th><th style="" class="manage-column column-author" id="author" scope="col"><?php _e('Author', 'crucible'); ?></th><th style="" class="manage-column column-comment" id="comment" scope="col"><?php _e('Review', 'crucible'); ?></th></tr>
+                      <input type="submit" class="button-secondary apply" name="act" value="<?php _e('Apply', 'crucible'); ?>" id="doaction" /></div>
+					  <div class="alignright actions reviews-admin"><?php echo $this->pagination($total_reviews); ?></div>
+					  <br class="clear" /></div> <div class="clear"></div><table cellspacing="0" class="widefat comments fixed"><thead><tr><th style="" class="manage-column column-cb check-column" id="cb" scope="col"><input type="checkbox" /></th><th style="" class="manage-column column-author" id="author" scope="col"><?php _e('Author', 'crucible'); ?></th><th style="" class="manage-column column-comment" id="comment" scope="col"><?php _e('Review', 'crucible'); ?></th></tr>
                 </thead>
                 <tfoot>
                   <tr>
@@ -1465,11 +1465,7 @@ class SMARTESTReviewsBusiness {
                       </select>&nbsp;
                       <input type="submit" class="button-secondary apply" name="act2" value="<?php _e('Apply', 'crucible'); ?>" id="doaction2" />
                 </div>
-                <div class="alignleft actions" style="float:left;padding-left:20px;"><?php 
-				
-				// @test this output
-				echo $this->pagination($total_reviews);
-				?></div>  
+                <div class="alignright actions reviews-admin"><?php echo $this->pagination($total_reviews); ?></div>  
                 <br class="clear" />
               </div>
             </form>
