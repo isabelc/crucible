@@ -251,21 +251,65 @@ big {
 }
 
 /* @test FONTS */
-.font_arial { font-family: Arial,Helvetica,sans-serif }
-.font_cambria { font-family:Cambria, Georgia, Times, Times New Roman, serif}
-.font_copperplate_light { font-family: Copperplate Light, Copperplate Gothic Light, serif}
-.font_copperplate_bold { font-family: Copperplate Bold, Copperplate Gothic Bold, serif}
-.font_garamond { font-family: Garamond, Hoefler Text, Times New Roman, Times, serif}
-.font_georgia { font-family: Georgia, Times, Times New Roman, serif}
-.font_gillsans { font-family: GillSans, Calibri, Trebuchet MS, sans-serif}
-.font_impact { font-family: Impact, Haettenschweiler, Arial Narrow Bold, sans-serif}
-.font_monotype { font-family: Monotype Corsiva, Arial, sans-serif}
-.font_monospace { font-family: Lucida Console,Monaco,monospace}
-.font_lucida { font-family: Lucida Sans Unicode,Lucida Grande,sans-serif}
-.font_palatino { font-family: Palatino Linotype,Book Antiqua,Palatino,serif}
-.font_tahoma { font-family: Tahoma,Geneva,sans-serif}
-.font_trebuchet { font-family: Trebuchet MS,Arial,Helvetica,sans-serif}
-.font_verdana { font-family: Verdana,Geneva,sans-serif}
+.font_arial,
+.site-title a.font_arial,
+.attention-grab .font_arial { font-family: Arial,Helvetica,sans-serif }
+
+.font_cambria,
+.site-title a.font_cambria,
+.attention-grab .font_cambria { font-family:Cambria, Georgia, Times, Times New Roman, serif}
+
+.font_copperplate_light,
+.site-title a.font_copperplate_light,
+.attention-grab .font_copperplate_light { font-family: Copperplate Light, Copperplate Gothic Light, serif}
+
+.font_copperplate_bold,
+.site-title a.font_copperplate_bold
+.attention-grab .font_copperplate_bold { font-family: Copperplate Bold, Copperplate Gothic Bold, serif}
+
+.font_garamond,
+.site-title a.font_garamond,
+.attention-grab .font_garamond { font-family: Garamond, Hoefler Text, Times New Roman, Times, serif}
+
+.font_georgia,
+.site-title a.font_georgia,
+.attention-grab .font_georgia { font-family: Georgia, Times, Times New Roman, serif}
+
+.font_gillsans,
+.site-title a.font_gillsans,
+.attention-grab .font_gillsans { font-family: GillSans, Calibri, Trebuchet MS, sans-serif}
+
+.font_impact,
+.site-title a.font_impact,
+.attention-grab .font_impact { font-family: Impact, Haettenschweiler, Arial Narrow Bold, sans-serif}
+
+.font_monotype,
+.site-title a.font_monotype,
+.attention-grab .font_monotype { font-family: Monotype Corsiva, Arial, sans-serif}
+
+.font_monospace,
+.site-title a.font_monospace,
+.attention-grab .font_monospace { font-family: Lucida Console,Monaco,monospace}
+
+.font_lucida,
+.site-title a.font_lucida,
+.attention-grab .font_lucida { font-family: Lucida Sans Unicode,Lucida Grande,sans-serif}
+
+.font_palatino,
+.site-title a.font_palatino,
+.attention-grab .font_palatino { font-family: Palatino Linotype,Book Antiqua,Palatino,serif}
+
+.font_tahoma,
+.site-title a.font_tahoma,
+.attention-grab .font_tahoma { font-family: Tahoma,Geneva,sans-serif}
+
+.font_trebuchet,
+.site-title a.font_trebuchet,
+.attention-grab .font_trebuchet { font-family: Trebuchet MS,Arial,Helvetica,sans-serif}
+
+.font_verdana,
+.site-title a.font_verdana,
+.attention-grab .font_verdana { font-family: Verdana,Geneva,sans-serif}
 
 /*--------------------------------------------------------------
 3.0 Elements

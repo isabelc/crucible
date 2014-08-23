@@ -70,11 +70,15 @@
 
 	// logo font
 	wp.customize( 'smartestthemes_options[logo_font]', function( value ) {
-		value.bind( function( newval ) {
+		value.bind( function( to ) {
 		
 			// always remove previous class during preview
 			
 			$('.site-title a').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');
+
+			
+			// @test to is undefined below according to browser console error
+
 
 			$('.site-title a').addClass( to ? 'font_' + to : 'font_copperplate_bold' );// @new default
 			
@@ -126,7 +130,7 @@
 		value.bind( function( to ) {
 			// @test clearing
 			
-			$('h2.site-description').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');
+			$('h2.site-description').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');// @new list
 
 			$('h2.site-description').addClass( to ? 'font_' + to : 'font_copperplate_bold' );// @new default
 			
@@ -216,7 +220,7 @@
 		} );
 	} );
 	
-	//
+	
 	// Table caption color
 	wp.customize( 'smartestthemes_options[table_caption_bg_color]', function( value ) {
 		value.bind( function( to ) {
@@ -275,7 +279,7 @@
 	
 	// Attention Grabber font
 	wp.customize( 'smartestthemes_options[att_grabber_font]', function( value ) {
-		value.bind( function( newval ) {
+		value.bind( function( to ) {
 		
 		
 		/* @todo this DID work, but we are trying now a new method that should also work with site-title and tagline...
@@ -293,7 +297,7 @@
 
 			// @test clearing
 			
-			$('.attention-grab').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');
+			$('.attention-grab').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');// @new list
 
 			$('.attention-grab').addClass( to ? 'font_' + to : 'font_impact' );// @new default
 			
@@ -368,7 +372,7 @@
 	// Heading font
 	
 	wp.customize( 'smartestthemes_options[heading_font]', function( value ) {
-		value.bind( function( newval ) {
+		value.bind( function( to ) {
 		
 		
 		/* @todo this did work, but trying new method that should also work with site title and tagline 
@@ -455,22 +459,25 @@
 	// Footer text
 	wp.customize( 'smartestthemes_options[footer_text]', function( value ) {
 		value.bind( function( to ) {
-			$( '#custom-footer' ).html( '<br />' + to );
+			$( '#custom-footer' ).html( '<br />' + to );// @test try without the br and see if it ok.
 		} );
 	} );
 		
 	// Override Footer
 	wp.customize( 'smartestthemes_options[override_footer]', function( value ) {
 		value.bind( function( to ) {
+		
 			if ( '1' == to ) {
 				// hide footer
-				$( "#footer-copyright, #footer-sitename" ).hide();
+				$( "#footer-copyright, #footer-sitename, .extra-span" ).hide();// @test maybe remove .extra-span here and below
 			} else {
 				// show default footer
 				bn = wp.customize.value('blogname')();
 				year = (new Date).getFullYear();
-				$( '.site-info' ).prepend( '<span id="footer-copyright">Copyright &copy; ' + year + '</span> <a id="footer-sitename" href="#">' + bn + '</a>' );
+				$( '.site-info' ).prepend( '<span class="extra-span" style="display:block;"><span id="footer-copyright">Copyright &copy; ' + year + '</span> <a id="footer-sitename" href="#">' + bn + '</a></span>' );
 			}
+			
+	
 		} );
 	} );	
 	
