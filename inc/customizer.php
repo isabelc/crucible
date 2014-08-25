@@ -26,7 +26,7 @@ function crucible_customize_register( $wp_customize ) {
 /* @test replace this with the add_class version
 /// @test must retest all 4 with this again: site title, tagline, headings, attention grabber
 ///
-
+*/
 	
 	$logo_fonts = array(
 			'' => 'default',// @test
@@ -47,7 +47,10 @@ function crucible_customize_register( $wp_customize ) {
 			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
 	);
 	
-*/
+/** @test remove this was the add class method. instead will try above and then strip the beginning and lower case it to get a class name.
+*
+*
+*
 
 	$logo_fonts = array(
 			'' => 'default',// @test
@@ -67,6 +70,8 @@ function crucible_customize_register( $wp_customize ) {
 			'trebuchet' => 'Trebuchet MS',
 			'verdana' => 'Verdana, Geneva'
 	);
+*/
+
 	
 	
 	/* add a textarea control */
@@ -135,6 +140,23 @@ function crucible_customize_register( $wp_customize ) {
 		'priority'	=> 62
 	));
 
+	
+	/* Tagline font */
+	$wp_customize->add_setting('smartestthemes_options[tagline_font]', array(
+		'default'	=> '',// @test
+		'type'		=> 'option',
+		'transport'	=> 'postMessage'
+	));
+	$wp_customize->add_control( 'tagline_font_select', array(
+		'settings' => 'smartestthemes_options[tagline_font]',
+		'label' => __('Tagline Font', 'crucible'),
+		'section' => 'title_tagline',
+		'type' => 'select',
+		'choices' => $logo_fonts,
+		'priority'   => 63
+	));
+
+	
 	/* logo font color */
 	$wp_customize->add_setting('smartestthemes_options[logo_color]', array(
         'default'	=> '#000',// @new default
@@ -149,7 +171,7 @@ function crucible_customize_register( $wp_customize ) {
 				'label'		=> __( 'Site Title Color', 'crucible' ),
 				'section'	=> 'title_tagline',
 				'settings'	=> 'smartestthemes_options[logo_color]',
-				'priority'	=> 63
+				'priority'	=> 64
 			)
 	));
 
@@ -164,8 +186,10 @@ function crucible_customize_register( $wp_customize ) {
         'label'		=> __('Optional: Title Size. Default is 36px.', 'crucible'),// @new default size
         'section'	=> 'title_tagline',
         'settings'	=> 'smartestthemes_options[logo_fontsize]',
-		'priority'	=> 65
+		'priority'	=> 67
     ));
+	
+	
 	
 	
 	/* Hide tagline */
@@ -183,20 +207,6 @@ function crucible_customize_register( $wp_customize ) {
 		'priority'	=> 15
     ));
 	
-	/* Tagline font */
-	$wp_customize->add_setting('smartestthemes_options[tagline_font]', array(
-		'default'	=> '',// @test
-		'type'		=> 'option',
-		'transport'	=> 'postMessage'
-	));
-	$wp_customize->add_control( 'tagline_font_select', array(
-		'settings' => 'smartestthemes_options[tagline_font]',
-		'label' => __('Tagline Font', 'crucible'),
-		'section' => 'title_tagline',
-		'type' => 'select',
-		'choices' => $logo_fonts,
-		'priority'   => 66
-	));
 
 	/* Tagline color */
 	$wp_customize->add_setting('smartestthemes_options[tagline_color]', array(
@@ -212,7 +222,7 @@ function crucible_customize_register( $wp_customize ) {
 				'label'		=> __( 'Tagline Color', 'crucible' ),
 				'section'	=> 'title_tagline',
 				'settings'	=> 'smartestthemes_options[tagline_color]',
-				'priority'	=> 67
+				'priority'	=> 65
 			)
 	));
 	

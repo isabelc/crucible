@@ -299,7 +299,7 @@ function stcf_display_contact_form() {
 	} else { $captcha_box = ''; }
 	if ( 'true' == $include_phone ) {
 		$phone_field = '<fieldset class="stcf-phone">
-			<label for="smartestthemes_contactform_phone">'. __( 'Phone', 'crucible' ) .'</label>
+			<label for="stcf_phone">'. __( 'Phone', 'crucible' ) .'</label>
 			'. $stcf_strings['phone'] .
 			'</fieldset>';
 	} else {

@@ -23,7 +23,9 @@
 			
 			if ( '' == newval ) {
 			
-				sitetitle = wp.customize.value('blogname')();
+				var sitetitle = wp.customize.value('blogname')();
+				
+				// @todo get site-title font option here and apply to the a below.
 				
 				$( 'img#customlogo' ).hide();
 				
@@ -57,7 +59,7 @@
 				$( 'img#customlogo' ).hide();
 				
 				// prepend full size image
-				fullImage = wp.customize.value('smartestthemes_options[logo_setting]')();
+				var fullImage = wp.customize.value('smartestthemes_options[logo_setting]')();
 				$( '.site-branding' ).prepend( '<img id="customlogo" src="' + fullImage + '" />' );
 					
 				// add the css
@@ -71,19 +73,29 @@
 	// logo font
 	wp.customize( 'smartestthemes_options[logo_font]', function( value ) {
 		value.bind( function( to ) {
-		
+
 			// always remove previous class during preview
-			
-			$('.site-title a').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');
 
-			
-			// @test to is undefined below according to browser console error
+			$('.site-title a').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');
 
+			// @test 2 convert font key into class slug
 
-			$('.site-title a').addClass( to ? 'font_' + to : 'font_copperplate_bold' );// @new default
+			if ( to ) {
+
+				// get position of 1st comma
+				var ifComma = to.indexOf(",");
+				// extract the font class
+				if(ifComma > 1) {
+					var fontclass = to.substring(0, ifComma);
+				} else {
+					var fontclass = to;
+				}
+
+				// convert spaces to dashes, and make it lowercase @test
+				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
+			}
 			
-			
-			// @test clearing !!
+			$('.site-title a').addClass( to ? 'font_' + fontclass : 'font_copperplate-bold' );// @new default
 			
 		} );
 	} );
@@ -130,10 +142,29 @@
 		value.bind( function( to ) {
 			// @test clearing
 			
-			$('h2.site-description').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');// @new list
+			$('h2.site-description').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');// @new list
 
-			$('h2.site-description').addClass( to ? 'font_' + to : 'font_copperplate_bold' );// @new default
+			// @test convert font key into class slug
 			
+			// @test 2 convert font key into class slug
+
+			if ( to ) {
+
+				// get position of 1st comma
+				var ifComma = to.indexOf(",");
+				// extract the font class
+				if(ifComma > 1) {
+					var fontclass = to.substring(0, ifComma);
+				} else {
+					var fontclass = to;
+				}
+
+				// convert spaces to dashes, and make it lowercase @test
+				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
+			}			
+			
+			
+			$('h2.site-description').addClass( to ? 'font_' + fontclassSlug : 'font_copperplate_bold' );// @new default
 	
 		} );
 	} );
@@ -295,11 +326,26 @@
 
 
 
-			// @test clearing
-			
-			$('.attention-grab').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');// @new list
+			$('.attention-grab').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');// @new list
 
-			$('.attention-grab').addClass( to ? 'font_' + to : 'font_impact' );// @new default
+			// @test 2 convert font key into class slug
+
+			if ( to ) {
+
+				// get position of 1st comma
+				var ifComma = to.indexOf(",");
+				// extract the font class
+				if(ifComma > 1) {
+					var fontclass = to.substring(0, ifComma);
+				} else {
+					var fontclass = to;
+				}
+
+				// convert spaces to dashes, and make it lowercase @test
+				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
+			}			
+			
+			$('.attention-grab').addClass( to ? 'font_' + fontclassSlug : 'font_impact' );// @new default
 			
 		} );
 	} );
@@ -391,12 +437,33 @@
 			// @test clearing
 			// @test this one has a different default than the other logo fonts !! @test
 			
-			$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').removeClass('font_arial font_cambria font_copperplate_light font_copperplate_bold font_garamond font_georgia font_gillsans font_impact font_monotype font_monospace font_lucida font_palatino font_tahoma font_trebuchet font_verdana');
+			$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');
+
+			
+
+
 
 			if ( '' != to ) {
-				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').addClass( 'font_' + to );// @new default
-			}
+			
+			
+				// @test 2 convert font key into class slug
+				
+				// get position of 1st comma
+				var ifComma = to.indexOf(",");
+				// extract the font class
+				if(ifComma > 1) {
+					var fontclass = to.substring(0, ifComma);
+				} else {
+					var fontclass = to;
+				}
 
+				// convert spaces to dashes, and make it lowercase @test
+				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
+
+
+				
+				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').addClass( 'font_' + fontclassSlug );// @new default
+			}
 			
 		} );
 	} );

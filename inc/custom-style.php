@@ -1,6 +1,6 @@
 <style><?php global $smartestthemes_options;// @TEST WORKS
-$header_bg_color = isset($smartestthemes_options['header_bg_color']) ? $smartestthemes_options['header_bg_color'] : '';
-$footer_bg_color = isset($smartestthemes_options['footer_bg_color']) ? $smartestthemes_options['footer_bg_color'] : '';
+$header_bg_color = empty($smartestthemes_options['header_bg_color']) ? '' : $smartestthemes_options['header_bg_color'];
+$footer_bg_color = empty($smartestthemes_options['footer_bg_color']) ? '' : $smartestthemes_options['footer_bg_color'];
 
 if ( $header_bg_color ) {
 	?>#masthead{background:<?php echo $header_bg_color; ?>; }<?php
@@ -12,19 +12,22 @@ if ( $footer_bg_color ) {
 
 /* FONTS */
 
-$att_grabber_color = isset($smartestthemes_options['att_grabber_color']) ? $smartestthemes_options['att_grabber_color'] : '';
-$att_grabber_font = isset($smartestthemes_options['att_grabber_font']) ? $smartestthemes_options['att_grabber_font'] : 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif';// @new default
-$attgrabber_fontsize = isset($smartestthemes_options['attgrabber_fontsize']) ? $smartestthemes_options['attgrabber_fontsize'] : '';
-$body_text_color = isset($smartestthemes_options['body_text_color']) ? $smartestthemes_options['body_text_color'] : '';
-$body_font = isset($smartestthemes_options['body_font']) ? $smartestthemes_options['body_font'] : '';
-$body_fontsize = isset($smartestthemes_options['body_fontsize']) ? $smartestthemes_options['body_fontsize'] : '';
-$heading_text_color = isset($smartestthemes_options['heading_text_color']) ? $smartestthemes_options['heading_text_color'] : '';
-$heading_font = isset($smartestthemes_options['heading_font']) ? $smartestthemes_options['heading_font'] : '';
-$h1_fontsize =  isset($smartestthemes_options['h1_fontsize']) ? $smartestthemes_options['h1_fontsize'] : '';
-$h2_fontsize =  isset($smartestthemes_options['h2_fontsize']) ? $smartestthemes_options['h2_fontsize'] : '';
-$h3_fontsize =  isset($smartestthemes_options['h3_fontsize']) ? $smartestthemes_options['h3_fontsize'] : '';
-$h4_fontsize =  isset($smartestthemes_options['h4_fontsize']) ? $smartestthemes_options['h4_fontsize'] : '';
-$footer_text_color = isset($smartestthemes_options['footer_text_color']) ? $smartestthemes_options['footer_text_color'] : '';
+$att_grabber_color = empty($smartestthemes_options['att_grabber_color']) ? '' : $smartestthemes_options['att_grabber_color'];
+$att_grabber_font = empty($smartestthemes_options['att_grabber_font']) ? 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' : $smartestthemes_options['att_grabber_font'];// @new default
+$attgrabber_fontsize = empty($smartestthemes_options['attgrabber_fontsize']) ? '' : $smartestthemes_options['attgrabber_fontsize'];
+
+$body_text_color = empty($smartestthemes_options['body_text_color']) ? '' : $smartestthemes_options['body_text_color'];
+$body_font = empty($smartestthemes_options['body_font']) ? '' : $smartestthemes_options['body_font'];
+$body_fontsize = empty($smartestthemes_options['body_fontsize']) ? '' : $smartestthemes_options['body_fontsize'];
+
+$heading_text_color = empty($smartestthemes_options['heading_text_color']) ? '' : $smartestthemes_options['heading_text_color'];
+$heading_font = empty($smartestthemes_options['heading_font']) ? '' : $smartestthemes_options['heading_font'];
+$h1_fontsize =  empty($smartestthemes_options['h1_fontsize']) ? '' : $smartestthemes_options['h1_fontsize'];
+$h2_fontsize =  empty($smartestthemes_options['h2_fontsize']) ? '' : $smartestthemes_options['h2_fontsize'];
+$h3_fontsize =  empty($smartestthemes_options['h3_fontsize']) ? '' : $smartestthemes_options['h3_fontsize'];
+$h4_fontsize =  empty($smartestthemes_options['h4_fontsize']) ? '' : $smartestthemes_options['h4_fontsize'];
+
+$footer_text_color = empty($smartestthemes_options['footer_text_color']) ? '' : $smartestthemes_options['footer_text_color'];
 
 if ( $body_text_color ) { 
 
@@ -89,7 +92,8 @@ if ( $heading_font ) {
 
 if ( $att_grabber_font || $att_grabber_color || $attgrabber_fontsize ) { ?>
 
-	.attention-grab{ 
+	.attention-grab{
+	
 	<?php if ( $att_grabber_font ) { ?>
 			font-family:<?php echo $att_grabber_font; ?>;
 	<?php }
@@ -101,6 +105,7 @@ if ( $att_grabber_font || $att_grabber_color || $attgrabber_fontsize ) { ?>
 	if ( $attgrabber_fontsize ) { ?>
 			font-size:<?php echo $attgrabber_fontsize; ?>;
 	<?php } ?>
+	
 	}
 		
 <?php }
@@ -175,25 +180,18 @@ tbody tr:nth-child(even) {background:<?php echo $table_alt_row_color; ?> }
 // LOGO
 
 /* avoid PHP notices */
-$logo_color = isset($smartestthemes_options['logo_color']) ? $smartestthemes_options['logo_color'] : '';
-// @test remove $logo_font = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : '';
-$logo_fontsize = isset($smartestthemes_options['logo_fontsize']) ? $smartestthemes_options['logo_fontsize'] : '';
-$increase_logo = isset($smartestthemes_options['increase_logo']) ? $smartestthemes_options['increase_logo'] : '';
-$hide_tagline = isset($smartestthemes_options['hide_tagline']) ? $smartestthemes_options['hide_tagline'] : '';
-$tagline_color = isset($smartestthemes_options['tagline_color']) ? $smartestthemes_options['tagline_color'] : '';
-// @test remove	$tagline_font = isset($smartestthemes_options['tagline_font']) ? $smartestthemes_options['tagline_font'] : '';
-$tagline_size = isset($smartestthemes_options['tagline_size']) ? $smartestthemes_options['tagline_size'] : '';
+$logo_color = empty($smartestthemes_options['logo_color']) ? '' : $smartestthemes_options['logo_color'];
+
+$logo_fontsize = empty($smartestthemes_options['logo_fontsize']) ? '' : $smartestthemes_options['logo_fontsize'];
+$increase_logo = empty($smartestthemes_options['increase_logo']) ? '' : $smartestthemes_options['increase_logo'];
+$hide_tagline = empty($smartestthemes_options['hide_tagline']) ? '' : $smartestthemes_options['hide_tagline'];
+$tagline_color = empty($smartestthemes_options['tagline_color']) ? '' : $smartestthemes_options['tagline_color'];
+
+$tagline_size = empty($smartestthemes_options['tagline_size']) ? '' : $smartestthemes_options['tagline_size'];
 
 if ( $logo_color ) {
 	?>.site-title a { color:<?php echo $logo_color; ?>; }<?php
 }
-
-/* 
-// @test remove 
-if ( $logo_font ) {
-	?>.site-title a {font-family:<?php echo $logo_font; ?>}<?php
-}
-*/
 
 if ( $logo_fontsize ) {
 	?>.site-title a {font-size:<?php echo $logo_fontsize; ?>}<?php
@@ -208,13 +206,6 @@ if( empty($hide_tagline) ) {
 	if ( $tagline_color ) {
 		?>h2.site-description { color:<?php echo $tagline_color; ?>;}<?php
 	}
-	
-	/*
-	// @test remove
-	if ( $tagline_font ) {
-		?>h2.site-description{font-family:<?php echo $tagline_font; ?>;}<?php
-	} 
-	*/
 	
 	if ( $tagline_size ) {
 		?>h2.site-description{font-size:<?php echo $tagline_size; ?>;}<?php

@@ -105,10 +105,9 @@ function crucible_post_thumbnail() {
 	if ( post_password_required() ) {
 		return;
 	}
-	
-	global $smartestthemes_options;// @test this one works
-	$stop = isset($smartestthemes_options['st_stop_theme_icon']) ? $smartestthemes_options['st_stop_theme_icon'] : ''; // @test output of this var, even though i know global here works. this method of global, or do i use get_option
-	
+	global $smartestthemes_options;
+	$stop = isset($smartestthemes_options['st_stop_theme_icon']) ? $smartestthemes_options['st_stop_theme_icon'] : '';
+
 	if ( ! has_post_thumbnail() ) {
 		if ( is_post_type_archive( 'smartest_news' ) && ( $stop == 'false' ) ) {
 			// show news icon
@@ -130,10 +129,7 @@ function crucible_post_thumbnail() {
 	$out = '';
 	$img = get_post_thumbnail_id(); 
 	
-	// @test replace with next 	$full_image_url = wp_get_attachment_image_src( $img, 'full');
-	
-	// @test get attachment title for title attr
-	$img_data = wp_prepare_attachment_for_js( $img );// @test all of these data on a single post image
+	$img_data = wp_prepare_attachment_for_js( $img );
 
 	if ( is_singular() ) :
 		$out .= '<div class="post-thumbnail"><a href="' . $img_data['url'] . '" title="' . $img_data['title'] . '"><img src="' . $img_data['url'] . '" alt="' . $img_data['title'] . '" width="' . $img_data['width'] . '" height="' . $img_data['height'] . '" /></a></div>';
@@ -282,7 +278,7 @@ function crucible_contact_info() {
 	
 	$output = '<div itemscope itemtype="http://schema.org/'.$schema. '"><p><strong itemprop="name">' . $bn . '</strong></p><p class="main-address">';
 	
-	$output .= crucible_postal_address();// @test
+	$output .= crucible_postal_address();
 	
 	if ( $phone ) {
 		$output .= '<br /><span class="strong">' . __('Telephone:', 'crucible') . '</span>&nbsp; <span itemprop="telephone">'. $phone . '</span> &nbsp;';
@@ -313,23 +309,19 @@ function crucible_google_map() {
  * Display the logo
  */
 function crucible_logo() {
-	global $smartestthemes_options;// @test this one works
+	global $smartestthemes_options;
 	$name = get_bloginfo('name');
 	$description = get_bloginfo('description');
 	$increase_logo = empty($smartestthemes_options['increase_logo']) ? '' : $smartestthemes_options['increase_logo'];
-	$bn = stripslashes(esc_attr($smartestthemes_options['st_business_name']));
-	if(!$bn) { 
-		$bn = $name;
-	}
+	
+	$bn = empty($smartestthemes_options['st_business_name']) ? $name : stripslashes(esc_attr($smartestthemes_options['st_business_name']));
+	
 	// seo title
-	$ti = stripslashes(esc_attr($smartestthemes_options['st_home_meta_title']));
-	if(empty($ti)) {
-		$ti = $bn;
-	}
+	$ti = empty($smartestthemes_options['st_home_meta_title']) ? $bn : stripslashes(esc_attr($smartestthemes_options['st_home_meta_title']));
 	
 	$output = '';
 
-	$custom_logo = isset($smartestthemes_options['logo_setting']) ? $smartestthemes_options['logo_setting'] : '';// @test
+	$custom_logo = empty($smartestthemes_options['logo_setting']) ? '' : $smartestthemes_options['logo_setting'];// @test
 	
 	if ( $custom_logo ) {
 		// there is a logo
@@ -352,10 +344,48 @@ function crucible_logo() {
 		
 		// no logo image, so use text logo 
 		if ( $name ) {
-			$output .= '<h1 class="site-title"><a href="' . home_url( '/' ) . '" title="' . $ti . '" rel="home">' . $name . '</a></h1>';
+			// isa_log($smartestthemes_options);// @test 
+		
+			$output .= '<h1 class="site-title"><a';
+			
+			// get custom logo font
+			$logo_font = empty($smartestthemes_options['logo_font']) ? '' : $smartestthemes_options['logo_font'];
+
+			
+			if ( $logo_font ) {
+			
+				// convert font key into class slug @test
+				// $logo_font_pre = strstr($logo_font, ',', true);
+				// $logo_font_class = sanitize_title($logo_font_pre);
+				
+				// isa_log('=== $logo_font ============: ' . $logo_font);// @test
+				//isa_log('=== $logo_font_pre ============: ' . $logo_font_pre);// @test
+				//isa_log('=== $logo_font_class ============: ' . $logo_font_class);// @test
+				
+				$output .= ' class="font_' . $logo_font_class . '" ';
+			}
+			
+			$output .= ' href="' . home_url( '/' ) . '" title="' . $ti . '" rel="home">' . $name . '</a></h1>';
 		}
 		if ( empty($smartestthemes_options['hide_tagline']) ) {
-			$output .= '<h2 class="site-description">' . $description . '</h2>';
+		
+			// get custom tagline font
+			$tagline_font = empty($smartestthemes_options['tagline_font']) ? '' : $smartestthemes_options['tagline_font'];
+
+			// convert font keys into class slugs @test
+			if ( $tagline_font ) {
+				$tagline_font = strstr($tagline_font, ',', true);
+				$tagline_font = sanitize_title($tagline_font);
+			}
+		
+			$output .= '<h2 class="site-description"';
+			
+			if ( $tagline_font ) {
+				$output .= ' class="font_' . $tagline_font . '"';// @test
+			}
+			
+			
+			$output .= '>' . $description . '</h2>';
 		}
 			
 	} // end else no logo
@@ -367,7 +397,7 @@ add_action('crucible_logo', 'crucible_logo');
  * Display the social buttons for the business
  */
 function crucible_social_buttons() {
-	global $smartestthemes_options;// @test this one works
+	global $smartestthemes_options;
 	$tw = empty( $smartestthemes_options['st_business_twitter'] ) ? '' : $smartestthemes_options['st_business_twitter'];
 	$goo = empty( $smartestthemes_options['st_business_gplus'] ) ? '' : $smartestthemes_options['st_business_gplus'];
 	$fa = empty( $smartestthemes_options['st_business_facebook'] ) ? '' : $smartestthemes_options['st_business_facebook'];
@@ -421,22 +451,24 @@ add_action('crucible_social_buttons', 'crucible_social_buttons');
  * Display the site footer
  */
 function crucible_footer() {
-	global $smartestthemes_options;// @test this one works
+	global $smartestthemes_options;
 	$output = '';
 	$override_footer = empty($smartestthemes_options['override_footer']) ? '' : $smartestthemes_options['override_footer'];
 	$footer_text = empty($smartestthemes_options['footer_text']) ? '' : $smartestthemes_options['footer_text'];
 	$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 	
 	if ( ! $override_footer ) { // no override, so do default
-		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '"><span itemprop="name">' . $bn . '</span></a><span id="custom-footer">';
+		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '"><span itemprop="name">' . $bn . '</span></a><span id="custom-footer">';// need for live customizer
 		if ( $footer_text ) {
 			$output .= '<br />';// if default plus custom, need <br />
 		}
+	} else {
+		$output .= '<span id="custom-footer">';// need for live customizer
 	}
 	if ( $footer_text ) {
 		$output .= stripslashes_deep( $footer_text );
 	}
-	$output .= '</span>';// @test
+	$output .= '</span>';
 	echo $output;
 }
 add_action( 'crucible_footer', 'crucible_footer' );
@@ -445,8 +477,8 @@ add_action( 'crucible_footer', 'crucible_footer' );
  * Display the clock icon with the Our Hours heading
  */
 function crucible_clock_hours() {
-	global $smartestthemes_options;// @test yes, it works
-	$hours = isset($smartestthemes_options['st_hours']) ? $smartestthemes_options['st_hours'] : '';// @test 
+	global $smartestthemes_options;
+	$hours = empty($smartestthemes_options['st_hours']) ? '' : $smartestthemes_options['st_hours'];
 	$output = '';
 	
 	if ($hours) {

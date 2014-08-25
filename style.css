@@ -259,13 +259,13 @@ big {
 .site-title a.font_cambria,
 .attention-grab .font_cambria { font-family:Cambria, Georgia, Times, Times New Roman, serif}
 
-.font_copperplate_light,
-.site-title a.font_copperplate_light,
-.attention-grab .font_copperplate_light { font-family: Copperplate Light, Copperplate Gothic Light, serif}
+.font_copperplate-light,
+.site-title a.font_copperplate-light,
+.attention-grab .font_copperplate-light { font-family: Copperplate Light, Copperplate Gothic Light, serif}
 
-.font_copperplate_bold,
-.site-title a.font_copperplate_bold
-.attention-grab .font_copperplate_bold { font-family: Copperplate Bold, Copperplate Gothic Bold, serif}
+.font_copperplate-bold,
+.site-title a.font_copperplate-bold
+.attention-grab .font_copperplate-bold { font-family: Copperplate Bold, Copperplate Gothic Bold, serif}
 
 .font_garamond,
 .site-title a.font_garamond,
@@ -283,29 +283,29 @@ big {
 .site-title a.font_impact,
 .attention-grab .font_impact { font-family: Impact, Haettenschweiler, Arial Narrow Bold, sans-serif}
 
-.font_monotype,
-.site-title a.font_monotype,
-.attention-grab .font_monotype { font-family: Monotype Corsiva, Arial, sans-serif}
+.font_monotype-corsiva,
+.site-title a.font_monotype-corsiva,
+.attention-grab .font_monotype-corsiva { font-family: Monotype Corsiva, Arial, sans-serif}
 
-.font_monospace,
-.site-title a.font_monospace,
-.attention-grab .font_monospace { font-family: Lucida Console,Monaco,monospace}
+.font_lucida-console,
+.site-title a.font_lucida-console,
+.attention-grab .font_lucida-console { font-family: Lucida Console,Monaco,monospace}
 
-.font_lucida,
-.site-title a.font_lucida,
-.attention-grab .font_lucida { font-family: Lucida Sans Unicode,Lucida Grande,sans-serif}
+.font_lucida-sans-unicode,
+.site-title a.font_lucida-sans-unicode,
+.attention-grab .font_lucida-sans-unicode { font-family: Lucida Sans Unicode,Lucida Grande,sans-serif}
 
-.font_palatino,
-.site-title a.font_palatino,
-.attention-grab .font_palatino { font-family: Palatino Linotype,Book Antiqua,Palatino,serif}
+.font_palatino-linotype,
+.site-title a.font_palatino-linotype,
+.attention-grab .font_palatino-linotype { font-family: Palatino Linotype,Book Antiqua,Palatino,serif}
 
 .font_tahoma,
 .site-title a.font_tahoma,
 .attention-grab .font_tahoma { font-family: Tahoma,Geneva,sans-serif}
 
-.font_trebuchet,
-.site-title a.font_trebuchet,
-.attention-grab .font_trebuchet { font-family: Trebuchet MS,Arial,Helvetica,sans-serif}
+.font_trebuchet-ms,
+.site-title a.font_trebuchet-ms,
+.attention-grab .font_trebuchet-ms { font-family: Trebuchet MS,Arial,Helvetica,sans-serif}
 
 .font_verdana,
 .site-title a.font_verdana,
