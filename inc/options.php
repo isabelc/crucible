@@ -616,7 +616,7 @@ $options[] = array(
 	'std' => 'false',
 	'type' => 'checkbox');
 $options[] = array( 'name' => __('Disable Automatic Home Page Creation','crucible'),
-	'desc' => __('Check this to stop the page titled "Home" to be automatically created every time you delete it. This will permanently delete the automatically-created Home page.', 'crucible'),
+	'desc' => __('Check this to stop the page titled "Home" to be automatically created every time you delete it. This will permanently delete the automatically-created Home page, and allow you to create your own page titled "Home".', 'crucible'),
 	'id' => $shortname.'_stop_home',
 	'std' => 'false',
 	'type' => 'checkbox');
