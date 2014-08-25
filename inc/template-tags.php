@@ -234,7 +234,7 @@ function crucible_entry_meta() {
 	}
 		
 	$out .= '<br />';
-	return $out;
+	echo $out;
 }
 endif;
 
@@ -319,9 +319,20 @@ function crucible_logo() {
 	// seo title
 	$ti = empty($smartestthemes_options['st_home_meta_title']) ? $bn : stripslashes(esc_attr($smartestthemes_options['st_home_meta_title']));
 	
+	
+	// get custom tagline font @test
+
+	$tagline_font = empty($smartestthemes_options['tagline_font']) ? '' : $smartestthemes_options['tagline_font'];
+	if ( $tagline_font ) {
+		// extract font class before comma from font key
+		$tagline_font_pre = strstr($tagline_font, ',', true);
+		$tagline_font_class = $tagline_font_pre ? sanitize_title($tagline_font_pre) : sanitize_title($tagline_font);
+	}
+			
+	
 	$output = '';
 
-	$custom_logo = empty($smartestthemes_options['logo_setting']) ? '' : $smartestthemes_options['logo_setting'];// @test
+	$custom_logo = empty($smartestthemes_options['logo_setting']) ? '' : $smartestthemes_options['logo_setting'];
 	
 	if ( $custom_logo ) {
 		// there is a logo
@@ -338,53 +349,43 @@ function crucible_logo() {
 		<img id="customlogo" src="' . $src . '" alt="' . $ti . '" title="' . $ti . '" />
 		</a><br />';
 		if ( empty($smartestthemes_options['hide_tagline']) ) {
-			$output .= '<h2 class="site-description">' . $description . '</h2>';
+		
+			$output .= '<h2 class="site-description"';
+
+			if ( $tagline_font ) {
+				$output .= ' class="font_' . $tagline_font_class . '"';
+			}
+			$output .= '>' . $description . '</h2>';		
+		
 		}
 	} else { 
 		
 		// no logo image, so use text logo 
 		if ( $name ) {
-			// isa_log($smartestthemes_options);// @test 
 		
 			$output .= '<h1 class="site-title"><a';
 			
 			// get custom logo font
 			$logo_font = empty($smartestthemes_options['logo_font']) ? '' : $smartestthemes_options['logo_font'];
 
-			
 			if ( $logo_font ) {
 			
-				// convert font key into class slug @test
-				// $logo_font_pre = strstr($logo_font, ',', true);
-				// $logo_font_class = sanitize_title($logo_font_pre);
+				// extract font class before comma from font key @test
+				$logo_font_pre = strstr($logo_font, ',', true);
+				$logo_font_class = $logo_font_pre ? sanitize_title($logo_font_pre) : sanitize_title($logo_font);
 				
-				// isa_log('=== $logo_font ============: ' . $logo_font);// @test
-				//isa_log('=== $logo_font_pre ============: ' . $logo_font_pre);// @test
-				//isa_log('=== $logo_font_class ============: ' . $logo_font_class);// @test
-				
-				$output .= ' class="font_' . $logo_font_class . '" ';
+				$output .= ' class="font_' . $logo_font_class . '"';
 			}
 			
 			$output .= ' href="' . home_url( '/' ) . '" title="' . $ti . '" rel="home">' . $name . '</a></h1>';
 		}
 		if ( empty($smartestthemes_options['hide_tagline']) ) {
 		
-			// get custom tagline font
-			$tagline_font = empty($smartestthemes_options['tagline_font']) ? '' : $smartestthemes_options['tagline_font'];
-
-			// convert font keys into class slugs @test
-			if ( $tagline_font ) {
-				$tagline_font = strstr($tagline_font, ',', true);
-				$tagline_font = sanitize_title($tagline_font);
-			}
-		
 			$output .= '<h2 class="site-description"';
-			
+
 			if ( $tagline_font ) {
-				$output .= ' class="font_' . $tagline_font . '"';// @test
+				$output .= ' class="font_' . $tagline_font_class . '"';
 			}
-			
-			
 			$output .= '>' . $description . '</h2>';
 		}
 			
@@ -458,12 +459,17 @@ function crucible_footer() {
 	$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 	
 	if ( ! $override_footer ) { // no override, so do default
-		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '"><span itemprop="name">' . $bn . '</span></a><span id="custom-footer">';// need for live customizer
+		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '"><span itemprop="name">' . $bn . '</span></a><br /><span id="custom-footer">';// need for live customizer
+		// @test added br in line above instead of next condi...
+		
+		/*
 		if ( $footer_text ) {
 			$output .= '<br />';// if default plus custom, need <br />
 		}
+		*/
+		
 	} else {
-		$output .= '<span id="custom-footer">';// need for live customizer
+		$output .= '<br /><span id="custom-footer">';// need for live customizer. @test added br to see if works better in customizer.
 	}
 	if ( $footer_text ) {
 		$output .= stripslashes_deep( $footer_text );
@@ -472,7 +478,6 @@ function crucible_footer() {
 	echo $output;
 }
 add_action( 'crucible_footer', 'crucible_footer' );
-
 /**
  * Display the clock icon with the Our Hours heading
  */

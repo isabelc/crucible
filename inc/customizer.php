@@ -23,9 +23,12 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->get_control( 'background_color'  )->priority	= 1;
 
 	// repeated variables
+	
 /* @test replace this with the add_class version
 /// @test must retest all 4 with this again: site title, tagline, headings, attention grabber
 ///
+
+
 */
 	$logo_fonts = array(
 			'' => 'default',// @test
@@ -45,31 +48,6 @@ function crucible_customize_register( $wp_customize ) {
 			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
 			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
 	);
-	
-/* @todo hold...
-
-	$logo_fonts = array(
-			'' => 'default',// @test
-			'arial' => 'Arial',
-			'cambria' => 'Cambria',
-			'copperplate_light' => 'Copperplate Gothic Light',
-			'copperplate_bold' => 'Copperplate Gothic Bold',
-			'garamond' => 'Garamond',
-			'georgia' => 'Georgia',
-			'gillsans' => 'GillSans, Calibri',
-			'impact' => 'Impact',
-			'monotype' => 'Monotype Corsiva',
-			'monospace' => 'Lucida Console, Monaco, monospace',
-			'lucida' => 'Lucida Sans',
-			'palatino' => 'Palatino Linotype, Book Antiqua, serif',
-			'tahoma' => 'Tahoma, Geneva',
-			'trebuchet' => 'Trebuchet MS',
-			'verdana' => 'Verdana, Geneva'
-	);
-	
-	*/
-	
-	
 	
 	/* add a textarea control */
 	class Crucible_Customize_Textarea_Control extends WP_Customize_Control {

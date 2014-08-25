@@ -1,4 +1,4 @@
-<style><?php global $smartestthemes_options;// @TEST WORKS
+<style><?php global $smartestthemes_options;
 $header_bg_color = empty($smartestthemes_options['header_bg_color']) ? '' : $smartestthemes_options['header_bg_color'];
 $footer_bg_color = empty($smartestthemes_options['footer_bg_color']) ? '' : $smartestthemes_options['footer_bg_color'];
 
@@ -31,29 +31,18 @@ $footer_text_color = empty($smartestthemes_options['footer_text_color']) ? '' : 
 
 if ( $body_text_color ) { 
 
-	// @test do i need all these selectors....
-	// blockquote, .entry-meta, time, dl.main-address span, .widget ul a
-	
 	?>body {color:<?php echo $body_text_color; ?>;}<?php
 } 
 
 
 if ($footer_text_color) { 
-
-	// @test this selector to make sure it doesn't hijace social icons
-	// @test see how it works with links color
-
 	?>.site-info{color:<?php echo $footer_text_color; ?>;}<?php
 } 
 
 
 
 if ( $body_font ) {
-	
-	// @test which selectors to use? Do I need all these (also fix these in customizer.js ....
-	
-	?>#content {font-family:<?php echo $body_font; ?>;}
-	body a.button, body button.button, body input.button, body #review_form #submit {font-family:<?php echo $body_font; ?>!important;}<?php
+	?>#content{font-family:<?php echo $body_font; ?>;}<?php
 	
 }
 
@@ -64,9 +53,6 @@ if ( $body_fontsize ) {
 
 
 if( $heading_text_color ) {
-	// @test do i need all these selectors for headings ....
-	//  .indent-left h3, .pad h3, .page-title, #entry-title
-	
 	?>#content h1,#content h2,h3,h4,h5,h6{
 		color:<?php echo $heading_text_color; ?>;
 		}<?php
@@ -212,7 +198,8 @@ if( empty($hide_tagline) ) {
 	}
 }
 
-echo get_option('smartestthemes_inline_font_css');// @test consider using this for brining in inline styles from enqueue.php, or else remove this line @todo
+echo get_option('smartestthemes_inline_font_css');
+	// @test consider using this for brining in inline styles from enqueue.php, or else remove this line @todo
 
 // widget styles
 echo apply_filters( 'smartestthemes_widget_styles', NULL );

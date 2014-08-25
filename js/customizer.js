@@ -78,7 +78,7 @@
 
 			$('.site-title a').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');
 
-			// @test 2 convert font key into class slug
+			// convert font key into class slug
 
 			if ( to ) {
 
@@ -91,7 +91,7 @@
 					var fontclass = to;
 				}
 
-				// convert spaces to dashes, and make it lowercase @test
+				// convert spaces to dashes, make it lowercase
 				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
 			}
 			
@@ -140,14 +140,10 @@
 	// tagline font
 	wp.customize( 'smartestthemes_options[tagline_font]', function( value ) {
 		value.bind( function( to ) {
-			// @test clearing
-			
 			$('h2.site-description').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');// @new list
 
-			// @test convert font key into class slug
-			
+			// convert font key into class slug
 			if ( to ) {
-
 				// get position of 1st comma
 				var ifComma = to.indexOf(",");
 				// extract the font class
@@ -156,12 +152,9 @@
 				} else {
 					var fontclass = to;
 				}
-
-				// convert spaces to dashes, and make it lowercase @test
+				// convert spaces to dashes, make it lowercase
 				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
-			}			
-			
-			
+			}
 			$('h2.site-description').addClass( to ? 'font_' + fontclassSlug : 'font_copperplate-bold' );// @new default
 	
 		} );
@@ -322,11 +315,9 @@
 			}
 		*/
 
-
-
 			$('.attention-grab').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');// @new list
 
-			// @test 2 convert font key into class slug
+			// convert font key into class slug
 
 			if ( to ) {
 
@@ -339,7 +330,7 @@
 					var fontclass = to;
 				}
 
-				// convert spaces to dashes, and make it lowercase @test
+				// convert spaces to dashes, make it lowercase
 				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
 			}			
 			
@@ -392,11 +383,7 @@
 			if ( newval ) {
 				$('#content, #home-footer, blockquote').css('font-size', newval );
 			} else {
-			
-				// @test of the next line works to clear it properly
-				 // @test SEEMS TO BE WORKING YAY
-				$('#content, #home-footer, blockquote').css( 'font-size', '100%' );// @test!!!!
-				
+				$('#content, #home-footer, blockquote').css( 'font-size', '100%' );
 			}
 		
 		} );
@@ -417,34 +404,12 @@
 	
 	wp.customize( 'smartestthemes_options[heading_font]', function( value ) {
 		value.bind( function( to ) {
-		
-		
-		/* @todo this did work, but trying new method that should also work with site title and tagline 
-		...
-		
-			if ( '' == newval ) {
-				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').css('font-family', 'inherit' );
-			} else {
-			
-				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').css('font-family', newval );
-			}
-		*/
-
-		
-			
-			// @test clearing
-			// @test this one has a different default than the other logo fonts !! @test
-			
+	
 			$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');
-
-			
-
-
 
 			if ( '' != to ) {
 			
-			
-				// @test 2 convert font key into class slug
+				// convert font key into class slug
 				
 				// get position of 1st comma
 				var ifComma = to.indexOf(",");
@@ -455,10 +420,8 @@
 					var fontclass = to;
 				}
 
-				// convert spaces to dashes, and make it lowercase @test
+				// convert spaces to dashes, and make it lowercase
 				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
-
-
 				
 				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').addClass( 'font_' + fontclassSlug );// @new default
 			}
@@ -524,7 +487,8 @@
 	// Footer text
 	wp.customize( 'smartestthemes_options[footer_text]', function( value ) {
 		value.bind( function( to ) {
-			$( '#custom-footer' ).html( '<br />' + to );// @test try without the br and see if it ok.
+			$( '#custom-footer' ).html( to );
+				/* @test try without the br and see if it ok. Was ( '<br />' + to ). */
 		} );
 	} );
 		
@@ -534,16 +498,15 @@
 		
 			if ( '1' == to ) {
 				// hide footer
-				$( "#footer-copyright, #footer-sitename, .extra-span" ).hide();// @test maybe remove .extra-span here and below
+				$( "#footer-copyright, #footer-sitename" ).hide();// @test maybe remove .extra-span here and below
 			} else {
 				// show default footer
 				bn = wp.customize.value('blogname')();
 				year = (new Date).getFullYear();
-				$( '.site-info' ).prepend( '<span class="extra-span" style="display:block;"><span id="footer-copyright">Copyright &copy; ' + year + '</span> <a id="footer-sitename" href="#">' + bn + '</a></span>' );
+				$( '.site-info' ).prepend( '<span id="footer-copyright">Copyright &copy; ' + year + '</span> <a id="footer-sitename" href="#">' + bn + '</a>' );
+				/* removed <span class="extra-span" style="display:block;"> at begninning and </span> at end */
 			}
-			
 	
 		} );
 	} );	
-	
 } )( jQuery );
