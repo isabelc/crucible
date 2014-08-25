@@ -27,7 +27,6 @@ function crucible_customize_register( $wp_customize ) {
 /// @test must retest all 4 with this again: site title, tagline, headings, attention grabber
 ///
 */
-	
 	$logo_fonts = array(
 			'' => 'default',// @test
 			'Arial,Helvetica,sans-serif' => 'Arial',
@@ -47,10 +46,7 @@ function crucible_customize_register( $wp_customize ) {
 			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
 	);
 	
-/** @test remove this was the add class method. instead will try above and then strip the beginning and lower case it to get a class name.
-*
-*
-*
+/* @todo hold...
 
 	$logo_fonts = array(
 			'' => 'default',// @test
@@ -70,8 +66,9 @@ function crucible_customize_register( $wp_customize ) {
 			'trebuchet' => 'Trebuchet MS',
 			'verdana' => 'Verdana, Geneva'
 	);
-*/
-
+	
+	*/
+	
 	
 	
 	/* add a textarea control */

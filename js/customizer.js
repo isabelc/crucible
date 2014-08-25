@@ -95,7 +95,7 @@
 				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
 			}
 			
-			$('.site-title a').addClass( to ? 'font_' + fontclass : 'font_copperplate-bold' );// @new default
+			$('.site-title a').addClass( to ? 'font_' + fontclassSlug : 'font_copperplate-bold' );// @new default
 			
 		} );
 	} );
@@ -146,8 +146,6 @@
 
 			// @test convert font key into class slug
 			
-			// @test 2 convert font key into class slug
-
 			if ( to ) {
 
 				// get position of 1st comma
@@ -164,7 +162,7 @@
 			}			
 			
 			
-			$('h2.site-description').addClass( to ? 'font_' + fontclassSlug : 'font_copperplate_bold' );// @new default
+			$('h2.site-description').addClass( to ? 'font_' + fontclassSlug : 'font_copperplate-bold' );// @new default
 	
 		} );
 	} );
