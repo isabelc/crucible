@@ -5,17 +5,17 @@
  * @package Crucible
  */
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope itemtype="http://schema.org/AboutPage">
 	<?php smartestthemes_about_top_image(); ?>
 	<header class="entry-header">
-		<h1 class="entry-title"><?php the_title(); ?></h1>
+		<h1 class="entry-title" itemprop="name"><?php the_title(); ?></h1>
 		<h3><?php bloginfo('description'); ?></h3>
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
 		<?php
 		global $smartestthemes_options;
-		$aboutcontent = isset( $smartestthemes_options['st_about_page'] ) ? stripslashes_deep($smartestthemes_options['st_about_page']) : '';
+		$aboutcontent = empty( $smartestthemes_options['st_about_page'] ) ? '' : stripslashes_deep($smartestthemes_options['st_about_page']);
 		echo wpautop($aboutcontent); 
 		the_content();
 		smartestthemes_about_bottom_image();

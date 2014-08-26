@@ -1276,7 +1276,7 @@ function smartestthemes_about_page_images() {
 	$out = array();
 
 	if( !empty($topImg) ) {
-		$out[] = '<figure><a href="' . $topImg . '" title="' . the_title_attribute('echo=0') . '" ><img src="' . $topImg . '" alt="' . the_title_attribute('echo=0') . '" width="' . $top_width . '" height="' . $top_height . '" /></a></figure>';
+		$out[] = '<figure><a href="' . $topImg . '" title="' . the_title_attribute('echo=0') . '" ><img itemprop="primaryImageOfPage" src="' . $topImg . '" alt="' . the_title_attribute('echo=0') . '" width="' . $top_width . '" height="' . $top_height . '" /></a></figure>';
 	}
 
 	// if there's both an about page option picture and a featured image, do feat.image at bottom
