@@ -1382,4 +1382,75 @@ function smartestthemes_archive_menu_meta_box_render() {
 	</div>
 	<?php
 }
+
+/*
+***********************************************************************************************
+
+@test all of these
+**
+* Prints the HTML for the schema.org microdata depending on which page we are on.
+* @param string $position, the position which this call is made from. Accepts 'archive', 'single', 'header'.
+*/
+
+function schema_type($position) {
+
+	$out = '';
+	$schema = '';
+	$blogpost_archive = '';
+	
+	if ( $position == 'archive' ) {
+	
+		if ( is_post_type_archive('smartest_news') ) {
+			$schema = 'Article';
+		} elseif ( is_post_type_archive('smartest_services') || is_tax('smartest_service_category') ) {
+			$schema = 'Service';
+			
+		} elseif ( is_post_type_archive('smartest_staff') ) {
+		
+			$schema = 'Person';
+		
+		} elseif (is_home()) {
+					// @test is_archive did not print this to the blog page.
+					// @test now test is_home...
+					
+					
+			$blogpost_archive = ' itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"';
+				// @todo (caveat, this one must be nested within blog).
+		}
+
+	} elseif ( $position == 'single' ) {
+
+		global $post;// @test need
+		$post_type = get_post_type();
+		if ( 'smartest_staff' == $post_type ) {
+			$schema = 'Person';
+		} elseif ( 'smartest_services' == $post_type ) {
+			$schema = 'Service';
+		} elseif ( 'post' == $post_type ) {
+			$schema = 'BlogPosting';
+		} else {
+			$schema = 'Article';
+		}
+	
+	} elseif ($position = 'header') {
+	
+		if ( is_front_page() ) {
+		
+			global $smartestthemes_options;
+			$schema = empty( $smartestthemes_options['st_business_itemtype'] ) ? 'LocalBusiness' : $smartestthemes_options['st_business_itemtype'];
+		
+		} elseif ( is_home() ) {
+			$schema = 'Blog';
+		}
+	}
+
+	if ( $schema ) {
+		echo ' itemscope itemtype="http://schema.org/'.$schema.'"';
+	}
+
+	if ($blogpost_archive) {
+		echo $blogpost_archive;
+	}
+	// @test what are 2 echos going to do here?
+}
 ?>

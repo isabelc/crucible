@@ -55,6 +55,7 @@ function crucible_setup() {
 	add_image_size( 'newswidget', 40, 65, true );// @new size
 	add_image_size( 'featservices', 152, 96, true );// @new size
 	add_image_size( 'staffwidget', 48, 72 );// @new size
+	add_image_size( 'single', 400, 400 );// @new size
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(

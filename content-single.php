@@ -3,10 +3,9 @@
  * @package Crucible
  */
 ?>
-
-<article id="post-<?php the_ID(); ?>" <?php post_class(); if ( 'smartest_staff' == get_post_type() ) { echo ' itemscope itemtype="http://schema.org/Person"'; } ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
-		<h1 class="entry-title" <?php if ( 'smartest_staff' == get_post_type() ) { echo ' itemprop="name"'; } ?>><?php the_title(); ?></h1>
+		<h1 class="entry-title" itemprop="name"><?php the_title(); ?></h1>
 
 		<div class="entry-meta">
 			<?php crucible_entry_meta(); ?>

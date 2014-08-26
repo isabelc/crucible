@@ -132,14 +132,13 @@ function crucible_post_thumbnail() {
 	$img_data = wp_prepare_attachment_for_js( $img );
 
 	if ( is_singular() ) :
-		$out .= '<div class="post-thumbnail"><a href="' . $img_data['url'] . '" title="' . $img_data['title'] . '"><img src="' . $img_data['url'] . '" alt="' . $img_data['title'] . '" width="' . $img_data['width'] . '" height="' . $img_data['height'] . '" /></a></div>';
-
+		$out .= '<div class="post-thumbnail"><a href="' . $img_data['url'] . '" title="' . $img_data['title'] . '">' . get_the_post_thumbnail( get_the_id(), 'single', array('itemprop' => 'image') ) . '</a></div>';
+		
 	else : 
 
-		$out .= '<div class="post-thumbnail"><a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute('echo=0') . '">' . get_the_post_thumbnail( get_the_id(), 'thumbnail' ) . '</a></div>';
-
+		$out .= '<div class="post-thumbnail"><a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute('echo=0') . '">' . get_the_post_thumbnail( get_the_id(), 'thumbnail',  array('itemprop' => 'image') ) . '</a></div>';
+		
 	endif;
-
 	echo $out;
 }
 
@@ -217,7 +216,7 @@ function crucible_entry_meta() {
 
 	} elseif ( 'smartest_news' == get_post_type() ) {
 
-		$out .= '<span class="posted-on">' . sprintf( __( 'Posted on <time class="entry-date" datetime="%1$s" pubdate>%2$s</time>', 'crucible' ),
+		$out .= '<span class="posted-on">' . sprintf( __( 'Posted on <meta itemprop="datePublished" content="%1$s"><time class="entry-date" datetime="%1$s" pubdate>%2$s</time>', 'crucible' ),
 					esc_attr( get_the_date( 'c' ) ),
 					esc_html( get_the_date() )
 					) . '</span>';

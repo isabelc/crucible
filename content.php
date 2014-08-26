@@ -1,12 +1,12 @@
 <?php
-/**
+/** @test used by archive.php
  * @package Crucible
  */
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class(); schema_type('archive'); ?>>
 	<?php crucible_post_thumbnail(); ?>
 	<header class="entry-header">
-		<h1 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h1>
+		<h1 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><span itemprop="name"><?php the_title(); ?></span></a></h1>
 
 		<div class="entry-meta">
 			<?php crucible_entry_meta(); ?>
@@ -17,8 +17,8 @@
 	<?php crucible_staff_social_buttons(); ?>
 			
 	<div class="entry-summary">
-		<p>
-		<?php the_excerpt(); ?>
+		<p itemprop="description">
+		<?php echo get_the_excerpt(); ?>
 		</p>
 		<?php
 		$anchor = is_post_type_archive('smartest_services') ? __('Details', 'crucible') : 'More';
