@@ -3,7 +3,6 @@
 /* 
 @todo 
 in custom-style, don't repeat selectors!!
-
 */
 $header_bg_color = empty($smartestthemes_options['header_bg_color']) ? '' : $smartestthemes_options['header_bg_color'];
 $footer_bg_color = empty($smartestthemes_options['footer_bg_color']) ? '' : $smartestthemes_options['footer_bg_color'];
@@ -175,7 +174,7 @@ $logo_color = empty($smartestthemes_options['logo_color']) ? '' : $smartesttheme
 
 $logo_fontsize = empty($smartestthemes_options['logo_fontsize']) ? '' : $smartestthemes_options['logo_fontsize'];
 $increase_logo = empty($smartestthemes_options['increase_logo']) ? '' : $smartestthemes_options['increase_logo'];
-$hide_tagline = empty($smartestthemes_options['hide_tagline']) ? '' : $smartestthemes_options['hide_tagline'];
+
 $tagline_color = empty($smartestthemes_options['tagline_color']) ? '' : $smartestthemes_options['tagline_color'];
 
 $tagline_size = empty($smartestthemes_options['tagline_size']) ? '' : $smartestthemes_options['tagline_size'];
@@ -193,7 +192,7 @@ if ( $increase_logo ) {
 }
 
 // tagline
-if( empty($hide_tagline) ) {
+if( empty($smartestthemes_options['hide_tagline']) ) {
 	if ( $tagline_color ) {
 		?>h2.site-description { color:<?php echo $tagline_color; ?>;}<?php
 	}
