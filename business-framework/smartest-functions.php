@@ -12,13 +12,13 @@ function smartestthemes_login_logo() {
 	// if there is a logo, show it, else do text
 	if ($buslogo) {
 		$small_logo = vt_resize( '', $buslogo, 326, 67, false );
-	    echo '<style type="text/css">.login h1 a { background: url('.$small_logo['url'].') 50% 50% no-repeat !important;width: 326px;height: 70px;}</style>';
+	    echo '<style>.login h1 a { background: url('.$small_logo['url'].') 50% 50% no-repeat !important;width: 326px;height: 70px;}</style>';
 	} else {
 		// @new default next 2
 		$col = empty($smartestthemes_options['logo_color']) ? '#000' : $smartestthemes_options['logo_color'];
 		$font = empty($smartestthemes_options['logo_font']) ? 'Copperplate Bold, Copperplate Gothic Bold, serif' : $smartestthemes_options['logo_font'];
 
-		echo '<style type="text/css">.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. $font . ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}</style>';
+		echo '<style>.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. $font . ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}</style>';
 	}
 }
 add_action('login_head', 'smartestthemes_login_logo');
