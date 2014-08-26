@@ -488,7 +488,6 @@
 	wp.customize( 'smartestthemes_options[footer_text]', function( value ) {
 		value.bind( function( to ) {
 			$( '#custom-footer' ).html( to );
-				/* @test try without the br and see if it ok. Was ( '<br />' + to ). */
 		} );
 	} );
 		
@@ -498,13 +497,12 @@
 		
 			if ( '1' == to ) {
 				// hide footer
-				$( "#footer-copyright, #footer-sitename" ).hide();// @test maybe remove .extra-span here and below
+				$( "#footer-copyright, #footer-sitename" ).hide();
 			} else {
 				// show default footer
 				bn = wp.customize.value('blogname')();
 				year = (new Date).getFullYear();
 				$( '.site-info' ).prepend( '<span id="footer-copyright">Copyright &copy; ' + year + '</span> <a id="footer-sitename" href="#">' + bn + '</a>' );
-				/* removed <span class="extra-span" style="display:block;"> at begninning and </span> at end */
 			}
 	
 		} );
