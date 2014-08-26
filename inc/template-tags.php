@@ -320,7 +320,7 @@ function crucible_logo() {
 	$ti = empty($smartestthemes_options['st_home_meta_title']) ? $bn : stripslashes(esc_attr($smartestthemes_options['st_home_meta_title']));
 	
 	
-	// get custom tagline font @test
+	// get custom tagline font
 
 	$tagline_font = empty($smartestthemes_options['tagline_font']) ? '' : $smartestthemes_options['tagline_font'];
 	if ( $tagline_font ) {
@@ -350,16 +350,15 @@ function crucible_logo() {
 		</a><br />';
 		if ( empty($smartestthemes_options['hide_tagline']) ) {
 		
-			$output .= '<h2 class="site-description"';
+			$output .= '<h2 class="site-description';
 
 			if ( $tagline_font ) {
-				$output .= ' class="font_' . $tagline_font_class . '"';
+				$output .= ' font_' . $tagline_font_class;
 			}
-			$output .= '>' . $description . '</h2>';		
+			$output .= '">' . $description . '</h2>';		
 		
 		}
 	} else { 
-		
 		// no logo image, so use text logo 
 		if ( $name ) {
 		
@@ -370,7 +369,7 @@ function crucible_logo() {
 
 			if ( $logo_font ) {
 			
-				// extract font class before comma from font key @test
+				// extract font class before comma from font key
 				$logo_font_pre = strstr($logo_font, ',', true);
 				$logo_font_class = $logo_font_pre ? sanitize_title($logo_font_pre) : sanitize_title($logo_font);
 				
@@ -381,15 +380,17 @@ function crucible_logo() {
 		}
 		if ( empty($smartestthemes_options['hide_tagline']) ) {
 		
-			$output .= '<h2 class="site-description"';
+			$output .= '<h2 class="site-description';
 
 			if ( $tagline_font ) {
-				$output .= ' class="font_' . $tagline_font_class . '"';
+				$output .= ' font_' . $tagline_font_class;
 			}
-			$output .= '>' . $description . '</h2>';
-		}
 			
+			$output .= '">' . $description . '</h2>';
+
+		}
 	} // end else no logo
+	
 	echo $output;
 }
 add_action('crucible_logo', 'crucible_logo');
@@ -460,16 +461,9 @@ function crucible_footer() {
 	
 	if ( ! $override_footer ) { // no override, so do default
 		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '"><span itemprop="name">' . $bn . '</span></a><br /><span id="custom-footer">';// need for live customizer
-		// @test added br in line above instead of next condi...
-		
-		/*
-		if ( $footer_text ) {
-			$output .= '<br />';// if default plus custom, need <br />
-		}
-		*/
 		
 	} else {
-		$output .= '<br /><span id="custom-footer">';// need for live customizer. @test added br to see if works better in customizer.
+		$output .= '<br /><span id="custom-footer">';// need for live customizer.
 	}
 	if ( $footer_text ) {
 		$output .= stripslashes_deep( $footer_text );

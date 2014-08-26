@@ -25,12 +25,30 @@
 			
 				var sitetitle = wp.customize.value('blogname')();
 				
-				// @todo get site-title font option here and apply to the a below.
+			// @test
+				// get site-title font option here and apply to the site-title anchor below.
+				get_current_logo_font = wp.customize.value('smartestthemes_options[custom_logo_color]')();
+				
+				// get position of 1st comma
+				var ifComma = get_current_logo_font.indexOf(",");
+				// extract the font class
+				if(ifComma > 1) {
+					var fontclass = get_current_logo_font.substring(0, ifComma);
+				} else {
+					var fontclass = get_current_logo_font;
+				}
+
+				// convert spaces to dashes, make it lowercase
+				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
+				
+				
+				
+			// @test end
 				
 				$( 'img#customlogo' ).hide();
 				
 				// insert title
-				$( '.site-branding' ).prepend( '<h1 class="site-title"><a href="#">' + sitetitle + '</a></h1>' );
+				$( '.site-branding' ).prepend( '<h1 class="site-title"><a class="font_' + fontclassSlug + '" href="#">' + sitetitle + '</a></h1>' );
 
 			} else {
 			
@@ -303,18 +321,6 @@
 	wp.customize( 'smartestthemes_options[att_grabber_font]', function( value ) {
 		value.bind( function( to ) {
 		
-		
-		/* @todo this DID work, but we are trying now a new method that should also work with site-title and tagline...
-		...
-		...
-		
-			if ( '' == newval ) {
-				$('.attention-grab').css('font-family', 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' );// @new default, or 'inherit' if no default
-			} else {
-				$('.attention-grab').css('font-family', newval );
-			}
-		*/
-
 			$('.attention-grab').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');// @new list
 
 			// convert font key into class slug
