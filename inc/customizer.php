@@ -23,15 +23,8 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->get_control( 'background_color'  )->priority	= 1;
 
 	// repeated variables
-	
-/* @test replace this with the add_class version
-/// @test must retest all 4 with this again: site title, tagline, headings, attention grabber
-///
-
-
-*/
 	$logo_fonts = array(
-			'' => 'default',// @test
+			'' => 'default',
 			'Arial,Helvetica,sans-serif' => 'Arial',
 			'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
 			'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
@@ -118,7 +111,7 @@ function crucible_customize_register( $wp_customize ) {
 	
 	/* Tagline font */
 	$wp_customize->add_setting('smartestthemes_options[tagline_font]', array(
-		'default'	=> '',// @test
+		'default'	=> '',
 		'type'		=> 'option',
 		'transport'	=> 'postMessage'
 	));
@@ -473,7 +466,7 @@ function crucible_customize_register( $wp_customize ) {
 	// Attention Grabber Font
 	
 	$wp_customize->add_setting('smartestthemes_options[att_grabber_font]', array(
-		'default'	=> '',// @test
+		'default'	=> '',
 		'type'		=> 'option',
 		'transport'	=> 'postMessage'
 	));
@@ -522,7 +515,7 @@ function crucible_customize_register( $wp_customize ) {
 	// Body font
 	
 	$wp_customize->add_setting('smartestthemes_options[body_font]', array(
-		'default'	=> '',// @test blank. does this work in live preveiw??
+		'default'	=> '',
 		'type'		=> 'option',
 		'transport'	=> 'postMessage'
 	));
@@ -532,7 +525,7 @@ function crucible_customize_register( $wp_customize ) {
 		'section' => 'crucible_fonts_section',
 		'type' => 'select',
 		'choices' => array(
-			'' => 'default',// @test
+			'' => 'default',
 			'Arial,Helvetica,sans-serif' => 'Arial',
 			'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
 			'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
@@ -587,7 +580,7 @@ function crucible_customize_register( $wp_customize ) {
 	
 	// Heading font
 	$wp_customize->add_setting('smartestthemes_options[heading_font]', array(
-		'default'	=> '',// @test blank @test live preview clearing
+		'default'	=> '',/* @test blank @test live preview clearing. @todo i tested & THIS DOES NOT CLEAR. EVERYTHING ELSE IN FONT TAB CLEARS. */
 		'type'		=> 'option',
 		'transport'	=> 'postMessage'
 	));

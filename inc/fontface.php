@@ -1,13 +1,15 @@
 <?php // Conditionally load fontface stylesheets
+// @todo this whole page needs updating with the new font keys.. maybe..
+
 function crucible_loadfonts() {
 	global $smartestthemes_options;// @test this one works
 	// @new default for next 5
 	// @test all of these
-	$needle1 = isset($smartestthemes_options['heading_font']) ? $smartestthemes_options['heading_font'] : '';
-	$needle2 = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : '';
-	$needle3 = isset($smartestthemes_options['body_font']) ? $smartestthemes_options['body_font'] : '';
-	$needle4 = isset($smartestthemes_options['tagline_font']) ? $smartestthemes_options['tagline_font'] : '';
-	$needle5 = isset($smartestthemes_options['att_grabber_font']) ? $smartestthemes_options['att_grabber_font'] : 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif';
+	$needle1 = empty($smartestthemes_options['heading_font']) ? '' : $smartestthemes_options['heading_font'];
+	$needle2 = empty($smartestthemes_options['logo_font']) ? '' : $smartestthemes_options['logo_font'];
+	$needle3 = empty($smartestthemes_options['body_font']) ? '' : $smartestthemes_options['body_font'];
+	$needle4 = empty($smartestthemes_options['tagline_font']) ? '' : $smartestthemes_options['tagline_font'];
+	$needle5 = empty($smartestthemes_options['att_grabber_font']) ? 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' : $smartestthemes_options['att_grabber_font'];
 
 	// @new list font css output from theme options $logofonts array index [2]
 	$font1 = 'qumpellkano12regular,Arial,Helvetica,sans-serif';
@@ -62,12 +64,12 @@ function crucible_logofontface() {
 
 	global $smartestthemes_options;// @test this one works
 	// @test logo login fonts only needed if no logo image
-	if( isset($smartestthemes_options['logo_setting']) ? $smartestthemes_options['logo_setting'] : '') {
+	if( empty($smartestthemes_options['logo_setting']) ? '' : $smartestthemes_options['logo_setting'] ) {
 		return;
 	}
 
 	$fontdir = get_template_directory_uri(). '/inc/fonts/';
-	$needle2 = isset($smartestthemes_options['logo_font']) ? $smartestthemes_options['logo_font'] : '';
+	$needle2 = empty($smartestthemes_options['logo_font']) ? '' : $smartestthemes_options['logo_font'];
 		
 	/* FONT NAME VARS */
 	$font1 =  'qumpellkano12regular,Arial,Helvetica,sans-serif';

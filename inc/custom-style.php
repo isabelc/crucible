@@ -11,7 +11,6 @@ if ( $footer_bg_color ) {
 }
 
 /* FONTS */
-
 $att_grabber_color = empty($smartestthemes_options['att_grabber_color']) ? '' : $smartestthemes_options['att_grabber_color'];
 $att_grabber_font = empty($smartestthemes_options['att_grabber_font']) ? 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' : $smartestthemes_options['att_grabber_font'];// @new default
 $attgrabber_fontsize = empty($smartestthemes_options['attgrabber_fontsize']) ? '' : $smartestthemes_options['attgrabber_fontsize'];

@@ -25,11 +25,11 @@
 			
 				var sitetitle = wp.customize.value('blogname')();
 				
-			// @test
-				// get site-title font option here and apply to the site-title anchor below.
-				get_current_logo_font = wp.customize.value('smartestthemes_options[custom_logo_color]')();
+				// get current site-title font and apply to site-title anchor below.
 				
-				// get position of 1st comma
+				var get_current_logo_font = wp.customize.value('smartestthemes_options[logo_font]')();
+				
+				// slugify font class
 				var ifComma = get_current_logo_font.indexOf(",");
 				// extract the font class
 				if(ifComma > 1) {
@@ -37,13 +37,8 @@
 				} else {
 					var fontclass = get_current_logo_font;
 				}
-
 				// convert spaces to dashes, make it lowercase
 				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
-				
-				
-				
-			// @test end
 				
 				$( 'img#customlogo' ).hide();
 				
@@ -430,10 +425,31 @@
 				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
 				
 				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').addClass( 'font_' + fontclassSlug );// @new default
+			
+			} else { // @test this else for clearing
+			
+			// @test
+				// get current heading font and apply it below.
+				get_current_heading_font = wp.customize.value('smartestthemes_options[heading_font]')();
+				
+				// get position of 1st comma
+				var ifComma = get_current_heading_font.indexOf(",");
+				// extract the font class
+				if(ifComma > 1) {
+					var fontclass = get_current_heading_font.substring(0, ifComma);
+				} else {
+					var fontclass = get_current_heading_font;
+				}
+				// convert spaces to dashes, make it lowercase
+				var fontclassSlug = fontclass.replace(/\s+/g, '-').toLowerCase();
+				
+				$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').addClass( 'font_' + fontclassSlug );// @test
+				// @test end
+			
 			}
 			
-		} );
-	} );
+		});
+	});
 	
 	// h1 Heading font size
 	wp.customize( 'smartestthemes_options[h1_fontsize]', function( value ) {
@@ -443,8 +459,8 @@
 			} else {
 				$('#content h1, #content h1 a').css('font-size', to );
 			}
-		} );
-	} );
+		});
+	});
 	
 	// h2 Heading font size
 	wp.customize( 'smartestthemes_options[h2_fontsize]', function( value ) {
@@ -454,8 +470,8 @@
 			} else {
 				$('#content h2, #content h2 a').css('font-size', to );
 			}
-		} );
-	} );
+		});
+	});
 	
 	// h3 Heading font size
 	wp.customize( 'smartestthemes_options[h3_fontsize]', function( value ) {
