@@ -275,7 +275,6 @@ function crucible_contact_info() {
 	$fax = empty($smartestthemes_options['st_fax_numb']) ? '' : $smartestthemes_options['st_fax_numb'];
 	$show_email = empty($smartestthemes_options['st_show_contactemail']) ? '' : $smartestthemes_options['st_show_contactemail'];
 	
-	
 	$output = '<div itemscope itemtype="http://schema.org/'.$schema. '"><p><strong itemprop="name">' . $bn . '</strong></p><p class="main-address">';
 	
 	$output .= crucible_postal_address();
@@ -460,7 +459,19 @@ function crucible_footer() {
 	$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 	
 	if ( ! $override_footer ) { // no override, so do default
-		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '"><span itemprop="name">' . $bn . '</span></a><br /><span id="custom-footer">';// need for live customizer
+		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
+		
+		if ( is_front_page() ) {
+			$output .= '<span itemprop="name">';
+		}
+		
+		$output .=  $bn;
+
+		if ( is_front_page() ) {
+			$output .= '</span>';
+		}
+		$output .= '</a><!-- @test --><br /><span id="custom-footer">';// need for live customizer
+		
 		
 	} else {
 		$output .= '<br /><span id="custom-footer">';// need for live customizer.
