@@ -27,8 +27,6 @@ class SmartestServices extends WP_Widget {
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Services', 'crucible' ) : $instance['title'], $instance, $this->id_base );		
 		$service_category_term_id = isset( $instance['service_category'] ) ? $instance['service_category'] : '';
 		$service_category = !empty($service_category_term_id) ? $service_category_term_id : '';
-		global $smartestthemes_options;
-		$sort = isset($smartestthemes_options['st_enable_service_sort']) ? $smartestthemes_options['st_enable_service_sort'] : '';
 		echo $args['before_widget'];
 		echo '<h3 class="widget-title">'. $title . '</h3>';
 
@@ -37,69 +35,32 @@ class SmartestServices extends WP_Widget {
 		// if cat is selected, do tax query
 		if ( ! empty ($service_category) ) {
 		
-			if ( 'true' == $sort ) {
-
-				// custom sort order is enabled
-
-				$query_args = array( 
-					'posts_per_page' => -1, 
-					'post_type' => 'smartest_services',
-					'tax_query' => array(
-						array(
-							'taxonomy' => 'smartest_service_category',
-							'field' => 'id',
-							'terms' => array( $service_category ),
-						)
-					),
-					'orderby' => 'meta_value_num',
-					'meta_key' => '_stmb_service_order_number',
-					'order' => 'ASC' );
-
-			} else { 
-
-				// default sort order
-			
-				$query_args = array( 
-					'posts_per_page' => -1, 
-					'post_type' => 'smartest_services',
-					'tax_query' => array(
-						array(
-							'taxonomy' => 'smartest_service_category',
-							'field' => 'id',
-							'terms' => array( $service_category ),
-						)
-					),
-					'orderby' => 'title',
-					'order' => 'ASC' );
-
-			}
+			$query_args = array( 
+				'posts_per_page' => -1, 
+				'post_type' => 'smartest_services',
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'smartest_service_category',
+						'field' => 'id',
+						'terms' => array( $service_category ),
+					)
+				),
+				'orderby' => 'meta_value_num',
+				'meta_key' => '_stmb_service_order_number',
+				'order' => 'ASC' );
 
 		} else {
 
 			// no tax query
 
-			if ( 'true' == $sort ) {
-
-				// custom sort order is enabled
-
-				$query_args = array( 
-					'posts_per_page' => -1, 
-					'post_type' => 'smartest_services',
-					'orderby' => 'meta_value_num',
-					'meta_key' => '_stmb_service_order_number',
-					'order' => 'ASC' );
+			$query_args = array( 
+				'posts_per_page' => -1, 
+				'post_type' => 'smartest_services',
+				'orderby' => 'meta_value_num',
+				'meta_key' => '_stmb_service_order_number',
+				'order' => 'ASC' );
 
 
-			} else {
-
-				// default sort order
-
-				$query_args = array( 
-					'posts_per_page' => -1, 
-					'post_type' => 'smartest_services',
-					'orderby' => 'title',
-					'order' => 'ASC' );
-			}
 
 		}
 

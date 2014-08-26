@@ -46,38 +46,18 @@ class SmartestFeaturedServices extends WP_Widget {
 		
 		/* loop through announcements */
 
-		if( get_option('st_enable_service_sort') == 'true'  ) {
-
-			// custom sort order is enabled
-
-			$query_args = array( 
-				'post_type' => 'smartest_services',
-				'meta_query' => array(
-							array  (
-								'key' => '_stmb_services_featured',
-								'value'=> 'on' 
-							)
-						),
-				'orderby' => 'meta_value_num',
-				'meta_key' => '_stmb_service_order_number',
-				'order' => 'ASC'
-				);
-
-		} else {
-
-			// default sort order
-
-			$query_args = array( 
-				'post_type' => 'smartest_services',
-				'meta_query' => array(
-							array  (
-								'key' => '_stmb_services_featured',
-								'value'=> 'on' 
-								)
-							)
-				);
-
-		}
+		$query_args = array( 
+			'post_type' => 'smartest_services',
+			'meta_query' => array(
+						array  (
+							'key' => '_stmb_services_featured',
+							'value'=> 'on' 
+						)
+					),
+			'orderby' => 'meta_value_num',
+			'meta_key' => '_stmb_service_order_number',
+			'order' => 'ASC'
+			);
 		$sbffs = new WP_Query( $query_args );
 		if ( $sbffs->have_posts() ) {
 			while ( $sbffs->have_posts() ) {

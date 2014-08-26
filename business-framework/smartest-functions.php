@@ -379,13 +379,6 @@ function create_smartest_business_cpts() {
 		);
 		register_post_type( 'smartest_slide' , $args );
 	}	// end slideshow
-	
-	// @todo @test update all services by giving them the 9999 sort order number
-	
-	
-	
-	
-	
 }
 add_action('init', 'create_smartest_business_cpts');
 /**
@@ -537,7 +530,7 @@ function smartestthemes_metaboxes( array $meta_boxes ) {
 			),
 			array(
 				'name' => __( 'Sort Order Number', 'crucible' ),
-				'desc' => __( 'Give this person a number to order them on the list on the staff page and in the staff widget. Number 1 appears 1st on the list, while greater numbers appear lower. Numbers do not have to be consecutive; for example, you could number them like, 10, 20, 35, 45, etc. This would help to leave room in between to insert new staff members later without having to change everyone\'s current number.', 'crucible' ),
+				'desc' => __( 'Give this person a number to order them on the list on the staff page and in the staff widget. Numbers do not have to be consecutive; for example, you could number them like, 10, 20, 35, 45, etc. This would leave room to insert new staff members later without having to change everyone\'s current number.', 'crucible' ),
 				'id'   => $prefix . 'staff_order_number',
 				'type' => 'text',
 				'std' => 9999
@@ -593,28 +586,25 @@ function smartestthemes_metaboxes( array $meta_boxes ) {
 		)
 	);
 
-	if ( isset($smartestthemes_options['st_enable_service_sort']) ) {
-		if( $smartestthemes_options['st_enable_service_sort'] == 'true'  ) {
-			$meta_boxes[] = array(
-				'id'         => 'services-sort-order',
-				'title'      => __( 'Set a Sort-Order', 'crucible' ),
-				'pages'      => array( 'smartest_services' ),
-				'context'    => 'normal',
-				'priority'   => 'high',//high, core, default, low
-				'show_names' => true,
-				'fields'     => array(
-					array(
-						'name' => __( 'Sort Order Number', 'crucible' ),
-						'desc' => __( 'Give this service a number to order them on the list on the service page and in the services widget. Number 1 appears 1st on the list, while greater numbers appear lower. Numbers do not have to be consecutive; for example, you could number them like, 10, 20, 35, 45, etc. This would help to leave room in between to insert new staff members later without having to change all current numbers.', 'crucible' ),
-						'id'   => $prefix . 'service_order_number',
-						'type' => 'text',
-						'std' => 9999
-					),
-				)
-			);
-		}
-	}
-
+		
+	$meta_boxes[] = array(
+		'id'         => 'services-sort-order',
+		'title'      => __( 'Set a Sort-Order', 'crucible' ),
+		'pages'      => array( 'smartest_services' ),
+		'context'    => 'normal',
+		'priority'   => 'high',//high, core, default, low
+		'show_names' => true,
+		'fields'     => array(
+			array(
+				'name' => __( 'Sort Order Number', 'crucible' ),
+				'desc' => __( 'Give this service a number to order it on the list on the service page and in the services widget. Numbers do not have to be consecutive; for example, you could number them like, 10, 20, 35, 45, etc. This would leave room to insert new services later without having to change all current numbers.', 'crucible' ),
+				'id'   => $prefix . 'service_order_number',
+				'type' => 'text',
+				'std' => 9999
+			),
+		)
+	);
+	
 	$meta_boxes[] = array(
 		'id'         => 'featured_news',
 		'title'      => __('Featured News', 'crucible'),
@@ -975,7 +965,6 @@ function smartestthemes_share() { ?>
 if ( ! function_exists( 'smartestthemes_content_nav' ) ):
 /** 
  * Display navigation to next/previous pages when applicable
- *
  */
 function smartestthemes_content_nav( $nav_id ) {
 	global $wp_query, $post;
@@ -1151,26 +1140,20 @@ add_filter( 'parse_query', 'smartestthemes_sort_staff' );
  * @uses is_main_query()
  */
 function smartestthemes_sort_services($query) {
-	if( !is_admin() &&
-	( 
-	( is_post_type_archive('smartest_services') || is_tax( 'smartest_service_category' ) ) &&
-	$query->is_main_query()
-	)
+	if( !is_admin()
+	&&	(
+		( is_post_type_archive('smartest_services') || is_tax( 'smartest_service_category' ) )
+		&& $query->is_main_query()
+		)
 	&& isset( $query->query_vars['meta_key'] ) ) {
-	$query->query_vars['orderby'] = 'meta_value_num';
-	$query->query_vars['meta_key'] = '_stmb_service_order_number';
-	$query->query_vars['order'] = 'ASC';
+		$query->query_vars['orderby'] = 'meta_value_num';
+		$query->query_vars['meta_key'] = '_stmb_service_order_number';
+		$query->query_vars['order'] = 'ASC';
 	}
 	return $query;
 }
-
-
 // @test
-if ( isset($options['st_enable_service_sort']) ) {
-	if( $options['st_enable_service_sort'] == 'true'  ) {
-		add_filter( 'parse_query', 'smartestthemes_sort_services' );
-	}
-}
+add_filter( 'parse_query', 'smartestthemes_sort_services' );
 
 /**
  * Check if the uploaded file is an image. If it is, then it processes it using the retina_support_create_images()

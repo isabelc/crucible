@@ -175,11 +175,6 @@ $options[] = array(
 	'id' => $shortname.'_business_servicesmenulabel',
 	'std' => '',
 	'type' => 'text');
-$options[] = array(
-	'desc' => sprintf( __('%s Set Custom Sort-Order? %s Check this to set a custom sort-order for services. Default sort-order is descending order by date of post.','crucible'), '<strong>', '</strong>' ),
-	'id' => $shortname.'_enable_service_sort',
-	'std' => 'false',
-	'type' => 'checkbox');
 // @new comment out NEXT 3 OPTIONS if not using home slideshow.
 $options[] = array( 'name' => __('Show Slideshow on Homepage?','crucible'),
 	'desc' => __('Check this if you want to show the slideshow on your homepage.','crucible'),
