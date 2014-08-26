@@ -828,25 +828,66 @@ i.fa:hover {
 }
 .bypostauthor {
 }
-
-
-/**
-begin Comments from frame.css  ******************************************************************************
-
-	@todo see if these are needed 
-	
-*/
-
 #comments,#reply{margin:1.6em}
+
 .comments-title{padding-bottom:1em;margin-bottom:.5em;border-bottom:4px double #ededed;font-size:24px}
-.commentlist .reply{text-align:right}.commentlist .reply a{display:inline-block;text-decoration:none;padding:5px 15px 6px;font-size:13px;font-weight:700;color:#000;background:#999;cursor:pointer;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px}.commentlist .reply a:hover,.commentlist .reply a:active{background:#000}.commentlist .comment-author span.says{display:inline}.commentlist .comment-author img{display:block}.commentlist li.comment{padding:1em 1em 2em}.commentlist .children li.comment{padding-bottom:0}.commentlist article.comment{border-bottom:4px double #ededed;margin-bottom:1em;padding-bottom:1em;word-wrap:break-word;-moz-hyphens:auto}.commentlist .commentmetadata time{font-size:10px}.commentlist .comment footer{width:auto;padding:0;text-align:left;width:28%}.commentlist .comment footer,.commentlist .comment .comment-content{float:left;margin-left:0;margin-right:0;display:block}.commentlist .comment .comment-content{width:72%;margin-left:0;margin-right:0}.commentlist .children{padding-left:2em}#respond{clear:both}span.required{color:red}
+
+
+#content h2.comment-author{
+    font-size: 1.9rem;
+}
+
+#content h2.comment-author a{
+    font-size: 100%;
+}
+
+
+.child-comments {
+	margin-left:2em;
+}
+
+
+
+.comment-reply-link{	/* @new */
+	float:right;
+	display:inline-block;
+	text-decoration:none;
+	padding:0.5em 0.7em;/* @todo in mobile padding:1em; */
+	cursor:pointer
+}
+.comments-list article.comment{
+	border-bottom:4px double #ededed;margin-bottom:1em;padding-bottom:1em;word-wrap:break-word;-moz-hyphens:auto
+}
+.comments-list time{font-size:smaller;text-align:right;display: block;}
+
+/* @todo make columns so avatar sticks out on right... */
+
+.comments-list .says{font-weight:normal;}
+.comments-list .comment-column{
+	
+	width:24%;
+	display:inline-block;
+	
+	vertical-align:top;
+	
+}
+
+.comment-col-2{
+	width:64%;
+	display:inline-block;
+	vertical-align: bottom;
+	margin-top:2em;
+	
+	
+	
+}
+
+.comment-content{
+	padding-top:1em;
+}
+
+#respond{clear:both}
 #commentform label{margin-right:5px}
-#commentform input[type=text],
-#commentform textarea{border:thin solid #d5d5d5;padding:5px 10px;font-family:Arial,Helvetica,sans-serif;background:none repeat scroll 0 0 #fff;border-radius:2px}
-
-/**
-end Comments from frame.css ******************************************************************************/
-
 
 
 /*--------------------------------------------------------------
@@ -895,7 +936,7 @@ end Comments from frame.css ****************************************************
 --------------------------------------------------------------*/
 .page-content img.wp-smiley,
 .entry-content img.wp-smiley,
-.comment-content img.wp-smiley {
+.comment-content img.wp-smiley {/* @test do i have '.comment-content' still */
 	border: none;
 	margin-bottom: 0;
 	margin-top: 0;
@@ -953,7 +994,31 @@ img#customlogo{
 }
 
 @media screen and (max-device-width: 568px){
-
-	article footer.entry-meta{padding:2em 0}#comments,#reply{margin:0}.commentlist{width:100%!important}.commentlist>li.comment{padding:0}.commentlist .children{padding-left:0}.commentlist .children li.comment{margin:1.625em 0 0;padding:2px}#commentform input[type=text],#commentform textarea{width:90%}#searchsubmit{display:block;margin-top:5px}
-	.one-half,.one-third,.one-fourth{margin:1.5em auto;padding-left:2%;padding-right:2%;float:none;width:96%;display:block}/* @framework */
+	/* @test check all the below comment selectors to see if they still exist */
+	
+	article footer.entry-meta{padding:2em 0}#comments,#reply{margin:0}
+	
+	.commentlist{width:100%!important}
+	
+	.commentlist>li.comment{padding:0}
+	
+	.commentlist .children{padding-left:0}
+	
+	.commentlist .children li.comment{margin:1.625em 0 0;padding:2px}
+	
+	#commentform input[type=text],
+	#commentform textarea{width:90%}
+	
+	#searchsubmit{display:block;margin-top:5px}
+	
+	.one-half,
+	.one-third,
+	.one-fourth{
+		margin:1.5em auto;
+		padding-left:2%;
+		padding-right:2%;
+		float:none;
+		width:96%;
+		display:block
+	}/* @framework */
 }

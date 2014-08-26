@@ -323,7 +323,7 @@ class Crucible_Comment_Walker extends Walker_Comment {
 	function end_lvl( &$output, $depth = 0, $args = array() ) {
 		$GLOBALS['comment_depth'] = $depth + 2; ?>
 
-		</section>
+		</section><!-- @test close child -->
 
 	<?php }
 
@@ -342,40 +342,48 @@ class Crucible_Comment_Walker extends Walker_Comment {
 			$add_below = 'comment';
 		} ?>
 
-		<article <?php comment_class(empty( $args['has_children'] ) ? '' :'parent') ?> id="comment-<?php comment_ID() ?>" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
-			<figure class="gravatar"><?php 
-				
-			 if ( 0 != $args['avatar_size'] ) echo get_avatar( $comment, $args['avatar_size'] );// @test if gravatar displays
-			 				
-			?></figure>
-			<div class="comment-meta post-meta" role="complementary">
-				<h2 class="comment-author" itemprop='creator' itemscope itemtype='http://schema.org/Person'>
-					<a class="comment-author-link" href="<?php comment_author_url(); ?>"><span itemprop='name'><?php comment_author(); ?></span></a>
+		<article <?php comment_class(empty( $args['has_children'] ) ? '' :'parent') ?> id="comment-<?php comment_ID() ?>">
+			<div class="comment-schema-wrap" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+			<div class="comment-column">
+			<figure class="gravatar"><?php if ( 0 != $args['avatar_size'] ) echo get_avatar( $comment, $args['avatar_size'] ); ?></figure>
+			<h2 class="comment-author" itemprop='creator' itemscope itemtype='http://schema.org/Person'>
+					<a class="comment-author-link" href="<?php comment_author_url(); ?>"><span itemprop='name'><?php comment_author(); ?></span></a> <span class="says"><?php _e(' says:', 'crucible'); ?></span>
 				</h2>
+			
+			
+			
+			</div>
+			<div class="comment-col-2">
+			<div class="comment-meta post-meta">
+				
 					
 				<?php
 					
 				
 				// @test consider remove my comments CSS.
 				// @test the datetime in testing tool to see time format. is c?
+				
+				
 				?>
 					
 				<time class="comment-meta-item" datetime="<?php comment_date('c'); ?>" itemprop="commentTime">
-					
-				<?php comment_date('F jS, Y'); ?> at <?php comment_time(); ?>
-				<a href="#comment-<?php comment_ID(); ?>" itemprop="url"><?php comment_time(); ?></a></time>
-					
-				<?php edit_comment_link('<p class="comment-meta-item">Edit this comment</p>','',''); ?>
-					
+				<?php comment_date('F jS, Y'); ?> at <a href="#comment-<?php comment_ID(); ?>"><?php comment_time(); ?></a></time>
+
+				<?php edit_comment_link(); ?>
+				
 				<?php if ($comment->comment_approved == '0') : ?>
-				<p class="comment-meta-item">Your comment is awaiting moderation.</p>
+				<p class="comment-meta-item"><?php _e('Your comment is awaiting moderation.', 'crucible'); ?></p>
 					<?php endif; ?>
 					
 			</div>
+			
 			<div class="comment-content post-content" itemprop="commenttext">
 				<?php comment_text(); ?>
 				<?php comment_reply_link(array_merge( $args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
 			</div>
+			</div>
+			</div>
+			
 
 	<?php }
 
@@ -389,7 +397,7 @@ class Crucible_Comment_Walker extends Walker_Comment {
 	// destructor – closing wrapper for the comments list
 	function __destruct() { ?>
 
-		</section>
+		</section><!-- @test close .comments-list -->
 		
 	<?php }
 
