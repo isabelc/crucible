@@ -453,11 +453,10 @@ add_action('crucible_social_buttons', 'crucible_social_buttons');
 function crucible_footer() {
 	global $smartestthemes_options;
 	$output = '';
-	$override_footer = empty($smartestthemes_options['override_footer']) ? '' : $smartestthemes_options['override_footer'];
 	$footer_text = empty($smartestthemes_options['footer_text']) ? '' : $smartestthemes_options['footer_text'];
 	$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 	
-	if ( ! $override_footer ) { // no override, so do default
+	if ( empty($smartestthemes_options['override_footer']) ) { // no override, so do default
 		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
 		
 		if ( is_front_page() ) {
