@@ -470,7 +470,7 @@ function crucible_footer() {
 		if ( is_front_page() ) {
 			$output .= '</span>';
 		}
-		$output .= '</a><!-- @test --><br /><span id="custom-footer">';// need for live customizer
+		$output .= '</a><br /><span id="custom-footer">';// need for live customizer
 		
 		
 	} else {
