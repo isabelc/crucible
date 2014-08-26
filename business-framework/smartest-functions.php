@@ -379,6 +379,13 @@ function create_smartest_business_cpts() {
 		);
 		register_post_type( 'smartest_slide' , $args );
 	}	// end slideshow
+	
+	// @todo @test update all services by giving them the 9999 sort order number
+	
+	
+	
+	
+	
 }
 add_action('init', 'create_smartest_business_cpts');
 /**
@@ -512,7 +519,7 @@ add_filter( 'cmb_meta_boxes', 'smartestthemes_metaboxes' );
  * @return array
  */
 function smartestthemes_metaboxes( array $meta_boxes ) {
-	$prefix = '_smab_';
+	$prefix = '_stmb_';
 	global $smartestthemes_options;
 	$meta_boxes[] = array(
 		'id'         => 'staff_details',
@@ -531,7 +538,7 @@ function smartestthemes_metaboxes( array $meta_boxes ) {
 			array(
 				'name' => __( 'Sort Order Number', 'crucible' ),
 				'desc' => __( 'Give this person a number to order them on the list on the staff page and in the staff widget. Number 1 appears 1st on the list, while greater numbers appear lower. Numbers do not have to be consecutive; for example, you could number them like, 10, 20, 35, 45, etc. This would help to leave room in between to insert new staff members later without having to change everyone\'s current number.', 'crucible' ),
-				'id'   => $prefix . 'staff-order-number',
+				'id'   => $prefix . 'staff_order_number',
 				'type' => 'text',
 				'std' => 9999
 			),
@@ -599,7 +606,7 @@ function smartestthemes_metaboxes( array $meta_boxes ) {
 					array(
 						'name' => __( 'Sort Order Number', 'crucible' ),
 						'desc' => __( 'Give this service a number to order them on the list on the service page and in the services widget. Number 1 appears 1st on the list, while greater numbers appear lower. Numbers do not have to be consecutive; for example, you could number them like, 10, 20, 35, 45, etc. This would help to leave room in between to insert new staff members later without having to change all current numbers.', 'crucible' ),
-						'id'   => $prefix . 'service-order-number',
+						'id'   => $prefix . 'service_order_number',
 						'type' => 'text',
 						'std' => 9999
 					),
@@ -695,20 +702,17 @@ function smartestthemes_register_widgets() {
 }
 add_action( 'widgets_init', 'smartestthemes_register_widgets' );
 /**
- * insert custom scripts from theme options
+ * insert custom scripts from theme options into head
  */
 function smartestthemes_add_customscripts() {
 	global $smartestthemes_options;
 	// get analytics script
-	$gascript = empty($smartestthemes_options['st_script_analytics']) ? '' : $smartestthemes_options['st_script_analytics'];// @test
-	// get other scripts
-	$oscripts = empty($smartestthemes_options['st_scripts_head']) ? '' : $smartestthemes_options['st_scripts_head'];// @test
-	
-	if ( $gascript ) {
-		echo stripslashes($gascript)."\r\n";
+	if ( ! empty($smartestthemes_options['st_script_analytics']) ) {
+		echo stripslashes($smartestthemes_options['st_script_analytics'])."\r\n";
 	}
-	if ( $oscripts ) {
-		echo stripslashes($oscripts)."\r\n";
+	// get other scripts
+	if ( ! empty($smartestthemes_options['st_scripts_head']) ) {
+		echo stripslashes($smartestthemes_options['st_scripts_head'])."\r\n";
 	}
 }
 add_action('wp_head','smartestthemes_add_customscripts', 12);
@@ -722,7 +726,7 @@ function custom_staff_heading() {
 	$staffpagetitle = empty($smartestthemes_options['st_business_staffpagetitle']) ? '' : stripslashes($smartestthemes_options['st_business_staffpagetitle']);
 	
 	if ( $staffpagetitle ) {
-		echo $staffpagetitle;// @test
+		echo $staffpagetitle;
 	} else {
 		_e('Meet The Staff', 'crucible');
 	}
@@ -733,7 +737,7 @@ function custom_services_heading() {
 	$servicepagetitle = empty( $smartestthemes_options['st_business_servicespagetitle'] ) ? '' : stripslashes($smartestthemes_options['st_business_servicespagetitle']);
 	
 	if ( $servicepagetitle ) {
-		echo $servicepagetitle;// @test
+		echo $servicepagetitle;
 	} else { 
 		_e('Services', 'crucible');
 	}
@@ -744,7 +748,7 @@ function custom_news_heading() {
 	global $smartestthemes_options;
 	$newspagetitle = empty( $smartestthemes_options['st_business_newspagetitle'] ) ? '' : stripslashes($smartestthemes_options['st_business_newspagetitle']);
 	if ( $newspagetitle ) {
-		echo $newspagetitle;// @test
+		echo $newspagetitle;
 	} else {
 		_e('Announcements', 'crucible');
 	}
@@ -797,7 +801,7 @@ function smar_manage_staff_columns( $column, $post_id ) {
 	global $post;
 	switch( $column ) {
 		case 'jobtitle' :
-			$jobtitle = get_post_meta( $post_id, '_smab_staff_job_title', true );
+			$jobtitle = get_post_meta( $post_id, '_stmb_staff_job_title', true );
 			 echo $jobtitle;
 			break;
 		default :
@@ -828,7 +832,7 @@ function smar_manage_services_columns( $column, $post_id ) {
 	global $post;
 	switch( $column ) {
 		case 'featureds' :
-			$sf = get_post_meta( $post_id, '_smab_services_featured', true );
+			$sf = get_post_meta( $post_id, '_stmb_services_featured', true );
 			if ( $sf )
 				_e('Featured', 'crucible');
 			break;
@@ -860,7 +864,7 @@ function smar_manage_news_columns( $column, $post_id ) {
 	global $post;
 	switch( $column ) {
 		case 'featuredn' :
-			$sf = get_post_meta( $post_id, '_smab_news_featured', true );
+			$sf = get_post_meta( $post_id, '_stmb_news_featured', true );
 			if ( $sf )
 				_e('Featured', 'crucible');
 			break;
@@ -869,7 +873,7 @@ function smar_manage_news_columns( $column, $post_id ) {
 	}
 }
 /**
- * Add thumbnail column to smartest_slide backend
+ * Add thumbnail column to smartest_slide admin
  */
 function smar_manage_edit_slide_columns( $columns ) {
 	$columns = array(
@@ -884,7 +888,6 @@ function smar_manage_edit_slide_columns( $columns ) {
 /**
  * Add data to thumbnail column in smartest_slide
  */
-
 function smar_manage_slide_columns( $column, $post_id ) {
 	global $post;
 	switch( $column ) {
@@ -902,7 +905,7 @@ function smar_manage_slide_columns( $column, $post_id ) {
 
 // @new only need for slides
 if ( isset($options['st_show_slider']) ) {
-	if ( $options['st_show_slider'] == 'true') {// @test options var
+	if ( $options['st_show_slider'] == 'true') {
 		add_filter( 'manage_edit-smartest_slide_columns', 'smar_manage_edit_slide_columns' ) ;
 		add_action( 'manage_smartest_slide_posts_custom_column', 'smar_manage_slide_columns', 10, 2 );
 	}
@@ -929,7 +932,7 @@ function st_remove_footer_admin () {
 	$admin_footer = empty($smartestthemes_options['st_admin_footer']) ? '' : $smartestthemes_options['st_admin_footer'];
 	$remove_it = empty($smartestthemes_options['st_remove_adminfooter']) ? '' : $smartestthemes_options['st_remove_adminfooter'];
 
-	if ( $admin_footer &&  ( 'true' != $remove_it ) ) {// @test
+	if ( $admin_footer &&  ( 'true' != $remove_it ) ) {
 		echo $admin_footer;
 	} elseif ( 'true' == $remove_it ) {
 		echo '';
@@ -1133,7 +1136,7 @@ add_action('wp_head', 'smartest_custom_style', 9999);
 function smartestthemes_sort_staff($query) {
 	if( !is_admin() && is_post_type_archive('smartest_staff') && $query->is_main_query() && isset( $query->query_vars['meta_key'] ) ) {
 	$query->query_vars['orderby'] = 'meta_value_num';
-	$query->query_vars['meta_key'] = '_smab_staff-order-number';
+	$query->query_vars['meta_key'] = '_stmb_staff_order_number';
 	$query->query_vars['order'] = 'ASC';
 	}
 	return $query;
@@ -1155,7 +1158,7 @@ function smartestthemes_sort_services($query) {
 	)
 	&& isset( $query->query_vars['meta_key'] ) ) {
 	$query->query_vars['orderby'] = 'meta_value_num';
-	$query->query_vars['meta_key'] = '_smab_service-order-number';
+	$query->query_vars['meta_key'] = '_stmb_service_order_number';
 	$query->query_vars['order'] = 'ASC';
 	}
 	return $query;

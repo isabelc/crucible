@@ -48,7 +48,7 @@ class SmartestStaff extends WP_Widget {
 			'posts_per_page' => -1, 
 			'post_type' => 'smartest_staff',
 			'orderby' => 'meta_value_num',
-			'meta_key' => '_smab_staff-order-number',
+			'meta_key' => '_stmb_staff_order_number',
 			'order' => 'ASC' );
 		$sbfstaff = new WP_Query( $query_args );
 		if ( $sbfstaff->have_posts() ) {

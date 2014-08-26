@@ -156,11 +156,11 @@ if ( ! function_exists( 'crucible_staff_social_buttons' ) ) :
 			return;
 		}
 
-		$tw = get_post_meta($post->ID, '_smab_staff_twitter', true);
-		$goo = get_post_meta($post->ID, '_smab_staff_gplus', true);
-		$fa = get_post_meta($post->ID, '_smab_staff_facebook', true);
-		$li = get_post_meta($post->ID, '_smab_staff_linkedin', true);
-		$in = get_post_meta($post->ID, '_smab_staff_instagram', true);
+		$tw = get_post_meta($post->ID, '_stmb_staff_twitter', true);
+		$goo = get_post_meta($post->ID, '_stmb_staff_gplus', true);
+		$fa = get_post_meta($post->ID, '_stmb_staff_facebook', true);
+		$li = get_post_meta($post->ID, '_stmb_staff_linkedin', true);
+		$in = get_post_meta($post->ID, '_stmb_staff_instagram', true);
 
 		// only print if at least 1 is entered
 		if( $tw || $goo || $fa || $li || $in ) {
@@ -213,7 +213,7 @@ function crucible_entry_meta() {
 		}
 	} elseif ( 'smartest_staff' == get_post_type() ) {
 			
-		$out .= '<span class="jobtitle">' . get_post_meta($post->ID, '_smab_staff_job_title', true) . '</span><br />';
+		$out .= '<span class="jobtitle">' . get_post_meta($post->ID, '_stmb_staff_job_title', true) . '</span><br />';
 
 	} elseif ( 'smartest_news' == get_post_type() ) {
 

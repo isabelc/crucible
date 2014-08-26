@@ -52,7 +52,7 @@ class SmartestServices extends WP_Widget {
 						)
 					),
 					'orderby' => 'meta_value_num',
-					'meta_key' => '_smab_service-order-number',
+					'meta_key' => '_stmb_service_order_number',
 					'order' => 'ASC' );
 
 			} else { 
@@ -86,7 +86,7 @@ class SmartestServices extends WP_Widget {
 					'posts_per_page' => -1, 
 					'post_type' => 'smartest_services',
 					'orderby' => 'meta_value_num',
-					'meta_key' => '_smab_service-order-number',
+					'meta_key' => '_stmb_service_order_number',
 					'order' => 'ASC' );
 
 

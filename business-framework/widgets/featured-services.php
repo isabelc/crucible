@@ -54,12 +54,12 @@ class SmartestFeaturedServices extends WP_Widget {
 				'post_type' => 'smartest_services',
 				'meta_query' => array(
 							array  (
-								'key' => '_smab_services_featured',
+								'key' => '_stmb_services_featured',
 								'value'=> 'on' 
 							)
 						),
 				'orderby' => 'meta_value_num',
-				'meta_key' => '_smab_service-order-number',
+				'meta_key' => '_stmb_service_order_number',
 				'order' => 'ASC'
 				);
 
@@ -71,7 +71,7 @@ class SmartestFeaturedServices extends WP_Widget {
 				'post_type' => 'smartest_services',
 				'meta_query' => array(
 							array  (
-								'key' => '_smab_services_featured',
+								'key' => '_stmb_services_featured',
 								'value'=> 'on' 
 								)
 							)

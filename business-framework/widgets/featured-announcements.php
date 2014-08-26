@@ -50,7 +50,7 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 			'post_type' => 'smartest_news',
 			'meta_query' => array(
 								array  (
-									'key' => '_smab_news_featured',
+									'key' => '_stmb_news_featured',
 									'value'=> 'on'
 									)
 							)			
