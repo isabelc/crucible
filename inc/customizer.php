@@ -95,7 +95,7 @@ function crucible_customize_register( $wp_customize ) {
 	/* Logo font */
 	
 	$wp_customize->add_setting('smartestthemes_options[logo_font]', array(
-		'default'	=> '',// @test make sure doesn't add extra markup to custom-style.php if not needed
+		'default'	=> '',
 		'type'		=> 'option',
 		'transport'	=> 'postMessage'
 	));
@@ -437,8 +437,6 @@ function crucible_customize_register( $wp_customize ) {
 		'priority'   => 65
 	));
 	
-	// @test ALL new FONTS SECTION
-	
 	$wp_customize->add_section('crucible_fonts_section', array(
         'title'			=> __('Fonts', 'crucible'),
 		'description'	=> __('Leave any of these blank for the default.', 'crucible'),
@@ -547,7 +545,7 @@ function crucible_customize_register( $wp_customize ) {
 	
 	// Body font size
     $wp_customize->add_setting('smartestthemes_options[body_fontsize]', array(
-        'default'	=> '',// @test live preview clearing and also on live site
+        'default'	=> '',
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -580,7 +578,7 @@ function crucible_customize_register( $wp_customize ) {
 	
 	// Heading font
 	$wp_customize->add_setting('smartestthemes_options[heading_font]', array(
-		'default'	=> '',/* @test blank @test live preview clearing. @todo i tested & THIS DOES NOT CLEAR. EVERYTHING ELSE IN FONT TAB CLEARS. */
+		'default'	=> '',
 		'type'		=> 'option',
 		'transport'	=> 'postMessage'
 	));
