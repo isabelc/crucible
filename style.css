@@ -862,6 +862,7 @@ i.fa:hover {
 
 /* @todo make columns so avatar sticks out on right... */
 
+
 .comments-list .says{font-weight:normal;}
 .comments-list .comment-column{
 	
@@ -986,6 +987,14 @@ img#customlogo{
 	max-height:150px;
     width: auto;
 }
+
+/*
+@todo mobile comments CSS
+
+@todo mobile everything !
+
+*/
+
 
 @media only screen and (max-device-width: 767px) {
 	

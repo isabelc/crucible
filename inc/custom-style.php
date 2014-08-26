@@ -1,4 +1,10 @@
 <style><?php global $smartestthemes_options;
+
+/* 
+@todo 
+in custom-style, don't repeat selectors!!
+
+*/
 $header_bg_color = empty($smartestthemes_options['header_bg_color']) ? '' : $smartestthemes_options['header_bg_color'];
 $footer_bg_color = empty($smartestthemes_options['footer_bg_color']) ? '' : $smartestthemes_options['footer_bg_color'];
 
