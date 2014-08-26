@@ -196,15 +196,12 @@ if( empty($hide_tagline) ) {
 		?>h2.site-description{font-size:<?php echo $tagline_size; ?>;}<?php
 	}
 }
-
-echo get_option('smartestthemes_inline_font_css');
-	// @test consider using this for brining in inline styles from enqueue.php, or else remove this line @todo
-
+echo apply_filters('smartestthemes_fontface_css', NULL );// @todo
 // widget styles
 echo apply_filters( 'smartestthemes_widget_styles', NULL );
 
 // custom css from theme options
 if ( isset($smartestthemes_options['st_custom_css']) ) {
 	echo $smartestthemes_options['st_custom_css'];
-} 
+}
 ?></style>
