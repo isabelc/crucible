@@ -20,8 +20,10 @@ class SMARTESTReviewsBusiness {
 	
 	private function __construct() {
 		global $wpdb;
-		// @todo consider chnge table name!!!
-		$this->dbtable = $wpdb->prefix . 'smareviewsb';
+		// @test change table name!!!
+		// was 'smareviewsb'
+		// now try 'st_reviews'
+		$this->dbtable = $wpdb->prefix . 'st_reviews';
 		add_action('init', array($this, 'init'));
 		add_action('admin_init', array($this, 'create_reviews_page'));
 		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));

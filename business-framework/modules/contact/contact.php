@@ -177,12 +177,11 @@ function sbf_create_contact_page() {
 		// CONTACT form is not disabled so do it	
 		$bn = stripslashes_deep(esc_attr(get_option('st_business_name')));
 		$contitle = sprintf(__('Contact %s','crucible'), $bn);
-		smartestthemes_insert_post( 'page', esc_sql( _x('contact', 'page_slug', 'crucible') ), 'smartestthemes_contact_page_id', $contitle );// @todo sync in whole theme the issue that this, and only this, option whill not be part of the options array. So it will have the prefix 'smartestthemes_
-
+		smartestthemes_insert_post( 'page', esc_sql( _x('contact', 'page_slug', 'crucible') ), 'smartestthemes_contact_page_id', $contitle );
 	}
 }
 add_action('after_setup_theme', 'sbf_create_contact_page');
-// if contact page is disabled, delete the page
+// if contact page is disabled, delete it
 if(get_option('st_stop_contact') == 'true') {
 	wp_delete_post(get_option('smartestthemes_contact_page_id'), true);
 }

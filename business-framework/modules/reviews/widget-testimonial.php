@@ -42,10 +42,10 @@ class SmartestReviewsTestimonial extends WP_Widget {
 			global $blog_id;
 			$bi = get_current_blog_id();
 			
-			$pre2 = $pre . $bi . '_smareviewsb';
+			$pre2 = $pre . $bi . '_st_reviews';
 		} else {
 			// not Multisite
-			$pre2 = $pre . 'smareviewsb';
+			$pre2 = $pre . 'st_reviews';
 		}
 
 		$number_testimonials = ! empty( $number ) ? $number : 1;
