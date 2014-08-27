@@ -10,7 +10,7 @@
  */
 include dirname( __FILE__ ) . '/inc/updater.php';
 // Smartest Themes Business Framework
-require_once TEMPLATEPATH . '/business-framework/admin-init.php'; // @test debug 
+require_once TEMPLATEPATH . '/business-framework/admin-init.php';
 // Theme specific functionality
 $incpath = TEMPLATEPATH . '/inc/';
 require_once $incpath . 'options.php';
@@ -181,17 +181,18 @@ require get_template_directory() . '/inc/customizer.php';
  * Nav Menu Fallback
  */
 function crucible_nav_fallback() {
-	global $smartestthemes_options;// @test this works
-	$bname = isset($smartestthemes_options['st_business_name']) ? $smartestthemes_options['st_business_name'] : '';
-	$sbn = esc_attr(stripslashes_deep($bname));
-	$about_page = isset($smartestthemes_options['st_about_page']) ? $smartestthemes_options['st_about_page'] : '';
-	$about_picture = isset($smartestthemes_options['st_about_picture']) ? $smartestthemes_options['st_about_picture'] : '';
-	$stop_about = isset($smartestthemes_options['st_stop_about']) ? $smartestthemes_options['st_stop_about'] : '';
-	$stop_contact = isset($smartestthemes_options['st_stop_contact']) ? $smartestthemes_options['st_stop_contact'] : '';
-	$svcs = isset($smartestthemes_options['st_show_services']) ? $smartestthemes_options['st_show_services'] : '';
-	$staff = isset($smartestthemes_options['st_show_staff']) ? $smartestthemes_options['st_show_staff'] : '';
-	$news = isset($smartestthemes_options['st_show_news']) ? $smartestthemes_options['st_show_news'] : '';
-	$reviews = isset($smartestthemes_options['st_add_reviews']) ? $smartestthemes_options['st_add_reviews'] : '';
+
+	global $smartestthemes_options;
+	
+	$sbn = empty($smartestthemes_options['st_business_name']) ? '' : esc_attr(stripslashes_deep($smartestthemes_options['st_business_name']));
+	$about_page = empty($smartestthemes_options['st_about_page']) ? '' : $smartestthemes_options['st_about_page'];
+	$about_picture = empty($smartestthemes_options['st_about_picture']) ? '' : $smartestthemes_options['st_about_picture'];
+	$stop_about = empty($smartestthemes_options['st_stop_about']) ? '' : $smartestthemes_options['st_stop_about'];
+	$stop_contact = empty($smartestthemes_options['st_stop_contact']) ? '' : $smartestthemes_options['st_stop_contact'];
+	$svcs = empty($smartestthemes_options['st_show_services']) ? '' : $smartestthemes_options['st_show_services'];
+	$staff = empty($smartestthemes_options['st_show_staff']) ? '' : $smartestthemes_options['st_show_staff'];
+	$news = empty($smartestthemes_options['st_show_news']) ? '' : $smartestthemes_options['st_show_news'];
+	$reviews = empty($smartestthemes_options['st_add_reviews']) ? '' : $smartestthemes_options['st_add_reviews'];
 
 	echo '<ul class="menu">'; ?>
 	<li class="home"><a title="<?php echo $sbn; ?>" href="<?php echo site_url('/'); ?>"><?php _e('Home', 'crucible'); ?></a></li>
@@ -199,8 +200,6 @@ function crucible_nav_fallback() {
 		<li class="about"><a title="<?php _e('About', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_about_page_id')); ?>">
 		<?php _e('About', 'crucible'); ?></a></li>
 	<?php } if($svcs == 'true') { 
-	
-				// @test apply_filters only once
 				$service_label = apply_filters( 'smartestthemes_services_menu_label', __( 'Services', 'crucible' ) );
 	?>
 		<li class="services"><a title="<?php echo esc_attr( $service_label ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_services' ); ?>">
@@ -219,22 +218,18 @@ function crucible_nav_fallback() {
 		} ?>
 		</li>
 	<?php } if($staff == 'true') { 
-	
-				// @test apply_filters only once
 				$staff_label = apply_filters( 'smartestthemes_staff_menu_label', __( 'Staff', 'crucible' ) );
 				?>
 		<li class="staff"><a title="<?php echo esc_attr( $staff_label ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_staff' ); ?>">
 		<?php echo $staff_label; ?>
 		</a></li>
 	<?php } if($news == 'true') { 
-	
-				// @test apply_filters only once
 				$news_label = apply_filters( 'smartestthemes_news_menu_label', __( 'News', 'crucible' ) );
 				?>
 		<li class="news"><a title="<?php echo esc_attr( $news_label ); ?>" href="<?php echo get_post_type_archive_link( 'smartest_news' ); ?>">
 		<?php echo $news_label; ?>
 		</a></li>
-	<?php } if($stop_contact != 'true') {	// @test logic
+	<?php } if($stop_contact != 'true') {
 	?><li class="contact"><a title="<?php _e('Contact', 'crucible'); echo ' ' . $sbn; ?>" href="<?php echo get_page_link(get_option('smartestthemes_contact_page_id')); ?>">
 		<?php _e('Contact', 'crucible'); ?>
 		</a></li>
@@ -261,10 +256,9 @@ function crucible_excerpt_length($length) {
 /**
  * Control the number of posts per page in taxonomy or cat archives
  * make it 9 instead of 10 for grid style layouts
- * @todo also for service taxonomy...
  */
 function crucible_numberposts( $query ) {
-    if ( $query->is_post_type_archive(array('smartest_services')) ) {
+    if ( $query->is_post_type_archive(array('smartest_services')) || $query->is_tax(array('smartest_service_category')) ) {
         set_query_var('posts_per_page', 9);
     }
 }
@@ -323,7 +317,7 @@ class Crucible_Comment_Walker extends Walker_Comment {
 	function end_lvl( &$output, $depth = 0, $args = array() ) {
 		$GLOBALS['comment_depth'] = $depth + 2; ?>
 
-		</section><!-- @test close child -->
+		</section>
 
 	<?php }
 
