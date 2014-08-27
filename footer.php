@@ -10,9 +10,10 @@
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="site-info">
 			<?php do_action( 'crucible_footer' ); ?>
-			<?php if ( get_option('st_remove_social_footer') != 'true'  ) {// @todo add option for this if necessary, else remove this.
+			<?php if ( get_option('st_social_follow_show_footer') == 'true'  ) {
 				do_action( 'crucible_social_buttons' );
-			} ?>
+			}
+			?>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->

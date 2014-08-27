@@ -292,6 +292,17 @@ $options[] = array(
 	'id' => $shortname.'_business_sociallabel2',
 	'type' => 'text'
 );
+$options[] = array(
+	'name' => __('Display Social Follow Buttons','crucible'),
+	'desc' => __('Check where you would like to display the social links.', 'crucible'),
+	'id' => $shortname.'_social_follow_show',
+	'std' => 'footer',
+	'type' => 'multicheck',
+	'options' => array(
+			'header'	=> __('on the site header', 'crucible'),
+			'footer'	=> __('on the site footer', 'crucible'))
+	);
+
 /* SEO */
 $options[] = array(
 	'name' => __('SEO','crucible'),
@@ -476,9 +487,7 @@ $options[] = array(
 	'desc'	=> '',
 	'id'	=> $shortname.'_reviews_ask_fields',
 	'type'	=> 'multicheck',
-	'std'	=> array(
-			'ask_fname',
-			'ask_femail'),
+	'std'	=> 'ask_femail',
 	'options' => array(
 			'ask_fname'		=> __('Name', 'crucible'),
 			'ask_femail'	=> __('Email', 'crucible'),
@@ -490,7 +499,7 @@ $options[] = array(
 	'desc' => '',
 	'id' => $shortname.'_reviews_require_fields',
 	'type' => 'multicheck',
-	'std' => array('require_fname'),
+	'std' => 'require_femail',
 	'options' => array(
 			'require_fname'		=> __('Name', 'crucible'),
 			'require_femail'	=> __('Email', 'crucible'),
@@ -502,7 +511,7 @@ $options[] = array(
 	'desc' => __('It is usually NOT a good idea to show email addresses publicly.', 'crucible'),
 	'id' => $shortname.'_reviews_show_fields',
 	'type' => 'multicheck',
-	'std' => array('show_fname'),
+	'std' => 'show_fname',
 	'options' => array(
 			'show_fname'	=> __('Name', 'crucible'),
 			'show_femail'	=> __('Email', 'crucible'),

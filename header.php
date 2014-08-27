@@ -15,7 +15,10 @@
 <body <?php body_class(); schema_type('header'); ?>>
 
 <div id="page" class="site">
-<?php // do_action( 'crucible_social_buttons' ); // @new here or in footer, decide per theme
+<?php
+if ( get_option('st_social_follow_show_header') == 'true'  ) {
+	do_action( 'crucible_social_buttons' );
+}
 ?>
 	<header id="masthead" class="site-header" role="banner">
 	
