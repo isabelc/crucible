@@ -26,7 +26,7 @@ if (is_admin() && isset($_GET['activated'] ) && $pagenow == "themes.php" ) {
  * Set the content width based on the theme's design and stylesheet.
  */
 if ( ! isset( $content_width ) ) {
-	$content_width = 640; /* pixels */ // @todo @new decide on this!!
+	$content_width = 640; // @new
 }
 
 if ( ! function_exists( 'crucible_setup' ) ) :
@@ -51,7 +51,7 @@ function crucible_setup() {
 	 * Enable support for Post Thumbnails on posts and pages.
 	 */
 	add_theme_support( 'post-thumbnails' );
-	add_image_size( 'crucible-logo', 9999, 150 );// @new @todo prefix. @new @todo max-height.
+	add_image_size( 'crucible-logo', 9999, 150 );// @new prefix. @new max-height.
 	add_image_size( 'newswidget', 40, 65, true );// @new size
 	add_image_size( 'featservices', 152, 96, true );// @new size
 	add_image_size( 'staffwidget', 48, 72 );// @new size
@@ -256,18 +256,19 @@ function crucible_excerpt_length($length) {
 	else
 	    return 23;
 }
-// @new @todo if needed add_filter('excerpt_length', 'crucible_excerpt_length');
+// @new if needed add_filter('excerpt_length', 'crucible_excerpt_length');
 
 /**
  * Control the number of posts per page in taxonomy or cat archives
  * make it 9 instead of 10 for grid style layouts
+ * @todo also for service taxonomy...
  */
 function crucible_numberposts( $query ) {
     if ( $query->is_post_type_archive(array('smartest_services')) ) {
         set_query_var('posts_per_page', 9);
     }
 }
-// @new @todo if needed add_action( 'pre_get_posts', 'crucible_numberposts' );
+// @new if needed add_action( 'pre_get_posts', 'crucible_numberposts' );
 add_filter('widget_text', 'do_shortcode');
 
 /**

@@ -66,8 +66,7 @@ function smartestthemes_insert_post($potype, $slug, $option, $page_title = '', $
  */
 function smartestthemes_after_setup() {
 
-	// @todo see why about page is not being created. see if i should not check for 'false' anymore.
-	// @todo do the above for all entire theme.
+	// @test on new install if About page is created.
 
 	$options = get_option('smartestthemes_options');
 	
@@ -1383,12 +1382,8 @@ function smartestthemes_archive_menu_meta_box_render() {
 	<?php
 }
 
-/*
-***********************************************************************************************
-
-@test all of these
-**
-* Prints the HTML for the schema.org microdata depending on which page we are on.
+/**
+* Prints the HTML for the schema.org microdata depending on the page.
 * @param string $position, the position which this call is made from. Accepts 'archive', 'single', 'header'.
 */
 
