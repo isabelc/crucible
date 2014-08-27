@@ -68,7 +68,7 @@ endif; ?>
 							echo apply_filters('smartestthemes_news_heading', __('Announcements', 'crucible'));
 						elseif (is_tax('smartest_service_category')) :
 							$queried_object = get_queried_object();
-							echo $queried_object->name;// @test
+							echo $queried_object->name;
 						else :
 							_e( 'Archives', 'crucible' );
 						endif;

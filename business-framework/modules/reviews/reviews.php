@@ -20,9 +20,6 @@ class SMARTESTReviewsBusiness {
 	
 	private function __construct() {
 		global $wpdb;
-		// @test change table name!!!
-		// was 'smareviewsb'
-		// now try 'st_reviews'
 		$this->dbtable = $wpdb->prefix . 'st_reviews';
 		add_action('init', array($this, 'init'));
 		add_action('admin_init', array($this, 'create_reviews_page'));
@@ -347,9 +344,9 @@ class SMARTESTReviewsBusiness {
     }
 	
 	/**
-	* The HTML for the entire Reviews list
+	* Display the Reviews list
 	*/
-	function output_reviews_show() {
+	function reviews_list() {
 	
 		global $smartestthemes_options;
 		$add_reviews = empty($smartestthemes_options['st_add_reviews']) ? '' : $smartestthemes_options['st_add_reviews'];
@@ -366,14 +363,6 @@ class SMARTESTReviewsBusiness {
         $showtitle = '';
         $title_tag = empty($smartestthemes_options['st_reviews_title_tag']) ? 'h2' : $smartestthemes_options['st_reviews_title_tag'];
 		
-		/* @new remove to test if this is  multisite bug fix for not showing status_msg on when review is submitted on  multisite.
-				 trying to access a page that does not exist -- send to main page 
-				if ( isset($this->p->smarp) && $this->p->smarp != 1 && count($reviews) == 0 ) {
-					$url = get_permalink(get_option('smartestthemes_reviews_page_id'));
-					$this->smar_redirect($url);
-				}
-		*/        
-
 		if (count($reviews) == 0) {
 			$reviews_content .= '<p>'. __('There are no reviews yet. Be the first to leave yours!', 'crucible').'</p>';
 		} elseif ($add_reviews != 'true') {
@@ -543,7 +532,7 @@ class SMARTESTReviewsBusiness {
 					$req = '';
 				}
 					
-				$fields .= '<tr><td><label for="custom_' . $i . '" class="comment-field">' . $field_label . ': ' . $req . '</label></td><td><input class="text-input" type="text" id="custom_' . $i . '" name="custom_' . $i . '" maxlength="150" value="' . $this->p->$custom_i . '" /></td></tr>';
+				$fields .= '<tr><td><label for="custom_' . $i . '" class="comment-field">' . stripslashes_deep(esc_attr($field_label)) . ': ' . $req . '</label></td><td><input class="text-input" type="text" id="custom_' . $i . '" name="custom_' . $i . '" maxlength="150" value="' . $this->p->$custom_i . '" /></td></tr>';
 			
 			}
         }
@@ -849,7 +838,7 @@ class SMARTESTReviewsBusiness {
 			$reviews_content .= $this->show_reviews_form();
 		}
 
-		$ret_Arr = $this->output_reviews_show();
+		$ret_Arr = $this->reviews_list();
         $reviews_content .= $ret_Arr[0];
         $total_reviews = $ret_Arr[1];
 		$reviews_content .= $this->pagination($total_reviews);
@@ -875,7 +864,7 @@ class SMARTESTReviewsBusiness {
 				
 				$custom_field = array();
 				for ($i = 0; $i < 6; $i++) {
-					$custom_field[] = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : $smartestthemes_options['st_reviews_custom_field_' . $i];
+					$custom_field[] = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : stripslashes_deep(esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]));
 				}
 				
 				$loc = array(
@@ -1303,7 +1292,7 @@ class SMARTESTReviewsBusiness {
 								
 									?>[<a target="_blank" href="<?php 
 							
-									echo $this->get_jumplink_for_review($review,$this->page); ?>"><?php _e('View Review on Page', 'crucible'); ?></a>]<?php
+									echo $this->get_jumplink_for_review($review,$this->page); ?>"><?php _e('View on Reviews Page', 'crucible'); ?></a>]<?php
 								}
 							endif; ?>
                           </div>
@@ -1322,7 +1311,7 @@ class SMARTESTReviewsBusiness {
 							}
 							for ($i = 0; $i < 6; $i++) {
 							
-								$label = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]);
+								$label = empty($smartestthemes_options['st_reviews_custom_field_' . $i]) ? '' : stripslashes_deep(esc_attr($smartestthemes_options['st_reviews_custom_field_' . $i]));
 							
 								if ( isset($custom_unserialized[$i]) && $label ) {
 										
