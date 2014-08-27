@@ -15,7 +15,7 @@
 <body <?php body_class(); schema_type('header'); ?>>
 
 <div id="page" class="site">
-<?php // do_action( 'crucible_social_buttons' ); // @new @todo here or in footer, decide per theme
+<?php // do_action( 'crucible_social_buttons' ); // @new here or in footer, decide per theme
 ?>
 	<header id="masthead" class="site-header" role="banner">
 	
