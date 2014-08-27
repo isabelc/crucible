@@ -3,6 +3,7 @@
  * Admin Interface
  * @package    Smartest Themes Business Framework
 */
+
 /** 
 * Setup the admin options
 */
@@ -11,9 +12,7 @@ function smartestthemes_option_setup(){
 	$smartestthemes_array = array();
 	add_option('smartestthemes_options',$smartestthemes_array);
 	$template = get_option('smartestthemes_template');
-	$saved_options = get_option('smartestthemes_options');// @test if needed
-	
-	
+
 	foreach($template as $option) {
 		if($option['type'] != 'heading'){
 			$id = isset($option['id']) ? $option['id'] : '';
@@ -596,7 +595,6 @@ function smartestthemes_ajax_callback() {
 		}
 		$output .= "</ul>";
 		update_option('smartestthemes_options',$smartestthemes_array);
-		update_option('smartestthemes_settings_encode',$output);// @test maybe remove this
 		
 		flush_rewrite_rules();
 	}
@@ -605,7 +603,7 @@ function smartestthemes_ajax_callback() {
 add_action('wp_ajax_smartestthemes_ajax_post_action', 'smartestthemes_ajax_callback');
 
 /**
- * Generates The Options
+ * Generate Options
  */
 function smartestthemes_machine($options) {
         
@@ -790,31 +788,12 @@ function smartestthemes_machine($options) {
 				else {
 					$checked = '';
 				}
-				 
-				
-				
+
 				$output .= '<input type="checkbox" class="checkbox smartestthemes-input" name="'. $smartestthemes_key .'" id="'. $smartestthemes_key .'" value="true" '. $checked .' /><label for="'. $smartestthemes_key .'">'. $option .'</label>';
 				
 				if ( ! $multiclass ) {
 					$output .= '<br />';
 				}
-				
-				
-/* @test below is my custom, but did not work to save my options, so I will try the default way .
-
-				
-			if(($pos = strpos($key, '_')) !== false){
-			   $extract_data = substr($key, $pos + 1);
-			} else {
-				$extract_data = $key;
-			}
-
-			$output .= '<input data-what="'. $extract_data .'" type="checkbox" class="checkbox smartestthemes-input" name="'. $value['id'] .'" id="' . $key .'" value="true" '. $checked .' /><label for="'. $key .'">'. $option .'</label><br />';// @test
-
-*/
-
-			
-			
 										
 			}
 		break;

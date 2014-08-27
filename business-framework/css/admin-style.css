@@ -221,7 +221,6 @@ h4.support-section-title {
 #smartestthemes-container #smartestthemes-nav ul li a:hover {
 	color: #797979;
 }
-/* @test less selectors */
 #smartestthemes-nav .smartestthemes-nav-icon {
 	display: inline;
 	width: 20px;
@@ -335,10 +334,6 @@ background-position: -392px 0
 	margin: 10px 10px 30px 10px;
 }
 
-/* @test do i need this one */
-#smartestthemes-container #content #smartestthemes-option-colors .explain {
-	width: auto;
-}
 #smartestthemes-container #smartestthemes-nav ul li.current a, #smartestthemes-nav ul li a:hover {
 	color: #21759b;
 	background-color: #fff;
@@ -750,8 +745,4 @@ html body * span.clear, html body * div.clear, html body * li.clear, html body *
 }
 .clearfix {
 	clear: both;
-}
-.black {
-	color: #000;
-	font-weight: bold;
 }
