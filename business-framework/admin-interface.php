@@ -216,32 +216,10 @@ function smartestthemes_frame_load() {
 	
 	function smartestthemes_admin_head() {
 	
-		// @todo do i still need jquery datepicker function below...
-		
-		$fr = get_template_directory_uri(). '/business-framework/'; // @test need
+		$fr = get_template_directory_uri(). '/business-framework/';
 		
 		?>
 		<link rel="stylesheet" type="text/css" href="<?php echo $fr; ?>css/admin-style.css" media="screen" />
-		
-		<script>
-		/* @test without this script
-		
-		jQuery(document).ready(function(){
-			//JQUERY DATEPICKER
-			jQuery('.smartestthemes-input-calendar').each(function (){
-				jQuery('#' + jQuery(this).attr('id')).datepicker({showOn: 'button', buttonImage: '<?php echo $fr; ?>images/calendar.gif', buttonImageOnly: true});
-			});
-			
-			//JQUERY TIME INPUT MASK
-			jQuery('.smartestthemes-input-time').each(function (){
-				jQuery('#' + jQuery(this).attr('id')).mask("99-9999999");
-			});
-});
-
-*/
-
-
-		</script>
 		<?php //AJAX Upload
 		// Localize vars for js
 		$upl = __('Uploading', 'crucible');

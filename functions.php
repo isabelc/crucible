@@ -277,7 +277,7 @@ add_filter('widget_text', 'do_shortcode');
 function crucible_texture_class( $classes ) {
 	// only if there is no bg image do we check for texture
 	if ( ! get_theme_mod( 'background_image' ) ) {
-		global $smartestthemes_options;// @test this one works
+		global $smartestthemes_options;
 		$bg_texture = isset($smartestthemes_options['bg_texture']) ? $smartestthemes_options['bg_texture'] : '';
 		if ($bg_texture) {
 			// add 'texture_' to the $classes array
@@ -307,7 +307,6 @@ class Crucible_Comment_Walker extends Walker_Comment {
  
 	// constructor – wrapper for the comments list
 	function __construct() { ?>
-
 		<section class="comments-list">
 
 	<?php }
@@ -356,17 +355,6 @@ class Crucible_Comment_Walker extends Walker_Comment {
 			</div>
 			<div class="comment-col-2">
 			<div class="comment-meta post-meta">
-				
-					
-				<?php
-					
-				
-				// @test consider remove my comments CSS.
-				// @test the datetime in testing tool to see time format. is c?
-				
-				
-				?>
-					
 				<time class="comment-meta-item" datetime="<?php comment_date('c'); ?>" itemprop="commentTime">
 				<?php comment_date('F jS, Y'); ?> at <a href="#comment-<?php comment_ID(); ?>"><?php comment_time(); ?></a></time>
 
@@ -398,7 +386,7 @@ class Crucible_Comment_Walker extends Walker_Comment {
 	// destructor – closing wrapper for the comments list
 	function __destruct() { ?>
 
-		</section><!-- @test close .comments-list -->
+		</section>
 		
 	<?php }
 

@@ -36,7 +36,7 @@ if ( post_password_required() ) {
 
 		<?php
 				wp_list_comments( array(
-					'walker'		=> new Crucible_Comment_Walker(),// @test
+					'walker'		=> new Crucible_Comment_Walker(),// @test in rich snippets test tool
 					'style'			=> 'ol',
 					'short_ping'	=> true,
 				) );

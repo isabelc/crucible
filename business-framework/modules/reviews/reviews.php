@@ -41,7 +41,6 @@ class SMARTESTReviewsBusiness {
 			add_menu_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array($this, 'admin_view_reviews'), 'dashicons-star-filled', 62);
 		}
 	}
-
 	/**
 	* Generates an html link for a review with its page and ID as URL parameters
 	*/

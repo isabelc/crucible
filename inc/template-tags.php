@@ -118,7 +118,7 @@ function crucible_post_thumbnail() {
 		}
 	}
 
-	/* @todo just a note that if I need exact size image for staff archives or so, use this below:
+	/* @new just a note that if I need exact size image for staff archives or so, use this below:
 	
 			$feedthumb = vt_resize( get_post_thumbnail_id(), '', 250, 127, true);
 			$src = $feedthumb['url'];

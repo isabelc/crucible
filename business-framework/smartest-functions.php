@@ -1404,13 +1404,8 @@ function schema_type($position) {
 		
 			$schema = 'Person';
 		
-		} elseif (is_home()) {
-					// @test is_archive did not print this to the blog page.
-					// @test now test is_home...
-					
-					
+		} elseif (is_home()) {// @test again
 			$blogpost_archive = ' itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"';
-				// @todo (caveat, this one must be nested within blog).
 		}
 
 	} elseif ( $position == 'single' ) {
