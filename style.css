@@ -630,7 +630,11 @@ i.fa:hover {
 	display: block;
 }
 .main-navigation .current_page_item a,
-.main-navigation .current-menu-item a {
+.main-navigation .current-menu-item a,
+/* for fallback menu */
+.home .main-navigation .home>a
+{
+color:#fff;/* @new */
 }
 /* Small menu */
 .menu-toggle {

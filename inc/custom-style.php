@@ -7,28 +7,17 @@ if ( $header_bg_color ) {
 }
 
 if ( $footer_bg_color ) {
-// @test removed footer pre
 	?>.site-footer{background:<?php echo $footer_bg_color; ?>; }<?php
 }
 
 
 /* FONTS */
 $att_grabber_color = empty($smartestthemes_options['att_grabber_color']) ? '' : $smartestthemes_options['att_grabber_color'];
-
-
-// @test worked when put default. but now test without default so output nothing if they select default.....	$att_grabber_font = empty($smartestthemes_options['att_grabber_font']) ? 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' : $smartestthemes_options['att_grabber_font'];// @new default
-
-
-$att_grabber_font = empty($smartestthemes_options['att_grabber_font']) ? '' : $smartestthemes_options['att_grabber_font'];// @test
-
-
-
+$att_grabber_font = empty($smartestthemes_options['att_grabber_font']) ? '' : $smartestthemes_options['att_grabber_font'];
 $attgrabber_fontsize = empty($smartestthemes_options['attgrabber_fontsize']) ? '' : $smartestthemes_options['attgrabber_fontsize'];
-
 $body_text_color = empty($smartestthemes_options['body_text_color']) ? '' : $smartestthemes_options['body_text_color'];
 $body_font = empty($smartestthemes_options['body_font']) ? '' : $smartestthemes_options['body_font'];
 $body_fontsize = empty($smartestthemes_options['body_fontsize']) ? '' : $smartestthemes_options['body_fontsize'];
-
 $heading_text_color = empty($smartestthemes_options['heading_text_color']) ? '' : $smartestthemes_options['heading_text_color'];
 $heading_font = empty($smartestthemes_options['heading_font']) ? '' : $smartestthemes_options['heading_font'];
 $h1_fontsize =  empty($smartestthemes_options['h1_fontsize']) ? '' : $smartestthemes_options['h1_fontsize'];
@@ -105,40 +94,35 @@ if ( $att_grabber_font || $att_grabber_color || $attgrabber_fontsize ) { ?>
 		
 <?php }
 
-// HIGHLIGHT MENU
-// @new active menu item style from css.
-// @todo why again do i need this...
-
-/*
-body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, 
-body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, 
-body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,
-body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a,
-.menu .current-menu-item a,
-body.post-type-archive-smartest_staff .menu li.staff a,
-	body.post-type-archive-smartest_services .menu li.services a,
-	body.post-type-archive-smartest_news .menu li.news a,
-	body.single-smartest_services .menu .services a,
-	body.single-smartest_staff .menu .staff a,
-	body.single-smartest_news .menu .news a,
-	body.about .menu li.about a, 
-	body.contact .menu li.contact a,
-	body.reviews .menu li.reviews a,
-	body.single-post .menu li.blog a,
-	body.archive.author .menu li.blog a,
-	body.archive.category .menu li.blog a,
-	body.archive.tag .menu li.blog a,
-	body.archive.date .menu li.blog a {
-		color: #37C878;
-		text-decoration: none;
-}
+/** @new
+/* Create link relationships for fallback menu, to highlight current the page.
 */
+?>
+.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .main-navigation .about a, 
+.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .main-navigation .contact a, 
+.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .main-navigation .reviews a,
+.post-type-archive-smartest_staff .main-navigation .staff a,
+.post-type-archive-smartest_news .main-navigation .news a,
+.post-type-archive-smartest_services .main-navigation .services a,
+.tax-smartest_service_category .main-navigation .services a,
+.single-smartest_services .main-navigation .services a,
+.single-smartest_staff .main-navigation .staff a,
+.single-smartest_news .main-navigation .news a,
+.about .main-navigation .about a, 
+.contact .main-navigation .contact a,
+.reviews .main-navigation .reviews a,
+.single-post .main-navigation .blog a,
+.archive.author .main-navigation .blog a,
+.archive.category .main-navigation .blog a,
+.archive.tag .main-navigation .blog a,
+.archive.date .main-navigation .blog a {
+		color: #fff;
+}
 
+<?php
 
 
 // ACCENT COLORS
-
-// @test make these only output markup if a custom selection is made.
 
 $link_color = empty($smartestthemes_options['link_color']) ? '' : $smartestthemes_options['link_color'];
 $link_hover_color = empty($smartestthemes_options['link_hover_color']) ? '' : $smartestthemes_options['link_hover_color'];
@@ -153,7 +137,27 @@ $table_alt_row_color = empty($smartestthemes_options['table_alt_row_color']) ? '
 // @new default for this and next 6 colors.
 if ( $link_color && ( '#008000' != $link_color) ) {
 
-	?>a, i.fa-clock-o, i.fa-bullhorn, .entry-meta.jobtitle,.menu .current-menu-item a,body.post-type-archive-smartest_staff .menu li.staff a,body.post-type-archive-smartest_services .menu li.services a,body.post-type-archive-smartest_news .menu li.news a,body.tax-smartest_service_category .menu li.services a,body.single-smartest_services .menu .services a,body.single-smartest_staff .menu .staff a,body.single-smartest_news .menu .news a,body.about .menu li.about a, body.contact .menu li.contact a,body.reviews .menu li.reviews a,body.single-post .menu li.blog a,body.archive.author .menu li.blog a,body.archive.category .menu li.blog a,body.archive.tag .menu li.blog a,body.archive.date .menu li.blog a,body.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .menu li.about a, body.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .menu li.contact a, body.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .menu li.reviews a,body.page-id-<?php echo get_option('smartestthemes_home_page_id'); ?> .menu > li.home > a { color:<?php echo $link_color; ?>;} <?php
+	?>a, i.fa-clock-o, i.fa-bullhorn, .entry-meta.jobtitle,.main-navigation .current-menu-item a,
+	.main-navigation .current_page_item a,
+	.home .main-navigation .home>a,
+	.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .main-navigation .about a, 
+	.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .main-navigation .contact a, 
+	.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .main-navigation .reviews a,
+	.post-type-archive-smartest_staff .main-navigation .staff a,
+	.post-type-archive-smartest_news .main-navigation .news a,
+	.post-type-archive-smartest_services .main-navigation .services a,
+	.tax-smartest_service_category .main-navigation .services a,
+	.single-smartest_services .main-navigation .services a,
+	.single-smartest_staff .main-navigation .staff a,
+	.single-smartest_news .main-navigation .news a,
+	.about .main-navigation .about a, 
+	.contact .main-navigation .contact a,
+	.reviews .main-navigation .reviews a,
+	.single-post .main-navigation .blog a,
+	.archive.author .main-navigation .blog a,
+	.archive.category .main-navigation .blog a,
+	.archive.tag .main-navigation .blog a,
+	.archive.date .main-navigation .blog a{ color:<?php echo $link_color; ?>;} <?php
 	
 }
 	
@@ -196,9 +200,8 @@ if ( $button_hover_color && ('#e6e6e6' != $button_hover_color) ) {
 
 }
 	
-	
-
-if ( $table_caption_color && ('#999' != $table_caption_color) ) {
+// @test that this does not output the default
+if ( $table_caption_color && ('#999999' != $table_caption_color) ) {
 	?>#today, table caption, thead {background:<?php echo $table_caption_color; ?> }<?php
 	
 }
@@ -217,6 +220,7 @@ $increase_logo = empty($smartestthemes_options['increase_logo']) ? '' : $smartes
 $tagline_color = empty($smartestthemes_options['tagline_color']) ? '' : $smartestthemes_options['tagline_color'];
 $tagline_size = empty($smartestthemes_options['tagline_size']) ? '' : $smartestthemes_options['tagline_size'];
 
+// @test that this does not output the default
 $print_logo_color = '';
 if ( $logo_color && ('#000000' != $logo_color) ) {
 	$print_logo_color = true;

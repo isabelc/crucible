@@ -1,8 +1,11 @@
 <?php // Conditionally load fontface stylesheets
 // @todo this whole page needs updating with the new font keys.. maybe..
 
+// @todo add in some default fontface fonts.
+
+
 function crucible_loadfonts() {
-	global $smartestthemes_options;// @test this one works
+	global $smartestthemes_options;
 	// @new default for next 5
 	// @test all of these
 	$needle1 = empty($smartestthemes_options['heading_font']) ? '' : $smartestthemes_options['heading_font'];
@@ -62,7 +65,7 @@ add_action( 'wp_enqueue_scripts', 'crucible_loadfonts' );
  */
 function crucible_logofontface() {
 
-	global $smartestthemes_options;// @test this one works
+	global $smartestthemes_options;
 	// @test logo login fonts only needed if no logo image
 	if( empty($smartestthemes_options['logo_setting']) ? '' : $smartestthemes_options['logo_setting'] ) {
 		return;

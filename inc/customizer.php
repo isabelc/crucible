@@ -127,7 +127,7 @@ function crucible_customize_register( $wp_customize ) {
 	
 	/* logo font color */
 	$wp_customize->add_setting('smartestthemes_options[logo_color]', array(
-        'default'	=> '#000',// @new default
+        'default'	=> '#000000',// @new default
         'type'		=> 'option',
 		'transport'	=> 'postMessage'
      ));
@@ -321,7 +321,7 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'smartestthemes_options[table_caption_bg_color]',
 		array(
-			'default'	=> '#999', // @new default
+			'default'	=> '#999999', // @new default
 			'type'		=> 'option',
 			'transport'	=> 'postMessage'
 		)
