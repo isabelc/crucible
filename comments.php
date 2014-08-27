@@ -31,12 +31,12 @@ if ( post_password_required() ) {
 			<h1 class="screen-reader-text"><?php _e( 'Comment navigation', 'crucible' ); ?></h1>
 			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'crucible' ) ); ?></div>
 			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'crucible' ) ); ?></div>
-		</nav><!-- #comment-nav-above -->
+		</nav>
 		<?php endif; // check for comment navigation ?>
 
 		<?php
 				wp_list_comments( array(
-					'walker'		=> new Crucible_Comment_Walker(),// @test in rich snippets test tool
+					'walker'		=> new Crucible_Comment_Walker(),
 					'style'			=> 'ol',
 					'short_ping'	=> true,
 				) );
@@ -47,7 +47,7 @@ if ( post_password_required() ) {
 			<h1 class="screen-reader-text"><?php _e( 'Comment navigation', 'crucible' ); ?></h1>
 			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'crucible' ) ); ?></div>
 			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'crucible' ) ); ?></div>
-		</nav><!-- #comment-nav-below -->
+		</nav>
 		<?php endif; // check for comment navigation ?>
 
 	<?php endif; // have_comments() ?>
@@ -61,4 +61,4 @@ if ( post_password_required() ) {
 
 	<?php comment_form(); ?>
 
-</div><!-- #comments -->
+</div>

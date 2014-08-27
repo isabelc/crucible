@@ -346,7 +346,7 @@ function create_smartest_business_cpts() {
 	   	register_post_type( 'smartest_services' , $args );
 	}// end if show services enabled
 
-	// if show homepage slideshow is enabled, do cpt @todo consider remove
+	// @new if show homepage slideshow is enabled, do cpt
 	if( $slideshow == 'true'  ) {
 		$args = array(
 			'label' => __('Slideshow','storefront'),
@@ -1151,7 +1151,6 @@ function smartestthemes_sort_services($query) {
 	}
 	return $query;
 }
-// @test
 add_filter( 'parse_query', 'smartestthemes_sort_services' );
 
 /**
@@ -1404,13 +1403,13 @@ function schema_type($position) {
 		
 			$schema = 'Person';
 		
-		} elseif (is_home()) {// @test again
+		} elseif (is_home()) {
 			$blogpost_archive = ' itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"';
 		}
 
 	} elseif ( $position == 'single' ) {
 
-		global $post;// @test need
+		// global $post;// @test need
 		$post_type = get_post_type();
 		if ( 'smartest_staff' == $post_type ) {
 			$schema = 'Person';
@@ -1441,6 +1440,6 @@ function schema_type($position) {
 	if ($blogpost_archive) {
 		echo $blogpost_archive;
 	}
-	// @test what are 2 echos going to do here?
+
 }
 ?>

@@ -16,8 +16,7 @@ if ($user_info == true) {
 	$admin_name = __( 'Site Administrator', 'crucible' );
 }
 $currtime = date("l, F jS, Y @ g:i a");
-/* @new edit shortname per diff framework */
-$shortname = 'st';// @test  @todo update all option names in theme
+$shortname = 'st';
 
 // Globalize theme options variable for use in theme
 global $smartestthemes_options;

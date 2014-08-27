@@ -6,23 +6,23 @@
 		if ( is_active_sidebar( 'foot1' ) ) : ?>
 			<aside id="first" class="widget grid_3 alpha actives1">
 				<?php dynamic_sidebar( 'foot1' ); ?>
-			</aside><!-- #first .widget-area -->
+			</aside>
 		<?php endif; ?>
 		
 		<?php if ( is_active_sidebar( 'foot2' ) ) : ?>
 			<aside id="second" class="widget grid_6 actives2">
 				<?php dynamic_sidebar( 'foot2' ); ?>
-			</aside><!-- #second .widget-area -->
+			</aside>
 		<?php endif; ?>
 		
 		<?php if ( is_active_sidebar( 'foot3' ) ) : ?>
 			<aside id="third" class="widget grid_3 omega">
 				<?php dynamic_sidebar( 'foot3' ); ?>
-			</aside><!-- #third .widget-area -->
+			</aside>
 		<?php endif;
 
 	} else { // no active dynamic footer sidebars, so hard code widgets
-		global $smartestthemes_options;// @test this one works
+		global $smartestthemes_options;
 		$ne = isset($smartestthemes_options['st_show_news']) ? $smartestthemes_options['st_show_news'] : '';
 		$se = isset($smartestthemes_options['st_show_services']) ? $smartestthemes_options['st_show_services'] : '';
 		$re = isset($smartestthemes_options['st_add_reviews']) ? $smartestthemes_options['st_add_reviews'] : '';
