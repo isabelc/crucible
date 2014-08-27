@@ -1,5 +1,5 @@
 <?php
-/** @test used by archive.php
+/** Used by index.php and archive.php
  * @package Crucible
  */
 ?>

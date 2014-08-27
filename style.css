@@ -9,18 +9,18 @@ License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: crucible
 Domain Path: /languages/
-Tags: @todo
+Tags: @new business, business themes
 */
 
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
 1.0 - Reset
-	1.1 - Background
 2.0 - Typography
 3.0 - Elements
-	3.1 - Message Boxes
-	3.2 - Social Links
+	3.1 - Background Textures
+	3.2 - Message Boxes
+	3.3 - Social Links
 4.0 - Forms
 5.0 - Navigation
 	5.1 - Links
@@ -116,27 +116,6 @@ a:active {
 a img {
 	border: 0;
 }
-/*--------------------------------------------------------------
-1.1 Background
---------------------------------------------------------------*/
-body.texture_argyle {background-image:url('images/argyle.png');background-repeat:repeat;}
-body.texture_dark_brick_wall {background-image:url('images/dark_brick_wall.png');background-repeat:repeat;}
-body.texture_white_brick_wall {background-image:url('images/white_brick_wall.png');background-repeat:repeat;}
-body.texture_carbon_fibre {background-image:url('images/carbon_fibre.png');background-repeat:repeat;}
-body.texture_carpet {background-image:url('images/carpet.png');background-repeat:repeat;}
-body.texture_checkered_pattern {background-image:url('images/checkered_pattern.png');background-repeat:repeat;}
-body.texture_circles {background-image:url('images/circles.png');background-repeat:repeat;}
-body.texture_crissXcross {background-image:url('images/crissXcross.png');background-repeat:repeat;}
-body.texture_diagonal_striped_brick {background-image:url('images/diagonal_striped_brick.png');background-repeat:repeat;}
-body.texture_double_lined {background-image:url('images/double_lined.png');background-repeat:repeat;}
-body.texture_hexellence {background-image:url('images/hexellence.png');background-repeat:repeat;}
-body.texture_paven {background-image:url('images/paven.png');background-repeat:repeat;}
-body.texture_plaid {background-image:url('images/plaid.png');background-repeat:repeat;}
-body.texture_pinstripe {background-image:url('images/pinstripe.png');background-repeat:repeat;}
-body.texture_speckled {background-image:url('images/speckled.png');background-repeat:repeat;}
-body.texture_tiles {background-image:url('images/tiles.png');background-repeat:repeat;}
-body.texture_wood {background-image:url('images/wood.png');background-repeat:repeat;}
-
 /*--------------------------------------------------------------
 2.0 Typography
 --------------------------------------------------------------*/
@@ -250,7 +229,7 @@ big {
 	color:#404040;
 }
 
-/* @test FONTS */
+/* FONTS */
 .font_arial,
 .site-title a.font_arial,
 .attention-grab.font_arial { font-family: Arial,Helvetica,sans-serif }
@@ -357,14 +336,33 @@ th {
 
 tr td:first-child, thead th:first-child, tr th:first-child, table caption {padding-left:10px;}
 
-/* @test @todo add table selectors accent color inline styles. maybe. */
-
 /* @new table colors */
 thead, table caption {   background-color:#999;}
 tbody tr:nth-child(even) {background-color:#e0e0e0;}
 
 /*--------------------------------------------------------------
-3.1 Message Boxes @framework
+3.1 Background Textures
+--------------------------------------------------------------*/
+body.texture_argyle {background-image:url('images/argyle.png');background-repeat:repeat;}
+body.texture_dark_brick_wall {background-image:url('images/dark_brick_wall.png');background-repeat:repeat;}
+body.texture_white_brick_wall {background-image:url('images/white_brick_wall.png');background-repeat:repeat;}
+body.texture_carbon_fibre {background-image:url('images/carbon_fibre.png');background-repeat:repeat;}
+body.texture_carpet {background-image:url('images/carpet.png');background-repeat:repeat;}
+body.texture_checkered_pattern {background-image:url('images/checkered_pattern.png');background-repeat:repeat;}
+body.texture_circles {background-image:url('images/circles.png');background-repeat:repeat;}
+body.texture_crissXcross {background-image:url('images/crissXcross.png');background-repeat:repeat;}
+body.texture_diagonal_striped_brick {background-image:url('images/diagonal_striped_brick.png');background-repeat:repeat;}
+body.texture_double_lined {background-image:url('images/double_lined.png');background-repeat:repeat;}
+body.texture_hexellence {background-image:url('images/hexellence.png');background-repeat:repeat;}
+body.texture_paven {background-image:url('images/paven.png');background-repeat:repeat;}
+body.texture_plaid {background-image:url('images/plaid.png');background-repeat:repeat;}
+body.texture_pinstripe {background-image:url('images/pinstripe.png');background-repeat:repeat;}
+body.texture_speckled {background-image:url('images/speckled.png');background-repeat:repeat;}
+body.texture_tiles {background-image:url('images/tiles.png');background-repeat:repeat;}
+body.texture_wood {background-image:url('images/wood.png');background-repeat:repeat;}
+
+/*--------------------------------------------------------------
+3.2 Message Boxes @framework
 --------------------------------------------------------------*/
 
 .st-info, .st-success, .st-warning, .st-error {
@@ -393,7 +391,7 @@ tbody tr:nth-child(even) {background-color:#e0e0e0;}
     vertical-align:middle;
 }
 /*--------------------------------------------------------------
-3.2 Social Links @framework
+3.3 Social Links @framework
 --------------------------------------------------------------*/
 
 /* Social Share */
@@ -427,7 +425,7 @@ tbody tr:nth-child(even) {background-color:#e0e0e0;}
 
 /* Social Follow */
 
-.social ul,.social-staff ul {list-style:none;}
+.social ul,.social-staff ul {list-style:none;margin-left:0;}
 .social li, .social-staff li {display:inline-block;margin:6px;}
 
 .social .fa-google-plus-square,
@@ -852,7 +850,7 @@ i.fa:hover {
 	float:right;
 	display:inline-block;
 	text-decoration:none;
-	padding:0.5em 0.7em;/* @todo in mobile padding:1em; */
+	padding:0.5em 0.7em;
 	cursor:pointer
 }
 .comments-list article.comment{
@@ -860,10 +858,9 @@ i.fa:hover {
 }
 .comments-list time{font-size:smaller;text-align:right;display: block;}
 
-/* @todo make columns so avatar sticks out on right... */
-
-
-.comments-list .says{font-weight:normal;}
+.comments-list .says{
+	font-weight:normal
+}
 .comments-list .comment-column{
 	
 	width:24%;
@@ -937,7 +934,7 @@ i.fa:hover {
 --------------------------------------------------------------*/
 .page-content img.wp-smiley,
 .entry-content img.wp-smiley,
-.comment-content img.wp-smiley {/* @test do i have '.comment-content' still */
+.comment-content img.wp-smiley {
 	border: none;
 	margin-bottom: 0;
 	margin-top: 0;
@@ -988,37 +985,25 @@ img#customlogo{
     width: auto;
 }
 
-/*
-@todo mobile comments CSS
-
-@todo mobile everything !
-
-*/
-
-
 @media only screen and (max-device-width: 767px) {
 	
 	.overflow { overflow: auto; }/* wrap around tables to make responsive @framework */
 	
+	.content-area {
+		float: none;
+		margin: 0;
+	}
+	.site-main {
+		margin: 0;
+	}
+	.site-content .widget-area {
+		float: none;
+		width: 100%;
+	}
+	
 }
 
 @media screen and (max-device-width: 568px){
-	/* @test check all the below comment selectors to see if they still exist */
-	
-	article footer.entry-meta{padding:2em 0}#comments,#reply{margin:0}
-	
-	.commentlist{width:100%!important}
-	
-	.commentlist>li.comment{padding:0}
-	
-	.commentlist .children{padding-left:0}
-	
-	.commentlist .children li.comment{margin:1.625em 0 0;padding:2px}
-	
-	#commentform input[type=text],
-	#commentform textarea{width:90%}
-	
-	#searchsubmit{display:block;margin-top:5px}
 	
 	.one-half,
 	.one-third,
