@@ -2,37 +2,12 @@
 function crucible_loadfonts() {
 	global $smartestthemes_options;
 
-	// @test all of these
 	$haystack1 = empty($smartestthemes_options['heading_font']) ? '' : $smartestthemes_options['heading_font'];
 	$haystack2 = empty($smartestthemes_options['logo_font']) ? '' : $smartestthemes_options['logo_font'];
 	$haystack3 = empty($smartestthemes_options['body_font']) ? '' : $smartestthemes_options['body_font'];
 	$haystack4 = empty($smartestthemes_options['tagline_font']) ? '' : $smartestthemes_options['tagline_font'];
 	$haystack5 = empty($smartestthemes_options['att_grabber_font']) ? '' : $smartestthemes_options['att_grabber_font'];
 
-	// @test
-	isa_log( ' this is $haystack1: ');// @test
-	isa_log($haystack1);// @test
-	
-	isa_log( ' this is $haystack2: ');// @test
-	isa_log($haystack2);// @test
-
-	isa_log( ' this is $haystack3: ');// @test
-	isa_log($haystack3);// @test
-
-	isa_log( ' this is $haystack4: ');// @test
-	isa_log($haystack4);// @test
-
-	isa_log( ' this is $haystack5: ');// @test
-	isa_log($haystack5);// @test	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	// @new list fonts from customizer.php $logo_fonts array indices
 	$font1 = 'qumpellkano12regular,Arial,Helvetica,sans-serif';
@@ -97,41 +72,22 @@ function crucible_loadfonts() {
 		$css .= "@font-face{font-family:roboto_slabbold;src:url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.eot);src:url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.eot?#iefix) format('embedded-opentype'),url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.woff) format('woff'),url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.ttf) format('truetype'),url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.svg#roboto_slabbold) format('svg');font-weight:400;font-style:normal}";
 	}
 	
-	/**
-	************************
-	
-	@todo delete font css files.
-	
-	
-	**********************************************
-	
-	*/
 	if ( $css ) {
 		update_option('crucible_inline_font_css',$css);
 	}
-	
-	
-	isa_log('this is CSS:');// @test
-	isa_log($css);// @test
-	
-	isa_log('this is the option crucible_inline_font_css: :');// @test
-	
-	$op = get_option('crucible_inline_font_css');// @test remove
-	isa_log($op);// @test
-	
 }
 add_action( 'wp_enqueue_scripts', 'crucible_loadfonts' );
 
 
 /**
- * On login screen only if no logo used.
- * This is almost same as above but only check for logo font, not all heading fonts.
+ * Load custom fontface styles on wp-login screen only if no logo is used.
+ * This is almost same as above but only check logo font, not all fonts.
  */
 
  function crucible_logofontface() {
 
 	global $smartestthemes_options;
-	// @test logo login fonts only needed if no logo image
+	// logo fonts are only needed if no logo image
 	if( empty($smartestthemes_options['logo_setting']) ? '' : $smartestthemes_options['logo_setting'] ) {
 		return;
 	}
@@ -227,17 +183,5 @@ add_action( 'wp_enqueue_scripts', 'crucible_loadfonts' );
 	if ( $css ) {
 		update_option('crucible_login_font_css',$css);
 	}
-	
-	
-	
-	isa_log('this is CSS for wp-login:');// @test
-	isa_log($css);// @test
-	
-	isa_log('this is the option crucible_login_font_css: :');// @test
-	
-	$op = get_option('crucible_login_font_css');// @test remove
-	isa_log($op);// @test
-	
-	
 }
 add_action( 'login_enqueue_scripts', 'crucible_logofontface' ); ?>

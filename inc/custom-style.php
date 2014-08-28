@@ -193,14 +193,12 @@ if ( $print_button_color || $print_button_text_color ) {
 
 }
 
-
 if ( $button_hover_color && ('#e6e6e6' != $button_hover_color) ) {
 
 	?>.button:hover, button:hover, input[type="button"]:hover,input[type="reset"]:hover,input[type="submit"]:hover,#smar_button_1:hover,#smar_submit_btn:hover{background:<?php echo $button_hover_color; ?>;}<?php
 
 }
 	
-// @test that this does not output the default
 if ( $table_caption_color && ('#999999' != $table_caption_color) ) {
 	?>#today, table caption, thead {background:<?php echo $table_caption_color; ?> }<?php
 	
@@ -220,7 +218,6 @@ $increase_logo = empty($smartestthemes_options['increase_logo']) ? '' : $smartes
 $tagline_color = empty($smartestthemes_options['tagline_color']) ? '' : $smartestthemes_options['tagline_color'];
 $tagline_size = empty($smartestthemes_options['tagline_size']) ? '' : $smartestthemes_options['tagline_size'];
 
-// @test that this does not output the default
 $print_logo_color = '';
 if ( $logo_color && ('#000000' != $logo_color) ) {
 	$print_logo_color = true;
@@ -228,7 +225,7 @@ if ( $logo_color && ('#000000' != $logo_color) ) {
 
 if ( $print_logo_color || $logo_fontsize ) {
 
-	?>.site-title a {<?php 
+	?>.site-title a {<?php
 	
 		if ( $print_logo_color ) {
 			?>color:<?php echo $logo_color; ?>;<?php
@@ -272,28 +269,8 @@ if( empty($smartestthemes_options['hide_tagline']) ) {
 	}
 }
 
-?>
-/*
-************************************
-
-@test Custom Fontface fonts
-
-************************************
-*/
-<?php
 $fontstyle = get_option('crucible_inline_font_css');
-echo $fontstyle;// @test
-?>
-/*
-************************************
-
-@test END FONTS
-
-************************************
-*/
-
-<?php
-
+echo $fontstyle;
 
 // widget styles @todo don't use NULL. echo NULL can give errors. find a better way.
 echo apply_filters( 'smartestthemes_widget_styles', NULL );
