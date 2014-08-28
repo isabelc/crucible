@@ -774,4 +774,4 @@ add_action('customize_controls_print_styles', 'crucible_customize_styles');
 function crucible_customize_enqueue() {
 	wp_enqueue_style( 'customizer-fonts', get_template_directory_uri() . '/inc/fonts/customizer-fonts.css' );
 }
-// @test replace. try instead to load fontface in regular css. add_action( 'customize_controls_enqueue_scripts', 'crucible_customize_enqueue' );// @test
+add_action( 'customize_controls_enqueue_scripts', 'crucible_customize_enqueue' );// @test

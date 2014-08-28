@@ -126,17 +126,28 @@ if i use this, i no longer need the fontface inline style option in custom-style
 
 */
 
+/*
+*******************************************************************************************************
+
+@test now that this worked, try now to use thise CSS inside the external customizer-fonts.css sheet...
+*
+*
+*
+*
+*
+
+
 @font-face{font-family:qumpellkano12regular;src:url('inc/fonts/bluechip/qumpellkano12-webfont.eot');src:url('inc/fonts/bluechip/qumpellkano12-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/bluechip/qumpellkano12-webfont.woff') format('woff'),url('inc/fonts/bluechip/qumpellkano12-webfont.ttf') format('truetype');font-weight:400;font-style:normal}
 	
 	@font-face{font-family:bebasregular;src:url('inc/fonts/bebas_regular/BEBAS___-webfont.eot');src:url('inc/fonts/bebas_regular/BEBAS___-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/bebas_regular/BEBAS___-webfont.woff') format('woff'),url('inc/fonts/bebas_regular/BEBAS___-webfont.ttf') format('truetype'),url('inc/fonts/bebas_regular/BEBAS___-webfont.svg#bebasregular') format('svg');font-weight:400;font-style:normal}
 	
 @font-face {
     font-family: 'dayposterblackregular';
-    src: url('inc/fonts/DAYPBL__-webfont.eot');
-    src: url('inc/fonts/DAYPBL__-webfont.eot?#iefix') format('embedded-opentype'),
-         url('inc/fonts/DAYPBL__-webfont.woff') format('woff'),
-         url('inc/fonts/DAYPBL__-webfont.ttf') format('truetype'),
-         url('inc/fonts/DAYPBL__-webfont.svg#dayposterblackregular') format('svg');
+    src: url('inc/fonts/dayposterblack/DAYPBL__-webfont.eot');
+    src: url('inc/fonts/dayposterblack/DAYPBL__-webfont.eot?#iefix') format('embedded-opentype'),
+         url('inc/fonts/dayposterblack/DAYPBL__-webfont.woff') format('woff'),
+         url('inc/fonts/dayposterblack/DAYPBL__-webfont.ttf') format('truetype'),
+         url('inc/fonts/dayposterblack/DAYPBL__-webfont.svg#dayposterblackregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -153,6 +164,11 @@ if i use this, i no longer need the fontface inline style option in custom-style
 	
 	@font-face{font-family:roboto_slabbold;src:url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.eot');src:url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.woff') format('woff'),url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.ttf') format('truetype'),url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.svg#roboto_slabbold') format('svg');font-weight:400;font-style:normal}
 	
+********************************************************************************
+*/
+
+
+
 	
 body,
 button,
