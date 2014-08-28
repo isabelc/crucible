@@ -17,8 +17,8 @@ function smartestthemes_login_logo() {
 		// @new default next 2
 		$col = empty($smartestthemes_options['logo_color']) ? '#000' : $smartestthemes_options['logo_color'];
 		$font = empty($smartestthemes_options['logo_font']) ? 'Copperplate Bold, Copperplate Gothic Bold, serif' : $smartestthemes_options['logo_font'];
-
-		echo '<style>.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. $font . ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}</style>';
+		$custom_fonts = get_option('crucible_login_font_css');// @test
+		echo '<style>' . $custom_fonts . '.login h1 a {background-position: center top;text-indent: 0px;text-align:center; background-image:none;text-decoration:none;font-family:'. $font . ';color:'.$col. ';padding-top: 3px;width: 326px;height: 70px;}</style>';
 	}
 }
 add_action('login_head', 'smartestthemes_login_logo');
@@ -1409,7 +1409,6 @@ function schema_type($position) {
 
 	} elseif ( $position == 'single' ) {
 
-		// global $post;// @test need
 		$post_type = get_post_type();
 		if ( 'smartest_staff' == $post_type ) {
 			$schema = 'Person';
