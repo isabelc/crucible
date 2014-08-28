@@ -543,7 +543,7 @@ function crucible_customize_register( $wp_customize ) {
 			'Lucida Console,Monaco,monospace' => 'Lucida Console, Monaco, monospace',
 			'Lucida Sans Unicode,Lucida Grande,sans-serif' => 'Lucida Sans',
 			'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua, serif',
-			'roboto_slabregular,Arial,Helvetica,sans-serif' => 'Roboto Slab Regular',// @test
+			'roboto_slabregular,Arial,Helvetica,sans-serif' => 'Roboto Slab Regular',
 			'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
 			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
 			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
@@ -758,7 +758,7 @@ function crucible_customize_styles() {
 	
 	@font-face{font-family:roboto_slabbold;src:url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.eot);src:url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.eot?#iefix) format('embedded-opentype'),url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.woff) format('woff'),url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.ttf) format('truetype'),url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.svg#roboto_slabbold) format('svg');font-weight:400;font-style:normal}</style>";
 	
-	
+
 }
 add_action('customize_controls_print_styles', 'crucible_customize_styles');
 
@@ -774,4 +774,4 @@ add_action('customize_controls_print_styles', 'crucible_customize_styles');
 function crucible_customize_enqueue() {
 	wp_enqueue_style( 'customizer-fonts', get_template_directory_uri() . '/inc/fonts/customizer-fonts.css' );
 }
-add_action( 'customize_controls_enqueue_scripts', 'crucible_customize_enqueue' );// @test
+// @test replace. try instead to load fontface in regular css. add_action( 'customize_controls_enqueue_scripts', 'crucible_customize_enqueue' );// @test
