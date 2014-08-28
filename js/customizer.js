@@ -5,6 +5,7 @@
  */
 
 ( function( $ ) {
+
 	// Site title and description.
 	wp.customize( 'blogname', function( value ) {
 		value.bind( function( to ) {
@@ -89,7 +90,7 @@
 
 			// always remove previous class during preview
 
-			$('.site-title a').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');
+			$('.site-title a').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana font_bebasregular font_qumpellkano12regular font_dayposterblackregular font_fontleroybrownregular font_florante_at_lauraregular font_forqueregular font_kingthings_exeterregular font_roboto_slabregular font_roboto_slabbold');
 
 			// convert font key into class slug
 
@@ -153,7 +154,7 @@
 	// tagline font
 	wp.customize( 'smartestthemes_options[tagline_font]', function( value ) {
 		value.bind( function( to ) {
-			$('h2.site-description').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');// @new list
+			$('h2.site-description').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana font_bebasregular font_qumpellkano12regular font_dayposterblackregular font_fontleroybrownregular font_florante_at_lauraregular font_forqueregular font_kingthings_exeterregular font_roboto_slabregular font_roboto_slabbold');// @new list
 
 			// convert font key into class slug
 			if ( to ) {
@@ -316,7 +317,7 @@
 	wp.customize( 'smartestthemes_options[att_grabber_font]', function( value ) {
 		value.bind( function( to ) {
 		
-			$('.attention-grab').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');// @new list
+			$('.attention-grab').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana font_bebasregular font_qumpellkano12regular font_dayposterblackregular font_fontleroybrownregular font_florante_at_lauraregular font_forqueregular font_kingthings_exeterregular font_roboto_slabregular font_roboto_slabbold');// @new list
 
 			// convert font key into class slug
 
@@ -403,7 +404,7 @@
 	wp.customize( 'smartestthemes_options[heading_font]', function( value ) {
 		value.bind( function( to ) {
 	
-			$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana');
+			$('#content h1, #content h1 a, #content h2, #content h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a').removeClass('font_arial font_cambria font_copperplate-light font_copperplate-bold font_garamond font_georgia font_gillsans font_impact font_monotype-corsiva font_lucida-console font_lucida-sans-unicode font_palatino-linotype font_tahoma font_trebuchet-ms font_verdana font_bebasregular font_qumpellkano12regular font_dayposterblackregular font_fontleroybrownregular font_florante_at_lauraregular font_forqueregular font_kingthings_exeterregular font_roboto_slabregular font_roboto_slabbold');
 
 			if ( '' != to ) {
 			

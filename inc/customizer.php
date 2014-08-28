@@ -22,30 +22,37 @@ function crucible_customize_register( $wp_customize ) {
 	$wp_customize->get_control( 'background_color'  )->section	= 'background_image';
 	$wp_customize->get_control( 'background_color'  )->priority	= 1;
 
-	// repeated variables
 	$logo_fonts = array(
 			'' => 'default',
 			'Arial,Helvetica,sans-serif' => 'Arial',
+			'bebasregular,Arial,Helvetica,sans-serif' => 'Bebas',
+			'qumpellkano12regular,Arial,Helvetica,sans-serif' => 'Bluechip',
 			'Cambria, Georgia, Times, Times New Roman, serif' => 'Cambria',
 			'Copperplate Light, Copperplate Gothic Light, serif' => 'Copperplate Gothic Light',
 			'Copperplate Bold, Copperplate Gothic Bold, serif' => 'Copperplate Gothic Bold',
+			'dayposterblackregular,Arial,Helvetica,sans-serif' => 'DayPoster Black',
+			'florante_at_lauraregular,Garamond, Hoefler Text, Times New Roman, Times, serif' => 'Florante at Laura',
+			'fontleroybrownregular,Arial,Helvetica,sans-serif' => 'FontLeroy Brown',
+			'forqueregular,Arial,Helvetica,sans-serif' => 'Forque',
 			'Garamond, Hoefler Text, Times New Roman, Times, serif' => 'Garamond',
 			'Georgia, Times, Times New Roman, serif' => 'Georgia',
 			'GillSans, Calibri, Trebuchet MS, sans-serif' => 'GillSans, Calibri',
 			'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif' => 'Impact',
+			'kingthings_exeterregular,Arial,Helvetica,sans-serif' => 'Kingthings Exeter',
 			'Monotype Corsiva, Arial, sans-serif' => 'Monotype Corsiva',
 			'Lucida Console,Monaco,monospace' => 'Lucida Console, Monaco, monospace',
 			'Lucida Sans Unicode,Lucida Grande,sans-serif' => 'Lucida Sans',
 			'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua, serif',
+			'roboto_slabregular,Arial,Helvetica,sans-serif' => 'Roboto Slab Regular',
+			'roboto_slabbold,Arial,Helvetica,sans-serif' => 'Roboto Slab Bold',
 			'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
 			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
-			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
+			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva',
 	);
 	
 	/* add a textarea control */
 	class Crucible_Customize_Textarea_Control extends WP_Customize_Control {
 		public $type = 'textarea';
-	 
 		public function render_content() {
 			?>
 			<label>
@@ -536,6 +543,7 @@ function crucible_customize_register( $wp_customize ) {
 			'Lucida Console,Monaco,monospace' => 'Lucida Console, Monaco, monospace',
 			'Lucida Sans Unicode,Lucida Grande,sans-serif' => 'Lucida Sans',
 			'Palatino Linotype,Book Antiqua,Palatino,serif' => 'Palatino Linotype, Book Antiqua, serif',
+			'roboto_slabregular,Arial,Helvetica,sans-serif' => 'Roboto Slab Regular',// @test
 			'Tahoma,Geneva,sans-serif' => 'Tahoma, Geneva',
 			'Trebuchet MS,Arial,Helvetica,sans-serif' => 'Trebuchet MS',
 			'Verdana,Geneva,sans-serif' => 'Verdana, Geneva'
@@ -710,3 +718,60 @@ function crucible_customize_preview_js() {
 	wp_enqueue_script( 'crucible_customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), false, true );
 }
 add_action( 'customize_preview_init', 'crucible_customize_preview_js' );
+
+/**
+* Print font styles to head of customizer screen 
+*/
+
+/* @test remove replace with something that works.
+
+function crucible_customize_styles() {
+
+	$fontdir = get_template_directory_uri(). '/inc/fonts/';
+
+	
+	
+	echo "<style> @font-face{font-family:qumpellkano12regular;src:url(" .$fontdir. "bluechip/qumpellkano12-webfont.eot);src:url(" .$fontdir. "bluechip/qumpellkano12-webfont.eot?#iefix) format('embedded-opentype'),url(" .$fontdir. "bluechip/qumpellkano12-webfont.woff) format('woff'),url(" .$fontdir. "bluechip/qumpellkano12-webfont.ttf) format('truetype');font-weight:400;font-style:normal}
+	
+	@font-face{font-family:bebasregular;src:url(" .$fontdir. "bebas_regular/BEBAS___-webfont.eot);src:url(" .$fontdir. "bebas_regular/BEBAS___-webfont.eot?#iefix) format('embedded-opentype'),url(" .$fontdir. "bebas_regular/BEBAS___-webfont.woff) format('woff'),url(" .$fontdir. "bebas_regular/BEBAS___-webfont.ttf) format('truetype'),url(" .$fontdir. "bebas_regular/BEBAS___-webfont.svg#bebasregular) format('svg');font-weight:400;font-style:normal}
+	
+@font-face {
+    font-family: 'dayposterblackregular';
+    src: url('DAYPBL__-webfont.eot');
+    src: url('DAYPBL__-webfont.eot?#iefix') format('embedded-opentype'),
+         url('DAYPBL__-webfont.woff') format('woff'),
+         url('DAYPBL__-webfont.ttf') format('truetype'),
+         url('DAYPBL__-webfont.svg#dayposterblackregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+	
+	@font-face{font-family:forqueregular;src:url(" .$fontdir. "forque/Forque-webfont.eot);src:url(" .$fontdir. "forque/Forque-webfont.eot?#iefix) format('embedded-opentype'),url(" .$fontdir. "forque/Forque-webfont.woff) format('woff'),url(" .$fontdir. "forque/Forque-webfont.ttf) format('truetype'),url(" .$fontdir. "forque/Forque-webfont.svg#forqueregular) format('svg');font-weight:400;font-style:normal}
+	
+	@font-face{font-family:florante_at_lauraregular;src:url(" .$fontdir. "floranteatlaura/FLORLRG_-webfont.eot);src:url(" .$fontdir. "floranteatlaura/FLORLRG_-webfont.eot?#iefix) format('embedded-opentype'),url(" .$fontdir. "floranteatlaura/FLORLRG_-webfont.woff) format('woff'),url(" .$fontdir. "floranteatlaura/FLORLRG_-webfont.ttf) format('truetype'),url(" .$fontdir. "floranteatlaura/FLORLRG_-webfont.svg#florante_at_lauraregular) format('svg');font-weight:400;font-style:normal}
+	
+	@font-face{font-family:fontleroybrownregular;src:url(" .$fontdir. "fontleroybrown/FontleroyBrown-webfont.eot);src:url(" .$fontdir. "fontleroybrown/FontleroyBrown-webfont.eot?#iefix) format('embedded-opentype'),url(" .$fontdir. "fontleroybrown/FontleroyBrown-webfont.woff) format('woff'),url(" .$fontdir. "fontleroybrown/FontleroyBrown-webfont.ttf) format('truetype'),url(" .$fontdir. "fontleroybrown/FontleroyBrown-webfont.svg#fontleroybrownregular) format('svg');font-weight:400;font-style:normal}
+	
+	@font-face{font-family:kingthings_exeterregular;src:url(" .$fontdir. "kingthingsexete/Kingthings_Exeter-webfont.eot);src:url(" .$fontdir. "kingthingsexete/Kingthings_Exeter-webfont.eot?#iefix) format('embedded-opentype'),url(" .$fontdir. "kingthingsexete/Kingthings_Exeter-webfont.woff) format('woff'),url(" .$fontdir. "kingthingsexete/Kingthings_Exeter-webfont.ttf) format('truetype'),url(" .$fontdir. "kingthingsexete/Kingthings_Exeter-webfont.svg#kingthings_exeterregular) format('svg');font-weight:400;font-style:normal}
+	
+	@font-face{font-family:roboto_slabregular;src:url(" .$fontdir. "robotoslab_regular/RobotoSlab-Regular-webfont.eot);src:url(" .$fontdir. "robotoslab_regular/RobotoSlab-Regular-webfont.eot?#iefix) format('embedded-opentype'),url(" .$fontdir. "robotoslab_regular/RobotoSlab-Regular-webfont.woff) format('woff'),url(" .$fontdir. "robotoslab_regular/RobotoSlab-Regular-webfont.ttf) format('truetype'),url(" .$fontdir. "robotoslab_regular/RobotoSlab-Regular-webfont.svg#roboto_slabregular) format('svg');font-weight:400;font-style:normal}
+	
+	@font-face{font-family:roboto_slabbold;src:url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.eot);src:url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.eot?#iefix) format('embedded-opentype'),url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.woff) format('woff'),url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.ttf) format('truetype'),url(" .$fontdir. "robotoslab_bold/RobotoSlab-Bold-webfont.svg#roboto_slabbold) format('svg');font-weight:400;font-style:normal}</style>";
+	
+	
+}
+add_action('customize_controls_print_styles', 'crucible_customize_styles');
+
+**
+**
+**
+*/
+
+
+/**
+ * Enqueue custom fonts CSS for customizer.
+ */
+function crucible_customize_enqueue() {
+	wp_enqueue_style( 'customizer-fonts', get_template_directory_uri() . '/inc/fonts/customizer-fonts.css' );
+}
+add_action( 'customize_controls_enqueue_scripts', 'crucible_customize_enqueue' );// @test

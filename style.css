@@ -230,6 +230,22 @@ big {
 }
 
 /* FONTS */
+
+font_bebasregular
+
+font_qumpellkano12regular
+
+font_dayposterblackregular
+
+font_fontleroybrownregular
+
+font_florante_at_lauraregular
+
+font_forqueregular
+
+font_kingthings_exeterregular font_roboto_slabregular font_roboto_slabbold
+
+
 .font_arial,
 .site-title a.font_arial,
 .attention-grab.font_arial { font-family: Arial,Helvetica,sans-serif }
@@ -289,6 +305,44 @@ big {
 .font_verdana,
 .site-title a.font_verdana,
 .attention-grab.font_verdana { font-family: Verdana,Geneva,sans-serif}
+
+.font_bebasregular,
+.site-title a.font_bebasregular,
+.attention-grab.font_bebasregular { font-family: bebasregular,Arial,Helvetica,sans-serif}
+
+.font_qumpellkano12regular,
+.site-title a.font_qumpellkano12regular,
+.attention-grab.font_qumpellkano12regular { font-family: qumpellkano12regular,Arial,Helvetica,sans-serif}
+
+.font_dayposterblackregular,
+.site-title a.font_dayposterblackregular,
+.attention-grab.font_dayposterblackregular { font-family: dayposterblackregular,Arial,Helvetica,sans-serif}
+
+.font_fontleroybrownregular,
+.site-title a.font_fontleroybrownregular,
+.attention-grab.font_fontleroybrownregular { font-family: fontleroybrownregular,Arial,Helvetica,sans-serif}
+
+.font_florante_at_lauraregular,
+.site-title a.font_florante_at_lauraregular,
+.attention-grab.font_florante_at_lauraregular { font-family: florante_at_lauraregular,Arial,Helvetica,sans-serif}
+
+.font_forqueregular,
+.site-title a.font_forqueregular,
+.attention-grab.font_forqueregular { font-family: forqueregular,Arial,Helvetica,sans-serif}
+
+.font_kingthings_exeterregular,
+.site-title a.font_kingthings_exeterregular,
+.attention-grab.font_kingthings_exeterregular { font-family: kingthings_exeterregular,Arial,Helvetica,sans-serif}
+
+.font_roboto_slabregular,
+.site-title a.font_roboto_slabregular,
+.attention-grab.font_roboto_slabregular { font-family: roboto_slabregular,Arial,Helvetica,sans-serif}
+
+.font_roboto_slabbold,
+.site-title a.font_roboto_slabbold,
+.attention-grab.font_roboto_slabbold { font-family: roboto_slabbold,Arial,Helvetica,sans-serif}
+
+
 
 /*--------------------------------------------------------------
 3.0 Elements
