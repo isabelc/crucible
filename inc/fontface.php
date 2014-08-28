@@ -31,6 +31,19 @@ function crucible_loadfonts() {
 
 	if ( in_array($font1,array($needle1, $needle2, $needle4, $needle5)) ) {
 		wp_register_style('bluechip', $fontdir.'bluechip/stylesheet.css', ''); wp_enqueue_style('bluechip');
+		
+		
+		/**
+		*************************************
+		
+		@todo this is example (do for all fonts):
+		
+		$inline_font_css .= "@font-face {font-family: 'top_secretbold';src: url('" .$fontdir. "top-secret/Top_Secret-webfont.eot');src: url('" .$fontdir. "top-secret/Top_Secret-webfont.eot?#iefix') format('embedded-opentype'),url('" .$fontdir. "top-secret/Top_Secret-webfont.woff') format('woff'),url('" .$fontdir. "top-secret/Top_Secret-webfont.ttf') format('truetype'),url('" .$fontdir. "top-secret/Top_Secret-webfont.svg#top_secretbold') format('svg');font-weight: normal;font-style: normal;}";
+		
+		***************************************
+		*/
+		
+		
 	}
 	if ( in_array($font2,array($needle1, $needle2, $needle4, $needle5)) ) {
 		wp_register_style('bebas_regular', $fontdir.'bebas_regular/stylesheet.css', ''); wp_enqueue_style('bebas_regular');
@@ -56,6 +69,20 @@ function crucible_loadfonts() {
 	if ( in_array($font9,array($needle1, $needle2, $needle3, $needle4, $needle5)) ) {
 		wp_register_style('robotoslab_bold', $fontdir.'robotoslab_bold/stylesheet.css', ''); wp_enqueue_style('robotoslab_bold');
 	}
+	
+	/**
+	************************
+		@todo see how to do this:
+	
+			update_option('crucible_inline_font_css',$inline_font_css);
+		
+		either like that, or like I did the widgets CSS.
+		
+		@todo repeat for login fonts, below.
+	
+	**********************************************
+	
+	*/
 }
 add_action( 'wp_enqueue_scripts', 'crucible_loadfonts' );
 
