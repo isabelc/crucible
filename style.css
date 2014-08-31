@@ -4,7 +4,7 @@ Theme URI: https://github.com/isabelc/crucible
 Author: Isabel Castillo
 Author URI: http://isabelcastillo.com/
 Description: Crucible is a starter theme built on a custom, yet efficient, framework.
-Version: 1.0.0-rc-2
+Version: 1.0.0-rc-2.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: crucible
@@ -119,12 +119,6 @@ a img {
 /*--------------------------------------------------------------
 2.0 Typography
 --------------------------------------------------------------*/
-
-/* @test doing font face this way. see if this is bad for speed 
-if i use this, i no longer need the fontface inline style option in custom-style.css. @todo.
-*
-
-*/
 
 @font-face{font-family:qumpellkano12regular;src:url('inc/fonts/bluechip/qumpellkano12-webfont.eot');src:url('inc/fonts/bluechip/qumpellkano12-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/bluechip/qumpellkano12-webfont.woff') format('woff'),url('inc/fonts/bluechip/qumpellkano12-webfont.ttf') format('truetype');font-weight:400;font-style:normal}
 	
