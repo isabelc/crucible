@@ -766,12 +766,3 @@ add_action('customize_controls_print_styles', 'crucible_customize_styles');
 **
 **
 */
-
-
-/**
- * Enqueue custom fonts CSS for customizer.
- */
-function crucible_customize_enqueue() {
-	wp_enqueue_style( 'customizer-fonts', get_template_directory_uri() . '/inc/fonts/customizer-fonts.css' );
-}
-add_action( 'customize_controls_enqueue_scripts', 'crucible_customize_enqueue' );// @test

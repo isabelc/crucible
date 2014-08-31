@@ -126,20 +126,9 @@ if i use this, i no longer need the fontface inline style option in custom-style
 
 */
 
-/*
-*******************************************************************************************************
-
-@test now that this worked, try now to use thise CSS inside the external customizer-fonts.css sheet...
-*
-*
-*
-*
-*
-
-
 @font-face{font-family:qumpellkano12regular;src:url('inc/fonts/bluechip/qumpellkano12-webfont.eot');src:url('inc/fonts/bluechip/qumpellkano12-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/bluechip/qumpellkano12-webfont.woff') format('woff'),url('inc/fonts/bluechip/qumpellkano12-webfont.ttf') format('truetype');font-weight:400;font-style:normal}
 	
-	@font-face{font-family:bebasregular;src:url('inc/fonts/bebas_regular/BEBAS___-webfont.eot');src:url('inc/fonts/bebas_regular/BEBAS___-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/bebas_regular/BEBAS___-webfont.woff') format('woff'),url('inc/fonts/bebas_regular/BEBAS___-webfont.ttf') format('truetype'),url('inc/fonts/bebas_regular/BEBAS___-webfont.svg#bebasregular') format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:bebasregular;src:url('inc/fonts/bebas_regular/BEBAS___-webfont.eot');src:url('inc/fonts/bebas_regular/BEBAS___-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/bebas_regular/BEBAS___-webfont.woff') format('woff'),url('inc/fonts/bebas_regular/BEBAS___-webfont.ttf') format('truetype'),url('inc/fonts/bebas_regular/BEBAS___-webfont.svg#bebasregular') format('svg');font-weight:400;font-style:normal}
 	
 @font-face {
     font-family: 'dayposterblackregular';
@@ -152,23 +141,17 @@ if i use this, i no longer need the fontface inline style option in custom-style
     font-style: normal;
 }
 	
-	@font-face{font-family:forqueregular;src:url('inc/fonts/forque/Forque-webfont.eot');src:url('inc/fonts/forque/Forque-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/forque/Forque-webfont.woff') format('woff'),url('inc/fonts/forque/Forque-webfont.ttf') format('truetype'),url('inc/fonts/forque/Forque-webfont.svg#forqueregular') format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:forqueregular;src:url('inc/fonts/forque/Forque-webfont.eot');src:url('inc/fonts/forque/Forque-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/forque/Forque-webfont.woff') format('woff'),url('inc/fonts/forque/Forque-webfont.ttf') format('truetype'),url('inc/fonts/forque/Forque-webfont.svg#forqueregular') format('svg');font-weight:400;font-style:normal}
 	
-	@font-face{font-family:florante_at_lauraregular;src:url('inc/fonts/floranteatlaura/FLORLRG_-webfont.eot');src:url('inc/fonts/floranteatlaura/FLORLRG_-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/floranteatlaura/FLORLRG_-webfont.woff') format('woff'),url('inc/fonts/floranteatlaura/FLORLRG_-webfont.ttf') format('truetype'),url('inc/fonts/floranteatlaura/FLORLRG_-webfont.svg#florante_at_lauraregular') format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:florante_at_lauraregular;src:url('inc/fonts/floranteatlaura/FLORLRG_-webfont.eot');src:url('inc/fonts/floranteatlaura/FLORLRG_-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/floranteatlaura/FLORLRG_-webfont.woff') format('woff'),url('inc/fonts/floranteatlaura/FLORLRG_-webfont.ttf') format('truetype'),url('inc/fonts/floranteatlaura/FLORLRG_-webfont.svg#florante_at_lauraregular') format('svg');font-weight:400;font-style:normal}
 	
-	@font-face{font-family:fontleroybrownregular;src:url('inc/fonts/fontleroybrown/FontleroyBrown-webfont.eot');src:url('inc/fonts/fontleroybrown/FontleroyBrown-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/fontleroybrown/FontleroyBrown-webfont.woff') format('woff'),url('inc/fonts/fontleroybrown/FontleroyBrown-webfont.ttf') format('truetype'),url('inc/fonts/fontleroybrown/FontleroyBrown-webfont.svg#fontleroybrownregular') format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:fontleroybrownregular;src:url('inc/fonts/fontleroybrown/FontleroyBrown-webfont.eot');src:url('inc/fonts/fontleroybrown/FontleroyBrown-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/fontleroybrown/FontleroyBrown-webfont.woff') format('woff'),url('inc/fonts/fontleroybrown/FontleroyBrown-webfont.ttf') format('truetype'),url('inc/fonts/fontleroybrown/FontleroyBrown-webfont.svg#fontleroybrownregular') format('svg');font-weight:400;font-style:normal}
 	
-	@font-face{font-family:kingthings_exeterregular;src:url('inc/fonts/kingthingsexete/Kingthings_Exeter-webfont.eot');src:url('inc/fonts/kingthingsexete/Kingthings_Exeter-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/kingthingsexete/Kingthings_Exeter-webfont.woff') format('woff'),url('inc/fonts/kingthingsexete/Kingthings_Exeter-webfont.ttf') format('truetype'),url('inc/fonts/kingthingsexete/Kingthings_Exeter-webfont.svg#kingthings_exeterregular') format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:kingthings_exeterregular;src:url('inc/fonts/kingthingsexete/Kingthings_Exeter-webfont.eot');src:url('inc/fonts/kingthingsexete/Kingthings_Exeter-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/kingthingsexete/Kingthings_Exeter-webfont.woff') format('woff'),url('inc/fonts/kingthingsexete/Kingthings_Exeter-webfont.ttf') format('truetype'),url('inc/fonts/kingthingsexete/Kingthings_Exeter-webfont.svg#kingthings_exeterregular') format('svg');font-weight:400;font-style:normal}
 	
-	@font-face{font-family:roboto_slabregular;src:url('inc/fonts/robotoslab_regular/RobotoSlab-Regular-webfont.eot');src:url('inc/fonts/robotoslab_regular/RobotoSlab-Regular-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/robotoslab_regular/RobotoSlab-Regular-webfont.woff') format('woff'),url('inc/fonts/robotoslab_regular/RobotoSlab-Regular-webfont.ttf') format('truetype'),url('inc/fonts/robotoslab_regular/RobotoSlab-Regular-webfont.svg#roboto_slabregular') format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:roboto_slabregular;src:url('inc/fonts/robotoslab_regular/RobotoSlab-Regular-webfont.eot');src:url('inc/fonts/robotoslab_regular/RobotoSlab-Regular-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/robotoslab_regular/RobotoSlab-Regular-webfont.woff') format('woff'),url('inc/fonts/robotoslab_regular/RobotoSlab-Regular-webfont.ttf') format('truetype'),url('inc/fonts/robotoslab_regular/RobotoSlab-Regular-webfont.svg#roboto_slabregular') format('svg');font-weight:400;font-style:normal}
 	
-	@font-face{font-family:roboto_slabbold;src:url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.eot');src:url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.woff') format('woff'),url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.ttf') format('truetype'),url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.svg#roboto_slabbold') format('svg');font-weight:400;font-style:normal}
-	
-********************************************************************************
-*/
-
-
-
+@font-face{font-family:roboto_slabbold;src:url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.eot');src:url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.eot?#iefix') format('embedded-opentype'),url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.woff') format('woff'),url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.ttf') format('truetype'),url('inc/fonts/robotoslab_bold/RobotoSlab-Bold-webfont.svg#roboto_slabbold') format('svg');font-weight:400;font-style:normal}
 	
 body,
 button,
