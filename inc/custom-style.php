@@ -269,9 +269,6 @@ if( empty($smartestthemes_options['hide_tagline']) ) {
 	}
 }
 
-$fontstyle = get_option('crucible_inline_font_css');
-echo $fontstyle;
-
 // widget styles @todo don't use NULL. echo NULL can give errors. find a better way.
 echo apply_filters( 'smartestthemes_widget_styles', NULL );
 
