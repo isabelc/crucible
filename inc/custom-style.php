@@ -270,6 +270,20 @@ if( empty($smartestthemes_options['hide_tagline']) ) {
 }
 
 // widget styles @todo don't use NULL. echo NULL can give errors. find a better way.
+
+
+// @test begin
+?>
+/*
+**********
+@test widget CSS
+**************
+*/
+<?php
+
+// @test end
+
+
 echo apply_filters( 'smartestthemes_widget_styles', NULL );
 
 // custom css from theme options

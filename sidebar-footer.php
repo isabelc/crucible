@@ -3,20 +3,24 @@
 		|| is_active_sidebar( 'foot2' )
 		|| is_active_sidebar( 'foot3'  )
 	) {
-		if ( is_active_sidebar( 'foot1' ) ) : ?>
-			<aside id="first" class="widget grid_3 alpha actives1">
+		if ( is_active_sidebar( 'foot1' ) ) : 
+		
+			// @todo see what 'actives1', actives2 style is used for in professional services.
+			// @todo is 'omega' needed below?
+		?>
+			<aside id="first" class="widget one-third alpha actives1">
 				<?php dynamic_sidebar( 'foot1' ); ?>
 			</aside>
 		<?php endif; ?>
 		
 		<?php if ( is_active_sidebar( 'foot2' ) ) : ?>
-			<aside id="second" class="widget grid_6 actives2">
+			<aside id="second" class="widget one-third actives2">
 				<?php dynamic_sidebar( 'foot2' ); ?>
 			</aside>
 		<?php endif; ?>
 		
 		<?php if ( is_active_sidebar( 'foot3' ) ) : ?>
-			<aside id="third" class="widget grid_3 omega">
+			<aside id="third" class="widget one-third omega">
 				<?php dynamic_sidebar( 'foot3' ); ?>
 			</aside>
 		<?php endif;
@@ -94,29 +98,34 @@
 			$combo = 'combo1d';
 			// else $combo = $no_combo means no footer bar
 		} else { 
-			// no combo, so no need to continue below
-			// get out early
+			// no combo, so no need to continue
 			return;
 		}
+		
 		// If we get this far, we have a footer bar.
+		
 		/* 
-		 * Set gridnumber for each $combo
-		 * widget 3 style='grid_3' always, no variable needed.
-		 * widget 2 style='grid_6 center-wid', unless no wid3, then add class omega
-		 * 
-		 * if 3, $wid1style='grid_3'
-		 * if 2, $wid1style='grid_6'
-		 * if 1, $wid1style='grid_6' with the extra inline style
+		 * Assign classes to widgets 1 and 2 based on number of columns for each $combo
 		 */
 		
 		if (in_array($combo, array($c3a, $c3b, $c3c, $c3d ))) { 
-			$wid1style = 'class="widget grid_3 alpha"';
-			$wid2style = 'class="widget grid_6"';
+			
+			// we have 3 widgets
+			
+			$wid1style = 'class="widget one-third alpha"';
+			$wid2style = 'class="widget one-third"';
+			
 		} elseif (in_array($combo, array($c2a, $c2b, $c2c, $c2d, $c2e, $c2f ))) { 
-			$wid1style = 'class="widget grid_6 alpha"';
-			$wid2style = 'class="widget grid_6 omega"';
+			
+			// we have 2 widgets
+			
+			$wid1style = 'class="widget one-half alpha"';
+			$wid2style = 'class="widget one-half omega"';// @test do alpha & omega work?
 		} elseif (in_array($combo, array($c1a, $c1b, $c1c, $c1d ))) {
-			$wid1style = 'class="widget grid_6" style="margin-left:auto;margin-right:auto;float:none;display:block;max-width:470px;"';
+		
+			// we have only 1 widget
+			
+			$wid1style = 'class="widget one-half" style="margin-left:auto;margin-right:auto;float:none;display:block;max-width:470px;"';// @test
 		}
 		// localize widget titles
 		$inst = array('title' => __('Testimonials', 'crucible'));
@@ -124,7 +133,7 @@
 		$insn = array('title' => __('What\'s New?', 'crucible'), 'number' => 3,);
 		
 		/* begin output */
-		echo '<!-- wid 1 --> <aside id="first" '. $wid1style.'>';
+		echo '<aside id="first" '. $wid1style.'>';
 		// widget 1
 		if (in_array($combo, array($c3a, $c3b, $c3c, $c2a, $c2b, $c2c, $c1a ))) {
 			the_widget('SmartestAnnouncements', $insn);
@@ -156,7 +165,7 @@
 			// if not a double wid combo, do wid3
 
 			if (!in_array($combo, array($c2a, $c2b, $c2c, $c2d, $c2e, $c2f ))) {
-				echo '<!-- wid 3 --> <aside id="third" class="widget grid_3 omega">';
+				echo '<!-- wid 3 --> <aside id="third" class="widget one-third omega">';
 				if (in_array($combo, array($c3a, $c3c ))) {
 					the_widget('SmartestReviewsTestimonial', $inst);
 				} elseif (in_array($combo, array($c3b, $c3d ))) {

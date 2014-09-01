@@ -15,9 +15,9 @@ get_header();
 // @new decide. may need something like this
 
 if (is_page(get_option('smartestthemes_contact_page_id'))){
-	$postclass = 'grid_7 alpha';
+	$postclass = 'two-thirds alpha';
 } else {
-	$postclass = 'grid_12';
+	$postclass = '';
 } 
 
 @new end
