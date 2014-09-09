@@ -17,18 +17,19 @@ class SmartestStaff extends WP_Widget {
 			__('Smartest Staff List', 'crucible'),
 			array( 'description' => __( 'Display the full list of Staff members.', 'crucible' ), )
 		);
-		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css') );
+		add_action( 'init', array($this, 'add_css'), 5);
 	}
 	
 	/**
 	* Add CSS to custom-style.php
 	*/
 	public function add_css( $css ) {
-		$new_css = $css;
+		$add_css = '';
 		if ( get_option('st_show_staff') == 'true' ) {
-			$new_css .= '.widget_smartest_staff_list, .sstwrap {width: 100%;}.sstwrap {overflow: hidden;position: relative;margin-bottom: 1em;display: block;}.ssfig {float: left;margin: 0px 20px 0px 0px;}.sstcontent {padding-top: 20px;	display: inline;}';
+			$add_css .= '.widget_smartest_staff_list, .sstwrap {width: 100%;}.sstwrap {overflow: hidden;position: relative;margin-bottom: 1em;display: block;}.ssfig {float: left;margin: 0px 20px 0px 0px;}.sstcontent {padding-top: 20px;	float: left;}';
 		}
-		return $new_css;
+		$css = get_option('smartestthemes_widget_styles') . $add_css;
+		update_option('smartestthemes_widget_styles', $css );
 	}
 	
 	/**

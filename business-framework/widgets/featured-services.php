@@ -18,18 +18,19 @@ class SmartestFeaturedServices extends WP_Widget {
 			__('Smartest Featured Services', 'crucible'),
 			array( 'description' => __( 'Display selected featured services.', 'crucible' ), )
 		);
-		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css'), 25 );
+		add_action( 'init', array($this, 'add_css'), 10);
 	}
 	
 	/**
 	* Add CSS to custom-style.php
 	*/
 	public function add_css( $css ) {
-		$new_css = $css;
+		$add_css = '';
 		if ( get_option('st_show_services') == 'true' ) {
-			$new_css .= '.sfswrap{width:100%;overflow:hidden;position:relative;padding-bottom:21px;border-bottom:1px #e5e5e5 solid;margin-bottom:20px}.sfsfig{float:left;margin:0 20px 0 0}.sfscontent{overflow:hidden;padding-right:15px}.widget_smartest_featured_services .widget-title{margin-left:0}#sidebar .sfsfig{float:none}#first .footer-widget .sfsfig,#third .footer-widget .sfsfig{max-width:30%;} .sfsfig a{width:100%;}@media screen and (max-device-width:568px){.sfsfig{float:none;margin:0 0 1em 0;}}';
+			$add_css .= '.sfswrap{width:100%;overflow:hidden;position:relative;padding-bottom:21px;border-bottom:1px #e5e5e5 solid;margin-bottom:20px}.sfsfig{float:left;margin:0 20px 0 0}.sfscontent{overflow:hidden;padding-right:15px}.widget_smartest_featured_services .widget-title{margin-left:0}#sidebar .sfsfig{float:none}#first .footer-widget .sfsfig,#third .footer-widget .sfsfig{max-width:30%;} .sfsfig a{width:100%;}@media screen and (max-device-width:568px){.sfsfig{float:none;margin:0 0 1em 0;}}';
 		}
-		return $new_css;
+		$css = get_option('smartestthemes_widget_styles') . $add_css;
+		update_option('smartestthemes_widget_styles', $css );
 	}
 
 	/**

@@ -18,18 +18,19 @@ class SmartestFeaturedAnnounce extends WP_Widget {
 			__('Smartest Featured Announcements', 'crucible'),
 			array( 'description' => __( 'Display selected featured announcements.', 'crucible' ), )
 		);
-		add_filter( 'smartestthemes_widget_styles', array($this, 'add_css'), 40 );
+		add_action( 'init', array($this, 'add_css'), 15);
 	}
 	
 	/**
 	* Add CSS to custom-style.php
 	*/
 	public function add_css( $css ) {
-		$new_css = $css;
+		$add_css = '';
 		if ( get_option('st_show_news') == 'true' ) {
-			$new_css .= '.sfawrap{width:100%;overflow:hidden;position:relative;margin-bottom:3em}.sfafig{float:left;margin:0 20px 0 0}.sfafig img{border:0 none}.sfacontent{overflow:hidden;padding-right:15px}.sfacontent p{margin-bottom:15px;margin-left:0}';
+			$add_css .= '.sfawrap{width:100%;overflow:hidden;position:relative;margin-bottom:3em}.sfafig{float:left;margin:0 20px 0 0}.sfafig img{border:0 none}.sfacontent{overflow:hidden;padding-right:15px}.sfacontent p{margin-bottom:15px;margin-left:0}';
 		}
-		return $new_css;
+		$css = get_option('smartestthemes_widget_styles') . $add_css;
+		update_option('smartestthemes_widget_styles', $css );
 	}
 
 	/**
