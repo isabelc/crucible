@@ -28,7 +28,5 @@ get_header(); ?>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
-<div id="home-footer">
-	<?php get_sidebar( 'footer' ); ?>
-</div>
+<?php get_sidebar( 'footer' ); ?>
 <?php get_footer(); ?>

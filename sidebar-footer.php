@@ -3,6 +3,7 @@
 		|| is_active_sidebar( 'foot2' )
 		|| is_active_sidebar( 'foot3'  )
 	) {
+		?><div id="home-footer" class="wrapper"><?php
 		if ( is_active_sidebar( 'foot1' ) ) : 
 		
 			// @todo see what 'actives1', actives2 style is used for in professional services.
@@ -17,6 +18,7 @@
 			<aside id="second" class="widget one-third actives2">
 				<?php dynamic_sidebar( 'foot2' ); ?>
 			</aside>
+			
 		<?php endif; ?>
 		
 		<?php if ( is_active_sidebar( 'foot3' ) ) : ?>
@@ -24,6 +26,8 @@
 				<?php dynamic_sidebar( 'foot3' ); ?>
 			</aside>
 		<?php endif;
+		
+		?></div><?php 
 
 	} else { // no active dynamic footer sidebars, so hard code widgets
 		global $smartestthemes_options;
@@ -133,7 +137,7 @@
 		$insn = array('title' => __('What\'s New?', 'crucible'), 'number' => 3,);
 		
 		/* begin output */
-		echo '<aside id="first" '. $wid1style.'>';
+		echo '<div id="home-footer" class="wrapper"><aside id="first" '. $wid1style.'>';
 		// widget 1
 		if (in_array($combo, array($c3a, $c3b, $c3c, $c2a, $c2b, $c2c, $c1a ))) {
 			the_widget('SmartestAnnouncements', $insn);
@@ -173,5 +177,8 @@
 				}
 				echo '</aside>';
 			}
-		} 
+		}
+		
+		echo '</div>';
+		
 	} ?>
