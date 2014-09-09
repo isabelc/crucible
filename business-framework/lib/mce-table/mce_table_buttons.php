@@ -34,7 +34,7 @@ class MCE_Table_Buttons {
 	 * Handles registering hooks that initialize this plugin.
 	 */
 	public static function _add_actions() {
-		add_filter( 'the_editor', array( __CLASS__, 'the_editor' ) ); // most convenient hook
+		add_filter( 'the_editor', array( __CLASS__, 'our_editor' ) ); // most convenient hook
 		add_action( 'content_save_pre', array( __CLASS__, 'content_save_pre'), 100 );
 	}
 
@@ -44,7 +44,7 @@ class MCE_Table_Buttons {
 	 * @param string $editor
 	 * @return string Editor fields
 	 */
-	public static function the_editor( $editor ) {
+	public static function our_editor( $editor ) {
 		global $tinymce_version;
 		if ( version_compare( $tinymce_version, '400', '<' ) ) {
 			add_filter( 'mce_external_plugins', array( __CLASS__, 'mce_external_plugins_3_8' ) );
@@ -56,7 +56,7 @@ class MCE_Table_Buttons {
 			add_filter( 'mce_buttons_2', array( __CLASS__, 'mce_buttons_3_9' ) );
 		}
 
-		remove_filter( 'the_editor', array( __CLASS__, 'the_editor' ) ); // only needs to run once
+		remove_filter( 'the_editor', array( __CLASS__, 'our_editor' ) ); // only needs to run once
 
 		return $editor;
 	}
