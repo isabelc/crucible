@@ -457,7 +457,7 @@ function crucible_footer() {
 	$bn = empty($smartestthemes_options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($smartestthemes_options['st_business_name']));
 	
 	if ( empty($smartestthemes_options['override_footer']) ) { // no override, so do default
-		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . get_bloginfo('url') . '" title="' . get_bloginfo('name') . '">';
+		$output .= '<span id="footer-copyright">' . __('Copyright ', 'crucible') . '&copy; '. date_i18n('Y') . '</span> <a id="footer-sitename" href="' . home_url() . '" title="' . get_bloginfo('name') . '">';
 		
 		if ( is_front_page() ) {
 			$output .= '<span itemprop="name">';

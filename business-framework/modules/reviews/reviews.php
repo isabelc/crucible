@@ -805,7 +805,7 @@ class SMARTESTReviewsBusiness {
                       KEY page_id (page_id)
                       ) $charset_collate;";
 
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
 		}
 		return true;
@@ -1282,7 +1282,8 @@ class SMARTESTReviewsBusiness {
                         <td class="comment column-comment">
                           <div class="smar-submitted-on">
                             <span class="best_in_place" data-url='<?php echo $update_path; ?>' data-object='json' data-attribute='date_time'>
-<?php echo date(__('m/d/Y g:i a', 'crucible'),strtotime(__($review->date_time, 'crucible'))); ?>
+							<?php echo date_i18n( get_option( 'date_format' ), strtotime( $review->date_time ) ) . ' at ' . date_i18n( get_option( 'time_format' ), strtotime( $review->date_time ) );
+							?>
                             </span>
                             <?php if ($review->status == 1) : 
 
@@ -1386,7 +1387,7 @@ class SMARTESTReviewsBusiness {
 } // end class
 $SMARTESTReviewsBusiness = SMARTESTReviewsBusiness::get_instance();
 /* get widget */
-include_once('widget-testimonial.php');
+include_once 'widget-testimonial.php';
 add_shortcode( 'smartest_reviews', array( $SMARTESTReviewsBusiness, 'reviews_shortcode' ) );
 add_shortcode( 'aggregate_rating', array( $SMARTESTReviewsBusiness, 'aggregate_footer_func' ) );
 ?>

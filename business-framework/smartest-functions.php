@@ -426,7 +426,7 @@ add_action( 'init', 'smartestthemes_taxonomies', 0 );
  */
 function smart_attach_external_image( $url = null, $post_id = null, $post_data = array() ) {
 	    if ( !$url || !$post_id ) return new WP_Error('missing', "Need a valid URL and post ID...");
-	    require_once( ABSPATH . 'wp-admin/includes/file.php' );
+	    require_once ABSPATH . 'wp-admin/includes/file.php';
 	    // Download file to temp location, returns full server path to temp file, ex; /home/user/public_html/mysite/wp-content/26192277_640.tmp
 	    $tmp = download_url( $url );
 	
@@ -457,9 +457,9 @@ function smart_attach_external_image( $url = null, $post_id = null, $post_data =
 	    }
 	
 	    // required libraries for media_handle_sideload
-	    require_once(ABSPATH . 'wp-admin/includes/file.php');
-	    require_once(ABSPATH . 'wp-admin/includes/media.php');
-	    require_once(ABSPATH . 'wp-admin/includes/image.php');
+	    require_once ABSPATH . 'wp-admin/includes/file.php';
+	    require_once ABSPATH . 'wp-admin/includes/media.php';
+	    require_once ABSPATH . 'wp-admin/includes/image.php';
 	
 	    // do the validation and storage stuff
 	    $att_id = media_handle_sideload( $file_array, $post_id, null, $post_data );             // $post_data can override the items saved to wp_posts table, like post_mime_type, guid, post_parent, post_title, post_content, post_status
@@ -646,7 +646,6 @@ add_action( 'init', 'smar_initialize_cmb_meta_boxes', 9999 );
  * Initialize the metabox class.
  */
 function smar_initialize_cmb_meta_boxes() {
-
 	if ( ! class_exists( 'cmb_Meta_Box' ) )
 		require_once 'lib/metabox/init.php';
 }

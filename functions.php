@@ -10,9 +10,9 @@
  */
 include dirname( __FILE__ ) . '/inc/updater.php';
 // Smartest Themes Business Framework
-require_once TEMPLATEPATH . '/business-framework/admin-init.php';
+require_once get_template_directory() . '/business-framework/admin-init.php';
 // Theme specific functionality
-$incpath = TEMPLATEPATH . '/inc/';
+$incpath = get_template_directory() . '/inc/';
 require_once $incpath . 'options.php';
 require_once $incpath . 'enqueue.php';
 require_once $incpath . 'fontface.php';
@@ -47,7 +47,7 @@ function crucible_setup() {
 	 */
 	load_theme_textdomain( 'crucible', get_template_directory() . '/languages' );
 
-	add_theme_support( 'automatic-feed-links' )
+	add_theme_support( 'automatic-feed-links' );
 	
 	/*
 	 * Enable support for Post Thumbnails on posts and pages.
