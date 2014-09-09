@@ -373,21 +373,27 @@ $options[] = array( 'type' => 'info',
 	'std' => __('<em>Refresh this page to see the effect of these changes.</em>','crucible')
 	);
 /* Contact form */
-$options[] = array( 'name' => __( 'Contact Form','crucible' ),
+$options[] = array(
+	'name' => __( 'Contact Form','crucible' ),
 	'class' => 'mail',
 	'type' => 'heading');
-$options[] = array( 'name' => __( 'Your Name', 'crucible' ),
-	'desc' => __( 'How would you like to be addressed in messages sent from the contact form?', 'crucible' ),
-	'id' => $shortname.'_contactform_name',
-	'std' => $admin_name,
-	'type' => 'text');
-$options[] = array( 'name' => __( 'Your Email', 'crucible' ),
-	'desc' => __( 'Where would you like to receive messages sent from the contact form? If blank, the default is the admin email set in Settings -> General', 'crucible' ),
+	
+$options[] = array(
+	'name' => __( 'Send Email To', 'crucible' ),
+	'desc' => __( 'Where would you like to receive messages sent from the contact form? You can enter multiple email addresses separated by commas. If blank, the default is the admin email set in Settings -> General.', 'crucible' ),
 	'id' => $shortname.'_contactform_email',
 	'std' => '',
 	'type' => 'text');
-$options[] = array( 'name' => __( 'Show "From:" Your Visitor', 'crucible' ),
-	'desc' => sprintf(__( 'Check this box if you want the %1$s"From:"%2$s in the email header to be the name and email of the visitor. Please note that some web hosts, such as DreamHost and BlueHost, will not send these messages. (GoDaddy hosting is okay with this option.) Test this option after you enable it. If left unchecked, the default is "From" your email setting from above.','crucible' ), '<strong>', '</strong>'),
+	
+$options[] = array(
+	'name' => __( 'Send Email From', 'crucible' ),
+	'desc' => __( 'Enter the email address that will show in the "From:" email header. If blank, the default is the admin email set in Settings -> General. You can override this with the next option.', 'crucible' ),
+	'id' => $shortname.'_contactform_email_from',// @test new option
+	'std' => '',
+	'type' => 'text');
+	
+$options[] = array( 'name' => __( 'Send Email From Your Visitor', 'crucible' ),
+	'desc' => sprintf(__( 'Check this box if you want the %1$s"From:"%2$s in the email header to be the name and email of the visitor. Please note that some web hosts, such as DreamHost and BlueHost, will not send these messages. They may consider it "spoofing" since the messages are not really coming from your visitor, but rather are coming from your own website server. (GoDaddy hosting is okay with this option.) Test this option after you enable it. If left unchecked, the "Send Email From" setting from above will be used.','crucible' ), '<strong>', '</strong>'),
 	'id' => $shortname.'_contactform_header_from',
 	'std' => 'false',
 	'type' => 'checkbox');

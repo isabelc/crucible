@@ -5,9 +5,6 @@
 	) {
 		?><div id="home-footer" class="wrapper"><?php
 		if ( is_active_sidebar( 'foot1' ) ) : 
-		
-			// @todo see what 'actives1', actives2 style is used for in professional services.
-			// @todo is 'omega' needed below?
 		?>
 			<aside id="first" class="widget one-third alpha actives1">
 				<?php dynamic_sidebar( 'foot1' ); ?>

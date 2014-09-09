@@ -202,9 +202,22 @@ add_action('wp_enqueue_scripts', 'stcf_enqueue_scripts');
 */
 function stcf_process_contact_form($content='') {
 	global $smartestthemes_options, $stcf_strings;
+	
+	$admin_email = get_bloginfo('admin_email');
+	
 	$topic     = empty($smartestthemes_options['st_contactform_subject']) ? __( 'Message sent from your contact form', 'crucible' ) : stripslashes($smartestthemes_options['st_contactform_subject']);
-	$recipient = empty($smartestthemes_options['st_contactform_email']) ? get_bloginfo('admin_email') : stripslashes($smartestthemes_options['st_contactform_email']);
-	$recipname = empty($smartestthemes_options['st_contactform_name']) ? __( 'Site Administrator', 'crucible' ) : stripslashes($smartestthemes_options['st_contactform_name']);
+	
+	$recipient = empty($smartestthemes_options['st_contactform_email']) ? $admin_email : stripslashes($smartestthemes_options['st_contactform_email']); /* the Send Email To from backend */	
+	
+	$multiple_recipients = explode(",", $recipient); 
+	// remove empty elements from array
+	$multiple_recipients_remove_empty = array_filter($multiple_recipients);
+	// trim whitespace from array elements
+	$trim_multiple_recipients = array();
+	foreach ( $multiple_recipients_remove_empty as $key => $value ) {
+		$trim_multiple_recipients[] = trim($value);
+	}	
+	
 	$success   = empty($smartestthemes_options['st_contactform_success']) ? '<strong>' . __( 'Success! ', 'crucible' ) . '</strong> ' . __( 'Your message has been sent.', 'crucible') : stripslashes($smartestthemes_options['st_contactform_success']);
 	$name      = $_POST['smartestthemes_contactform_name'];
 	$email     = $_POST['smartestthemes_contactform_email'];
@@ -224,7 +237,14 @@ function stcf_process_contact_form($content='') {
 	if ($header_from == 'true') {
 		$headers .= "From: $name <$email>\n";
 	} else {
-		$headers .= "From: " . get_bloginfo('name') . " <$recipient>\n";
+		
+		// check if new option  is blank
+		$sbfc_email_from  = empty($smartestb_options['st_contactform_email_from']) ? $admin_email : stripslashes($smartestb_options['st_contactform_email_from']);
+		
+		$headers .= $headers .= "From: " . get_bloginfo('name') . " <$sbfc_email_from>\n";
+
+		
+		
 	}
 	$headers .= "Reply-To: $email\n";
 	$headers  .= "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"";
@@ -247,7 +267,7 @@ function stcf_process_contact_form($content='') {
 	$local_host = __( 'Host:', 'crucible' );
 	$local_agent = __( 'Agent:', 'crucible' );
 
-$fullmsg   = ("$local_hello $recipname,
+$fullmsg   = ("$local_hello,
 
 $local_intro
 
@@ -270,7 +290,7 @@ $local_host   $host
 $local_agent  $agent
 ");
 	$fullmsg = stripslashes(strip_tags(trim($fullmsg)));
-	wp_mail($recipient, $topic, $fullmsg, $headers);
+	wp_mail($trim_multiple_recipients, $topic, $fullmsg, $headers);
 	$results = ($prepend . '<div id="stcf-success"><div class="st-success">' . $success . '</div>
 <pre>' . $local_name . ' ' . $name    . '
  ' . $local_email . ' ' . $email   . '
