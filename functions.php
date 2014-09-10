@@ -47,6 +47,7 @@ function crucible_setup() {
 	 */
 	load_theme_textdomain( 'crucible', get_template_directory() . '/languages' );
 
+	add_editor_style();
 	add_theme_support( 'automatic-feed-links' );
 	
 	/*
