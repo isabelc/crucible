@@ -6,20 +6,20 @@
 		?><div id="home-footer" class="wrapper"><?php
 		if ( is_active_sidebar( 'foot1' ) ) : 
 		?>
-			<aside id="first" class="widget one-third alpha actives1">
+			<aside id="first" class="one-third alpha actives1">
 				<?php dynamic_sidebar( 'foot1' ); ?>
 			</aside>
 		<?php endif; ?>
 		
 		<?php if ( is_active_sidebar( 'foot2' ) ) : ?>
-			<aside id="second" class="widget one-third actives2">
+			<aside id="second" class="one-third actives2">
 				<?php dynamic_sidebar( 'foot2' ); ?>
 			</aside>
 			
 		<?php endif; ?>
 		
 		<?php if ( is_active_sidebar( 'foot3' ) ) : ?>
-			<aside id="third" class="widget one-third omega">
+			<aside id="third" class="one-third omega">
 				<?php dynamic_sidebar( 'foot3' ); ?>
 			</aside>
 		<?php endif;
@@ -113,20 +113,20 @@
 			
 			// we have 3 widgets
 			
-			$wid1style = 'class="widget one-third alpha"';
-			$wid2style = 'class="widget one-third"';
+			$wid1style = 'class="one-third alpha"';
+			$wid2style = 'class="one-third"';
 			
 		} elseif (in_array($combo, array($c2a, $c2b, $c2c, $c2d, $c2e, $c2f ))) { 
 			
 			// we have 2 widgets
 			
-			$wid1style = 'class="widget one-half alpha"';
-			$wid2style = 'class="widget one-half omega"';// @test do alpha & omega work?
+			$wid1style = 'class="one-half alpha"';
+			$wid2style = 'class="one-half omega"';
 		} elseif (in_array($combo, array($c1a, $c1b, $c1c, $c1d ))) {
 		
 			// we have only 1 widget
 			
-			$wid1style = 'class="widget one-half" style="margin-left:auto;margin-right:auto;float:none;display:block;max-width:470px;"';// @test
+			$wid1style = 'class="one-half" style="margin-left:auto;margin-right:auto;float:none;display:block;max-width:470px;"';// @test
 		}
 		// localize widget titles
 		$inst = array('title' => __('Testimonials', 'crucible'));
@@ -166,7 +166,7 @@
 			// if not a double wid combo, do wid3
 
 			if (!in_array($combo, array($c2a, $c2b, $c2c, $c2d, $c2e, $c2f ))) {
-				echo '<!-- wid 3 --> <aside id="third" class="widget one-third omega">';
+				echo '<!-- wid 3 --> <aside id="third" class="one-third omega">';
 				if (in_array($combo, array($c3a, $c3c ))) {
 					the_widget('SmartestReviewsTestimonial', $inst);
 				} elseif (in_array($combo, array($c3b, $c3d ))) {

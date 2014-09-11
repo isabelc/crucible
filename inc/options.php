@@ -388,7 +388,7 @@ $options[] = array(
 $options[] = array(
 	'name' => __( 'Send Email From', 'crucible' ),
 	'desc' => __( 'Enter the email address that will show in the "From:" email header. If blank, the default is the admin email set in Settings -> General. You can override this with the next option.', 'crucible' ),
-	'id' => $shortname.'_contactform_email_from',// @test new option
+	'id' => $shortname.'_contactform_email_from',
 	'std' => '',
 	'type' => 'text');
 	

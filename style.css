@@ -867,6 +867,10 @@ color:#fff;/* @new */
 /* Announements widget @framework */
 .widget_smartest_announcements p {margin-left: 10%;} .widget_smartest_announcements time {font-style:italic;font-size: 75%;padding-left:8px;}
 
+.actives1.one-half.only1{margin-left:auto!important;margin-right:auto!important;float:none;display:block;max-width:470px}
+
+
+
 
 /*--------------------------------------------------------------
 10.0 Content
@@ -998,6 +1002,7 @@ color:#fff;/* @new */
 	clear: both;
 	width: 100%;
 }
+#home-footer{display:block;}
 
 /* Layout: Columns @framework maybe */
 
