@@ -233,18 +233,14 @@ function stcf_process_contact_form($content='') {
 	$header_from = isset($smartestthemes_options['st_contactform_header_from']) ? $smartestthemes_options['st_contactform_header_from'] : '';
 	
 	$headers   = "MIME-Version: 1.0\n";
-	
 	if ($header_from == 'true') {
 		$headers .= "From: $name <$email>\n";
 	} else {
 		
 		// check if new option  is blank
-		$sbfc_email_from  = empty($smartestb_options['st_contactform_email_from']) ? $admin_email : stripslashes($smartestb_options['st_contactform_email_from']);
+		$sbfc_email_from  = empty($smartestthemes_options['st_contactform_email_from']) ? $admin_email : stripslashes($smartestthemes_options['st_contactform_email_from']);
 		
 		$headers .= $headers .= "From: " . get_bloginfo('name') . " <$sbfc_email_from>\n";
-
-		
-		
 	}
 	$headers .= "Reply-To: $email\n";
 	$headers  .= "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"";
