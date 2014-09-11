@@ -72,8 +72,7 @@ function crucible_enqueue( ) {
 
 	*/
 
-	wp_enqueue_script( 'crucible-navigation', $jsdir . 'navigation.js', array(), false, true );
-	wp_enqueue_script( 'crucible-skip-link-focus-fix', $jsdir . 'skip-link-focus-fix.js', array(), false, true );
+	wp_enqueue_script( 'crucible-js', $jsdir . 'theme.js', array(), false, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
