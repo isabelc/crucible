@@ -940,10 +940,6 @@ function smartestthemes_admin_bar() {
 }
 add_action( 'wp_before_admin_bar_render', 'smartestthemes_admin_bar' );
 
-function smartest_framework_enq() {
-	wp_enqueue_script('retina', get_template_directory_uri().'/business-framework/js/retina-1.1.0.min.js', array(), false, true );
-}
-add_action('wp_enqueue_scripts', 'smartest_framework_enq');
 /**
  * Social Share Buttons
  */

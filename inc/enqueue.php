@@ -2,10 +2,48 @@
 	// inline js for faster page speed
 	if ( is_front_page() ) {
 	
+		// @test this.
+	
 		echo "<script>jQuery(window).load(function(){
-		if (window.screen.width < 900) { return; }var kids = jQuery('#home-footer .widget').length;if(2 == kids){
-	jQuery( '.actives1, .actives2' ).removeClass( 'one-third' ).addClass( 'one-half' );
-	jQuery( '.actives2' ).addClass( 'omega' );}if(1 == kids){jQuery( '.actives1' ).removeClass( 'one-third' ).addClass( 'one-half only1' );}});</script>";
+		
+
+			if (window.screen.width < 769) { return; }
+
+			// @test isabel
+		
+// count
+var kids = document.querySelectorAll('#home-footer .widget').length;
+
+if(2 == kids){
+
+    var one=document.getElementsByClassName('actives1')[0];
+    var two=document.getElementsByClassName('actives2')[0];
+
+    // remove class one-third
+    one.className=one.className.replace('one-third','');
+    two.className=two.className.replace('one-third','');
+    
+   // add class one-half
+    one.className = one.className + ' one-half';
+    two.className = two.className + ' one-half';
+    
+    // add class omega to 2
+    two.className = two.className + ' omega';
+
+
+}
+
+if(1 == kids){
+
+    var onlyone=document.getElementsByClassName('actives1')[0];
+    // remove class one-third
+    onlyone.className=onlyone.className.replace('one-third','');    
+     // add classes .one-half.only1
+    onlyone.className = onlyone.className + ' one-half only1';
+}
+		
+		
+		});</script>";
 	
 	}
 	
@@ -35,7 +73,7 @@ function crucible_enqueue( ) {
 	*/
 
 	wp_enqueue_script( 'crucible-navigation', $jsdir . 'navigation.js', array(), false, true );
-	wp_enqueue_script( 'crucible-skip-link-focus-fix', $jsdir . 'skip-link-focus-fix.js', array(), 'false', true );
+	wp_enqueue_script( 'crucible-skip-link-focus-fix', $jsdir . 'skip-link-focus-fix.js', array(), false, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
