@@ -97,7 +97,7 @@ class SMARTESTReviewsBusiness {
 					$has_error = $msg[0];
 					$status_msg = $msg[1];
 					$cookie = array('smar_status_msg' => $status_msg);
-					$this->smar_redirect(get_option('smartestthemes_reviews_page_id') . '#smar_status_msg', $cookie);
+					$this->smar_redirect( '?page_id=' . get_option('smartestthemes_reviews_page_id') . '#smar_status_msg', $cookie);
 				}
 			}
 		}
