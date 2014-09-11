@@ -1088,7 +1088,11 @@ function smartestthemes_head_meta() {
 		} else {
             $description = get_post_field( 'post_content', $post_id );
 		}
-		$description = trim( wp_strip_all_tags( $description, true ) );
+		$description = esc_attr(trim( wp_strip_all_tags( $description, true ) ));// @test if it removes " quotes from excerpt.
+		// http://chemacastillo.com/?smartest_news=another-featured-image-post
+		
+		isa_log($description); // @test remove
+		
 		$des .= substr( $description, 0, 150 );
 	}
 	if( !empty($des) ) {
