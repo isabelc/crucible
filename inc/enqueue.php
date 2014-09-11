@@ -1,7 +1,14 @@
 <?php function crucible_wp_head() {
-	if( !is_page( get_option('smartestthemes_reviews_page_id') ) ) {
-		echo "<script>jQuery(function(){jQuery('table').wrap('<div class=\"overflow\">');});</script>";
+	// inline js for faster page speed
+	if ( is_front_page() ) {
+	
+		echo "<script>jQuery(window).load(function(){
+		if (window.screen.width < 900) { return; }var kids = jQuery('#home-footer .widget').length;if(2 == kids){
+	jQuery( '.actives1, .actives2' ).removeClass( 'one-third' ).addClass( 'one-half' );
+	jQuery( '.actives2' ).addClass( 'omega' );}if(1 == kids){jQuery( '.actives1' ).removeClass( 'one-third' ).addClass( 'one-half only1' );}});</script>";
+	
 	}
+	
 }
 add_action('wp_head','crucible_wp_head');
 
