@@ -1090,13 +1090,13 @@ function smartestthemes_head_meta() {
 		}
 		$description = esc_attr(trim( wp_strip_all_tags( $description, true ) ));// @test if it removes " quotes from excerpt.
 		// http://chemacastillo.com/?smartest_news=another-featured-image-post
-		
 		isa_log($description); // @test remove
 		
 		$des .= substr( $description, 0, 150 );
 	}
 	if( !empty($des) ) {
 	?>
+		<!-- @test isa 8.35 -->
 		<meta name="description" content="<?php echo $des;?>" />
 	<?php
 	}

@@ -4,7 +4,7 @@
 	
 		// @test this.
 	
-		echo "<script>jQuery(window).load(function(){
+		$out = "<script>jQuery(window).load(function(){
 		
 
 			if (window.screen.width < 769) { return; }
@@ -34,17 +34,18 @@ if(2 == kids){
 }
 
 if(1 == kids){
-
     var onlyone=document.getElementsByClassName('actives1')[0];
     // remove class one-third
     onlyone.className=onlyone.className.replace('one-third','');    
      // add classes .one-half.only1
     onlyone.className = onlyone.className + ' one-half only1';
 }
-		
-		
 		});</script>";
-	
+		
+		isa_log('out'); // @test
+		isa_log($out); // @test
+		
+		echo $out;
 	}
 	
 }
