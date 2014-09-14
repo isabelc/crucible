@@ -94,34 +94,6 @@ if ( $att_grabber_font || $att_grabber_color || $attgrabber_fontsize ) { ?>
 		
 <?php }
 
-/** @new
-/* Create link relationships for fallback menu, to highlight current the page.
-*/
-?>
-.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .main-navigation .about a, 
-.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .main-navigation .contact a, 
-.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .main-navigation .reviews a,
-.post-type-archive-smartest_staff .main-navigation .staff a,
-.post-type-archive-smartest_news .main-navigation .news a,
-.post-type-archive-smartest_services .main-navigation .services a,
-.tax-smartest_service_category .main-navigation .services a,
-.single-smartest_services .main-navigation .services a,
-.single-smartest_staff .main-navigation .staff a,
-.single-smartest_news .main-navigation .news a,
-.about .main-navigation .about a, 
-.contact .main-navigation .contact a,
-.reviews .main-navigation .reviews a,
-.single-post .main-navigation .blog a,
-.archive.author .main-navigation .blog a,
-.archive.category .main-navigation .blog a,
-.archive.tag .main-navigation .blog a,
-.archive.date .main-navigation .blog a {
-		color: #fff;
-}
-
-<?php
-
-
 // ACCENT COLORS
 
 $link_color = empty($smartestthemes_options['link_color']) ? '' : $smartestthemes_options['link_color'];
@@ -133,16 +105,29 @@ $table_caption_color = empty($smartestthemes_options['table_caption_bg_color']) 
 $table_alt_row_color = empty($smartestthemes_options['table_alt_row_color']) ? '' : $smartestthemes_options['table_alt_row_color'];
 
 
-
 // @new default for this and next 6 colors.
 if ( $link_color && ( '#008000' != $link_color) ) {
 
-	?>a, i.fa-clock-o, i.fa-bullhorn, .entry-meta.jobtitle,.main-navigation .current-menu-item a,
+	?>a, i.fa-clock-o, i.fa-bullhorn, .entry-meta.jobtitle
+	
+			{
+				color:<?php echo $link_color; ?>;
+			} <?php
+	
+}
+	
+	
+	
+	
+if ( $link_hover_color && ( '#ffc0cb' != $link_hover_color) ) {
+
+	?>a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover,
+	.main-navigation .current-menu-item a,
 	.main-navigation .current_page_item a,
 	.home .main-navigation .home>a,
-	.page-id-<?php echo get_option('smartestthemes_about_page_id'); ?> .main-navigation .about a, 
-	.page-id-<?php echo get_option('smartestthemes_contact_page_id'); ?> .main-navigation .contact a, 
-	.page-id-<?php echo get_option('smartestthemes_reviews_page_id'); ?> .main-navigation .reviews a,
+	.about .main-navigation .about a, 
+	.contact .main-navigation .contact a, 
+	.reviews .main-navigation .reviews a,	
 	.post-type-archive-smartest_staff .main-navigation .staff a,
 	.post-type-archive-smartest_news .main-navigation .news a,
 	.post-type-archive-smartest_services .main-navigation .services a,
@@ -150,20 +135,14 @@ if ( $link_color && ( '#008000' != $link_color) ) {
 	.single-smartest_services .main-navigation .services a,
 	.single-smartest_staff .main-navigation .staff a,
 	.single-smartest_news .main-navigation .news a,
-	.about .main-navigation .about a, 
-	.contact .main-navigation .contact a,
-	.reviews .main-navigation .reviews a,
 	.single-post .main-navigation .blog a,
 	.archive.author .main-navigation .blog a,
 	.archive.category .main-navigation .blog a,
 	.archive.tag .main-navigation .blog a,
-	.archive.date .main-navigation .blog a{ color:<?php echo $link_color; ?>;} <?php
-	
-}
-	
-if ( $link_hover_color && ( '#ffc0cb' != $link_hover_color) ) {
-
-	?>a:hover, a:focus, a:active, i.fa:hover,.site-title a:hover{color:<?php echo $link_hover_color; ?>;}<?php
+	.archive.date .main-navigation .blog a{
+			color:<?php echo $link_hover_color; ?>;
+			
+	}<?php
 	
 }
 

@@ -406,7 +406,21 @@ function my_theme_wrapper_end() {
 	</div><!-- #primary -->';
 }
 
-	
+/**
+* Add custom page slugs to body class for Reviews, About, and Contact pages in order to be able to highlight these menu items when current on the fallback menu.
+*/
+function crucible_custom_page_class( $classes ) {
+	global $post;
+	if ( is_page(get_option('smartestthemes_about_page_id')) )
+		$classes[] = 'about';
+	if ( is_page(get_option('smartestthemes_contact_page_id')) )
+		$classes[] = 'contact';
+	if ( is_page(get_option('smartestthemes_reviews_page_id')) )
+		$classes[] = 'reviews';	
+	return $classes;
+}
+add_filter( 'body_class', 'crucible_custom_page_class' );
+
 /** @test remove this function
  * Log my own debug messages
  */
