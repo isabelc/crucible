@@ -1,16 +1,9 @@
 <?php function crucible_wp_head() {
 	// inline js for faster page speed
 	if ( is_front_page() ) {
-	
-		// @test this.
-	
-		$out = "<script>jQuery(window).load(function(){
-		
-
+	$out = "<script>
+			function crucible_center_widgets(){
 			if (window.screen.width < 769) { return; }
-
-			// @test isabel
-		
 // count
 var kids = document.querySelectorAll('#home-footer .widget').length;
 
@@ -35,16 +28,18 @@ if(2 == kids){
 
 if(1 == kids){
     var onlyone=document.getElementsByClassName('actives1')[0];
-    // remove class one-third
+	
+    // remove class one-third from the dynamic widget 1 
     onlyone.className=onlyone.className.replace('one-third','');    
-     // add classes .one-half.only1
+    
+	// add classes .one-half.only1
     onlyone.className = onlyone.className + ' one-half only1';
 }
-		});</script>";
+
+
+}
 		
-		isa_log('out'); // @test
-		isa_log($out); // @test
-		
+window.onload = crucible_center_widgets;</script>";
 		echo $out;
 	}
 	
@@ -64,6 +59,7 @@ function crucible_enqueue( ) {
 	*	@new see if i need this, depending on theme's style. if so, create the .js file
 	*
 	* 	do like this instead of inline because we need to make ut jquery dependent
+	* or consider making a non-jquery alternative with pure javascript.
 	*
 	
 	if ( is_post_type_archive(array('smartest_staff', 'smartest_services')) || is_tax( 'smartest_service_category' ) ) {

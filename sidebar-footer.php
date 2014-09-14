@@ -126,7 +126,7 @@
 		
 			// we have only 1 widget
 			
-			$wid1style = 'class="one-half" style="margin-left:auto;margin-right:auto;float:none;display:block;max-width:470px;"';// @test
+			$wid1style = 'class="one-half" style="margin-left:auto;margin-right:auto;float:none;display:block;max-width:470px;"';
 		}
 		// localize widget titles
 		$inst = array('title' => __('Testimonials', 'crucible'));
