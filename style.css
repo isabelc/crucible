@@ -1022,9 +1022,19 @@ color:pink;/* @new */
 }
 #home-footer{display:block;}
 
+/* Layout: Full-width */
+.content-area.full-width {
+	float: none;
+	margin: 0;
+}
+.full-width .site-main {
+	margin: 0;
+}
+
+
 /* Layout: Columns @framework maybe */
 
-.one-fourth,.one-half,.one-third{
+.one-fourth,.one-half,.one-third,.two-thirds{
 	margin:1.5em 0;
 	padding-left:2%;
 	padding-right:2%;
@@ -1033,6 +1043,7 @@ color:pink;/* @new */
 .one-half{width:46%}
 .one-third{width:29.3%}
 .one-fourth{width:21%}
+.two-thirds{width:58%}/* @test */
 
 
 /* No left padding on 1st column */
@@ -1051,7 +1062,16 @@ color:pink;/* @new */
 	padding-right:0
 }
 
-.one-fourth+h2,.one-fourth+h3,.one-half+h2,.one-half+h3,.one-third+h2,.one-third+h3{clear:both;padding-top:1em}
+.one-fourth+h2,
+.one-fourth+h3,
+.one-half+h2,
+.one-half+h3,
+.one-third+h2,
+.one-third+h3
+.two-thirds+h2,
+.two-thirds+h3{
+	clear:both;padding-top:1em
+}
 
 /*--------------------------------------------------------------
 11.0 Infinite scroll

@@ -13,18 +13,16 @@
 get_header();
 /*
 // @new decide. may need something like this
-
 if (is_page(get_option('smartestthemes_contact_page_id'))){
 	$postclass = 'two-thirds alpha';
 } else {
 	$postclass = '';
 } 
-
 @new end
 */
- ?>
+?>
 
-	<div id="primary" class="content-area">
+	<div id="primary" class="content-area full-width">
 		<main id="main" class="site-main" role="main">
 
 			<?php while ( have_posts() ) : the_post(); ?>
@@ -49,5 +47,4 @@ if (is_page(get_option('smartestthemes_contact_page_id'))){
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>

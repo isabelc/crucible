@@ -8,16 +8,6 @@
 get_header(); ?>
 
 	<div id="primary" class="content-area">
-	<?php 
-
-	/*
-	@new decide. may need this to fit sidebar
-	// post_class( 'content-area two-thirds alpha' )
-	// @todo if i need this, then I will have to add CSS for .two-thirds, which I do not have yet.
-	
-	@test if this page has proper HTML. 
-	*/
-?>
 	<main id="main" class="site-main" role="main">
 
 			<?php while ( have_posts() ) : the_post(); ?>
