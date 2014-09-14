@@ -49,12 +49,10 @@ add_action('wp_head','crucible_wp_head');
 function crucible_enqueue( ) {
 
 	wp_enqueue_style( 'crucible-style', get_stylesheet_uri() );
-
-	wp_enqueue_style('font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css');
+	wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
 
 	$jsdir = get_template_directory_uri(). '/js/';
 	
-
 	/**
 	*	@new see if i need this, depending on theme's style. if so, create the .js file
 	*
