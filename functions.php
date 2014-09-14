@@ -297,7 +297,6 @@ add_filter( 'post_class', 'crucible_remove_hentry_class' );
 /**
 * Custom walker for comments with schema.org microdata
 */
-
 class Crucible_Comment_Walker extends Walker_Comment {
 	var $tree_type = 'comment';
 	var $db_fields = array( 'parent' => 'comment_parent', 'id' => 'comment_ID' );
@@ -325,7 +324,7 @@ class Crucible_Comment_Walker extends Walker_Comment {
 	<?php }
 
 	// start_el – HTML for comment template
-	function start_el( &$output, $comment, $depth, $args, $id = 0 ) {
+	function start_el( &$output, $comment, $depth = 0, $args = array(), $id = 0 ) {
 		$depth++;
 		$GLOBALS['comment_depth'] = $depth;
 		$GLOBALS['comment'] = $comment;
@@ -387,7 +386,7 @@ class Crucible_Comment_Walker extends Walker_Comment {
 		
 	<?php }
 
-}
+} // end Crucible_Comment_Walker class
 	
 /**
 * WooCommerce compatibility
