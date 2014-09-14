@@ -10,17 +10,7 @@
  * @package Crucible
  */
 
-get_header();
-/*
-// @new decide. may need something like this
-if (is_page(get_option('smartestthemes_contact_page_id'))){
-	$postclass = 'two-thirds alpha';
-} else {
-	$postclass = '';
-} 
-@new end
-*/
-?>
+get_header(); ?>
 
 	<div id="primary" class="content-area full-width">
 		<main id="main" class="site-main" role="main">
