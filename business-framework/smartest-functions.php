@@ -65,11 +65,7 @@ function smartestthemes_insert_post($potype, $slug, $option, $page_title = '', $
  * @uses smartestthemes_insert_post()
  */
 function smartestthemes_after_setup() {
-
-	// @test on new install if About page is created.
-
 	$options = get_option('smartestthemes_options');
-	
 	$stop_about = empty($options['st_stop_about']) ? '' : $options['st_stop_about'];
 	$bn = empty($options['st_business_name']) ? get_bloginfo('name') : stripslashes_deep(esc_attr($options['st_business_name']));
 	$reviews = empty($options['st_add_reviews']) ? '' : $options['st_add_reviews'];
@@ -1088,25 +1084,22 @@ function smartestthemes_head_meta() {
 		} else {
             $description = get_post_field( 'post_content', $post_id );
 		}
-		$description = esc_attr(trim( wp_strip_all_tags( $description, true ) ));// @test if it removes " quotes from excerpt.
-		// http://chemacastillo.com/?smartest_news=another-featured-image-post
-		isa_log($description); // @test remove
-		
+		$description =   esc_attr( trim( wp_strip_all_tags( $description, true ) ) );
+		$description =   str_replace('"', '', $description);
+
 		$des .= substr( $description, 0, 150 );
 	}
 	if( !empty($des) ) {
-	?>
-		<!-- @test isa 8.35 -->
-		<meta name="description" content="<?php echo $des;?>" />
-	<?php
+	
+		?><meta name="description" content="<?php echo $des;?>" /><?php
 	}
 	if( !empty($keys) ) {
-	?>
-		<meta name="keywords" content="<?php echo $keys;?>" />
-	<?php 
+		?><meta name="keywords" content="<?php echo $keys;?>" /><?php 
 	}
 	// Tell searchbots to not index pages 2+ of paged archives. Improves ranking.
-	if ( $paged >= 2 ) {echo '<meta name="robots" content="noindex, follow, noarchive" />';} 
+	if ( $paged >= 2 ) {
+		echo '<meta name="robots" content="noindex, follow, noarchive" />';
+	} 
 }
 add_action('wp_head', 'smartestthemes_head_meta');
 function smartest_custom_style() {
