@@ -6,7 +6,7 @@ Crucible is currently under construction and not ready for public use. Soon, thi
 Provisional Notes
 -----------------
 
-The first thing to do is copy the `crucible` directory and change the name. Then do a 6-step search and replace:
+The first thing to do is copy the `crucible` directory and change the name. Then do all of these instances of search and replace:
 
 1. Search for `'crucible'` (inside single quotations) to capture the text domain and replace with: `'megatherium'`
 
