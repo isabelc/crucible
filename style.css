@@ -751,6 +751,18 @@ color:pink;/* @new */
 	.main-navigation ul {
 		display: none;
 	}
+	.main-navigation.toggled li {
+		float: none;
+	}
+	.main-navigation.toggled ul ul {
+		box-shadow: none;
+		display: block;
+		left:1em;
+		position: relative;
+		float:none;
+		top: auto;
+
+	}
 }
 .site-main .comment-navigation,
 .site-main .paging-navigation,
