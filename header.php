@@ -31,7 +31,6 @@ if ( get_option('st_social_follow_show_header') == 'true'  ) {
 		} ?>
 
 		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<!-- test if menu toggle works on windows phone, too -->
 			<button class="menu-toggle"><?php _e( 'Menu', 'crucible' ); ?></button>
 			<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'crucible' ); ?></a>
 
