@@ -78,9 +78,8 @@ function smartestthemes_after_setup() {
 	if($stop_home != 'true')
 		smartestthemes_insert_post( 'page', esc_sql( _x('home', 'page_slug', 'crucible') ), 'smartestthemes_home_page_id', __('Home', 'crucible'), '' );
 	// Activate Reviews
-	if (!class_exists('SMARTESTReviewsBusiness') && ($reviews == 'true'))
+	if (!class_exists('Smartest_Themes_Reviews') && ($reviews == 'true'))
 		include_once get_template_directory() .'/business-framework/modules/reviews/reviews.php';
-
 }
 add_action('after_setup_theme','smartestthemes_after_setup');
 
@@ -225,7 +224,7 @@ function vt_resize( $attach_id = null, $img_url = null, $width, $height, $crop =
 }
 /** 
  * add CPTs conditionally, if enabled
- * adds smartest_staff, smartest_staff, smartest_staff, 
+ * adds smartest_staff, smartest_services, smartest_news 
  */
 function create_smartest_business_cpts() {
 	$options = get_option('smartestthemes_options');
@@ -498,7 +497,9 @@ add_filter( 'smartestthemes_news_menu_label', 'custom_smartestthemes_news_menu_l
 
 /**
  * Custom metaboxes and fields
- * for staff cpt: occupational title & social links
+ * for staff: occupational title & social links
+ * for services: featured option and sort order
+ * for news: featured option
  */
 add_filter( 'cmb_meta_boxes', 'smartestthemes_metaboxes' );
 /**
