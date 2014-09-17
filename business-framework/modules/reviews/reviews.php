@@ -4,7 +4,7 @@
  * @subpackage Reviews
  * Description: Get reviews from visitors, and aggregate ratings and stars for your business in search results. Adds Microdata markup (Schema.org) for rich snippets. Includes Testimonial widget. Optional: pulls aggregaterating to home page. Option to not pull it to home page, and just have a reviews page. Requires Smartest Themes for full functionality.
  */
-class SMARTESTReviewsBusiness {
+class Smartest_Themes_Reviews {
 
 	private static $instance = null;
 	public static function get_instance() {
@@ -1385,9 +1385,9 @@ class SMARTESTReviewsBusiness {
     } // end admin_view_reviews	
 	
 } // end class
-$SMARTESTReviewsBusiness = SMARTESTReviewsBusiness::get_instance();
+$Smartest_Themes_Reviews = Smartest_Themes_Reviews::get_instance();
 /* get widget */
 include_once 'widget-testimonial.php';
-add_shortcode( 'smartest_reviews', array( $SMARTESTReviewsBusiness, 'reviews_shortcode' ) );
-add_shortcode( 'aggregate_rating', array( $SMARTESTReviewsBusiness, 'aggregate_footer_func' ) );
+add_shortcode( 'smartest_reviews', array( $Smartest_Themes_Reviews, 'reviews_shortcode' ) );
+add_shortcode( 'aggregate_rating', array( $Smartest_Themes_Reviews, 'aggregate_footer_func' ) );
 ?>

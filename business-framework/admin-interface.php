@@ -3,7 +3,19 @@
  * Admin Interface
  * @package    Smartest Themes Business Framework
 */
+/* @todo hold to see if i need
+*
+*
 
+if ( !defined('SMARTEST_FRAMEWORK') )
+	define('SMARTEST_FRAMEWORK','Business Framework');// @new
+	
+	*/
+	
+	
+	
+	
+	
 /** 
 * Setup the admin options
 */
