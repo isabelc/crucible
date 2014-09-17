@@ -581,12 +581,6 @@ $options[] = array(
 		'std'	=> __('Submit Your Review','crucible'),
 		'type'	=> 'text');
 
-
-
-		
-			
-			
-	
 /* Scripts */
 $options[] = array(
 	'name' => __('Scripts','crucible'),
