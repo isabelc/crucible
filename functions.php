@@ -420,16 +420,3 @@ function crucible_custom_page_class( $classes ) {
 	return $classes;
 }
 add_filter( 'body_class', 'crucible_custom_page_class' );
-
-/** @test remove this function
- * Log my own debug messages
- */
-function isa_log( $message ) {
-    if (WP_DEBUG === true) {
-        if ( is_array( $message) || is_object( $message ) ) {
-            error_log( print_r( $message, true ) );
-        } else {
-            error_log( $message );
-        }
-    }
-}

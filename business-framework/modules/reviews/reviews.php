@@ -201,7 +201,7 @@ class Smartest_Themes_Reviews {
 			$out .= '<span itemprop="telephone" class="' . $phone_class. '">' . $phone . '</span><br />';
 		}
 
-		$out .= crucible_postal_address() . $closer;// @todo for the framework plugin, do not include this.
+		$out .= crucible_postal_address() . $closer;
 		
 		return $out;
 	}
