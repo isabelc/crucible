@@ -3,18 +3,10 @@
  * Admin Interface
  * @package    Smartest Themes Business Framework
 */
-/* @todo hold to see if i need
-*
-*
 
+// Used to alert the clash in the QBW plugin 
 if ( !defined('SMARTEST_FRAMEWORK') )
-	define('SMARTEST_FRAMEWORK','Business Framework');// @new
-	
-	*/
-	
-	
-	
-	
+	define('SMARTEST_FRAMEWORK','Business Framework');
 	
 /** 
 * Setup the admin options
