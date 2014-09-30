@@ -509,7 +509,6 @@ add_filter( 'cmb_meta_boxes', 'smartestthemes_metaboxes' );
  */
 function smartestthemes_metaboxes( array $meta_boxes ) {
 	$prefix = '_stmb_';
-	global $smartestthemes_options;
 	$meta_boxes[] = array(
 		'id'         => 'staff_details',
 		'title'      => __('Details', 'crucible'),
