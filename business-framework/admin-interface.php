@@ -60,7 +60,7 @@ function smartestthemes_add_admin() {
 		}
 	}
 	$icon = get_template_directory_uri(). '/business-framework/images/smartestthemes-icon.png';
-	$sto=add_menu_page(sprintf(__('%s Options', 'crucible'), $themename), sprintf(__('%s Options', 'crucible'), $themename), 'activate_plugins', $themeslug, 'smartestthemes_options_page', $icon, 45);
+	$sto=add_menu_page(sprintf(__('%s Options', 'crucible'), $themename), sprintf(__('%s Options', 'crucible'), $themename), 'activate_plugins', $themeslug, 'smartestthemes_options_page', $icon, 45.9);
 	add_action( 'admin_head-'. $sto, 'smartestthemes_frame_load' );
 	add_smar_admin_menu_separator(44);
 } 

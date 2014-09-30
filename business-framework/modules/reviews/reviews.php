@@ -35,7 +35,7 @@ class Smartest_Themes_Reviews {
 
 	function addmenu() {
 		if(get_option('st_add_reviews') == 'true') {       
-			add_menu_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array($this, 'admin_view_reviews'), 'dashicons-star-filled', 62);
+			add_menu_page(__('Reviews', 'crucible'), __('Reviews', 'crucible'), 'edit_others_posts', 'smar_view_reviews', array($this, 'admin_view_reviews'), 'dashicons-star-filled', 62.4);
 		}
 	}
 	/**
