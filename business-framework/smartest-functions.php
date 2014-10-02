@@ -1433,4 +1433,260 @@ function schema_type($position) {
 	}
 
 }
+
+
+/**
+* @test migrate from legacy themes. Do this only once.
+*/
+
+function smartestthemes_migrate() {
+
+	// migrate only once
+	if ( get_option( 'smartestthemes_migration_status_123' ) != 'crucible_1' ) {
+	
+		global $wpdb;
+
+		// get table prefix
+		$base_prefix = $wpdb->base_prefix;
+		
+		// old Reviews table name
+		if ( is_multisite() ) {
+			global $blog_id;
+			$bid = get_current_blog_id();
+			$table = $base_prefix . $bid . '_smareviewsb';
+		} else {
+			// not Multisite
+			$table = $base_prefix . 'smareviewsb';
+		}
+
+	
+	
+	/*
+	********************************
+	
+	// @todo instead of rename, let me duplicate table with new name!! In case the revert to old theme.
+	
+	@todo try it like this:
+	CREATE TABLE recipes_new LIKE production.recipes;
+	INSERT recipes_new SELECT * FROM production.recipes;
+	
+	
+	**********************************
+	*/
+
+
+
+	
+		/*
+		
+		THIS IS THE OLD WAY OF USING RENAME
+		
+		// Rename Reviews table
+		$sql = "ALTER TABLE ".$wpdb->prefix."smareviewsb RENAME ".$wpdb->prefix."st_reviews";
+		$wpdb->query($sql);
+		
+	*/
+
+
+
+
+
+
+
+
+		// get legacy options
+		
+		global $smartestb_options; // @test
+		
+		isa_log( '$smartestb_options' );// @test
+		isa_log($smartestb_options);// @test
+		
+		// custom page titles
+		$smartestb_business_staffpagetitle = empty($smartestb_options['smartestb_business_staffpagetitle']) ? '' : $smartestb_options['smartestb_business_staffpagetitle'];
+		
+		$smartestb_business_newspagetitle = empty($smartestb_options['smartestb_business_newspagetitle']) ? '' : $smartestb_options['smartestb_business_newspagetitle'];
+		
+		$smartestb_business_servicespagetitle = empty($smartestb_options['smartestb_business_servicespagetitle']) ? '' : $smartestb_options['smartestb_business_servicespagetitle'];
+		
+		// menu labels
+		$smartestb_business_staffmenulabel = empty($smartestb_options['smartestb_business_staffmenulabel']) ? '' : $smartestb_options['smartestb_business_staffmenulabel'];
+
+		$smartestb_business_newsmenulabel = empty($smartestb_options['smartestb_business_newsmenulabel']) ? '' : $smartestb_options['smartestb_business_newsmenulabel'];
+
+		$smartestb_business_servicesmenulabel = empty($smartestb_options['smartestb_business_servicesmenulabel']) ? '' : $smartestb_options['smartestb_business_servicesmenulabel'];		
+				
+		$smartestb_about_page = empty($smartestb_options['smartestb_about_page']) ? '' : $smartestb_options['smartestb_about_page'];
+		
+		$smartestb_about_picture = empty($smartestb_options['smartestb_about_picture']) ? '' : $smartestb_options['smartestb_about_picture'];
+		
+		
+		// address
+		
+		$smartestb_address_street = empty($smartestb_options['smartestb_address_street']) ? '' : $smartestb_options['smartestb_address_street'];
+		$smartestb_address_city = empty($smartestb_options['smartestb_address_city']) ? '' : $smartestb_options['smartestb_address_city'];
+		$smartestb_address_state = empty($smartestb_options['smartestb_address_state']) ? '' : $smartestb_options['smartestb_address_state'];
+		$smartestb_address_zip = empty($smartestb_options['smartestb_address_zip']) ? '' : $smartestb_options['smartestb_address_zip'];
+		$smartestb_address_country = empty($smartestb_options['smartestb_address_country']) ? '' : $smartestb_options['smartestb_address_country'];
+		$smartestb_address_suite = empty($smartestb_options['smartestb_address_suite']) ? '' : $smartestb_options['smartestb_address_suite'];
+		
+		$smartestb_phone_number = empty($smartestb_options['smartestb_phone_number']) ? '' : $smartestb_options['smartestb_phone_number'];
+		
+		$smartestb_fax_numb = empty($smartestb_options['smartestb_fax_numb']) ? '' : $smartestb_options['smartestb_fax_numb'];
+		
+		
+		$smartestb_google_map = empty($smartestb_options['smartestb_google_map']) ? '' : $smartestb_options['smartestb_google_map'];
+		
+		$smartestb_hours = empty($smartestb_options['smartestb_hours']) ? '' : $smartestb_options['smartestb_hours'];		
+		
+		// social
+		
+		$facebook = empty($smartestb_options['smartestb_business_facebook']) ? '' : $smartestb_options['smartestb_business_facebook'];
+		$twitter = empty($smartestb_options['smartestb_business_twitter']) ? '' : $smartestb_options['smartestb_business_twitter'];
+		$gplus = empty($smartestb_options['smartestb_business_gplus']) ? '' : $smartestb_options['smartestb_business_gplus'];
+		$youtube = empty($smartestb_options['smartestb_business_youtube']) ? '' : $smartestb_options['smartestb_business_youtube'];
+		
+		$linkedin = empty($smartestb_options['smartestb_business_linkedin']) ? '' : $smartestb_options['smartestb_business_linkedin'];
+		$instagram = empty($smartestb_options['smartestb_business_instagram']) ? '' : $smartestb_options['smartestb_business_instagram'];
+		$pinterest = empty($smartestb_options['smartestb_business_pinterest']) ? '' : $smartestb_options['smartestb_business_pinterest'];
+		
+		
+		$othersocial_1 = empty($smartestb_options['smartestb_business_socialurl1']) ? '' : $smartestb_options['smartestb_business_socialurl1'];
+		$othersocial_1_label = empty($smartestb_options['smartestb_business_sociallabel1']) ? '' : $smartestb_options['smartestb_business_sociallabel1'];
+		$othersocial_2	= empty($smartestb_options['smartestb_business_socialurl2']) ? '' : $smartestb_options['smartestb_business_socialurl2'];
+		$othersocial_2_label	= empty($smartestb_options['smartestb_business_sociallabel2']) ? '' : $smartestb_options['smartestb_business_sociallabel2'];
+		
+		
+		// schema type
+		
+		$schema = empty($smartestb_options['smartestb_business_itemtype']) ? '' : $smartestb_options['smartestb_business_itemtype'];
+		
+		// meta title, meta desc, meta keys
+		
+		$meta_title = empty($smartestb_options['smartestb_home_meta_title']) ? '' : $smartestb_options['smartestb_home_meta_title'];
+		$meta_desc = empty($smartestb_options['smartestb_home_meta_desc']) ? '' : $smartestb_options['smartestb_home_meta_desc'];
+		$meta_keys = empty($smartestb_options['smartestb_home_meta_key']) ? '' : $smartestb_options['smartestb_home_meta_key'];
+		
+
+		// backend branding options
+		
+		$backend_logo = empty($smartestb_options['smartestb_options_logo']) ? '' : $smartestb_options['smartestb_options_logo'];
+		
+		$admin_footer = empty($smartestb_options['smartestb_admin_footer']) ? '' : $smartestb_options['smartestb_admin_footer'];
+		
+		$remove_wp_links = empty($smartestb_options['smartestb_remove_wplinks']) ? 'false' : $smartestb_options['smartestb_remove_wplinks'];
+		
+		// analytics and scripts
+		
+		$analytics =  empty($smartestb_options['smartestb_script_analytics']) ? '' : $smartestb_options['smartestb_script_analytics'];
+		$add_scripts =  empty($smartestb_options['smartestb_scripts_head']) ? '' : $smartestb_options['smartestb_scripts_head'];
+		
+		// contact form settings
+		
+		$contact_subject = empty($smartestb_options['smartestb_sbfc_subject']) ? __( 'Message sent from your contact form', 'crucible' ) : $smartestb_options['smartestb_sbfc_subject'];
+		
+		$contact_error = empty($smartestb_options['smartestb_sbfc_error']) ? '<strong>' . __( 'Please complete the required fields.', 'crucible' ) . '</strong>' : $smartestb_options['smartestb_sbfc_error'];
+		
+		$contact_success = empty($smartestb_options['smartestb_sbfc_success']) ? '<strong>' . __( 'Success! ', 'crucible' ) . '</strong> ' . __( 'Your message has been sent.', 'crucible') : $smartestb_options['smartestb_sbfc_success'];
+		
+		$contact_time_offset = empty($smartestb_options['smartestb_sbfc_offset']) ? '' : $smartestb_options['smartestb_sbfc_offset'];
+		
+		$contact_before_form = empty($smartestb_options['smartestb_sbfc_preform']) ? '' : $smartestb_options['smartestb_sbfc_preform'];
+		
+		$contact_after_form = empty($smartestb_options['smartestb_sbfc_appform']) ? '' : $smartestb_options['smartestb_sbfc_appform'];
+		
+		$contact_add_phone = empty($smartestb_options['smartestb_sbfc_include_phone']) ? 'false' : $smartestb_options['smartestb_sbfc_include_phone'];
+		
+		$contact_require_phone = empty($smartestb_options['smartestb_sbfc_required_phone']) ? 'false' : $smartestb_options['smartestb_sbfc_required_phone'];
+		
+		$contact_before_results = empty($smartestb_options['smartestb_sbfc_prepend']) ? '' : $smartestb_options['smartestb_sbfc_prepend'];
+		
+		$contact_after_results = empty($smartestb_options['smartestb_sbfc_append']) ? '' : $smartestb_options['smartestb_sbfc_append'];
+		
+		
+		// array of options to be updated
+		
+		$options_array = array(
+		
+			'st_business_staffpagetitle'				=> $smartestb_business_staffpagetitle,
+			'st_business_newspagetitle'				=> $smartestb_business_newspagetitle,
+			'st_business_servicespagetitle'				=> $smartestb_business_servicespagetitle,
+			'st_business_staffmenulabel'				=> $smartestb_business_staffmenulabel,
+			'st_business_newsmenulabel'				=> $smartestb_business_newsmenulabel,
+			'st_business_servicesmenulabel'				=> $smartestb_business_servicesmenulabel,
+			'st_about_page'				=> $smartestb_about_page,
+			'st_about_picture'				=> $smartestb_about_picture,			
+			'st_address_street'				=> $smartestb_address_street,
+			'st_address_suite'					=> $smartestb_address_suite,
+			'st_address_city'					=> $smartestb_address_city,
+			'st_address_state'				=> $smartestb_address_state,
+			'st_address_zip'					=> $smartestb_address_zip,
+			'st_address_country'				=> $smartestb_address_country,
+			'st_phone_number'				=> $smartestb_phone_number,			
+			'st_fax_numb'						=> $smartestb_fax_numb,		
+			'st_google_map'						=> $smartestb_google_map,
+			'st_hours'						=> $smartestb_hours,
+
+			'st_business_facebook'						=> $facebook,
+			'st_business_twitter'						=> $twitter,
+			'st_business_gplus'						=> $gplus,
+			'st_business_youtube'						=> $youtube,
+			'st_business_linkedin'						=> $linkedin,
+			'st_business_instagram'						=> $instagram,
+			'st_business_pinterest'						=> $pinterest,
+			'st_business_socialurl1'						=> $othersocial_1,
+			'st_business_sociallabel1'						=> $othersocial_1_label,
+			'st_business_socialurl2'						=> $othersocial_2,
+			'st_business_sociallabel2'						=> $othersocial_2_label,
+			'st_business_itemtype'						=> $schema,
+			'st_home_meta_title'						=> $meta_title,
+			'st_home_meta_desc'						=> $meta_desc,
+			'st_home_meta_key'						=> $meta_keys,
+		
+			'st_backend_logo'						=> $backend_logo,
+			'st_admin_footer'						=> $admin_footer,
+			'st_remove_wplinks'						=> $remove_wp_links,
+		
+			'st_script_analytics'						=> $analytics,
+			'st_scripts_head'						=> $add_scripts,
+			
+			'st_contactform_subject'						=> $contact_subject,
+			'st_contactform_success'						=> $contact_success,
+			'st_contactform_error'						=> $contact_error,
+			'st_contactform_offset'						=> $contact_time_offset,
+			'st_contactform_preform'						=> $contact_before_form,				
+			'st_contactform_appform'						=> $contact_after_form,
+			'st_contactform_include_phone'						=> $contact_add_phone,
+			'st_contactform_required_phone'						=> $contact_require_phone,
+			'st_contactform_prepend'						=> $contact_before_results,
+			'st_contactform_append'						=> $contact_after_results
+		);
+
+		foreach ( $options_array as $new_id => $old_value ) {
+			update_option( $new_id, $old_value );
+		}
+
+		
+		update_option( 'smartestthemes_migration_status_123', 'crucible_1' );
+		
+	}
+
+}
+
+add_action( 'init', 'smartestthemes_migrate' );
+
+
+
+
+
+
+
+
+
+
+
+
+// @test end migrate
+
+
+
 ?>
