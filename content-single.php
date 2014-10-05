@@ -66,4 +66,5 @@
 			echo smartestthemes_share(); 
 		} ?>
 	</footer><!-- .entry-footer -->
+	
 </article><!-- #post-## -->

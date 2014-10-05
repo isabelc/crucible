@@ -4,7 +4,7 @@
  * License: GNU General Public License
  * @package    Smartest Themes Business Framework
  * @author     Smartest Themes <isa@smartestthemes.com>
- * @version    1.0-beta-2
+ * @version    1.0
  */
  
  if( class_exists( 'Quick_Business_Website' ) ) {

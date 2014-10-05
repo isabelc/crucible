@@ -1436,16 +1436,77 @@ function schema_type($position) {
 
 
 /**
-* @test migrate from legacy themes. Do this only once.
+* Migrate from legacy themes. Do this only once.
 */
 
 function smartestthemes_migrate() {
 
 	// migrate only once
-	if ( get_option( 'smartestthemes_migration_status_123' ) != 'crucible_1' ) {
+	if ( get_option( 'smartestthemes_migration_status' ) != 'crucible_1' ) {
 	
-		global $wpdb;
+		global $wpdb, $post;
 
+		// update sort order number for services
+		
+		$args = array(
+				'post_type' => 'smartest_services', 
+				'posts_per_page' => -1,
+		);
+		$all_services = get_posts( $args );
+
+		if ( $all_services ) {
+			foreach ($all_services as $service) {
+			
+			
+				// get legacy value, if any
+				$old_sort_order = get_post_meta( $service->ID, '_smab_service-order-number', true );
+				
+				// new default
+				$updated_order = $old_sort_order ? $old_sort_order : 99999;
+			
+				// check if new value has been set
+				$new_sort_order_check = get_post_meta( $service->ID, '_stmb_service_order_number', true );
+
+				// if new sort order value is empty, assign a default value
+				if( empty( $new_sort_order_check ) ) {
+					update_post_meta($service->ID, '_stmb_service_order_number', $updated_order);
+				}
+			}
+		}
+		wp_reset_postdata();
+
+		// update sort order number for staff
+		
+		$args = array(
+				'post_type' => 'smartest_staff', 
+				'posts_per_page' => -1,
+		);
+		$all_staff = get_posts( $args );
+		
+		if ( $all_staff ) {
+
+			foreach ($all_staff as $staff) {
+			
+			
+				// get legacy value, if any
+				$old_sort_order = get_post_meta( $staff->ID, '_smab_staff-order-number', true );
+				
+				// new default
+				$updated_order = $old_sort_order ? $old_sort_order : 99999;
+			
+				// check if new value has been set
+				$new_sort_order_check = get_post_meta( $staff->ID, '_stmb_staff_order_number', true );
+
+				// if new sort order value is empty, assign a default value
+				if( empty( $new_sort_order_check ) ) {
+					update_post_meta($staff->ID, '_stmb_staff_order_number', $updated_order);
+				}
+			}
+		}
+		
+		wp_reset_postdata();
+		
+		
 		// get table prefix
 		$base_prefix = $wpdb->base_prefix;
 		
@@ -1453,53 +1514,60 @@ function smartestthemes_migrate() {
 		if ( is_multisite() ) {
 			global $blog_id;
 			$bid = get_current_blog_id();
-			$table = $base_prefix . $bid . '_smareviewsb';
+			$old_table = $base_prefix . $bid . '_smareviewsb';
 		} else {
 			// not Multisite
-			$table = $base_prefix . 'smareviewsb';
+			$old_table = $base_prefix . 'smareviewsb';
 		}
 
-	
-	
-	/*
-	********************************
-	
-	// @todo instead of rename, let me duplicate table with new name!! In case the revert to old theme.
-	
-	@todo try it like this:
-	CREATE TABLE recipes_new LIKE production.recipes;
-	INSERT recipes_new SELECT * FROM production.recipes;
-	
-	
-	**********************************
-	*/
+		$new_table = $wpdb->prefix . "st_reviews";
 
+		// Duplicate old Reviews table with the new name
+		// leave legacy table in place in case they revert to legacy theme
 
-
-	
-		/*
+		if ( $wpdb->get_var("SHOW TABLES LIKE '$new_table'") != $new_table ) {
 		
-		THIS IS THE OLD WAY OF USING RENAME
+			if ( $old_table ) {
+				$sql = "CREATE TABLE $new_table LIKE $old_table;";
+				$wpdb->query($sql);
+			}
+		}
 		
-		// Rename Reviews table
-		$sql = "ALTER TABLE ".$wpdb->prefix."smareviewsb RENAME ".$wpdb->prefix."st_reviews";
-		$wpdb->query($sql);
 		
-	*/
+		// increase the starting id # so as not to create errors if reviews exist in new table
+		$sql2 = "ALTER TABLE $new_table AUTO_INCREMENT=9001;";
+		$wpdb->query($sql2);
+		
+		
+		// if legacy table exists, copy stuff into new
+		
+		if ( $old_table ) {
+		
+			$new_reviews_pageid = get_option('smartestthemes_reviews_page_id');
+ 
+			$rows = $wpdb->get_results( "SELECT * FROM $old_table" );
+			
+			if ( $rows ) {
+				foreach ( $rows as $row ) {
+				
+					$query = $wpdb->prepare("INSERT INTO `$new_table` 
+						(`date_time`, `reviewer_name`, `reviewer_email`, `reviewer_ip`, `review_title`, `review_text`, `review_response`,`status`, `review_rating`, `reviewer_url`, `custom_fields`, `page_id`) 
+						VALUES (%s, %s, %s, %s, %s, %s, %s, %d, %d, %s, %s, %d)", $row->date_time, $row->reviewer_name, $row->reviewer_email, $row->reviewer_ip, $row->review_title, $row->review_text,$row->review_response, $row->status, $row->review_rating, $row->reviewer_url, $row->custom_fields, $new_reviews_pageid);
 
+					$wpdb->query($query);
+				}
+			}
+			
+		}
 
-
-
-
-
-
-
+		
 		// get legacy options
-		
-		global $smartestb_options; // @test
-		
-		isa_log( '$smartestb_options' );// @test
-		isa_log($smartestb_options);// @test
+
+		$smartestb_options = get_option( 'smartestb_options' );
+
+		// business name
+
+		$business_name = empty($smartestb_options['smartestb_business_name']) ? '' : $smartestb_options['smartestb_business_name'];
 		
 		// custom page titles
 		$smartestb_business_staffpagetitle = empty($smartestb_options['smartestb_business_staffpagetitle']) ? '' : $smartestb_options['smartestb_business_staffpagetitle'];
@@ -1519,6 +1587,7 @@ function smartestthemes_migrate() {
 		
 		$smartestb_about_picture = empty($smartestb_options['smartestb_about_picture']) ? '' : $smartestb_options['smartestb_about_picture'];
 		
+
 		
 		// address
 		
@@ -1606,7 +1675,7 @@ function smartestthemes_migrate() {
 		// array of options to be updated
 		
 		$options_array = array(
-		
+			'st_business_name'				=> $business_name,
 			'st_business_staffpagetitle'				=> $smartestb_business_staffpagetitle,
 			'st_business_newspagetitle'				=> $smartestb_business_newspagetitle,
 			'st_business_servicespagetitle'				=> $smartestb_business_servicespagetitle,
@@ -1614,7 +1683,7 @@ function smartestthemes_migrate() {
 			'st_business_newsmenulabel'				=> $smartestb_business_newsmenulabel,
 			'st_business_servicesmenulabel'				=> $smartestb_business_servicesmenulabel,
 			'st_about_page'				=> $smartestb_about_page,
-			'st_about_picture'				=> $smartestb_about_picture,			
+			'st_about_picture'				=> $smartestb_about_picture,
 			'st_address_street'				=> $smartestb_address_street,
 			'st_address_suite'					=> $smartestb_address_suite,
 			'st_address_city'					=> $smartestb_address_city,
@@ -1665,28 +1734,13 @@ function smartestthemes_migrate() {
 			update_option( $new_id, $old_value );
 		}
 
-		
-		update_option( 'smartestthemes_migration_status_123', 'crucible_1' );
-		
+		// ALSO UPDATE THE ARRAY OPTION
+		update_option('smartestthemes_options', $options_array);
+		update_option( 'smartestthemes_migration_status', 'crucible_1' );
 	}
 
 }
 
 add_action( 'init', 'smartestthemes_migrate' );
-
-
-
-
-
-
-
-
-
-
-
-
-// @test end migrate
-
-
 
 ?>
