@@ -14,16 +14,18 @@ The first thing to do is copy the `crucible` directory and change the name. Then
 
 3. Search for `Text Domain: crucible` in style.css and replace with: `Text Domain: megatherium`
 
-4. Search for <code>&nbsp;Crucible</code> (with a space before it) to capture DocBlocks and class name prefixes and replace with: <code>&nbsp;Megatherium</code> (with space before it and capital letter)
+4. Search for <code>&nbsp;Crucible_</code> (with a space before it and capital letter) to capture class name prefixes and replace with: <code>&nbsp;Megatherium_</code> (with space before it and capital letter)
 
-5. Search for `crucible-` to capture prefixed handles and replace with: `megatherium-`
+5. Search for <code>&nbsp;Crucible</code> (with a space before it) to capture DocBlocks  and replace with: <code>&nbsp;Megatherium</code> (with space before it and capital letter)
 
-6. Search for `_CRUCIBLE_` in all caps to capture the storename constant for EDD SL and replace with `_MEGATHERIUM_`
+6. Search for `crucible-` to capture prefixed handles and replace with: `megatherium-`
 
-7. Search for `page=crucible` and replace with `page=megatherium`
+7. Search for `_CRUCIBLE_` in all caps to capture the storename constant for EDD SL and replace with `_MEGATHERIUM_`
 
-8. Then, update the stylesheet header in style.css and the links in footer.php with your own information. 
+8. Search for `page=crucible` and replace with `page=megatherium`
 
-9. Change the crucible.pot filename to your textdomain.pot
+9. Then, update the stylesheet header in style.css and the links in footer.php with your own information. 
 
-10. Next, update or delete this readme. 
+10. Change the crucible.pot filename to your textdomain.pot
+
+11. Next, update or delete this readme. 
