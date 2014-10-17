@@ -3,8 +3,8 @@ Crucible
 
 Crucible is currently under construction and not ready for public use. Soon, this will be a starter theme built on a custom, yet very efficient, framework.
 
-Provisional Notes
------------------
+Notes
+-----
 
 The first thing to do is copy the `crucible` directory and change the name. Then do all of these instances of search and replace:
 
@@ -22,6 +22,8 @@ The first thing to do is copy the `crucible` directory and change the name. Then
 
 7. Search for `page=crucible` and replace with `page=megatherium`
 
-Then, update the stylesheet header in style.css and the links in footer.php with your own information. Next, update or delete this readme. Change the crucible.pot filename to your textdomain.pot
+8. Then, update the stylesheet header in style.css and the links in footer.php with your own information. 
 
+9. Change the crucible.pot filename to your textdomain.pot
 
+10. Next, update or delete this readme. 
