@@ -1522,12 +1522,12 @@ function smartestthemes_migrate() {
 
 		$new_table = $wpdb->prefix . "st_reviews";
 
-		// Duplicate old Reviews table with the new name
-		// leave legacy table in place in case they revert to legacy theme
-
 		if ( $wpdb->get_var("SHOW TABLES LIKE '$new_table'") != $new_table ) {
 		
-			if ( $old_table ) {
+			// If old table exists, duplicate it with the new name
+			// Leave legacy table in place in case they revert to legacy theme
+
+			if( $wpdb->get_var("SHOW TABLES LIKE '$old_table'") == $old_table ) {
 				$sql = "CREATE TABLE $new_table LIKE $old_table;";
 				$wpdb->query($sql);
 			}
@@ -1541,7 +1541,7 @@ function smartestthemes_migrate() {
 		
 		// if legacy table exists, copy stuff into new
 		
-		if ( $old_table ) {
+		if( $wpdb->get_var("SHOW TABLES LIKE '$old_table'") == $old_table ) {
 		
 			$new_reviews_pageid = get_option('smartestthemes_reviews_page_id');
  
