@@ -515,7 +515,7 @@ class cmb_Meta_Box {
  * Adding scripts and styles
  */
 function cmb_scripts( $hook ) {
-	if ( ( ( $hook == 'post.php' ) || ( $hook == 'post-new.php' ) ) && in_array( smartestthemes_get_current_post_type(), array( 'smartest_staff', 'smartest_services', 'smartest_news', 'smartest_slide' ) )
+	if ( ( ( $hook == 'post.php' ) || ( $hook == 'post-new.php' ) ) && in_array( smartestthemes_get_current_post_type(), array( 'smartest_staff', 'smartest_services', 'smartest_news' ) )
 	) {
 		wp_register_script( 'cmb-timepicker', CMB_META_BOX_URL . 'js/jquery.timePicker.min.js' );
 		wp_register_script( 'cmb-scripts', CMB_META_BOX_URL . 'js/cmb.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker', 'media-upload', 'thickbox', 'farbtastic' ), '0.9.1' );

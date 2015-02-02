@@ -284,12 +284,6 @@ background-position: -392px 0
 #smartestthemes-nav ul li a.preferences:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.pencil span.smartestthemes-nav-icon {
 	background-position: -336px 0
 }
-#smartestthemes-nav ul li a.homepage-slider span.smartestthemes-nav-icon {
-	background-position: 0 -20px;
-}
-#smartestthemes-nav ul li a.homepage-slider:hover span.smartestthemes-nav-icon, #smartestthemes-nav ul li.current a.homepage-slider span.smartestthemes-nav-icon {
-	background-position: 0 0;
-}
 #smartestthemes-nav ul li a.homepage-middle span.smartestthemes-nav-icon {
 	background-position: 0 -20px;
 }

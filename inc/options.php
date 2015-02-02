@@ -60,7 +60,7 @@ $options[] = array(
 	'type' => 'text');
 $options[] = array(
 	'name' => __('Attention Grabber For Homepage','crucible'),
-	'desc' => __('The large tag line shown under the slider on the home page. For example, "How can we help you?"','crucible'),
+	'desc' => __('The large tag line shown on the home page. For example, "How can we help you?"','crucible'),
 	'id' => $shortname.'_attention_grabber',
 	'std' => __( 'How can we help you?', 'crucible' ),
 	'type' => 'text');
@@ -174,35 +174,6 @@ $options[] = array(
 	'id' => $shortname.'_business_servicesmenulabel',
 	'std' => '',
 	'type' => 'text');
-// @new comment out NEXT 3 OPTIONS if not using home slideshow.
-$options[] = array( 'name' => __('Show Slideshow on Homepage?','crucible'),
-	'desc' => __('Check this if you want to show the slideshow on your homepage.','crucible'),
-	'id' => $shortname.'_show_slider',
-	'std' => 'true',
-	'type' => 'checkbox');
-$options[] = array( 'name' => __('Slide Duration','crucible'),
-	'desc' => __('How many seconds do you want to pause on each slide?','crucible'),
-	'id' => $shortname.'_slide_duration',
-	'std' => '5',
-	'type' => 'select',
-	'options' => array('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15'));
-$options[] = array( 'name' => __('Slideshow Transition Speed','crucible'),
-	'desc' => __('How fast do you want the transition between images to be? (in milliseconds)','crucible'),
-	'id' => $shortname.'_slider_trans_speed',
-	'std' => '800',
-                    'type' => 'select',
-                    'options' => array('300','400','500','600','700','800','900','1000','1100','1200','1300','1400','1500','1600','1700','1800','1900','2000'));
-		
-$options[] = array( 'name' => __('Force Crop Images to Fit The Slider Size?','crucible'),
-					'desc' => __('Check this if you want the slider to crop your images to fit the slider. If left unchecked, images are resized instead of cropped so that the entire image is seen.','crucible'),
-					'id' => $shortname.'_force_crop_slider',
-					'std' => 'false',
-					'type' => 'checkbox');
-$options[] = array( 'name' => __('Change Slideshow Height','crucible'),
-                    'desc' => __('Enter a height in pixels, for example "400px". If left blank, default height is 300px.','crucible'),
-                    'id' => $shortname.'_slideshow_height',
-                    'std' => '',
-                    'type' => 'text');
 					
 /* Custom CSS */
 $options[] = array(
@@ -641,7 +612,6 @@ $options[] = array( 'name' => __('Disable Announcements Icon','crucible'),
 			
 update_option('smartestthemes_template',$options);
 update_option('st_manual',$manualurl);
-update_option('st_sshow_description','Images of size 980 (width) x 300 look best. However, the slider is responsive and will work with any size of images.');// @new update
 }
 add_action('init','smartestthemes_options');
 ?>

@@ -231,7 +231,6 @@ function create_smartest_business_cpts() {
 	$staff = empty($options['st_show_staff']) ? '' : $options['st_show_staff'];
 	$news = empty($options['st_show_news']) ? '' : $options['st_show_news'];
 	$services = empty($options['st_show_services']) ? '' : $options['st_show_services'];
-	$slideshow =  empty($options['st_show_slider']) ? '' : $options['st_show_slider'];
 	
 	if( $staff == 'true'  ) {
     	$args = array(
@@ -340,39 +339,6 @@ function create_smartest_business_cpts() {
 		);
 	   	register_post_type( 'smartest_services' , $args );
 	}// end if show services enabled
-
-	// @new if show homepage slideshow is enabled, do cpt
-	if( $slideshow == 'true'  ) {
-		$args = array(
-			'label' => __('Slideshow','storefront'),
-			'singular_label' => __('Slide','storefront'),
-			'public' => true,
-			'show_ui' => true,
-			'capability_type' => 'post',
-			'hierarchical' => false,
-			'rewrite' => true,
-			'exclude_from_search' => true,
-			'labels' => array(
-				'name' => __( 'Slideshow','storefront' ),
-				'singular_name' => __( 'Slide','storefront' ),
-				'add_new' => __( 'Add New Slide','storefront' ),
-				'all_items' => __( 'All Slides','crucible' ),
-				'add_new_item' => __( 'Add New Slide','storefront' ),
-				'edit' => __( 'Edit','storefront' ),
-				'edit_item' => __( 'Edit Slide','storefront' ),
-				'new_item' => __( 'New Slide','storefront' ),
-				'view' => __( 'View Slide','storefront' ),
-				'view_item' => __( 'View Slide','storefront' ),
-				'search_items' => __( 'Search Slides','storefront' ),
-				'not_found' => __( 'No slides found','storefront' ),
-				'not_found_in_trash' => __( 'No slides found in Trash','storefront' ),
-				'parent' => __( 'Parent Slide','storefront' ),
-			),
-			'menu_icon' => 'dashicons-format-image',
-			'supports' => array('title', 'thumbnail')
-		);
-		register_post_type( 'smartest_slide' , $args );
-	}	// end slideshow
 }
 add_action('init', 'create_smartest_business_cpts');
 /**
@@ -409,67 +375,7 @@ function smartestthemes_taxonomies() {
 	register_taxonomy_for_object_type( 'smartest_service_category', 'smartest_services' );
 }
 add_action( 'init', 'smartestthemes_taxonomies', 0 );
-/**
- * upload slideshow images, attach to slide posts and set as featured image (the post thumbnail)
- *
- * Additional functionality: ability to pass $post_data to override values in wp_insert_attachment
- *
- * @param string $url (required) The URL of the image to download
- * @param int $post_id (required) The post ID the media is to be associated with
- * @param array $post_data (optional) Array of key => values for wp_posts table (ex: 'post_title' => 'foobar', 'post_status' => 'draft')
- * @return int|object The ID of the attachment or a WP_Error on failure
- */
-function smart_attach_external_image( $url = null, $post_id = null, $post_data = array() ) {
-	    if ( !$url || !$post_id ) return new WP_Error('missing', "Need a valid URL and post ID...");
-	    require_once ABSPATH . 'wp-admin/includes/file.php';
-	    // Download file to temp location, returns full server path to temp file, ex; /home/user/public_html/mysite/wp-content/26192277_640.tmp
-	    $tmp = download_url( $url );
-	
-	    // If error storing temporarily, unlink
-	    if ( is_wp_error( $tmp ) ) {
-	        @unlink($file_array['tmp_name']);   // clean up
-	        $file_array['tmp_name'] = '';
-	        return $tmp; // output wp_error
-	    }
-	
-	    preg_match('/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches);    // fix file filename for query strings
-	    $url_filename = basename($matches[0]);                                                  // extract filename from url for title
-	    $url_type = wp_check_filetype($url_filename);                                           // determine file type (ext and mime/type)
-	
-	    // assemble file data (should be built like $_FILES since wp_handle_sideload() will be using)
-	    $file_array['tmp_name'] = $tmp;                                                         // full server path to temp file
 
-	        $file_array['name'] = $url_filename;
-	
-	    // set additional wp_posts columns
-	    if ( empty( $post_data['post_title'] ) ) {
-	        $post_data['post_title'] = basename($url_filename, "." . $url_type['ext']);         // just use the original filename (no extension)
-	    }
-	
-	    // make sure gets tied to parent
-	    if ( empty( $post_data['post_parent'] ) ) {
-	        $post_data['post_parent'] = $post_id;
-	    }
-	
-	    // required libraries for media_handle_sideload
-	    require_once ABSPATH . 'wp-admin/includes/file.php';
-	    require_once ABSPATH . 'wp-admin/includes/media.php';
-	    require_once ABSPATH . 'wp-admin/includes/image.php';
-	
-	    // do the validation and storage stuff
-	    $att_id = media_handle_sideload( $file_array, $post_id, null, $post_data );             // $post_data can override the items saved to wp_posts table, like post_mime_type, guid, post_parent, post_title, post_content, post_status
-	
-	    // If error storing permanently, unlink
-	    if ( is_wp_error($att_id) ) {
-	        @unlink($file_array['tmp_name']);   // clean up
-	        return $att_id; // output wp_error
-	    }
-	
-	    // set as post thumbnail if desired
-	        set_post_thumbnail($post_id, $att_id);
-	
-	    return $att_id;
-}
 /**
 * Filter the custom menu labels to apply custom text for fallback menu items.
 */
@@ -616,24 +522,6 @@ function smartestthemes_metaboxes( array $meta_boxes ) {
 			),
 		)
 	);
-	$meta_boxes[] = array(
-		'id'         => 'home_slideshow',
-		'title'      => __('Slideshow', 'crucible'),
-		'pages'      => array( 'smartest_slide' ),
-		'context'    => 'normal',
-		'priority'   => 'high',
-		'show_names' => true,
-		'fields'     => array(
-			array(
-				'name' => __('Add A Picture', 'crucible'),
-				'desc' => sprintf(__('Set a featured image for this slide by clicking "Set featured image", which is normally located on the right hand side of this page. %s', 'crucible'),
-get_option('st_sshow_description')),
-				'id'   => $prefix . 'slide_title',
-				'type' => 'title',
-			),
-		)
-	);
-
 	return apply_filters( 'smartestthemes_cmb', $meta_boxes );
 }
 
@@ -854,44 +742,6 @@ function smar_manage_news_columns( $column, $post_id ) {
 			break;
 		default :
 			break;
-	}
-}
-/**
- * Add thumbnail column to smartest_slide admin
- */
-function smar_manage_edit_slide_columns( $columns ) {
-	$columns = array(
-		'cb' => '<input type="checkbox" />',
-		'title' => __('Title', 'crucible'),
-		'thumb' => __('Thumbnail', 'crucible'),
-		'date' => __('Date', 'crucible')
-	);
-	return $columns;
-}
-
-/**
- * Add data to thumbnail column in smartest_slide
- */
-function smar_manage_slide_columns( $column, $post_id ) {
-	global $post;
-	switch( $column ) {
-		case 'thumb' :
-		if ( has_post_thumbnail() ) {
-			$imgid = get_post_thumbnail_id(); 
-			$sthumb = vt_resize( $imgid, '', 60, 60, true);
-			echo '<img src="'.$sthumb['url'].'" width="60" height="60" alt="'.the_title_attribute('echo=0').'" />';
-		}
-			break;
-		default :
-			break;
-	}
-}
-
-// @new only need for slides
-if ( isset($options['st_show_slider']) ) {
-	if ( $options['st_show_slider'] == 'true') {
-		add_filter( 'manage_edit-smartest_slide_columns', 'smar_manage_edit_slide_columns' ) ;
-		add_action( 'manage_smartest_slide_posts_custom_column', 'smar_manage_slide_columns', 10, 2 );
 	}
 }
 
