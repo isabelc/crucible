@@ -1357,60 +1357,64 @@ function smartestthemes_migrate() {
 		wp_reset_postdata();
 		
 		
-		// get table prefix
-		$base_prefix = $wpdb->base_prefix;
-		
-		// old Reviews table name
-		if ( is_multisite() ) {
-			global $blog_id;
-			$bid = get_current_blog_id();
-			$old_table = $base_prefix . $bid . '_smareviewsb';
-		} else {
-			// not Multisite
-			$old_table = $base_prefix . 'smareviewsb';
-		}
+		// update table on a later hook to ensure table is created first
 
-		$new_table = $wpdb->prefix . "st_reviews";
+		function migrate_table() {
 
-		if ( $wpdb->get_var("SHOW TABLES LIKE '$new_table'") != $new_table ) {
-		
-			// If old table exists, duplicate it with the new name
-			// Leave legacy table in place in case they revert to legacy theme
-
-			if( $wpdb->get_var("SHOW TABLES LIKE '$old_table'") == $old_table ) {
-				$sql = "CREATE TABLE $new_table LIKE $old_table;";
-				$wpdb->query($sql);
-			}
-		}
-		
-		
-		// increase the starting id # so as not to create errors if reviews exist in new table
-		$sql2 = "ALTER TABLE $new_table AUTO_INCREMENT=9001;";
-		$wpdb->query($sql2);
-		
-		
-		// if legacy table exists, copy stuff into new
-		
-		if( $wpdb->get_var("SHOW TABLES LIKE '$old_table'") == $old_table ) {
-		
-			$new_reviews_pageid = get_option('smartestthemes_reviews_page_id');
- 
-			$rows = $wpdb->get_results( "SELECT * FROM $old_table" );
+			// get table prefix
+			$base_prefix = $wpdb->base_prefix;
 			
-			if ( $rows ) {
-				foreach ( $rows as $row ) {
-				
-					$query = $wpdb->prepare("INSERT INTO `$new_table` 
-						(`date_time`, `reviewer_name`, `reviewer_email`, `reviewer_ip`, `review_title`, `review_text`, `review_response`,`status`, `review_rating`, `reviewer_url`, `custom_fields`, `page_id`) 
-						VALUES (%s, %s, %s, %s, %s, %s, %s, %d, %d, %s, %s, %d)", $row->date_time, $row->reviewer_name, $row->reviewer_email, $row->reviewer_ip, $row->review_title, $row->review_text,$row->review_response, $row->status, $row->review_rating, $row->reviewer_url, $row->custom_fields, $new_reviews_pageid);
+			// old Reviews table name
+			if ( is_multisite() ) {
+				global $blog_id;
+				$bid = get_current_blog_id();
+				$old_table = $base_prefix . $bid . '_smareviewsb';
+			} else {
+				// not Multisite
+				$old_table = $base_prefix . 'smareviewsb';
+			}
 
-					$wpdb->query($query);
+			$new_table = $wpdb->prefix . "st_reviews";
+
+			// if new table does not exist
+			if ( $wpdb->get_var("SHOW TABLES LIKE '$new_table'") != $new_table ) {
+			
+				// If old table exists, duplicate it with the new name
+				// Leave legacy table in place in case they revert to legacy theme
+
+				if( $wpdb->get_var("SHOW TABLES LIKE '$old_table'") == $old_table ) {
+					$sql = "CREATE TABLE $new_table LIKE $old_table;";
+					$wpdb->query($sql);
 				}
 			}
 			
-		}
+			// increase the starting id # so as not to create errors if reviews exist in new table
+			$sql2 = "ALTER TABLE $new_table AUTO_INCREMENT=9001;";
+			$wpdb->query($sql2);
+			
+			// if legacy table exists, copy stuff into new
+			if( $wpdb->get_var("SHOW TABLES LIKE '$old_table'") == $old_table ) {
+			
+				$new_reviews_pageid = get_option('smartestthemes_reviews_page_id');
+	 
+				$rows = $wpdb->get_results( "SELECT * FROM $old_table" );
+				
+				if ( $rows ) {
+					foreach ( $rows as $row ) {
+					
+						$query = $wpdb->prepare("INSERT INTO `$new_table` 
+							(`date_time`, `reviewer_name`, `reviewer_email`, `reviewer_ip`, `review_title`, `review_text`, `review_response`,`status`, `review_rating`, `reviewer_url`, `custom_fields`, `page_id`) 
+							VALUES (%s, %s, %s, %s, %s, %s, %s, %d, %d, %s, %s, %d)", $row->date_time, $row->reviewer_name, $row->reviewer_email, $row->reviewer_ip, $row->review_title, $row->review_text,$row->review_response, $row->status, $row->review_rating, $row->reviewer_url, $row->custom_fields, $new_reviews_pageid);
 
-		
+						$wpdb->query($query);
+					}
+				}
+				
+			}
+
+		} // end migrate_table
+		add_action( 'init', 'migrate_table', 999);
+
 		// get legacy options
 
 		$smartestb_options = get_option( 'smartestb_options' );
@@ -1591,6 +1595,6 @@ function smartestthemes_migrate() {
 
 }
 
-add_action( 'init', 'smartestthemes_migrate' );
+add_action( 'admin_init', 'smartestthemes_migrate' );
 
 ?>

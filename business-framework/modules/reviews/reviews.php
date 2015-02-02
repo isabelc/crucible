@@ -21,7 +21,7 @@ class Smartest_Themes_Reviews {
 	private function __construct() {
 		global $wpdb;
 		$this->dbtable = $wpdb->prefix . 'st_reviews';
-		add_action('init', array($this, 'init'));
+		add_action('init', array($this, 'init'), 0);
 		add_action('admin_init', array($this, 'create_reviews_page'));
 		add_action( 'widgets_init', array($this, 'smartest_reviews_register_widgets'));
 		add_action('template_redirect',array($this, 'template_redirect'));
