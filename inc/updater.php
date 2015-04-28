@@ -127,8 +127,8 @@ function crucible_activate_license() {
 			'item_name' => urlencode( ST_CRUCIBLE_DLNAME ),
 			'url' => home_url()
 		);
-
-		$response = wp_remote_get( add_query_arg( $api_params, ST_CRUCIBLE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+		$url = esc_url_raw( add_query_arg( $api_params, ST_CRUCIBLE_URL ) );
+		$response = wp_remote_get( $url, array( 'timeout' => 15, 'sslverify' => false ) );
 
 		if ( is_wp_error( $response ) )
 			return false;
@@ -156,8 +156,8 @@ function crucible_deactivate_license() {
 			'license' 	=> $license,
 			'item_name' => urlencode( ST_CRUCIBLE_DLNAME )
 		);
-
-		$response = wp_remote_get( add_query_arg( $api_params, ST_CRUCIBLE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+		$url = esc_url_raw( add_query_arg( $api_params, ST_CRUCIBLE_URL ) );
+		$response = wp_remote_get( $url, array( 'timeout' => 15, 'sslverify' => false ) );
 
 		if ( is_wp_error( $response ) )
 			return false;
